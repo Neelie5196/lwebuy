@@ -37,6 +37,17 @@ body {
     color: #299145;
 }
 
+.navbar-default .navbar-nav > li > ul > li > a {
+    font-weight: bold;
+    color: #88b72f;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-default .navbar-nav > li > ul > li > a:hover  {
+    color: #299145;
+}
+
 .navbar-brand img {
     height: 100%;
 }
@@ -44,4 +55,13 @@ body {
 .homecontent {
     background-color: rgba(255,255,255,0.8);
     margin: 30px 0;
+}
+
+.userlogin {
+    border: groove 1px #dee0e2;
+    border-radius: 5px;
+}
+
+.loginform {
+    
 }
