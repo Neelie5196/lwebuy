@@ -8,7 +8,8 @@
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Purchase <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
                     <li><a href="purchaseproduct-1.php">Purchase Product</a></li>
-                    <li><a href="purchaselist.php">Purchase list (Payment)</a></li>
+                    <li><a href="purchaselist.php">Purchase List (Payment)</a></li>
+                    <li><a href="purchasehistory.php">Purchase History</a></li>
                 </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shipping <span class="caret"></span></a>

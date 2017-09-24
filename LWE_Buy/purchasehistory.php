@@ -7,7 +7,7 @@ $_SESSION['user_id'] =1;
 $purchaselistQuery = $db->prepare("
     SELECT *
     FROM order_list
-    WHERE user_id=:user_id AND status != 'Success'
+    WHERE user_id=:user_id AND status = 'Success'
     ORDER BY datetime desc
 ");
 

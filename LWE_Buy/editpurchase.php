@@ -2,16 +2,22 @@
 
 require_once 'connection/config.php';
 session_start();
-$_SESSION['user_id'] =1;
+$_SESSION['order_id'] = $_GET['order_id'];
+$_SESSION['oi_id'] = $_GET['oi_id'];
 
-$orderQuery = "SELECT * FROM order_list";
+$purchaseitemQuery = $db->prepare("
+    SELECT *
+    FROM order_item
+    WHERE oi_id=:oi_id
+");
 
-$orderResult = $db->query($orderQuery);
+$purchaseitemQuery->execute([
+    'oi_id' => $_SESSION['oi_id']
+]);
 
-$orderRowCount = $orderResult-> rowCount()+1;
+$purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
 
 ?>
-
 <!DOCTYPE html>
 <html data-ng-app="myApp">
     <head>
@@ -39,7 +45,7 @@ $orderRowCount = $orderResult-> rowCount()+1;
             </div>
             
             <div class="container">
-                <h2>Purchase Product</h2>
+                <h2>Edit Information</h2>
                 <hr/>
             </div>
             
@@ -54,35 +60,25 @@ $orderRowCount = $orderResult-> rowCount()+1;
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 jumbotron">
-                                    <form method="post" action="addpurchase.php?user_id=<?php echo $_SESSION['user_id']; ?>&order_id=<?php echo $orderRowCount; ?>">
-                                        <?php 
-                                            $numbers = $_POST['num'];
-                                            for($i=1; $i<=$numbers; $i++)
-                                            {
-                                        ?>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <td>
-                                                        Product <?php echo $i; ?>
-                                                    </td>
-                                                </tr>
-                                            </thead>
-                                            <input type="hidden" value="<?php echo $numbers; ?>" name="numbers"/>
-                                            <tbody>
+                                    <form method="post" action="update.php">
+                                        <?php if(!empty($purchaseitem)): ?>
+                                        <table class="table table-bordered purchaseitem">
+                                            <?php foreach($purchaseitem as $purchase): ?>
+                                            <tbody class="purchase">
                                                 <tr>
                                                     <td>
                                                         <label>Item Name</label>
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" name="name[]" type="text" required>
-                                                        <input type="hidden" value="<?php echo $orderRowCount; ?>" name="orderID[]">
+                                                        <input class="form-control" name="name" type="text" required value="<?php echo $purchase['name']; ?>">
+                                                        <input type="hidden" name="order_id" value="<?php echo $_SESSION['order_id']; ?>">
+                                                        <input type="hidden" name="oi_id" value="<?php echo $_SESSION['oi_id']; ?>">
                                                     </td>
                                                     <td>
                                                         <label>Item Link</label>
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" name="link[]" type="text" required>
+                                                        <input class="form-control" name="link" type="text" required required value="<?php echo $purchase['link']; ?>">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -90,13 +86,13 @@ $orderRowCount = $orderResult-> rowCount()+1;
                                                         <label>Item Type</label>
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" name="type[]" type="text" required>
+                                                        <input class="form-control" name="type" type="text" required required value="<?php echo $purchase['type']; ?>">
                                                     </td>
                                                     <td>
                                                         <label>Unit</label>
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" name="unit[]" type="number" required>
+                                                        <input class="form-control" name="unit" type="number" required required value="<?php echo $purchase['unit']; ?>">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -104,16 +100,18 @@ $orderRowCount = $orderResult-> rowCount()+1;
                                                         <label>Remark</label>
                                                     </td>
                                                     <td colspan="3">
-                                                        <input class="form-control" name="remark[]" type="text" width="80">
+                                                        <input class="form-control" name="remark" type="text" width="80"  required value="<?php echo $purchase['remark']; ?>">
                                                     </td>
                                                 </tr>
                                             </tbody>
+                                            <?php endforeach; ?>
                                         </table>
-                                        <?php
-                                            }
-                                        ?>
-                                        <a href='purchaseproduct-1.php' class='btn btn-default' name='back'>Back to Purchase</a>
-                                        <input type="submit" class="btn btn-default" name="submit" value="Submit Request">
+                                        <?php else: ?>
+                                            <p>Error.</p>
+                                        <?php endif; ?>
+                                        <a href="purchaseview.php?order_id=<?php echo $purchase['order_id']; ?>" class='btn btn-default' name='back'>Back to Purchase View</a>
+                                        
+                                        <button type="submit" class="btn btn-default" name="update">Update</button>
                                     </form>
                                 </div>
                             </div>
