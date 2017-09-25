@@ -59,9 +59,18 @@ body {
 
 .userlogin {
     border: groove 1px #dee0e2;
-    border-radius: 5px;
+    border-radius: 10px;
+    padding: 10px 5px;
 }
 
-.loginform {
-    
+.formfield {
+    padding: 10px 8px;
+}
+
+.btnreg {
+    margin-left: 10px;
+}
+
+.userreg {
+    border: solid 1px #dee0e2;
 }
