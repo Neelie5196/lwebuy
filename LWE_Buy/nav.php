@@ -28,14 +28,13 @@
                 </ul>
             </li>
             <li><a href="#service" class="menuitem">Service</a></li>
-            <li><a href="#contact" class="menuitem">Contact us</a></li>
+            <li><a href="contact.php" class="menuitem">Contact us</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['user_id']; ?></a>
                 <ul class="dropdown-menu menuitem">
-                    <li>Email Address</li>
-                    <li><a href="#">Setting</a></li>
+                    <li><a href="#">Email Address</a></li>
                 </ul>
             </li>
             <li><a href="#sign out" class="rightnav"><span class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>

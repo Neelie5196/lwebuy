@@ -1,8 +1,6 @@
 <?php
 session_start();
 $_SESSION['user_id'] =1;
-$_SESSION['user_id'] = $_GET['user_id'];
-$_SESSION['order_id'] = $_GET['order_id'];
 ?>
 <!DOCTYPE html>
 <html data-ng-app="myApp">
