@@ -14,9 +14,9 @@
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shipping <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
-                    <li><a href="#">Shipping List</a></li>
+                    <li><a href="shippinglist.php">Shipping List</a></li>
                     <li><a href="#">Shipping Request</a></li>
-                    <li><a href="#">Shipping History</a></li>
+                    <li><a href="shippinghistory.php">Shipping History</a></li>
                 </ul>
             </li>
             <li><a href="#tracking" class="menuitem">Tracking</a></li>
@@ -27,7 +27,7 @@
                     <li><a href="#">Transaction History</a></li>
                 </ul>
             </li>
-            <li><a href="#service" class="menuitem">Service</a></li>
+            <li><a href="service.php" class="menuitem">Service</a></li>
             <li><a href="contact.php" class="menuitem">Contact us</a></li>
         </ul>
 
