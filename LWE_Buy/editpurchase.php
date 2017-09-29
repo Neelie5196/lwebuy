@@ -111,7 +111,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                         <?php endif; ?>
                                         <a href="purchaseview.php?order_id=<?php echo $purchase['order_id']; ?>" class='btn btn-default' name='back'>Back to Purchase View</a>
                                         
-                                        <button type="submit" class="btn btn-default" name="update">Update</button>
+                                        <button type="submit" class="btn btn-default" name="editpurchase">Update</button>
                                     </form>
                                 </div>
                             </div>

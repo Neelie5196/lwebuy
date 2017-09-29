@@ -19,7 +19,7 @@
                     <li><a href="shippinghistory.php">Shipping History</a></li>
                 </ul>
             </li>
-            <li><a href="#tracking" class="menuitem">Tracking</a></li>
+            <li><a href="tracking.php" class="menuitem">Tracking</a></li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Point <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
                     <li><a href="#">Buy Point</a></li>
@@ -34,10 +34,10 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION['user_id']; ?></a>
                 <ul class="dropdown-menu menuitem">
-                    <li><a href="#">Email Address</a></li>
+                    <li><a href="setting.php">Email Address</a></li>
                 </ul>
             </li>
-            <li><a href="#sign out" class="rightnav"><span class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>
+            <li><a href="logout.php" class="rightnav"><span class="glyphicon glyphicon-log-in"></span> Sign Out</a></li>
         </ul>
     </div>
 </nav>

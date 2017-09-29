@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2017 at 11:06 AM
+-- Generation Time: Sep 29, 2017 at 05:23 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -50,6 +50,13 @@ CREATE TABLE `contact` (
   `tracknum` varchar(20) DEFAULT NULL,
   `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`cu_id`, `name`, `contact`, `email`, `subject`, `tracknum`, `message`) VALUES
+(2, 'SAD', '123', 'qwe@as.com', 'qwe', 'qwe', 'df');
 
 -- --------------------------------------------------------
 
@@ -133,7 +140,7 @@ CREATE TABLE `order_item` (
 INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`) VALUES
 (50, 1, '1', '1', '1', 1, '', '10.00'),
 (52, 2, '2', '2', '2', 2, '', '20.00'),
-(55, 3, 'SAD', 'https://www.youtube.com/', 'YOU', 3, 'TUBE', '45.00'),
+(55, 3, 'SAD', 'https://www.youtube.com/', 'YOU', 3, 'TUBEeeeeee', '45.00'),
 (56, 3, '3', '3', '3', 3, '12344566', '3.00'),
 (57, 4, '1', '1', '1', 1, '1111', NULL),
 (58, 4, '2', '2', '2', 2, '2222', NULL);
@@ -220,9 +227,9 @@ CREATE TABLE `track_summary` (
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `full_name` varchar(50) NOT NULL,
-  `contact` varchar(11) NOT NULL,
+  `fname` varchar(50) NOT NULL,
+  `lname` varchar(50) NOT NULL,
+  `contact` varchar(11) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `type` varchar(10) NOT NULL
@@ -232,9 +239,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `full_name`, `contact`, `email`, `password`, `type`) VALUES
-(1, 'one', 'user one', '1111111111', '11@gmail.com', '1111', 'user'),
-(2, 'qwe', 'asdasd', '12334123', 'adsasd', 'ADXas', 'user');
+INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`, `type`) VALUES
+(1, 'one', 'user one one', '44444411', '11@gmail.com', '44', 'customer'),
+(2, 'qwe', 'asdasd', '12334123', 'adsasd', 'ADXas', 'customer'),
+(4, '123', '123', NULL, '123@d.com', '123', 'customer');
 
 --
 -- Indexes for dumped tables
@@ -333,7 +341,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `cu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `credit`
 --
@@ -383,7 +391,7 @@ ALTER TABLE `track_summary`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
