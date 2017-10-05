@@ -24,14 +24,16 @@
                 <ul class="dropdown-menu menuitem">
                     <li><a href="#">New Item</a></li>
                     <li><a href="#">Transfer Order</a></li>
+                    <li><a href="#">New Warehouse Details</a></li>
                 </ul>
             </li>
             <li><a href="tracking.php" class="menuitem">Tracking</a></li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">System User <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
-                    <li><a href="#">Create New</a></li>
-                    <li><a href="#">Staff List</a></li>
-                    <li><a href="#">User List</a></li>
+                    <li><a href="createnew.php">Create New</a></li>
+                    <li><a href="adminlist.php">Admin List</a></li>
+                    <li><a href="stafflist.php">Staff List</a></li>
+                    <li><a href="customerlist.php">Customer List</a></li>
                 </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Other <span class="caret"></span></a>
