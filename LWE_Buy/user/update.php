@@ -1,6 +1,6 @@
 <?php
 
-require_once 'connection/config.php';
+require_once '../connection/config.php';
 
 if (isset($_POST['editpurchase']))
 

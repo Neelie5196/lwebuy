@@ -1,8 +1,7 @@
 <?php
 
-require_once 'connection/config.php';
+require_once '../connection/config.php';
 session_start();
-$_SESSION['user_id'] =1;
 
 ?>
 
@@ -13,10 +12,12 @@ $_SESSION['user_id'] =1;
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initialscale=1.0"/>
         <!-- Bootstrap -->
-        <link href="frameworks/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--stylesheet-->
-        <link href="frameworks/css/style.css" rel="stylesheet"/>
+        <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -26,7 +27,7 @@ $_SESSION['user_id'] =1;
         
     </head>
 
-    <body background="resources/img/bg.jpg">
+    <body background="../resources/img/bg.jpg">
         <center>
             <div class="row">
                 <?php include_once('nav.php')?>
@@ -64,11 +65,5 @@ $_SESSION['user_id'] =1;
                 </div>
             </section>
         </center>
-        
-        <!-- jQuery – required for Bootstrap's JavaScript plugins) -->
-        <script src="frameworks/js/jquery.min.js"></script>
-
-        <!-- All Bootstrap plug-ins file -->
-        <script src="frameworks/js/bootstrap.min.js"></script>
     </body>
 </html>

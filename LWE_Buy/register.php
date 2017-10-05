@@ -15,7 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         
         if ( $result->num_rows > 0 )
         {
-            $_SESSION['message'] = "This email already has an account.";
+            ?>
+            <script>
+            alert('This email already has an account, Please try other email');
+            window.location.href='register.php?fail';
+            </script>
+            <?php
         }
         else
         {
@@ -24,13 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-
-
             $sql = "INSERT INTO users (email, password, lname, fname, type) VALUES ('$email', '$password', '$lname', '$fname', 'customer')";
             mysql_query($sql);
-
-            $_SESSION['message'] = "Registration successful!";
-            header("location: index.html");
+            ?>
+            <script>
+            alert('Register Successful');
+            window.location.href='login.php?success';
+            </script>
+            <?php
         }
     }
 }
@@ -64,21 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <body>
         <center>
             <div class="row head">
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="index.html"><img src="resources/img/logo.png" alt="logo"/></a>
-                        </div>
-                        <ul class="nav navbar-nav">
-                            <li><a href="tracking.php" class="menuitem">Tracking</a></li>
-
-                            <li><a href="service.php" class="menuitem">Service</a></li>
-                            
-                            <li><a href="contact.php" class="menuitem">Contact us</a></li>
-                        </ul>
-
-                    </div>
-                </nav>
+                <?php include_once('nav.php')?>
             </div>
 
             <div class="row">
@@ -122,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                             <td colspan="2" class="formfield">
                                                 <center>
                                                     <button type="submit" class="btn btn-default" name="register">Submit</button>
-                                                    <button type="button" class="btn btn-default btnreg">Cancel</button>
+                                                    <a href='index.php' class='btn btn-default' name='cancel'>Cancel</a>
                                                 </center>
                                             </td>
                                         </tr>

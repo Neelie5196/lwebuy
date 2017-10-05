@@ -1,8 +1,7 @@
 <?php
 
-require_once 'connection/config.php';
+require_once '../connection/config.php';
 session_start();
-$_SESSION['user_id'] =1;
 
 ?>
 
@@ -18,7 +17,7 @@ $_SESSION['user_id'] =1;
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--stylesheet-->
-        <link href="frameworks/css/style.css" rel="stylesheet"/>
+        <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -28,7 +27,7 @@ $_SESSION['user_id'] =1;
         
     </head>
 
-    <body background="resources/img/bg.jpg">
+    <body background="../resources/img/bg.jpg">
         <div class="row">
             <?php include_once('nav.php')?>
         </div>
@@ -66,8 +65,8 @@ $_SESSION['user_id'] =1;
                         <div class="row">
                             <div class="col-xs-12 col-md-12 col-lg-12">
                                 <center>
-                                    <img src="resources/img/home-4.png"><br/><br/>
-                                    <img src="resources/img/home-4-2.png">
+                                    <img src="../resources/img/home-4.png"><br/><br/>
+                                    <img src="../resources/img/home-4-2.png">
                                 </center>
                             </div>
                         </div>

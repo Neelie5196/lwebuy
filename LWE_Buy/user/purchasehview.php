@@ -1,6 +1,6 @@
 <?php
 
-require_once 'connection/config.php';
+require_once '../connection/config.php';
 session_start();
 $_SESSION['order_id'] = $_GET['order_id'];
 $counter = 0; 
@@ -26,10 +26,12 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initialscale=1.0"/>
         <!-- Bootstrap -->
-        <link href="frameworks/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--stylesheet-->
-        <link href="frameworks/css/style.css" rel="stylesheet"/>
+        <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -39,7 +41,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
         
     </head>
 
-    <body background="resources/img/bg.jpg">
+    <body background="../resources/img/bg.jpg">
         <center>
             <div class="row">
                 <?php include_once('nav.php')?>
@@ -81,16 +83,20 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                             <td width="8%"><?php echo $purchase['unit']; ?></td>
                                             <td width="20%"><?php echo $purchase['remark']; ?></td>
                                             <td width="9%"><?php echo $purchase['price']; ?></td>
-                                            <td width="15%">
-                                                <a href="editpurchase.php?order_id=<?php echo $_SESSION['order_id']; ?>&oi_id=<?php echo $purchase['oi_id']; ?>" class="btn btn-xs btn-warning">Edit</a>
-                                                <a href="delete.php?order_id=<?php echo $_SESSION['order_id']; ?>&oi_id=<?php echo $purchase['oi_id']; ?>" class="btn btn-xs btn-danger delete-button">Delete</a>
-                                            </td>
                                         </tr>
                                     </tbody>
                                     <?php endforeach; ?>
                                 </table>
-                                <?php else: ?>
-                                    <p>Error.</p>
+                                <?php else: 
+                                
+                                    if(isset($_GET['order_id'])){
+                                        $order_id = $_GET['order_id'];
+
+                                        $result = mysql_query("DELETE FROM order_list WHERE ol_id=$order_id") or die(mysql_error());
+
+                                    }
+                                    header("location: purchaselist.php");
+                                ?>
                                 <?php endif; ?>
                                 <?php
                                     $order = $_SESSION['order_id'];
@@ -102,24 +108,11 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                     }
                                 ?>
                             </div>
-                            <a href="purchaselist.php" class="btn btn-default" name="back">Back</a>
-                            <input type="button" class="btn btn-default" name="submit" value="Check Out">
+                            <a href="purchasehistory.php" class="btn btn-default" name="back">Back</a>
                         </form>
                     </div>
                 </div>
             </section>
         </center>
-        
-        <script>
-        
-        
-        </script>
-        
-                
-        <!-- jQuery – required for Bootstrap's JavaScript plugins) -->
-        <script src="frameworks/js/jquery.min.js"></script>
-
-        <!-- All Bootstrap plug-ins file -->
-        <script src="frameworks/js/bootstrap.min.js"></script>
     </body>
 </html>

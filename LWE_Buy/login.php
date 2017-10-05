@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 $_SESSION['user_id'] = $user['user_id'];
 				$_SESSION['fname'] = $user['fname'];
                 $_SESSION['lname'] = $user['lname'];
+                $_SESSION['email'] = $user['email'];
             
                 
                 if($user['type'] == 'admin')
@@ -40,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 }
                 else if($user['type'] == 'customer')
                 {
-                    header("location: tracking.php");
+                    header("location: user/dashboard.php");
                 }
             }
             else
@@ -80,23 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <body>
         <center>
             <div class="row head">
-                <nav class="navbar navbar-default">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a class="navbar-brand" href="index.html"><img src="resources/img/logo.png" alt="logo"/></a>
-                        </div>
-                        <ul class="nav navbar-nav">
-       
-                            <li><a href="tracking.php" class="menuitem">Tracking</a></li>
-
-                            <li><a href="service.php" class="menuitem">Service</a></li>
-                            
-                            <li><a href="contact.php" class="menuitem">Contact us</a></li>
-                        </ul>
-
-                 
-                    </div>
-                </nav>
+                <?php include_once('nav.php')?>
             </div>
 
             <div class="row">

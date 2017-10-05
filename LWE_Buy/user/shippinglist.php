@@ -1,14 +1,12 @@
 <?php
 
-require_once 'connection/config.php';
+require_once '../connection/config.php';
 session_start();
-$_SESSION['user_id'] =1;
-
+$i= 0;
 $purchaselistQuery = $db->prepare("
     SELECT *
-    FROM order_list
-    WHERE user_id=:user_id AND status = 'Success'
-    ORDER BY datetime desc
+    FROM shipping
+    WHERE user_id=:user_id
 ");
 
 $purchaselistQuery->execute([
@@ -26,10 +24,12 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initialscale=1.0"/>
         <!-- Bootstrap -->
-        <link href="frameworks/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--stylesheet-->
-        <link href="frameworks/css/style.css" rel="stylesheet"/>
+        <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -38,54 +38,60 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
         <![endif]-->
     </head>
 
-    <body background="resources/img/bg.jpg">
-        <center>
+    <body background="../resources/img/bg.jpg">
+        <section class = "content"> 
+		<center>
             <div class="row">
                 <?php include_once('nav.php')?>
             </div>
-            
+   
             <div class="container">
-                <h2>Purchase List</h2>
+                <h2>All Shipping</h2>
                 <hr/>
             </div>
             
             <section class = "content">
                 <div class="row">
+			
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <?php if(!empty($purchaselist)): ?>
                         <table class="table thead-bordered table-hover purchaselist" style="width:80%">
                             <thead>
                                 <tr>
-                                    <th>Order#</th>
-                                    <th>Placed on</th>
-                                    <th>Total (RM)</th>
+                                    <th>#</th>
+									<th>Tracking No</th>
+									<th>Order No</th>
+                                    <th>Deliver To</th>
+                                    <th>Courier</th>
+									<th>Order Date</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <?php foreach($purchaselist as $purchase): ?>
+                            <?php foreach($purchaselist as $row):
+							{                             
+										$i++;
+							}?>
                             <tbody class="purchase">
                                 <tr>
-                                    <td><?php echo $purchase['ol_id']; ?></td>
-                                    <td><?php echo $purchase['datetime']; ?></td>
-                                    <td><?php echo $purchase['price']; ?></td>
-                                    <td><?php echo $purchase['status']; ?></td>
-                                    <td><a href="purchaseview.php?order_id=<?php echo $purchase['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+									<td><?php echo $i; ?></td>
+                                    <td><?php echo $row['tracking_code']; ?></td>
+                                    <td><?php echo $row['order_number']; ?></td>
+                                    <td><?php echo $row['ship_to']; ?></td>
+									<td><?php echo $row['courier']; ?></td>
+									<td><?php echo $row['order_date']; ?></td>
+									<td><?php echo $row['status']; ?></td>
+                                    
                                 </tr>
                             </tbody>
                             <?php endforeach; ?>
                         </table>
                         <?php else: ?>
-                            <p>There is no purchase item.</p>
+                            <p>No Record Found.</p>
                         <?php endif; ?>
                     </div>
                 </div>
             </section>
-        </center>
-        
-        <!-- jQuery – required for Bootstrap's JavaScript plugins) -->
-        <script src="frameworks/js/jquery.min.js"></script>
-
-        <!-- All Bootstrap plug-ins file -->
-        <script src="frameworks/js/bootstrap.min.js"></script>
+        </center>  
+		</section>
     </body>
 </html>

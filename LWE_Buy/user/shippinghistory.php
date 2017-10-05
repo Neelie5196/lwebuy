@@ -1,13 +1,12 @@
 <?php
 
-require_once 'connection/config.php';
+require_once '../connection/config.php';
 session_start();
-$_SESSION['user_id'] =1;
 $i= 0;
 $purchaselistQuery = $db->prepare("
     SELECT *
     FROM shipping
-    WHERE user_id=:user_id
+    WHERE user_id=:user_id AND status = 'Received'
 ");
 
 $purchaselistQuery->execute([
@@ -25,10 +24,12 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initialscale=1.0"/>
         <!-- Bootstrap -->
-        <link href="frameworks/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--stylesheet-->
-        <link href="frameworks/css/style.css" rel="stylesheet"/>
+        <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -37,13 +38,13 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
         <![endif]-->
     </head>
 
-    <body background="resources/img/bg.jpg">
-        <section class = "content"> 
+    <body background="../resources/img/bg.jpg">
+        <section class = "content">
 		<center>
             <div class="row">
                 <?php include_once('nav.php')?>
             </div>
-   
+            
             <div class="container">
                 <h2>All Shipping</h2>
                 <hr/>
@@ -51,7 +52,6 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
             
             <section class = "content">
                 <div class="row">
-			
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <?php if(!empty($purchaselist)): ?>
                         <table class="table thead-bordered table-hover purchaselist" style="width:80%">
@@ -90,13 +90,7 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
                     </div>
                 </div>
             </section>
-        </center>  
+        </center>
 		</section>
-        
-        <!-- jQuery – required for Bootstrap's JavaScript plugins) -->
-        <script src="frameworks/js/jquery.min.js"></script>
-
-        <!-- All Bootstrap plug-ins file -->
-        <script src="frameworks/js/bootstrap.min.js"></script>
     </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-require_once 'connection/config.php';
+require_once '../connection/config.php';
 session_start();
 $hawb = $_POST['hawb'];
 $id = 0;
@@ -14,10 +14,12 @@ $id = 0;
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initialscale=1.0"/>
         <!-- Bootstrap -->
-        <link href="frameworks/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--stylesheet-->
-        <link href="frameworks/css/style.css" rel="stylesheet"/>
+        <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -27,7 +29,7 @@ $id = 0;
         
     </head>
 
-    <body background="resources/img/bg.jpg">
+    <body background="../resources/img/bg.jpg">
         <div class="row">
             <?php include_once('nav.php')?>
         </div>
@@ -36,7 +38,7 @@ $id = 0;
             <div class="container">
                 <div class="row" style="padding-top: 50px; padding-bottom: 25px;">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <img src="resources/img/logo.png" width="200" height="75">
+                        <img src="../resources/img/logo.png" width="200" height="75">
                     </div>
                 </div>
                 <div class="row" style="padding-bottom: 25px;">
@@ -199,15 +201,5 @@ $id = 0;
                 </div>
             </section>
         </center>
-        
-        
-        <script src="frameworks/js/angular.min.js"></script>
-        <script src="frameworks/js/getdata.js"></script>
-        
-        <!-- jQuery – required for Bootstrap's JavaScript plugins) -->
-        <script src="frameworks/js/jquery.min.js"></script>
-
-        <!-- All Bootstrap plug-ins file -->
-        <script src="frameworks/js/bootstrap.min.js"></script>
     </body>
 </html>

@@ -22,20 +22,7 @@
 
     <body>
         <div class="row">
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <ul class="nav navbar-nav">
-                        <li><a href="service.php" class="menuitem">Service</a></li>
-                        <li><a href="tracking.php" class="menuitem">Tracking</a></li>
-                        <li><a href="contact.php" class="menuitem">Contact us</a></li>
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="register.php" class="rightnav"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
-                        <li><a href="login.php" class="rightnav"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    </ul>
-                </div>
-            </nav>
+            <?php include_once('nav.php')?>
         </div>
 
         <div class="row"> 

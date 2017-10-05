@@ -1,8 +1,7 @@
 <?php
 
-require_once 'connection/config.php';
+require_once '../connection/config.php';
 session_start();
-$_SESSION['user_id'] =1;
 
 $profilesettingQuery = $db->prepare("
     SELECT *
@@ -26,10 +25,12 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initialscale=1.0"/>
         <!-- Bootstrap -->
-        <link href="frameworks/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--stylesheet-->
-        <link href="frameworks/css/style.css" rel="stylesheet"/>
+        <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <style>
             label{
                 float: right;
@@ -44,7 +45,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
         
     </head>
 
-    <body background="resources/img/bg.jpg">
+    <body background="../resources/img/bg.jpg">
         <div class="row">
             <?php include_once('nav.php')?>
         </div>
@@ -152,13 +153,5 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
         <?php else: ?>
             <p>Error.</p>
         <?php endif; ?>
-        
-        
-        
-        <!-- jQuery – required for Bootstrap's JavaScript plugins) -->
-        <script src="frameworks/js/jquery.min.js"></script>
-
-        <!-- All Bootstrap plug-ins file -->
-        <script src="frameworks/js/bootstrap.min.js"></script>
     </body>
 </html>
