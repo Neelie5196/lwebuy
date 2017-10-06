@@ -50,7 +50,7 @@ session_start();
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <input class="form-control" name="num" type="number" required>
+                                                        <input class="form-control" name="num" type="number" value="1" required>
                                                     </td>
                                                 </tr>
                                             </tbody>

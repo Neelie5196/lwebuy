@@ -3,18 +3,17 @@
 require_once '../connection/config.php';
 session_start();
 $counter = 0; 
-$userslistQuery = $db->prepare("
+$warehouselistQuery = $db->prepare("
     SELECT *
-    FROM users
-    WHERE type = 'admin'
+    FROM warehouse
 
 ");
 
-$userslistQuery->execute([
+$warehouselistQuery->execute([
     'user_id' => $_SESSION['user_id']
 ]);
 
-$userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
+$warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
 
 
 ?>
@@ -50,7 +49,7 @@ $userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
             <div class="container">
                 <div class="row" style="padding-top: 50px; padding-bottom: 25px;">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <h2>Admin List</h2>
+                        <h2>Warehouse List</h2>
                     </div>
                 </div>
             </div>
@@ -59,37 +58,42 @@ $userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($userslist)): ?>
-                            <table class="table thead-bordered table-hover userslist">
+                            <?php if(!empty($warehouselist)): ?>
+                            <table class="table thead-bordered table-hover warehouselist">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Contact</th>
+                                        <th width="2%">#</th>
+                                        <th width="9%">Station Code</th>
+                                        <th width="20%">Station Description</th>
+                                        <th width="9%">Country Code</th>
+                                        <th width="20%">Country Description</th>
+                                        <th width="20%">Company Name</th>
+                                        <th width="20%">Station Name</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($userslist as $users): 
+                                <?php foreach($warehouselist as $warehouse): 
                                 {
                                     $counter++;
                                 }
                                 
                                 ?>
-                                <tbody class="users">
-                                    <tr>
+                                <tbody class="warehouse">
+                                    <tr height="50">
                                         <td><?php echo $counter; ?></td>
-                                        <td width="20%"><?php echo $users['fname']; ?></td>
-                                        <td width="20%"><?php echo $users['lname']; ?></td>
-                                        <td width="20%"><?php echo $users['email']; ?></td>
-                                        <td width="20%"><?php echo $users['contact']; ?></td>
-                                        <td width="20%"><a href="adminsview.php?users=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-info">View Detail</a> <a href="delete1.php?user_id=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
+                                        <td><?php echo $warehouse['station_code']; ?></td>
+                                        <td><?php echo $warehouse['station_description']; ?></td>
+                                        <td><?php echo $warehouse['country_code']; ?></td>
+                                        <td><?php echo $warehouse['country_description']; ?></td>
+                                        <td><?php echo $warehouse['company_name']; ?></td>
+                                        <td><?php echo $warehouse['station_name']; ?></td>
+                                        <td><a href="#" class="btn btn-xs btn-info">View</a></td>
+                                        <td><a href="delete.php?wh_id=<?php echo $warehouse['wh_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
                             </table>
                             <?php else: ?>
-                                <p>There is no admin users.</p>
+                                <p>There is no warehouse records.</p>
                             <?php endif; ?>      
                         </div>
                     </div>

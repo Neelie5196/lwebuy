@@ -9,7 +9,7 @@
                 <ul class="dropdown-menu menuitem">
                     <li><a href="#">Order Request</a></li>
                     <li><a href="#">Order Pending</a></li>
-                    <li><a href="#">Order History</a></li>
+                    <li><a href="orderhistory.php">Order History</a></li>
                 </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shipping <span class="caret"></span></a>
@@ -24,7 +24,8 @@
                 <ul class="dropdown-menu menuitem">
                     <li><a href="#">New Item</a></li>
                     <li><a href="#">Transfer Order</a></li>
-                    <li><a href="#">New Warehouse Details</a></li>
+                    <li><a href="newwarehouse.php">New Warehouse</a></li>
+                    <li><a href="warehouselist.php">Warehouse List</a></li>
                 </ul>
             </li>
             <li><a href="tracking.php" class="menuitem">Tracking</a></li>

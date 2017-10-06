@@ -82,7 +82,7 @@ $userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
                                         <td width="20%"><?php echo $users['lname']; ?></td>
                                         <td width="20%"><?php echo $users['email']; ?></td>
                                         <td width="20%"><?php echo $users['contact']; ?></td>
-                                        <td width="20%"><a href="usersview.php?users=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-info">View Detail</a></td>
+                                        <td width="20%"><a href="staffsview.php?users=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-info">View Detail</a> <a href="delete2.php?user_id=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>

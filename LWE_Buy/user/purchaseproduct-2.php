@@ -3,11 +3,14 @@
 require_once '../connection/config.php';
 session_start();
 
-$orderQuery = "SELECT * FROM order_list";
-
-$orderResult = $db->query($orderQuery);
-
-$orderRowCount = $orderResult-> rowCount()+1;
+$result = mysql_query('SELECT ol_id FROM order_list ORDER BY ol_id DESC LIMIT 1;');
+if (mysql_num_rows($result) > 0) {
+   $max_public_id = mysql_fetch_row($result);
+   $orderid = $max_public_id[0]+1;
+}else
+{
+    $orderid = 1;
+}
 
 ?>
 
@@ -77,8 +80,8 @@ $orderRowCount = $orderResult-> rowCount()+1;
                                                     </td>
                                                     <td>
                                                         <input class="form-control" name="name[]" type="text" required>
-                                                        <input type="hidden" value="<?php echo $orderRowCount; ?>" name="orderID[]">
-                                                        <input type="hidden" value="<?php echo $orderRowCount; ?>" name="orderId">
+                                                        <input type="hidden" value="<?php echo $orderid; ?>" name="orderID[]">
+                                                        <input type="hidden" value="<?php echo $orderid; ?>" name="orderId">
                                                     </td>
                                                     <td>
                                                         <label>Item Link</label>

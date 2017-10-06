@@ -64,7 +64,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                         <h3>Profile Settings<br/><small> Change your account settings</small></h3>
                         <hr/>
                         <center>
-                            <form action="update.php" method="post" class="profilesetting">
+                            <form action="update.php" method="post">
                                 <div class="row">
                                     <div class="col-xs-4 col-md-4 col-lg-4">
                                         <label>First Name</label>
