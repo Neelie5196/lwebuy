@@ -99,3 +99,44 @@ body {
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
+.udashrow1 {
+    margin: 10px;
+    background: #e0f0c1;
+    border-radius: 5px;
+    color: #1b6430;
+}
+
+.udashrow1:hover {
+    box-shadow: -5px 5px 5px #e6e6e6;
+}
+
+.udashrow1box1 {
+    border-top: solid 1px #b3b3b3;
+    padding: 10px 25px;
+}
+
+.udashrow1box2 {
+    border-top: solid 1px #b3b3b3;
+    border-left: solid 1px #b3b3b3;
+    padding: 10px 25px;
+}
+
+.udashrow2 {
+    margin: 10px;
+    background: #e0f0c1;
+    border-radius: 5px;
+    color: #1b6430;
+}
+
+.warehousedetr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.warehousedetfield {
+    width: 100%;
+    background: #fff;
+    border-radius: 5px;
+    border-style: none;
+}

@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2017 at 09:54 AM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Oct 07, 2017 at 05:52 PM
+-- Server version: 10.1.25-MariaDB
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -82,6 +84,13 @@ CREATE TABLE `credit` (
   `status` varchar(20) NOT NULL,
   `reference_code` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `credit`
+--
+
+INSERT INTO `credit` (`c_id`, `user_id`, `datetime`, `package`, `amount`, `status`, `reference_code`) VALUES
+(1, 10, '2017-10-07 07:58:21', '', '0.00', '', 0);
 
 -- --------------------------------------------------------
 
@@ -172,9 +181,9 @@ CREATE TABLE `order_list` (
 --
 
 INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VALUES
-(2, 4, 'Pending', '2017-10-05 07:39:32', NULL),
-(3, 4, 'Pending', '2017-10-05 07:40:27', NULL),
-(4, 4, 'Success', '2017-10-05 07:41:33', '219.00');
+(2, 10, 'pending', '2017-10-07 10:12:44', NULL),
+(3, 10, 'purchased', '2017-10-07 10:46:38', NULL),
+(4, 10, 'received', '2017-10-07 10:46:27', '219.00');
 
 -- --------------------------------------------------------
 
@@ -201,8 +210,17 @@ CREATE TABLE `payment` (
 CREATE TABLE `shipping` (
   `s_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `tracking_code` varchar(20) NOT NULL
+  `tracking_code` varchar(20) NOT NULL,
+  `status` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `shipping`
+--
+
+INSERT INTO `shipping` (`s_id`, `user_id`, `tracking_code`, `status`) VALUES
+(1, 10, 'ASFLF214', 'pending'),
+(2, 10, 'SGLH12H3', 'proceeded');
 
 -- --------------------------------------------------------
 
@@ -251,7 +269,8 @@ INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`
 (2, 'qwe', 'asdasd', '12334123', 'adsasd', 'ADXas', 'customer'),
 (3, '123', '123', NULL, '123@d.com', '123', 'admin'),
 (4, '234', '234', '2332', '234@s.com', '234', 'customer'),
-(5, '678', '8876', '23525241', 'sdf@gmail.com', '11', 'staff');
+(5, '678', '8876', '23525241', 'sdf@gmail.com', '11', 'staff'),
+(10, '51', '96', NULL, '5196@email.com', '5106', 'customer');
 
 -- --------------------------------------------------------
 
@@ -274,8 +293,8 @@ CREATE TABLE `warehouse` (
 --
 
 INSERT INTO `warehouse` (`wh_id`, `station_code`, `station_description`, `country_code`, `country_description`, `company_name`, `station_name`) VALUES
-(4, 'SZX', 'SHENZHEN, CHINA, PEOPLE REPUBLIC', 'CN', 'CHINA, PEOPLE REPUBLIC', 'LOGISTICS WORLDWIDE EXPRESS (SHENZHEN)', 'SHENZHEN, CHINA, PEOPLE REPUBLIC'),
-(5, 'HKG', 'HONG KONG, HONGKONG', 'HK', 'HONGKONG', 'LOGISTICS WORLDWIDE EXPRESS (HK) LTD', 'HONG KONG, HONGKONG');
+(0, 'SZX', 'SHENZHEN, CHINA, PEOPLE REPUBLIC', 'CN', 'CHINA, PEOPLE REPUBLIC', 'LOGISTICS WORLDWIDE EXPRESS (SHENZHEN)', 'SHENZHEN, CHINA, PEOPLE REPUBLIC'),
+(1, 'HKG', 'HONG KONG, HONGKONG', 'HK', 'HONGKONG', 'LOGISTICS WORLDWIDE EXPRESS (HK) LTD', 'HONG KONG, HONGKONG');
 
 -- --------------------------------------------------------
 
@@ -294,7 +313,7 @@ CREATE TABLE `work_station` (
 --
 
 INSERT INTO `work_station` (`ws_id`, `user_id`, `wh_id`) VALUES
-(1, 3, 5);
+(1, 3, 1);
 
 --
 -- Indexes for dumped tables
@@ -412,7 +431,7 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `credit`
 --
 ALTER TABLE `credit`
-  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `inbox`
 --
@@ -447,7 +466,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `track_detail`
 --
@@ -462,7 +481,7 @@ ALTER TABLE `track_summary`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
@@ -489,6 +508,7 @@ ALTER TABLE `order_list`
 ALTER TABLE `work_station`
   ADD CONSTRAINT `work_station_ibfk_1` FOREIGN KEY (`wh_id`) REFERENCES `warehouse` (`wh_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `work_station_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
