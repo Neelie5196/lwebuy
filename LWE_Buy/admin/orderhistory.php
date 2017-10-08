@@ -5,7 +5,9 @@ session_start();
 
 $orderhistoryQuery = $db->prepare("
     SELECT *
-    FROM order_list
+    FROM order_list ol
+    JOIN users us
+    ON us.user_id = ol.user_id
     WHERE status = 'Received'
     ORDER BY datetime desc
 ");
@@ -58,6 +60,7 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                             <thead>
                                 <tr>
                                     <th>Order#</th>
+                                    <th>Name</th>
                                     <th>Placed on</th>
                                     <th>Total (RM)</th>
                                     <th>Status</th>
@@ -67,6 +70,7 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                             <tbody class="order">
                                 <tr>
                                     <td><?php echo $order['ol_id']; ?></td>
+                                    <td><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
                                     <td><?php echo $order['datetime']; ?></td>
                                     <td><?php echo $order['price']; ?></td>
                                     <td><?php echo $order['status']; ?></td>

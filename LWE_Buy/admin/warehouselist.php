@@ -63,12 +63,12 @@ $warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
                                 <thead>
                                     <tr>
                                         <th width="2%">#</th>
-                                        <th width="9%">Station Code</th>
+                                        <th width="5%">Station Code</th>
                                         <th width="20%">Station Description</th>
-                                        <th width="9%">Country Code</th>
+                                        <th width="5%">Country Code</th>
                                         <th width="20%">Country Description</th>
-                                        <th width="20%">Company Name</th>
-                                        <th width="20%">Station Name</th>
+                                        <th width="24%">Company Name</th>
+                                        <th width="24%">Station Name</th>
                                     </tr>
                                 </thead>
                                 <?php foreach($warehouselist as $warehouse): 
@@ -87,6 +87,7 @@ $warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
                                         <td><?php echo $warehouse['company_name']; ?></td>
                                         <td><?php echo $warehouse['station_name']; ?></td>
                                         <td><a href="warehouseview.php?wh_id=<?php echo $warehouse['wh_id'] ?>&station=<?php echo $warehouse['station_name']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td><a href="editwarehouse.php?wh_id=<?php echo $warehouse['wh_id']; ?>" class="btn btn-xs btn-warning">Edit</a></td>
                                         <td><a href="delete.php?wh_id=<?php echo $warehouse['wh_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
                                     </tr>
                                 </tbody>
