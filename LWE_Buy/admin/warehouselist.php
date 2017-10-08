@@ -86,7 +86,7 @@ $warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
                                         <td><?php echo $warehouse['country_description']; ?></td>
                                         <td><?php echo $warehouse['company_name']; ?></td>
                                         <td><?php echo $warehouse['station_name']; ?></td>
-                                        <td><a href="#" class="btn btn-xs btn-info">View</a></td>
+                                        <td><a href="warehouseview.php?wh_id=<?php echo $warehouse['wh_id'] ?>&station=<?php echo $warehouse['station_name']; ?>" class="btn btn-xs btn-info">View</a></td>
                                         <td><a href="delete.php?wh_id=<?php echo $warehouse['wh_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
                                     </tr>
                                 </tbody>

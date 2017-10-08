@@ -129,7 +129,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                                         <label>New Password</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="np" id="np" class="form-control" style="border-radius: 30px; width: 50%;float: left;">
+                                        <input type="password" name="np" id="np" class="form-control" style="border-radius: 30px; width: 50%;float: left;">
                                     </div>
                                 </div>
                                 <br/>
@@ -138,7 +138,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                                         <label>Confirm Password</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="cnp" id="cnp" class="form-control" style="border-radius: 30px; width: 50%;float: left;">
+                                        <input type="password" name="cnp" id="cnp" class="form-control" style="border-radius: 30px; width: 50%;float: left;">
                                     </div>
                                 </div>
                                 <br/>

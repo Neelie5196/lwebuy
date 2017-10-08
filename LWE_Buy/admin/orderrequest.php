@@ -3,18 +3,18 @@
 require_once '../connection/config.php';
 session_start();
 
-$orderhistoryQuery = $db->prepare("
+$purchaselistQuery = $db->prepare("
     SELECT *
     FROM order_list
-    WHERE status = 'Received'
+    WHERE status = 'Pending'
     ORDER BY datetime desc
 ");
 
-$orderhistoryQuery->execute([
+$purchaselistQuery->execute([
     'user_id' => $_SESSION['user_id']
 ]);
 
-$orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
+$purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
 
 ?>
 
@@ -53,8 +53,8 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <?php if(!empty($orderhistory)): ?>
-                        <table class="table thead-bordered table-hover orderhistory" style="width:80%">
+                        <?php if(!empty($purchaselist)): ?>
+                        <table class="table thead-bordered table-hover purchaselist" style="width:80%">
                             <thead>
                                 <tr>
                                     <th>Order#</th>
@@ -63,14 +63,14 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <?php foreach($orderhistory as $order): ?>
-                            <tbody class="order">
+                            <?php foreach($purchaselist as $purchase): ?>
+                            <tbody class="purchase">
                                 <tr>
-                                    <td><?php echo $order['ol_id']; ?></td>
-                                    <td><?php echo $order['datetime']; ?></td>
-                                    <td><?php echo $order['price']; ?></td>
-                                    <td><?php echo $order['status']; ?></td>
-                                    <td><a href="orderhview.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                    <td><?php echo $purchase['ol_id']; ?></td>
+                                    <td><?php echo $purchase['datetime']; ?></td>
+                                    <td><?php echo $purchase['price']; ?></td>
+                                    <td><?php echo $purchase['status']; ?></td>
+                                    <td><a href="purchaseview.php?order_id=<?php echo $purchase['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                 </tr>
                             </tbody>
                             <?php endforeach; ?>

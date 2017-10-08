@@ -3,6 +3,18 @@
 require_once '../connection/config.php';
 session_start();
 
+$warehouselistQuery = $db->prepare("
+    SELECT *
+    FROM warehouse
+
+");
+
+$warehouselistQuery->execute([
+    'user_id' => $_SESSION['user_id']
+]);
+
+$warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
+
 ?>
 
 <!DOCTYPE html>
@@ -32,24 +44,119 @@ session_start();
             <?php include_once('nav.php')?>
         </div>
 
-        <center>
+        <section class = "content">
             <div class="container">
-                <div class="row" style="padding-top: 50px; padding-bottom: 25px;">
+                <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <h2>Create New</h2>
+                        <h3>User Information</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
+                        <form action="addusers.php" method="post">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <label>First name</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <input type="text" name="fname" class="form-control" style="border-radius: 30px; float: left;" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <label>Last name</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <input type="text" name="lname" class="form-control" style="border-radius: 30px; float: left;" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <label>Contact Number</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <input type="tel" name="contact" class="form-control" style="border-radius: 30px; float: left;" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <input type="email" name="email" class="form-control" style="border-radius: 30px; float: left;" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <label>Password</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <input type="password" name="password" class="form-control" style="border-radius: 30px; float: left;" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <label>Type</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <select name="type" class="form-control" style="border-radius: 30px;">
+                                              <option selected>admin</option>
+                                              <option>staff</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <label>Work Station</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <select name="workstation" class="form-control" style="border-radius: 30px;">
+                                                <?php if(!empty($warehouselist)): ?>
+                                                    <?php foreach($warehouselist as $warehouse): ?>
+                                                        <option value="<?php echo $warehouse['wh_id']; ?>" selected>
+                                                            <?php echo $warehouse['station_name']; ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                <?php else: ?>
+                                                    <p>There is no warehouse records.</p>
+                                                <?php endif; ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-success" name="new-users" value="Create" style="float: right;">
+                        </form>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <section class = "content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                                                        
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </center>
     </body>
 </html>

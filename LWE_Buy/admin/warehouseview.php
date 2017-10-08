@@ -3,19 +3,21 @@
 require_once '../connection/config.php';
 session_start();
 $counter = 0; 
-$userslistQuery = $db->prepare("
-    SELECT *
-    FROM users
-    WHERE type = 'admin'
 
+$wsinfoQuery = $db->prepare("
+    SELECT *
+    FROM users us
+    JOIN work_station ws
+    ON ws.user_id = us.user_id
+    WHERE wh_id=:wh_id
+    
 ");
 
-$userslistQuery->execute([
-    'user_id' => $_SESSION['user_id']
+$wsinfoQuery->execute([
+    'wh_id' => $_GET['wh_id']
 ]);
 
-$userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
-
+$wsinfo = $wsinfoQuery->rowCount() ? $wsinfoQuery : [];
 
 ?>
 
@@ -50,7 +52,7 @@ $userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
             <div class="container">
                 <div class="row" style="padding-top: 50px; padding-bottom: 25px;">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <h2>Admin List</h2>
+                        <h2><?php echo $_GET['station']; ?></h2>
                     </div>
                 </div>
             </div>
@@ -59,8 +61,8 @@ $userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($userslist)): ?>
-                            <table class="table thead-bordered table-hover userslist">
+                            <?php if(!empty($wsinfo)): ?>
+                            <table class="table thead-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -70,29 +72,29 @@ $userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
                                         <th>Contact</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($userslist as $users): 
+                                <?php foreach($wsinfo as $ws): 
                                 {
                                     $counter++;
                                 }
                                 
                                 ?>
-                                <tbody class="users">
+                                <tbody>
                                     <tr>
-                                        <td><?php echo $counter; ?></td>
-                                        <td width="20%"><?php echo $users['fname']; ?></td>
-                                        <td width="20%"><?php echo $users['lname']; ?></td>
-                                        <td width="20%"><?php echo $users['email']; ?></td>
-                                        <td width="20%"><?php echo $users['contact']; ?></td>
-                                        <td width="20%"><a href="adminsview.php?users=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-info">View Detail</a> <a href="editusers.php?users=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-warning">Edit</a> <a href="delete1.php?user_id=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
+                                        <td width="4%"><?php echo $counter; ?></td>
+                                        <td width="24%"><?php echo $ws['fname']; ?></td>
+                                        <td width="24%"><?php echo $ws['lname']; ?></td>
+                                        <td width="24%"><?php echo $ws['email']; ?></td>
+                                        <td width="24%"><?php echo $ws['contact']; ?></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
                             </table>
                             <?php else: ?>
-                                <p>There is no admin users.</p>
+                                <p>There is no admin/staff in this station.</p>
                             <?php endif; ?>      
                         </div>
                     </div>
+                    <center><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>
                 </div>
             </section>
         </center>
