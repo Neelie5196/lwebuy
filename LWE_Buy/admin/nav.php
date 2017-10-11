@@ -17,7 +17,7 @@
                     <li><a href="#">New Shipping</a></li>
                     <li><a href="#">Updata Status</a></li>
                     <li><a href="#">Shipping Request</a></li>
-                    <li><a href="#">Shipping Price</a></li>
+                    <li><a href="conprice.php">Shipping Price</a></li>
                 </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Warehouse <span class="caret"></span></a>

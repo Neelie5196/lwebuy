@@ -500,11 +500,71 @@ session_start();
                 <div class="row udashrow2">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <!-- shipping price -->
-                        <h3>Shipping price calculator</h3>
-                        
+                        <h3>Shipping price calculator</h3> 
                         <div class="row">
                             <div class="col-xs-12 col-md-12 col-lg-12">
-                                calculator here
+<form class="center" method="post">
+									<table class="table table-bordered">
+									<tr>
+										<td><label for="from">From</label></td>
+										<td><select name="from">
+											<option value="west">west</option>
+											<option value="east">east</option>
+										</select></td>
+									</tr>
+									
+									<tr>
+										<td><label>Weight</label></td>
+										<td><input type="number" name="camount" required=""/></td>
+									</tr>
+									<tr>
+									<td><label>Answer</label></td>
+									<td><?php 
+									if (isset($_POST['convert'])) {
+										$from=$_POST['from'];
+										$amount=$_POST['camount'];
+
+										if($amount==''||is_int($amount))
+										{
+											echo "Please Enter Valid Amount";
+											exit();
+										}
+
+										echo '<div class="center">';
+										if($from=='west'){
+											if($amount >= 10){
+												$result=$amount*4.5;
+												echo "RM".$result;
+											}
+											else if($amount < 1.5){
+												$result=$amount*6;
+												echo "RM".$result;
+											}
+											else if($amount >1.5 && $amount <3.5){
+												$result=$amount*5.5;
+												echo "RM".$result;
+											}
+											else if($amount >4.0 && $amount <10){
+												$result=$amount*5;
+												echo "RM".$result;
+											}
+									
+										}
+										else if ($from=='east') {
+											if($amount>=1){
+												$result=$amount*19;
+												echo "RM".$result;
+											}
+											
+				
+										}
+											echo '</div>';
+										}
+									 ?></td>
+									</tr>
+									</table>
+									<input type="submit" value="Convert" name="convert"/>
+									</form>
                             </div>
                         </div>
                     </div>
@@ -516,10 +576,98 @@ session_start();
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <!-- currency -->
                         <h3>Currency calculator</h3>
-                        
                         <div class="row">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                calculator here
+                            <div class="col-xs-6 col-md-6 col-lg-6">
+									<form class="center" method="post">
+									<table class="table table-bordered">
+									<tr>
+										<td><label for="from">From</label></td>
+										<td><select name="from">
+											<option value="myr">MYR</option>
+											<option value="rmb">RMB</option>
+											<option value="usd">USD</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td><label for="to">To</label></td>
+										<td><select name="to">
+											<option value="myr">MYR</option>
+											<option value="rmb">RMB</option>
+											<option value="usd">USD</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td><label>Enter Amount</label></td>
+										<td><input type="number" name="camount" required=""/></td>
+									</tr>
+									<tr>
+									<td><label>Answer</label></td>
+									<td><?php 
+									if (isset($_POST['convert'])) {
+										$from=$_POST['from'];
+										$to=$_POST['to'];
+										$amount=$_POST['camount'];
+
+										if($amount==''||is_int($amount))
+										{
+											echo "Please Enter Valid Amount";
+											exit();
+										}
+
+										echo '<div class="center">';
+										if($from=='myr'){
+											if($to=='myr'){
+												$result=$amount*1;
+												echo "MYR to   ".$result." MYR";
+											}
+											else if ($to=='rmb') {
+												$result=$amount*1.57;
+												echo "MYR==>   ".$result." RMB";
+											}
+											else if ($to=='usd') {
+												$result=$amount*0.24;
+												echo "MYR==>   ".$result." USD";
+											}
+										}
+										else if ($from=='rmb') {
+											if($to=='myr'){
+												$result=$amount*0.64;
+												echo "RMB==>   ".$result." MYR";
+											}
+											else if ($to=='rmb') {
+												$result=$amount*1;
+												echo "RMB==>   ".$result." RMB";
+											}
+											else if ($to=='usd') {
+												$result=$amount*0.15;
+												echo "RMB==>   ".$result." USD";
+											}
+										}
+										else if ($from=='usd') {
+											if($to=='usd'){
+												$result=$amount*1;
+												echo "USD==>   ".$result." USD";
+											}
+											else if ($to=='rmb') {
+												$result=$amount*6.65;
+												echo "USD==>   ".$result." RMB";
+											}
+											else if ($to=='usd') {
+												$result=$amount*4.24;
+												echo "USD==>   ".$result." MYR";
+											}
+											}
+											echo '</div>';
+										}
+									 ?></td>
+									</tr>
+									</table>
+									<input type="submit" value="Convert" name="convert"/>
+									</form>
+								</body>
+								</html>
+
+								
                             </div>
                         </div>
                     </div>
