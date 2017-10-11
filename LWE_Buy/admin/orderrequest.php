@@ -8,7 +8,7 @@ $orderrequestQuery = $db->prepare("
     FROM order_list ol
     JOIN users us
     ON us.user_id = ol.user_id
-    WHERE status = 'Pending'
+    WHERE status = 'request'
     ORDER BY datetime desc
 ");
 
@@ -62,7 +62,6 @@ $orderrequest = $orderrequestQuery->rowCount() ? $orderrequestQuery : [];
                                     <th>Order#</th>
                                     <th>Name</th>
                                     <th>Placed on</th>
-                                    <th>Total (RM)</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -72,9 +71,8 @@ $orderrequest = $orderrequestQuery->rowCount() ? $orderrequestQuery : [];
                                     <td><?php echo $order['ol_id']; ?></td>
                                     <td><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
                                     <td><?php echo $order['datetime']; ?></td>
-                                    <td><?php echo $order['price']; ?></td>
                                     <td><?php echo $order['status']; ?></td>
-                                    <td><a href="#" class="btn btn-xs btn-info">View</a></td>
+                                    <td><a href="orderview.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                 </tr>
                             </tbody>
                             <?php endforeach; ?>
