@@ -140,3 +140,10 @@ body {
     border-radius: 5px;
     border-style: none;
 }
+
+.btntopup {
+    margin-top: -6px;
+    margin-bottom: -14px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
