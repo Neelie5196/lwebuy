@@ -106,7 +106,6 @@ $purchase4list = $purchase4listQuery->rowCount() ? $purchase4listQuery : [];
                                     <tr>
                                         <th>Order#</th>
                                         <th>Placed on</th>
-                                        <th>Total (RM)</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -114,9 +113,8 @@ $purchase4list = $purchase4listQuery->rowCount() ? $purchase4listQuery : [];
                                 <tbody>
                                     <tr>
                                         <td width="5%"><?php echo $purchase1['ol_id']; ?></td>
-                                        <td width="40%"><?php echo $purchase1['datetime']; ?></td>
-                                        <td width="20%"><?php echo $purchase1['price']; ?></td>
-                                        <td width="20%"><?php echo $purchase1['status']; ?></td>
+                                        <td width="50%"><?php echo $purchase1['datetime']; ?></td>
+                                        <td width="30%"><?php echo $purchase1['status']; ?></td>
                                         <td width="15%"><a href="purchaseview.php?order_id=<?php echo $purchase1['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
@@ -159,7 +157,7 @@ $purchase4list = $purchase4listQuery->rowCount() ? $purchase4listQuery : [];
                                         <td width="40%"><?php echo $purchase2['datetime']; ?></td>
                                         <td width="20%"><?php echo $purchase2['price']; ?></td>
                                         <td width="20%"><?php echo $purchase2['status']; ?></td>
-                                        <td width="15%"><a href="purchaseview.php?order_id=<?php echo $purchase2['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="15%"><a href="purchasehview.php?order_id=<?php echo $purchase2['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
@@ -201,7 +199,7 @@ $purchase4list = $purchase4listQuery->rowCount() ? $purchase4listQuery : [];
                                         <td width="40%"><?php echo $purchase3['datetime']; ?></td>
                                         <td width="20%"><?php echo $purchase3['price']; ?></td>
                                         <td width="20%"><?php echo $purchase3['status']; ?></td>
-                                        <td width="15%"><a href="purchaseview.php?order_id=<?php echo $purchase3['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="15%"><a href="purchasehview.php?order_id=<?php echo $purchase3['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
@@ -245,7 +243,7 @@ $purchase4list = $purchase4listQuery->rowCount() ? $purchase4listQuery : [];
                                         <td width="15%"><?php echo $purchase4['price']; ?></td>
                                         <td width="15%"><?php echo $purchase4['status']; ?></td>
                                         <td width="10%"><?php echo $purchase4['order_code']; ?></td>
-                                        <td width="15%"><a href="purchaseview.php?order_id=<?php echo $purchase4['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="15%"><a href="purchasehview.php?order_id=<?php echo $purchase4['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>

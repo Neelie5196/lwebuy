@@ -87,6 +87,7 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                                         <th>Name</th>
                                         <th>Placed on</th>
                                         <th>Total (RM)</th>
+                                        <th>Order Code</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -97,6 +98,7 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                                         <td><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
                                         <td><?php echo $order['datetime']; ?></td>
                                         <td><?php echo $order['price']; ?></td>
+                                        <td><?php echo $order['order_code']; ?></td>
                                         <td><?php echo $order['status']; ?></td>
                                         <td><a href="orderhview.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
@@ -131,6 +133,7 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                                         <th>Name</th>
                                         <th>Placed on</th>
                                         <th>Total (RM)</th>
+                                        <th>Order Code</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -141,6 +144,7 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                                         <td><?php echo $orders['fname']; ?> <?php echo $orders['lname']; ?></td>
                                         <td><?php echo $orders['datetime']; ?></td>
                                         <td><?php echo $orders['price']; ?></td>
+                                        <td><?php echo $orders['order_code']; ?></td>
                                         <td><?php echo $orders['status']; ?></td>
                                         <td><a href="orderhview.php?order_id=<?php echo $orders['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>

@@ -66,6 +66,7 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
                                     <th>Order#</th>
                                     <th>Placed on</th>
                                     <th>Total (RM)</th>
+                                    <th>Order Code</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -75,6 +76,7 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
                                     <td><?php echo $purchase['ol_id']; ?></td>
                                     <td><?php echo $purchase['datetime']; ?></td>
                                     <td><?php echo $purchase['price']; ?></td>
+                                    <td><?php echo $purchase['order_code']; ?></td>
                                     <td><?php echo $purchase['status']; ?></td>
                                     <td><a href="purchasehview.php?order_id=<?php echo $purchase['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                 </tr>
