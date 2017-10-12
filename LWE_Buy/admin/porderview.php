@@ -54,7 +54,7 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
             <section class = "content">
                 <div class="container">
                     <div class="row">
-                        <form action="#">
+                        <form action="proceedorder.php" method="post">
                             <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                                 <?php if(!empty($orderhistory)): ?>
                                 <table class="table thead-bordered table-hover orderhistory" style="width:100%">
@@ -100,7 +100,11 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                                 <?php
                                     }
                                 ?>
+                                <label>Placed Order Code</label>
+                                <input type="text" name="ordercode" class="form-control" placeholder="Order Code" style="border-radius: 30px; width: 30%;" required>
+                                <input type="hidden" name="order_id" class="form-control" value="<?php echo $_GET['order_id']; ?>">
                             </div>
+                            <input type="submit" name="update" class='btn btn-success' value="Update">
                             <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>
                         </form>
                     </div>

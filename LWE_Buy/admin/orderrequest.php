@@ -51,7 +51,13 @@ $orderrequest = $orderrequestQuery->rowCount() ? $orderrequestQuery : [];
                 <h2>Order Request List</h2>
                 <hr/>
             </div>
-            
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                        <strong>Order Request</strong>
+                    </div>
+                </div>
+            </div>
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
@@ -78,7 +84,7 @@ $orderrequest = $orderrequestQuery->rowCount() ? $orderrequestQuery : [];
                             <?php endforeach; ?>
                         </table>
                         <?php else: ?>
-                            <p>There is no purchase item.</p>
+                            <p>There is no order request.</p>
                         <?php endif; ?>
                     </div>
                 </div>

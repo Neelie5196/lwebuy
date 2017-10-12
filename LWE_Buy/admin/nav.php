@@ -8,7 +8,7 @@
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Order <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
                     <li><a href="orderrequest.php">Order Request</a></li>
-                    <li><a href="#">Order Pending</a></li>
+                    <li><a href="orderpending.php">Order Pending</a></li>
                     <li><a href="orderhistory.php">Order History</a></li>
                 </ul>
             </li>

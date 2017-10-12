@@ -3,36 +3,35 @@
 require_once '../connection/config.php';
 session_start();
 
-$orderhistoryQuery = $db->prepare("
+$orderrequestQuery = $db->prepare("
     SELECT *
     FROM order_list ol
     JOIN users us
     ON us.user_id = ol.user_id
-    WHERE status = 'proceed'
+    WHERE status = 'ready to pay'
     ORDER BY datetime desc
 ");
 
-$orderhistoryQuery->execute([
+$orderrequestQuery->execute([
     'user_id' => $_SESSION['user_id']
 ]);
 
-$orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
+$orderrequest = $orderrequestQuery->rowCount() ? $orderrequestQuery : [];
 
-$ordershistoryQuery = $db->prepare("
+$ordersrequestQuery = $db->prepare("
     SELECT *
     FROM order_list ol
     JOIN users us
     ON us.user_id = ol.user_id
-    WHERE status = 'received'
+    WHERE status = 'paid'
     ORDER BY datetime desc
 ");
 
-$ordershistoryQuery->execute([
+$ordersrequestQuery->execute([
     'user_id' => $_SESSION['user_id']
 ]);
 
-$ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
-
+$ordersrequest = $ordersrequestQuery->rowCount() ? $ordersrequestQuery : [];
 
 ?>
 
@@ -64,23 +63,24 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
             </div>
             
             <div class="container">
-                <h2>Order History List</h2>
+                <h2>Order Pending List</h2>
                 <hr/>
             </div>
+            
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
-                        <strong>Proceed</strong>
-                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse">More Order Details</button>
+                        <strong>Ready to Pay</strong>
+                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse1">More Order Details</button>
                     </div>
                 </div>
             </div>
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
-                        <div class="span12 collapse" id="collapse">
-                            <?php if(!empty($orderhistory)): ?>
-                            <table class="table thead-bordered table-hover orderhistory" style="width:80%">
+                        <div class="span12 collapse" id="collapse1">
+                            <?php if(!empty($orderrequest)): ?>
+                            <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
                                         <th>Order#</th>
@@ -90,8 +90,8 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($orderhistory as $order): ?>
-                                <tbody class="order">
+                                <?php foreach($orderrequest as $order): ?>
+                                <tbody>
                                     <tr>
                                         <td><?php echo $order['ol_id']; ?></td>
                                         <td><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
@@ -104,7 +104,7 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                                 <?php endforeach; ?>
                             </table>
                             <?php else: ?>
-                                <p>There is no order histpry.</p>
+                                <p>There is no order pending.</p>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -114,17 +114,17 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
-                        <strong>Received</strong>
-                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse1">More Order Details</button>
+                        <strong>Ready to Proceed</strong>
+                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse">More Order Details</button>
                     </div>
                 </div>
             </div>
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
-                        <div class="span12 collapse" id="collapse1">
-                            <?php if(!empty($ordershistory)): ?>
-                            <table class="table thead-bordered table-hover orderhistory" style="width:80%">
+                        <div class="span12 collapse" id="collapse">
+                            <?php if(!empty($ordersrequest)): ?>
+                            <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
                                         <th>Order#</th>
@@ -134,21 +134,21 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($ordershistory as $orders): ?>
-                                <tbody class="order">
+                                <?php foreach($ordersrequest as $orders): ?>
+                                <tbody>
                                     <tr>
                                         <td><?php echo $orders['ol_id']; ?></td>
                                         <td><?php echo $orders['fname']; ?> <?php echo $orders['lname']; ?></td>
                                         <td><?php echo $orders['datetime']; ?></td>
                                         <td><?php echo $orders['price']; ?></td>
                                         <td><?php echo $orders['status']; ?></td>
-                                        <td><a href="orderhview.php?order_id=<?php echo $orders['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td><a href="porderview.php?order_id=<?php echo $orders['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
                             </table>
                             <?php else: ?>
-                                <p>There is no order histpry.</p>
+                                <p>There is no order pending.</p>
                             <?php endif; ?>
                         </div>
                     </div>

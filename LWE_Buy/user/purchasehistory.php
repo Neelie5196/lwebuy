@@ -6,7 +6,7 @@ session_start();
 $purchaselistQuery = $db->prepare("
     SELECT *
     FROM order_list
-    WHERE user_id=:user_id AND status = 'Success'
+    WHERE user_id=:user_id AND status = 'received'
     ORDER BY datetime desc
 ");
 
@@ -49,7 +49,13 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
                 <h2>Purchase List</h2>
                 <hr/>
             </div>
-            
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                        <strong>Received</strong>
+                    </div>
+                </div>
+            </div>
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">

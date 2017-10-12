@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2017 at 05:52 PM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Generation Time: Oct 12, 2017 at 08:24 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -21,6 +19,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `lwe`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `abx`
+--
+
+CREATE TABLE `abx` (
+  `id` int(11) NOT NULL,
+  `weight` varchar(25) NOT NULL,
+  `price` varchar(25) NOT NULL,
+  `place` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `abx`
+--
+
+INSERT INTO `abx` (`id`, `weight`, `price`, `place`) VALUES
+(1, 'First 1 KG', 'RM19', 'east'),
+(2, '1.5 - 10 KG', 'RM8/ 0.5 KG', 'east'),
+(3, 'above 10 KG', 'RM7.5 / 0.5 KG', 'east');
 
 -- --------------------------------------------------------
 
@@ -156,11 +176,13 @@ CREATE TABLE `order_item` (
 --
 
 INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`) VALUES
-(85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', NULL),
-(86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', NULL),
+(85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '12.00'),
+(86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00'),
 (87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', NULL),
 (88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', NULL),
-(89, 4, '4', '4', '4', 4, '444', '219.00');
+(89, 4, '4', '4', '4', 4, '444', '219.00'),
+(90, 9, '4', '4', '4', 4, '444', '219.00'),
+(91, 10, '4', '4', '4', 4, '444', '219.00');
 
 -- --------------------------------------------------------
 
@@ -173,17 +195,42 @@ CREATE TABLE `order_list` (
   `user_id` int(11) NOT NULL,
   `status` varchar(15) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `price` decimal(10,2) DEFAULT NULL
+  `price` decimal(10,2) DEFAULT NULL,
+  `order_code` int(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_list`
 --
 
-INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VALUES
-(2, 10, 'pending', '2017-10-07 10:12:44', NULL),
-(3, 10, 'purchased', '2017-10-07 10:46:38', NULL),
-(4, 10, 'received', '2017-10-07 10:46:27', '219.00');
+INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`, `order_code`) VALUES
+(2, 10, 'Request', '2017-10-12 02:47:02', '35.00', NULL),
+(3, 10, 'ready to pay', '2017-10-12 02:31:29', NULL, NULL),
+(4, 10, 'paid', '2017-10-12 06:16:44', '23.00', 123),
+(9, 10, 'proceed', '2017-10-12 06:17:21', NULL, 123),
+(10, 10, 'received', '2017-10-12 02:34:50', '219.00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `parcel`
+--
+
+CREATE TABLE `parcel` (
+  `id` int(11) NOT NULL,
+  `fromsender` text NOT NULL,
+  `toreceiver` text NOT NULL,
+  `content` text NOT NULL,
+  `value` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `parcel`
+--
+
+INSERT INTO `parcel` (`id`, `fromsender`, `toreceiver`, `content`, `value`) VALUES
+(2, '', '', 'yoyo', 'rm100'),
+(3, 'me', 'yoy', 'yoyo', 'rm100');
 
 -- --------------------------------------------------------
 
@@ -204,6 +251,32 @@ CREATE TABLE `payment` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `poslaju`
+--
+
+CREATE TABLE `poslaju` (
+  `id` int(11) NOT NULL,
+  `weight` varchar(25) NOT NULL,
+  `price` varchar(25) NOT NULL,
+  `place` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `poslaju`
+--
+
+INSERT INTO `poslaju` (`id`, `weight`, `price`, `place`) VALUES
+(1, '0.5 - 1.5 KG', 'RM6 / 0.5 KG', 'west'),
+(2, '2.0 - 3.5 KG', 'RM5.5 / 0.5 KG', 'west'),
+(3, '4.0 - 10 KG', 'RM5.0 / 0.5 KG', 'west'),
+(4, 'above 10 KG', 'RM4.5 / 0.5 KG', 'west'),
+(5, 'First 1 KG', 'RM19', 'east'),
+(6, '1.5 - 10 KG', 'RM8 / 0.5 KG', 'east'),
+(7, 'above 10 KG', 'RM7.5 / 0.5 KG', 'east');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `shipping`
 --
 
@@ -211,6 +284,10 @@ CREATE TABLE `shipping` (
   `s_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `tracking_code` varchar(20) NOT NULL,
+  `order_number` int(11) NOT NULL,
+  `ship_to` varchar(25) NOT NULL,
+  `courier` varchar(25) NOT NULL,
+  `order_date` datetime NOT NULL,
   `status` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -218,9 +295,32 @@ CREATE TABLE `shipping` (
 -- Dumping data for table `shipping`
 --
 
-INSERT INTO `shipping` (`s_id`, `user_id`, `tracking_code`, `status`) VALUES
-(1, 10, 'ASFLF214', 'pending'),
-(2, 10, 'SGLH12H3', 'proceeded');
+INSERT INTO `shipping` (`s_id`, `user_id`, `tracking_code`, `order_number`, `ship_to`, `courier`, `order_date`, `status`) VALUES
+(1, 10, 'ASFLF214', 112214141, 'house', 'Skynet', '2017-10-04 06:12:29', 'pending'),
+(2, 10, 'SGLH12H3', 0, '', '', '0000-00-00 00:00:00', 'proceeded');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `skynet`
+--
+
+CREATE TABLE `skynet` (
+  `id` int(11) NOT NULL,
+  `weight` varchar(25) NOT NULL,
+  `price` varchar(25) NOT NULL,
+  `place` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `skynet`
+--
+
+INSERT INTO `skynet` (`id`, `weight`, `price`, `place`) VALUES
+(1, '0.5 - 2.0 KG', 'RM6 / 0.5 KG', 'west'),
+(2, '2.5 KG', 'RM5.5 / 0.5 KG', 'west'),
+(3, '3.0 - 10 KG', 'RM5 / 0.5 KG', 'west'),
+(4, 'above 10 KG', 'RM4.5 / 0.5 KG', 'west');
 
 -- --------------------------------------------------------
 
@@ -270,7 +370,8 @@ INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`
 (3, '123', '123', NULL, '123@d.com', '123', 'admin'),
 (4, '234', '234', '2332', '234@s.com', '234', 'customer'),
 (5, '678', '8876', '23525241', 'sdf@gmail.com', '11', 'staff'),
-(10, '51', '96', NULL, '5196@email.com', '5106', 'customer');
+(10, '51', '96', NULL, '5196@email.com', '5106', 'customer'),
+(11, 'hii', 'hii', '1131', 'sam@email.com', '123', 'admin');
 
 -- --------------------------------------------------------
 
@@ -318,6 +419,12 @@ INSERT INTO `work_station` (`ws_id`, `user_id`, `wh_id`) VALUES
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `abx`
+--
+ALTER TABLE `abx`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `address`
@@ -370,16 +477,34 @@ ALTER TABLE `order_list`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `parcel`
+--
+ALTER TABLE `parcel`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `payment`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`p_id`);
 
 --
+-- Indexes for table `poslaju`
+--
+ALTER TABLE `poslaju`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `shipping`
 --
 ALTER TABLE `shipping`
   ADD PRIMARY KEY (`s_id`);
+
+--
+-- Indexes for table `skynet`
+--
+ALTER TABLE `skynet`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `track_detail`
@@ -418,6 +543,11 @@ ALTER TABLE `work_station`
 --
 
 --
+-- AUTO_INCREMENT for table `abx`
+--
+ALTER TABLE `abx`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
@@ -451,22 +581,37 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `oi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `oi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 --
 -- AUTO_INCREMENT for table `order_list`
 --
 ALTER TABLE `order_list`
-  MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `parcel`
+--
+ALTER TABLE `parcel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
   MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `poslaju`
+--
+ALTER TABLE `poslaju`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
   MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `skynet`
+--
+ALTER TABLE `skynet`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `track_detail`
 --
@@ -481,12 +626,12 @@ ALTER TABLE `track_summary`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `work_station`
 --
@@ -508,7 +653,6 @@ ALTER TABLE `order_list`
 ALTER TABLE `work_station`
   ADD CONSTRAINT `work_station_ibfk_1` FOREIGN KEY (`wh_id`) REFERENCES `warehouse` (`wh_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `work_station_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
