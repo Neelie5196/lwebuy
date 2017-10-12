@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: Oct 12, 2017 at 08:24 AM
+=======
+-- Generation Time: Oct 11, 2017 at 02:23 PM
+>>>>>>> 3144ba56284c3a1a96838e77705ec4c38530e882
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -203,12 +207,20 @@ CREATE TABLE `order_list` (
 -- Dumping data for table `order_list`
 --
 
+<<<<<<< HEAD
 INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`, `order_code`) VALUES
 (2, 10, 'Request', '2017-10-12 02:47:02', '35.00', NULL),
 (3, 10, 'ready to pay', '2017-10-12 02:31:29', NULL, NULL),
 (4, 10, 'paid', '2017-10-12 06:16:44', '23.00', 123),
 (9, 10, 'proceed', '2017-10-12 06:17:21', NULL, 123),
 (10, 10, 'received', '2017-10-12 02:34:50', '219.00', NULL);
+=======
+INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VALUES
+(2, 10, 'Request', '2017-10-11 12:13:23', '35.00'),
+(3, 10, 'pending', '2017-10-11 12:12:10', NULL),
+(4, 10, 'received', '2017-10-07 10:46:27', '219.00'),
+(6, 10, 'Ready to Pay', '2017-10-11 12:13:23', '35.00');
+>>>>>>> 3144ba56284c3a1a96838e77705ec4c38530e882
 
 -- --------------------------------------------------------
 
@@ -586,7 +598,11 @@ ALTER TABLE `order_item`
 -- AUTO_INCREMENT for table `order_list`
 --
 ALTER TABLE `order_list`
+<<<<<<< HEAD
   MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+=======
+  MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+>>>>>>> 3144ba56284c3a1a96838e77705ec4c38530e882
 --
 -- AUTO_INCREMENT for table `parcel`
 --
