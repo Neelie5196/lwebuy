@@ -108,7 +108,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                     }
                                 ?>
                             </div>
-                            <a href="purchasehistory.php" class="btn btn-default" name="back">Back</a>
+                            <a href="javascript:history.go(-1)" class="btn btn-default" name="back">Back</a>
                         </form>
                     </div>
                 </div>
