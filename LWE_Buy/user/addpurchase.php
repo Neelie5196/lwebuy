@@ -42,7 +42,7 @@ session_start();
                         
                             $order_id = $_POST['orderId'];
                             $user_id = $_SESSION['user_id'];
-                            $status = "Pending";
+                            $status = "Request";
 
                             $sql = "INSERT INTO order_list (ol_id, user_id, status, datetime) VALUES ('$order_id','$user_id','$status',NOW())";
                             mysql_query($sql);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2017 at 12:29 PM
+-- Generation Time: Oct 15, 2017 at 12:52 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -172,21 +172,22 @@ CREATE TABLE `order_item` (
   `type` varchar(50) NOT NULL,
   `unit` int(15) NOT NULL,
   `remark` varchar(255) DEFAULT NULL,
-  `price` decimal(10,2) DEFAULT NULL
+  `price` decimal(10,2) DEFAULT NULL,
+  `status` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_item`
 --
 
-INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`) VALUES
-(85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '12.00'),
-(86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00'),
-(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00'),
-(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00'),
-(89, 4, '4', '4', '4', 4, '444', '219.00'),
-(90, 9, '4', '4', '4', 4, '444', '219.00'),
-(91, 10, '4', '4', '4', 4, '444', '219.00');
+INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`, `status`) VALUES
+(85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '12.00', ''),
+(86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00', ''),
+(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00', ''),
+(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00', ''),
+(89, 4, '4', '4', '4', 4, '444', '219.00', ''),
+(90, 9, '4', '4', '4', 4, '444', '219.00', ''),
+(91, 10, '4', '4', '4', 4, '444', '219.00', '');
 
 -- --------------------------------------------------------
 
@@ -208,11 +209,11 @@ CREATE TABLE `order_list` (
 --
 
 INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`, `order_code`) VALUES
-(2, 10, 'Request', '2017-10-12 02:47:02', '35.00', NULL),
-(3, 10, 'ready to pay', '2017-10-15 03:26:32', '35.00', NULL),
-(4, 10, 'paid', '2017-10-12 06:16:44', '23.00', 123),
-(9, 10, 'proceed', '2017-10-12 06:17:21', NULL, 123),
-(10, 10, 'received', '2017-10-12 02:34:50', '219.00', NULL);
+(2, 10, 'Request', '2017-10-15 10:44:57', '35.00', NULL),
+(3, 10, 'Ready to Pay', '2017-10-15 10:44:57', '35.00', NULL),
+(4, 10, 'Paid', '2017-10-15 10:44:57', '23.00', 123),
+(9, 10, 'Proceed', '2017-10-15 10:44:57', NULL, 123),
+(10, 10, 'Received', '2017-10-15 10:44:57', '219.00', NULL);
 
 -- --------------------------------------------------------
 

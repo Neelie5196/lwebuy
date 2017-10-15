@@ -61,7 +61,7 @@ session_start();
                                                 {
                                                     foreach($purchasesetting as $purchase)
                                                     {
-                                                        if ($purchase['status']=="pending")
+                                                        if ($purchase['status']=="Request")
                                                         {
                                                             $count += 1;
                                                         }
@@ -105,7 +105,7 @@ session_start();
                                                 {
                                                     foreach($purchasesetting as $purchase)
                                                     {
-                                                        if ($purchase['status']=="approved")
+                                                        if ($purchase['status']=="Ready to Pay")
                                                         {
                                                             $count += 1;
                                                         }
@@ -145,7 +145,7 @@ session_start();
                                                 {
                                                     foreach($purchasesetting as $purchase)
                                                     {
-                                                        if ($purchase['status']=="purchased")
+                                                        if ($purchase['status']=="Paid")
                                                         {
                                                             $count += 1;
                                                         }
@@ -170,11 +170,11 @@ session_start();
                                 <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Parcel received</p>
+                                            <p>Parcel proceed</p>
                                             
                                             <p>
                                             <?php
-                                                $purchasesettingQuery = $db->prepare("SELECT status FROM shipping WHERE user_id=:user_id");
+                                                $purchasesettingQuery = $db->prepare("SELECT status FROM order_list WHERE user_id=:user_id");
 
                                                 $purchasesettingQuery->execute(['user_id' => $_SESSION['user_id']]);
 
@@ -185,7 +185,7 @@ session_start();
                                                 {
                                                     foreach($purchasesetting as $purchase)
                                                     {
-                                                        if ($purchase['status']=="received")
+                                                        if ($purchase['status']=="Proceed")
                                                         {
                                                             $count += 1;
                                                         }
