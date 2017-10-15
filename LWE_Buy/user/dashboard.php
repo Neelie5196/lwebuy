@@ -16,6 +16,9 @@ session_start();
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
 
+        <!-- AngularJS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+        
         <!--stylesheet-->
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -31,7 +34,7 @@ session_start();
             <?php include_once('nav.php')?>
         </div>
 
-        <div class="row"> 
+        <div class="row" ng-app=""> 
             <div class="col-xs-5 col-md-5 col-lg-5">
                 <a href="purchaselist.php">
                     <div class="row udashrow1">
@@ -430,6 +433,38 @@ session_start();
                                     <p>Error</p>
                                     
                                     <?php endif; ?>
+                                    
+                                    <p>
+                                        <button type="button" class="btn btn-default btntopup" data-toggle="modal" data-target="#topupModal">Open Modal</button>
+                                    </p>
+
+                                    <div id="topupModal" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form action="reload.php" method="post">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Credit Reload</h4>
+                                                    </div>
+
+                                                    <div class="modal-body">
+                                                        <p>Enter credit amount to reload</p>
+                                                        <p>
+                                                            <input type="number" name="reloadamt" ng-model="reloadamt" ng-init="reloadamt=1"/>
+                                                        </p>
+
+                                                        <p>
+                                                            Amount to be paid: RM {{reloadamt*1.57}}
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-default" name="pay">Pay now</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </form>                                                    
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
