@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
-<<<<<<< HEAD
--- Generation Time: Oct 12, 2017 at 08:24 AM
-=======
--- Generation Time: Oct 11, 2017 at 02:23 PM
->>>>>>> 3144ba56284c3a1a96838e77705ec4c38530e882
+-- Generation Time: Oct 15, 2017 at 12:29 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -82,16 +78,20 @@ CREATE TABLE `contact` (
   `email` varchar(50) NOT NULL,
   `subject` varchar(20) NOT NULL,
   `tracknum` varchar(20) DEFAULT NULL,
-  `message` text NOT NULL
+  `message` text NOT NULL,
+  `datetime` datetime NOT NULL,
+  `status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `contact`
 --
 
-INSERT INTO `contact` (`cu_id`, `name`, `contact`, `email`, `subject`, `tracknum`, `message`) VALUES
-(2, 'SAD', '123', 'qwe@as.com', 'qwe', 'qwe', 'df'),
-(3, '123', '123', '123@d.com', '123', '12', '123');
+INSERT INTO `contact` (`cu_id`, `name`, `contact`, `email`, `subject`, `tracknum`, `message`, `datetime`, `status`) VALUES
+(2, 'SAD', '123', 'qwe@as.com', 'qwe', 'qwe', 'df', '2017-10-15 03:15:26', 'unread'),
+(3, '123', '123', '123@d.com', '123', '12', '123', '2017-10-15 05:23:07', 'read'),
+(4, 'SAD', '123', 'qwe@as.com', 'qwe', 'qwe', 'df', '2017-10-15 03:15:26', 'read'),
+(5, '123', '123', '123@d.com', '123', '12', '123', '2017-10-15 05:23:07', 'unread');
 
 -- --------------------------------------------------------
 
@@ -182,8 +182,8 @@ CREATE TABLE `order_item` (
 INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`) VALUES
 (85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '12.00'),
 (86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00'),
-(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', NULL),
-(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', NULL),
+(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00'),
+(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00'),
 (89, 4, '4', '4', '4', 4, '444', '219.00'),
 (90, 9, '4', '4', '4', 4, '444', '219.00'),
 (91, 10, '4', '4', '4', 4, '444', '219.00');
@@ -207,20 +207,12 @@ CREATE TABLE `order_list` (
 -- Dumping data for table `order_list`
 --
 
-<<<<<<< HEAD
 INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`, `order_code`) VALUES
 (2, 10, 'Request', '2017-10-12 02:47:02', '35.00', NULL),
-(3, 10, 'ready to pay', '2017-10-12 02:31:29', NULL, NULL),
+(3, 10, 'ready to pay', '2017-10-15 03:26:32', '35.00', NULL),
 (4, 10, 'paid', '2017-10-12 06:16:44', '23.00', 123),
 (9, 10, 'proceed', '2017-10-12 06:17:21', NULL, 123),
 (10, 10, 'received', '2017-10-12 02:34:50', '219.00', NULL);
-=======
-INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VALUES
-(2, 10, 'Request', '2017-10-11 12:13:23', '35.00'),
-(3, 10, 'pending', '2017-10-11 12:12:10', NULL),
-(4, 10, 'received', '2017-10-07 10:46:27', '219.00'),
-(6, 10, 'Ready to Pay', '2017-10-11 12:13:23', '35.00');
->>>>>>> 3144ba56284c3a1a96838e77705ec4c38530e882
 
 -- --------------------------------------------------------
 
@@ -382,7 +374,7 @@ INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`
 (3, '123', '123', NULL, '123@d.com', '123', 'admin'),
 (4, '234', '234', '2332', '234@s.com', '234', 'customer'),
 (5, '678', '8876', '23525241', 'sdf@gmail.com', '11', 'staff'),
-(10, '51', '96', NULL, '5196@email.com', '5106', 'customer'),
+(10, '51', '96', '1234', '5196@email.com', '5106', 'customer'),
 (11, 'hii', 'hii', '1131', 'sam@email.com', '123', 'admin');
 
 -- --------------------------------------------------------
@@ -568,7 +560,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `cu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `credit`
 --
@@ -598,11 +590,7 @@ ALTER TABLE `order_item`
 -- AUTO_INCREMENT for table `order_list`
 --
 ALTER TABLE `order_list`
-<<<<<<< HEAD
   MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-=======
-  MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
->>>>>>> 3144ba56284c3a1a96838e77705ec4c38530e882
 --
 -- AUTO_INCREMENT for table `parcel`
 --

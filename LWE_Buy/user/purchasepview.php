@@ -116,7 +116,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                         </div>
                         <a href="purchaselist.php" class="btn btn-default" name="back">Back</a>
                         
-                        <input type="submit" class="btn btn-success" value="Pay">
+                        <input type="submit" class="btn btn-success" value="Pay Now">
                         </form>
                     </div>
                 </div>

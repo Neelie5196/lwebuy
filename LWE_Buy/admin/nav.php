@@ -41,7 +41,7 @@
                 <ul class="dropdown-menu menuitem">
                     <li><a href="#">Credit History</a></li>
                     <li><a href="#">Currency Adjustment</a></li>
-                    <li><a href="#">Customer Inbox</a></li>
+                    <li><a href="feedback.php">Feedback</a></li>
                 </ul>
             </li>
         </ul>
