@@ -147,3 +147,11 @@ body {
     margin-left: -10px;
     margin-right: -10px;
 }
+
+.transcontainer {
+    margin: 15px 10px;
+}
+
+.frmtrans {   
+    margin-bottom: 10px;
+}

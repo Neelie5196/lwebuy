@@ -4,6 +4,7 @@ require_once '../connection/config.php';
 session_start();
 
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -435,13 +436,13 @@ session_start();
                                     <?php endif; ?>
                                     
                                     <p>
-                                        <button type="button" class="btn btn-default btntopup" data-toggle="modal" data-target="#topupModal">Open Modal</button>
+                                        <button type="button" class="btn btn-default btntopup" data-toggle="modal" data-target="#topupModal">Top up</button>
                                     </p>
 
                                     <div id="topupModal" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
-                                                <form action="reload.php" method="post">
+                                                <form>
                                                     <div class="modal-header">
                                                         <h4 class="modal-title">Credit Reload</h4>
                                                     </div>
@@ -455,13 +456,69 @@ session_start();
                                                         <p>
                                                             Amount to be paid: RM {{reloadamt*1.57}}
                                                         </p>
+                                                        
+                                                        <p>Instructions for top up:<br/>
+                                                            Please bank in amount to the following bank account and submit transaction details. Thank you.</p>
+                                                        <p>
+                                                            Bank: <br/>
+                                                            Account No.: <br/>
+                                                            Account name: 
+                                                        </p>
                                                     </div>
 
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-default" name="pay">Pay now</button>
+                                                        <button href="#submitModal" class="btn btn-default" data-dismiss="modal" data-toggle="modal">Submit Transaction</button>
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                                     </div>
                                                 </form>                                                    
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="submitModal" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4>Submit Transaction Details</h4>
+                                                </div>
+                                                
+                                                <form action="reload.php" method="post">
+                                                    <div class="modal=body">
+                                                        <div class="transcontainer">
+                                                            <div class="row frmtrans">
+                                                                <div class="col-xs-5 col-md-5 col-lg-5">
+                                                                    <label for="transno">Transaction no.: </label>
+                                                                </div>
+                                                                <div class="col-xs-7 col-md-7 col-lg-7">
+                                                                    <input type="text" name="transno" id="transno" required/>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row frmtrans">
+                                                                <div class="col-xs-5 col-md-5 col-lg-5">
+                                                                    <label for="transamt">Transaction amount (MYR): </label>
+                                                                </div>
+                                                                <div class="col-xs-7 col-md-7 col-lg-7">
+                                                                    <input type="text" name="transamt" id="transamt" required/>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row frmtrans">
+                                                                <div class="col-xs-5 col-md-5 col-lg-5">
+                                                                    <label for="image">Transaction receipt: </label>
+                                                                </div>
+                                                                <div class="col-xs-7 col-md-7 col-lg-7">
+                                                                    <input type="file" name="image" id="image" required/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-default" name="transaction">Submit</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -538,68 +595,69 @@ session_start();
                         <h3>Shipping price calculator</h3> 
                         <div class="row">
                             <div class="col-xs-12 col-md-12 col-lg-12">
-<form class="center" method="post">
+                                <form class="center" method="post">
 									<table class="table table-bordered">
-									<tr>
-										<td><label for="from">From</label></td>
-										<td><select name="from">
-											<option value="west">west</option>
-											<option value="east">east</option>
-										</select></td>
-									</tr>
-									
-									<tr>
-										<td><label>Weight</label></td>
-										<td><input type="number" name="camount" required=""/></td>
-									</tr>
-									<tr>
-									<td><label>Answer</label></td>
-									<td><?php 
-									if (isset($_POST['convert'])) {
-										$from=$_POST['from'];
-										$amount=$_POST['camount'];
+                                        <tr>
+                                            <td><label for="from">From</label></td>
+                                            <td><select name="from">
+                                                <option value="west">west</option>
+                                                <option value="east">east</option>
+                                            </select></td>
+                                        </tr>
 
-										if($amount==''||is_int($amount))
-										{
-											echo "Please Enter Valid Amount";
-											exit();
-										}
+                                        <tr>
+                                            <td><label>Weight</label></td>
+                                            <td><input type="number" name="camount" required=""/></td>
+                                        </tr>
+                                        <tr>
+                                        <td><label>Answer</label></td>
+                                        <td><?php 
+                                        if (isset($_POST['convert'])) {
+                                            $from=$_POST['from'];
+                                            $amount=$_POST['camount'];
 
-										echo '<div class="center">';
-										if($from=='west'){
-											if($amount >= 10){
-												$result=$amount*4.5;
-												echo "RM".$result;
-											}
-											else if($amount < 1.5){
-												$result=$amount*6;
-												echo "RM".$result;
-											}
-											else if($amount >1.5 && $amount <3.5){
-												$result=$amount*5.5;
-												echo "RM".$result;
-											}
-											else if($amount >4.0 && $amount <10){
-												$result=$amount*5;
-												echo "RM".$result;
-											}
-									
-										}
-										else if ($from=='east') {
-											if($amount>=1){
-												$result=$amount*19;
-												echo "RM".$result;
-											}
-											
-				
-										}
-											echo '</div>';
-										}
-									 ?></td>
-									</tr>
+                                            if($amount==''||is_int($amount))
+                                            {
+                                                echo "Please Enter Valid Amount";
+                                                exit();
+                                            }
+
+                                            echo '<div class="center">';
+                                            if($from=='west'){
+                                                if($amount >= 10){
+                                                    $result=$amount*4.5;
+                                                    echo "RM".$result;
+                                                }
+                                                else if($amount < 1.5){
+                                                    $result=$amount*6;
+                                                    echo "RM".$result;
+                                                }
+                                                else if($amount >1.5 && $amount <3.5){
+                                                    $result=$amount*5.5;
+                                                    echo "RM".$result;
+                                                }
+                                                else if($amount >4.0 && $amount <10){
+                                                    $result=$amount*5;
+                                                    echo "RM".$result;
+                                                }
+
+                                            }
+                                            else if ($from=='east') {
+                                                if($amount>=1){
+                                                    $result=$amount*19;
+                                                    echo "RM".$result;
+                                                }
+
+
+                                            }
+                                                echo '</div>';
+                                            }
+                                         ?></td>
+                                        </tr>
 									</table>
-									<input type="submit" value="Convert" name="convert"/>
-									</form>
+                                    
+                                    <input type="submit" value="Convert" name="convert"/>
+                                </form>
                             </div>
                         </div>
                     </div>
