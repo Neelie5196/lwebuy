@@ -1,17 +1,19 @@
 <?php
 require_once '../connection/config.php';
 
-if(isset($_POST['order_id']))
-{
+if(isset($_POST['oi_id']))
+{    
     $order_id = $_POST['order_id'];
+    $oi_id = $_POST['oi_id'];
+    $ordercode = $_POST['ordercode'];
     $status = 'Proceed';
     
 	
-	$result = mysql_query("UPDATE order_list SET status='$status', datetime=NOW() WHERE ol_id = $order_id ") or die(mysql_error());
+	$result = mysql_query("UPDATE order_item SET order_code='$ordercode', status = '$status' WHERE oi_id = $oi_id ") or die(mysql_error());
     ?>
     <script>
     alert('Success to Update');
-    window.location.href='orderpending.php?&success';
+    window.location.href='porderview.php?order_id=<?php echo $order_id; ?>&success';
     </script>
     <?php
 }

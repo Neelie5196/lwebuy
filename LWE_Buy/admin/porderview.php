@@ -54,58 +54,70 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
             <section class = "content">
                 <div class="container">
                     <div class="row">
-                        <form action="proceedorder.php" method="post">
-                            <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                                <?php if(!empty($orderhistory)): ?>
-                                <table class="table thead-bordered table-hover orderhistory" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Link</th>
-                                            <th>Type</th>
-                                            <th>Unit</th>
-                                            <th>Remark</th>
-                                            <th>Price (RM)</th>
-                                        </tr>
-                                    </thead>
-                                    <?php foreach($orderhistory as $order): 
-                                    {
-                                        $counter++;
-                                    }
-                                    ?>
+                        <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
+                            <?php if(!empty($orderhistory)): ?>
+                            <table class="table thead-bordered table-hover orderhistory" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Link</th>
+                                        <th>Type</th>
+                                        <th>Unit</th>
+                                        <th>Remark</th>
+                                        <th>Price (RM)</th>
+                                        <th>Order Code</th>
+                                    </tr>
+                                </thead>
+                                <?php foreach($orderhistory as $order): 
+                                {
+                                    $counter++;
+                                }
+                                ?>
+                                <form action="updateorder.php" method="post">
                                     <tbody class="order">
                                         <tr>
                                             <td width="5%"><?php echo $counter; ?></td>
                                             <td width="15%"><?php echo $order['name']; ?></td>
-                                            <td width="20%"><a href="<?php echo $order['link']; ?>" target="_blank"><?php echo $order['link']; ?></a></td>
+                                            <td width="15%"><a href="<?php echo $order['link']; ?>" target="_blank"><?php echo $order['link']; ?></a></td>
                                             <td width="8%"><?php echo $order['type']; ?></td>
                                             <td width="8%"><?php echo $order['unit']; ?></td>
                                             <td width="20%"><?php echo $order['remark']; ?></td>
                                             <td width="9%"><?php echo $order['price']; ?></td>
+                                            <td width="9%"><input type="text" name="ordercode"></td>
+                                            <td width="15%">
+                                                <input type="hidden" name="oi_id" value="<?php echo $order['oi_id']; ?>">
+                                                <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
+                                                <input type="submit" class="btn btn-xs btn-warning" value="Update">
+                                            </td>
                                         </tr>
                                     </tbody>
-                                    <?php endforeach; ?>
-                                </table>
-                                <?php else: 
-                                    Error
-                                ?>
-                                <?php endif; ?>
-                                <?php
-                                    $order = $_SESSION['order_id'];
-                                    $result = mysql_query("SELECT sum(price) FROM order_item WHERE order_id= $order") or die(mysql_error());
-                                    while ($rows = mysql_fetch_array($result)) {
-                                ?>
-                                <h2 style="text-align: right; padding-right: 70px;"><small>RM</small> <?php echo $rows['sum(price)']; ?></h2>
-                                <?php
-                                    }
-                                ?>
-                                <label>Placed Order Code</label>
-                                <input type="text" name="ordercode" class="form-control" placeholder="Order Code" style="border-radius: 30px; width: 30%;" required>
-                                <input type="hidden" name="order_id" class="form-control" value="<?php echo $_GET['order_id']; ?>">
-                            </div>
-                            <input type="submit" name="update" class='btn btn-success' value="Update">
-                            <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>
+                                </form>
+                                <?php endforeach; ?>
+                            </table>
+                            <?php else: 
+                                Error
+                            ?>
+                            <?php endif; ?>
+                            <?php
+                                $order = $_SESSION['order_id'];
+                                $result = mysql_query("SELECT sum(price) FROM order_item WHERE order_id= $order") or die(mysql_error());
+                                while ($rows = mysql_fetch_array($result)) {
+                            ?>
+                            <h2 style="text-align: right; padding-right: 70px;"><small>RM</small> <?php echo $rows['sum(price)']; ?></h2>
+                            <?php
+                                }
+                            ?>
+                            <tfoot>
+                                <tr>
+                                    <td><label style="float: left;">Bank in Receipt:</label> <em></em></td>
+                                </tr>
+                            </tfoot>
+                        </div>
+                        <form action="proceedorder.php" method="post">
+                            <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
+                            <input type="submit" class="btn btn-success" value="Proceed">
+                            <a href="orderpending.php" class="btn btn-default" name="back">Back</a>
                         </form>
                     </div>
                 </div>

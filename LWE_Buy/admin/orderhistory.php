@@ -87,20 +87,18 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                                         <th>Name</th>
                                         <th>Placed on</th>
                                         <th>Total (RM)</th>
-                                        <th>Order Code</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <?php foreach($orderhistory as $order): ?>
                                 <tbody class="order">
                                     <tr>
-                                        <td><?php echo $order['ol_id']; ?></td>
-                                        <td><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
-                                        <td><?php echo $order['datetime']; ?></td>
-                                        <td><?php echo $order['price']; ?></td>
-                                        <td><?php echo $order['order_code']; ?></td>
-                                        <td><?php echo $order['status']; ?></td>
-                                        <td><a href="orderhview.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="5%"><?php echo $order['ol_id']; ?></td>
+                                        <td width="40%"><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
+                                        <td width="15%"><?php echo $order['datetime']; ?></td>
+                                        <td width="15%"><?php echo $order['price']; ?></td>
+                                        <td width="10%"><?php echo $order['status']; ?></td>
+                                        <td width="15%"><a href="orderhview.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
@@ -133,20 +131,18 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                                         <th>Name</th>
                                         <th>Placed on</th>
                                         <th>Total (RM)</th>
-                                        <th>Order Code</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <?php foreach($ordershistory as $orders): ?>
                                 <tbody class="order">
                                     <tr>
-                                        <td><?php echo $orders['ol_id']; ?></td>
-                                        <td><?php echo $orders['fname']; ?> <?php echo $orders['lname']; ?></td>
-                                        <td><?php echo $orders['datetime']; ?></td>
-                                        <td><?php echo $orders['price']; ?></td>
-                                        <td><?php echo $orders['order_code']; ?></td>
-                                        <td><?php echo $orders['status']; ?></td>
-                                        <td><a href="orderhview.php?order_id=<?php echo $orders['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="5%"><?php echo $orders['ol_id']; ?></td>
+                                        <td width="40%"><?php echo $orders['fname']; ?> <?php echo $orders['lname']; ?></td>
+                                        <td width="15%"><?php echo $orders['datetime']; ?></td>
+                                        <td width="15%"><?php echo $orders['price']; ?></td>
+                                        <td width="10%"><?php echo $orders['status']; ?></td>
+                                        <td width="15%"><a href="orderhview.php?order_id=<?php echo $orders['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>

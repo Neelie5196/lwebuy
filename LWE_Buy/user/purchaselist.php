@@ -232,7 +232,6 @@ $purchase4list = $purchase4listQuery->rowCount() ? $purchase4listQuery : [];
                                         <th>Placed on</th>
                                         <th>Total (RM)</th>
                                         <th>Status</th>
-                                        <th>Order Code</th>
                                     </tr>
                                 </thead>
                                 <?php foreach($purchase4list as $purchase4): ?>
@@ -240,9 +239,8 @@ $purchase4list = $purchase4listQuery->rowCount() ? $purchase4listQuery : [];
                                     <tr>
                                         <td width="5%"><?php echo $purchase4['ol_id']; ?></td>
                                         <td width="40%"><?php echo $purchase4['datetime']; ?></td>
-                                        <td width="15%"><?php echo $purchase4['price']; ?></td>
-                                        <td width="15%"><?php echo $purchase4['status']; ?></td>
-                                        <td width="10%"><?php echo $purchase4['order_code']; ?></td>
+                                        <td width="20%"><?php echo $purchase4['price']; ?></td>
+                                        <td width="20%"><?php echo $purchase4['status']; ?></td>
                                         <td width="15%"><a href="purchasehview.php?order_id=<?php echo $purchase4['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>

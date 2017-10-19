@@ -65,8 +65,9 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                                             <th>Link</th>
                                             <th>Type</th>
                                             <th>Unit</th>
-                                            <th>Remark</th>
                                             <th>Price (RM)</th>
+                                            <th>Order Code</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <?php foreach($orderhistory as $order): 
@@ -77,12 +78,13 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                                     <tbody class="order">
                                         <tr>
                                             <td width="5%"><?php echo $counter; ?></td>
-                                            <td width="15%"><?php echo $order['name']; ?></td>
+                                            <td width="20%"><?php echo $order['name']; ?></td>
                                             <td width="20%"><a href="<?php echo $order['link']; ?>" target="_blank"><?php echo $order['link']; ?></a></td>
                                             <td width="8%"><?php echo $order['type']; ?></td>
                                             <td width="8%"><?php echo $order['unit']; ?></td>
-                                            <td width="20%"><?php echo $order['remark']; ?></td>
-                                            <td width="9%"><?php echo $order['price']; ?></td>
+                                            <td width="14%"><?php echo $order['price']; ?></td>
+                                            <td width="15%"><?php echo $order['order_code']; ?></td>
+                                            <td width="10%"><?php echo $order['status']; ?></td>
                                         </tr>
                                     </tbody>
                                     <?php endforeach; ?>
@@ -100,6 +102,11 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                                 <?php
                                     }
                                 ?>
+                                <tfoot>
+                                    <tr>
+                                        <td><label style="float: left;">Bank in Receipt:</label> <em></em></td>
+                                    </tr>
+                                </tfoot>
                             </div>
                             <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>
                         </form>

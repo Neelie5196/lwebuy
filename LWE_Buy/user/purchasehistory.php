@@ -66,19 +66,17 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
                                     <th>Order#</th>
                                     <th>Placed on</th>
                                     <th>Total (RM)</th>
-                                    <th>Order Code</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <?php foreach($purchaselist as $purchase): ?>
                             <tbody class="purchase">
                                 <tr>
-                                    <td><?php echo $purchase['ol_id']; ?></td>
-                                    <td><?php echo $purchase['datetime']; ?></td>
-                                    <td><?php echo $purchase['price']; ?></td>
-                                    <td><?php echo $purchase['order_code']; ?></td>
-                                    <td><?php echo $purchase['status']; ?></td>
-                                    <td><a href="purchasehview.php?order_id=<?php echo $purchase['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                    <td width="5%"><?php echo $purchase['ol_id']; ?></td>
+                                    <td width="40%"><?php echo $purchase['datetime']; ?></td>
+                                    <td width="20%"><?php echo $purchase['price']; ?></td>
+                                    <td width="20%"><?php echo $purchase['status']; ?></td>
+                                    <td width="15%"><a href="purchasehview.php?order_id=<?php echo $purchase['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                 </tr>
                             </tbody>
                             <?php endforeach; ?>

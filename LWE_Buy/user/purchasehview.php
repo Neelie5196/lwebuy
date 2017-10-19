@@ -65,8 +65,9 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                             <th>Link</th>
                                             <th>Type</th>
                                             <th>Unit</th>
-                                            <th>Remark</th>
                                             <th>Price (RM)</th>
+                                            <th>Order Code</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <?php foreach($purchaseitem as $purchase): 
@@ -77,12 +78,13 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                     <tbody class="purchase">
                                         <tr>
                                             <td width="5%"><?php echo $counter; ?></td>
-                                            <td width="15%"><?php echo $purchase['name']; ?></td>
+                                            <td width="20%"><?php echo $purchase['name']; ?></td>
                                             <td width="20%"><a href="<?php echo $purchase['link']; ?>" target="_blank"><?php echo $purchase['link']; ?></a></td>
                                             <td width="8%"><?php echo $purchase['type']; ?></td>
                                             <td width="8%"><?php echo $purchase['unit']; ?></td>
-                                            <td width="20%"><?php echo $purchase['remark']; ?></td>
-                                            <td width="9%"><?php echo $purchase['price']; ?></td>
+                                            <td width="14%"><?php echo $purchase['price']; ?></td>
+                                            <td width="15%"><?php echo $purchase['order_code']; ?></td>
+                                            <td width="10%"><?php echo $purchase['status']; ?></td>
                                         </tr>
                                     </tbody>
                                     <?php endforeach; ?>
@@ -107,6 +109,11 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                 <?php
                                     }
                                 ?>
+                                <tfoot>
+                                    <tr>
+                                        <td><label style="float: left;">Bank in Receipt:</label> <em></em></td>
+                                    </tr>
+                                </tfoot>
                             </div>
                             <a href="javascript:history.go(-1)" class="btn btn-default" name="back">Back</a>
                         </form>
