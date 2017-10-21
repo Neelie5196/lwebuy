@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2017 at 12:52 PM
+-- Generation Time: Oct 21, 2017 at 11:36 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -152,10 +152,8 @@ CREATE TABLE `inbox_reply` (
 CREATE TABLE `item` (
   `i_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `oi_id` int(11) NOT NULL,
-  `weight` decimal(10,2) DEFAULT NULL,
-  `price` decimal(10,2) DEFAULT NULL
+  `name` varchar(100) NOT NULL,
+  `weight` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -173,21 +171,23 @@ CREATE TABLE `order_item` (
   `unit` int(15) NOT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
-  `status` varchar(15) DEFAULT NULL
+  `status` varchar(15) DEFAULT NULL,
+  `order_code` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_item`
 --
 
-INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`, `status`) VALUES
-(85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '12.00', ''),
-(86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00', ''),
-(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00', ''),
-(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00', ''),
-(89, 4, '4', '4', '4', 4, '444', '219.00', ''),
-(90, 9, '4', '4', '4', 4, '444', '219.00', ''),
-(91, 10, '4', '4', '4', 4, '444', '219.00', '');
+INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`, `status`, `order_code`) VALUES
+(85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '13.00', '', NULL),
+(86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00', '', NULL),
+(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00', '', NULL),
+(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00', '', NULL),
+(89, 4, '4', '4', '4', 4, '444', '219.00', 'Proceed', 123),
+(90, 9, '4', '4', '4', 4, '444', '219.00', '', NULL),
+(91, 10, '4', '4', '4', 4, '444', '219.00', '', NULL),
+(92, 11, 'try', 'try', 'try', 2, 'try', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -200,20 +200,20 @@ CREATE TABLE `order_list` (
   `user_id` int(11) NOT NULL,
   `status` varchar(15) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `price` decimal(10,2) DEFAULT NULL,
-  `order_code` int(15) DEFAULT NULL
+  `price` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_list`
 --
 
-INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`, `order_code`) VALUES
-(2, 10, 'Request', '2017-10-15 10:44:57', '35.00', NULL),
-(3, 10, 'Ready to Pay', '2017-10-15 10:44:57', '35.00', NULL),
-(4, 10, 'Paid', '2017-10-15 10:44:57', '23.00', 123),
-(9, 10, 'Proceed', '2017-10-15 10:44:57', NULL, 123),
-(10, 10, 'Received', '2017-10-15 10:44:57', '219.00', NULL);
+INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VALUES
+(2, 10, 'Request', '2017-10-15 10:44:57', '35.00'),
+(3, 10, 'Ready to Pay', '2017-10-15 10:44:57', '35.00'),
+(4, 10, 'Paid', '2017-10-18 08:13:02', '23.00'),
+(9, 10, 'Proceed', '2017-10-15 10:44:57', NULL),
+(10, 10, 'Received', '2017-10-15 10:44:57', '219.00'),
+(11, 4, 'Request', '2017-10-18 09:56:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -248,9 +248,7 @@ CREATE TABLE `payment` (
   `user_id` int(11) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `amount` decimal(10,2) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `status` varchar(20) NOT NULL,
-  `reference_code` int(20) NOT NULL
+  `order_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -278,6 +276,30 @@ INSERT INTO `poslaju` (`id`, `weight`, `price`, `place`) VALUES
 (5, 'First 1 KG', 'RM19', 'east'),
 (6, '1.5 - 10 KG', 'RM8 / 0.5 KG', 'east'),
 (7, 'above 10 KG', 'RM7.5 / 0.5 KG', 'east');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `receive_request`
+--
+
+CREATE TABLE `receive_request` (
+  `rr_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `order_code` int(15) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `receive_request`
+--
+
+INSERT INTO `receive_request` (`rr_id`, `user_id`, `name`, `order_code`, `status`, `datetime`) VALUES
+(2, 10, '1', 1, 'Request', '2017-10-21 09:16:52'),
+(3, 10, '2', 2, 'Request', '2017-10-21 09:16:52'),
+(5, 10, '2', 3, 'Received', '2017-10-21 09:28:08');
 
 -- --------------------------------------------------------
 
@@ -326,6 +348,36 @@ INSERT INTO `skynet` (`id`, `weight`, `price`, `place`) VALUES
 (2, '2.5 KG', 'RM5.5 / 0.5 KG', 'west'),
 (3, '3.0 - 10 KG', 'RM5 / 0.5 KG', 'west'),
 (4, 'above 10 KG', 'RM4.5 / 0.5 KG', 'west');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `slot`
+--
+
+CREATE TABLE `slot` (
+  `s_id` int(11) NOT NULL,
+  `slot_code` int(100) NOT NULL,
+  `slot_num` int(100) NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `slot`
+--
+
+INSERT INTO `slot` (`s_id`, `slot_code`, `slot_num`, `status`, `user_id`) VALUES
+(1, 1000, 1, 'In Use', 10),
+(2, 1000, 2, 'Not in Use', NULL),
+(3, 2000, 3, 'In Use', 10),
+(4, 2000, 4, 'In Use', 10),
+(5, 3000, 5, 'Not in Use', NULL),
+(6, 3000, 6, 'In Use', 10),
+(7, 4000, 7, 'Not in Use', NULL),
+(8, 4000, 8, 'Not in Use', NULL),
+(9, 5000, 9, 'In Use', 10),
+(10, 5000, 10, 'Not in Use', NULL);
 
 -- --------------------------------------------------------
 
@@ -500,6 +552,12 @@ ALTER TABLE `poslaju`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `receive_request`
+--
+ALTER TABLE `receive_request`
+  ADD PRIMARY KEY (`rr_id`);
+
+--
 -- Indexes for table `shipping`
 --
 ALTER TABLE `shipping`
@@ -510,6 +568,13 @@ ALTER TABLE `shipping`
 --
 ALTER TABLE `skynet`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `slot`
+--
+ALTER TABLE `slot`
+  ADD PRIMARY KEY (`s_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `track_detail`
@@ -586,12 +651,12 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `oi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `oi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 --
 -- AUTO_INCREMENT for table `order_list`
 --
 ALTER TABLE `order_list`
-  MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `parcel`
 --
@@ -608,6 +673,11 @@ ALTER TABLE `payment`
 ALTER TABLE `poslaju`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
+-- AUTO_INCREMENT for table `receive_request`
+--
+ALTER TABLE `receive_request`
+  MODIFY `rr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
@@ -617,6 +687,11 @@ ALTER TABLE `shipping`
 --
 ALTER TABLE `skynet`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `slot`
+--
+ALTER TABLE `slot`
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1004;
 --
 -- AUTO_INCREMENT for table `track_detail`
 --
@@ -636,7 +711,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `work_station`
 --
@@ -651,6 +726,12 @@ ALTER TABLE `work_station`
 --
 ALTER TABLE `order_list`
   ADD CONSTRAINT `order_list_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `slot`
+--
+ALTER TABLE `slot`
+  ADD CONSTRAINT `slot_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `work_station`

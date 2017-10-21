@@ -2,36 +2,34 @@
 
 require_once '../connection/config.php';
 session_start();
+$counter=0;
+$counters=0;
 
-$orderrequestQuery = $db->prepare("
+$receivelistQuery = $db->prepare("
     SELECT *
-    FROM order_list ol
-    JOIN users us
-    ON us.user_id = ol.user_id
-    WHERE status = 'ready to pay'
+    FROM receive_request
+    WHERE user_id = :user_id AND status = 'Request'
     ORDER BY datetime desc
 ");
 
-$orderrequestQuery->execute([
+$receivelistQuery->execute([
     'user_id' => $_SESSION['user_id']
 ]);
 
-$orderrequest = $orderrequestQuery->rowCount() ? $orderrequestQuery : [];
+$receivelist = $receivelistQuery->rowCount() ? $receivelistQuery : [];
 
-$ordersrequestQuery = $db->prepare("
+$receiveslistQuery = $db->prepare("
     SELECT *
-    FROM order_list ol
-    JOIN users us
-    ON us.user_id = ol.user_id
-    WHERE status = 'paid'
+    FROM receive_request
+    WHERE user_id = :user_id AND status = 'Received'
     ORDER BY datetime desc
 ");
 
-$ordersrequestQuery->execute([
+$receiveslistQuery->execute([
     'user_id' => $_SESSION['user_id']
 ]);
 
-$ordersrequest = $ordersrequestQuery->rowCount() ? $ordersrequestQuery : [];
+$receiveslist = $receiveslistQuery->rowCount() ? $receiveslistQuery : [];
 
 ?>
 
@@ -63,48 +61,60 @@ $ordersrequest = $ordersrequestQuery->rowCount() ? $ordersrequestQuery : [];
             </div>
             
             <div class="container">
-                <h2>Order Pending</h2>
+                <h2>Receive</h2>
                 <hr/>
             </div>
-            
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <a href='receive-1.php' class='btn btn-default' name='new' style="float: right;">New Receive</a>
+                    </div>
+                </div>
+            </div>
+            <br/>
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
-                        <strong>Ready to Pay</strong>
-                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse1">More Order Details</button>
+                        <strong>Request</strong>
+                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#request">More Item Details</button>
                     </div>
                 </div>
             </div>
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
-                        <div class="span12 collapse" id="collapse1">
-                            <?php if(!empty($orderrequest)): ?>
+                        <div class="span12 collapse" id="request">
+                            <?php if(!empty($receivelist)): ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
-                                        <th>Order#</th>
+                                        <th>#</th>
                                         <th>Name</th>
                                         <th>Placed on</th>
-                                        <th>Total (RM)</th>
+                                        <th>Order Code</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($orderrequest as $order): ?>
+                                <?php foreach($receivelist as $receive): 
+                                {
+                                    $counter++;
+                                }
+                                
+                                ?>
                                 <tbody>
                                     <tr>
-                                        <td width="5%"><?php echo $order['ol_id']; ?></td>
-                                        <td width="40%"><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
-                                        <td width="15%"><?php echo $order['datetime']; ?></td>
-                                        <td width="15%"><?php echo $order['price']; ?></td>
-                                        <td width="10%"><?php echo $order['status']; ?></td>
-                                        <td width="15%"><a href="orderhview.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="5%"><?php echo $counter; ?></td>
+                                        <td width="40%"><?php echo $receive['name']; ?></td>
+                                        <td width="15%"><?php echo $receive['datetime']; ?></td>
+                                        <td width="15%"><?php echo $receive['order_code']; ?></td>
+                                        <td width="10%"><?php echo $receive['status']; ?></td>
+                                        <td width="15%"><a href="deletereceive.php?rr_id=<?php echo $receive['rr_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
                             </table>
                             <?php else: ?>
-                                <p>There is no order pending.</p>
+                                <p>There is no receive request.</p>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -114,41 +124,44 @@ $ordersrequest = $ordersrequestQuery->rowCount() ? $ordersrequestQuery : [];
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
-                        <strong>Ready to Proceed</strong>
-                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse">More Order Details</button>
+                        <strong>Received</strong>
+                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#received">More Item Details</button>
                     </div>
                 </div>
             </div>
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
-                        <div class="span12 collapse" id="collapse">
-                            <?php if(!empty($ordersrequest)): ?>
+                        <div class="span12 collapse" id="received">
+                            <?php if(!empty($receiveslist)): ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
-                                        <th>Order#</th>
+                                        <th>#</th>
                                         <th>Name</th>
                                         <th>Placed on</th>
-                                        <th>Total (RM)</th>
+                                        <th>Order Code</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($ordersrequest as $orders): ?>
+                                <?php foreach($receiveslist as $receives): 
+                                {
+                                    $counters++;
+                                }
+                                ?>
                                 <tbody>
                                     <tr>
-                                        <td width="5%"><?php echo $orders['ol_id']; ?></td>
-                                        <td width="40%"><?php echo $orders['fname']; ?> <?php echo $orders['lname']; ?></td>
-                                        <td width="15%"><?php echo $orders['datetime']; ?></td>
-                                        <td width="15%"><?php echo $orders['price']; ?></td>
-                                        <td width="10%"><?php echo $orders['status']; ?></td>
-                                        <td width="15%"><a href="porderview.php?order_id=<?php echo $orders['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="5%"><?php echo $counters; ?></td>
+                                        <td width="40%"><?php echo $receives['name']; ?></td>
+                                        <td width="20%"><?php echo $receives['datetime']; ?></td>
+                                        <td width="20%"><?php echo $receives['order_code']; ?></td>
+                                        <td width="15%"><?php echo $receives['status']; ?></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
                             </table>
                             <?php else: ?>
-                                <p>There is no order pending.</p>
+                                <p>There is no received item.</p>
                             <?php endif; ?>
                         </div>
                     </div>

@@ -3,6 +3,15 @@
 require_once '../connection/config.php';
 session_start();
 
+$result = mysql_query('SELECT ol_id FROM order_list ORDER BY ol_id DESC LIMIT 1;');
+if (mysql_num_rows($result) > 0) {
+   $max_public_id = mysql_fetch_row($result);
+   $orderid = $max_public_id[0]+1;
+}else
+{
+    $orderid = 1;
+}
+
 $purchase1listQuery = $db->prepare("
     SELECT *
     FROM order_list
@@ -85,9 +94,17 @@ $purchase4list = $purchase4listQuery->rowCount() ? $purchase4listQuery : [];
             </div>
             
             <div class="container">
-                <h2>Purchase List</h2>
+                <h2>Purchase</h2>
                 <hr/>
             </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <a href='purchaseproduct-1.php' class='btn btn-default' name='new' style="float: right;">New Purchase</a>
+                    </div>
+                </div>
+            </div>
+            <br/>
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">

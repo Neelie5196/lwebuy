@@ -2,6 +2,7 @@
 
 require_once '../connection/config.php';
 session_start();
+$counter = 0; 
 
 ?>
 
@@ -35,7 +36,7 @@ session_start();
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <h2>Slot Item</h2>
+                    <h2>Slot Item - <?php echo $_GET['slotcode']; ?> - <?php echo $_GET['slotnum']; ?></h2>
                     <hr/>
                 </div>
             </div>
@@ -51,9 +52,12 @@ session_start();
                                     <th>#</th>
                                 </tr>
                             </thead>
+                            <?php
+                                $counter++;
+                            ?>
                             <tbody>
                                 <tr>
-                                    <td>#</td>
+                                    <td><?php echo $counter; ?></td>
                                 </tr>
                             </tbody>
                         </table>

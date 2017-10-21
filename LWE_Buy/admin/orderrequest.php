@@ -48,7 +48,7 @@ $orderrequest = $orderrequestQuery->rowCount() ? $orderrequestQuery : [];
             </div>
             
             <div class="container">
-                <h2>Order Request List</h2>
+                <h2>Order Request</h2>
                 <hr/>
             </div>
             <div class="container">

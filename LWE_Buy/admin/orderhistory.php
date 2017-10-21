@@ -64,7 +64,7 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
             </div>
             
             <div class="container">
-                <h2>Order History List</h2>
+                <h2>Order History</h2>
                 <hr/>
             </div>
             <div class="container">

@@ -22,8 +22,7 @@
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Warehouse <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
-                    <li><a href="#">New Item</a></li>
-                    <li><a href="#">Transfer Order</a></li>
+                    <li><a href="received.php">Received Item</a></li>
                     <li><a href="slotlist.php">Manage Slot</a></li>
                     <li><a href="warehouselist.php">Manage Warehouse</a></li>
                 </ul>

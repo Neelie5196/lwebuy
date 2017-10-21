@@ -46,7 +46,7 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
             </div>
             
             <div class="container">
-                <h2>Purchase List</h2>
+                <h2>Purchase History</h2>
                 <hr/>
             </div>
             <div class="container">
