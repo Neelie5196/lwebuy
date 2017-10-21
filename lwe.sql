@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2017 at 11:36 AM
+-- Generation Time: Oct 21, 2017 at 02:37 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -172,22 +172,23 @@ CREATE TABLE `order_item` (
   `remark` varchar(255) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `status` varchar(15) DEFAULT NULL,
-  `order_code` int(20) DEFAULT NULL
+  `order_code` varchar(20) DEFAULT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_item`
 --
 
-INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`, `status`, `order_code`) VALUES
-(85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '13.00', '', NULL),
-(86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00', '', NULL),
-(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00', '', NULL),
-(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00', '', NULL),
-(89, 4, '4', '4', '4', 4, '444', '219.00', 'Proceed', 123),
-(90, 9, '4', '4', '4', 4, '444', '219.00', '', NULL),
-(91, 10, '4', '4', '4', 4, '444', '219.00', '', NULL),
-(92, 11, 'try', 'try', 'try', 2, 'try', NULL, NULL, NULL);
+INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`, `status`, `order_code`, `datetime`) VALUES
+(85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '13.00', '', NULL, '2017-10-21 11:39:24'),
+(86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00', '', NULL, '2017-10-21 11:39:24'),
+(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00', '', NULL, '2017-10-21 11:39:24'),
+(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00', '', NULL, '2017-10-21 11:39:24'),
+(89, 4, '4', '4', '4', 4, '444', '219.00', 'Proceed', 'FREIGHT MARK - AIR', '2017-10-21 11:49:47'),
+(90, 9, '4', '4', '4', 4, '444', '219.00', '', NULL, '2017-10-21 11:39:24'),
+(91, 10, '4', '4', '4', 4, '444', '219.00', '', NULL, '2017-10-21 11:39:24'),
+(92, 11, 'try', 'try', 'try', 2, 'try', NULL, NULL, NULL, '2017-10-21 11:39:24');
 
 -- --------------------------------------------------------
 
@@ -651,12 +652,12 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `oi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `oi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 --
 -- AUTO_INCREMENT for table `order_list`
 --
 ALTER TABLE `order_list`
-  MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `parcel`
 --
@@ -691,7 +692,7 @@ ALTER TABLE `skynet`
 -- AUTO_INCREMENT for table `slot`
 --
 ALTER TABLE `slot`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1004;
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `track_detail`
 --
@@ -711,7 +712,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `work_station`
 --
