@@ -15,7 +15,7 @@ if(isset($_POST['stationcode']))
     ?>
     <script>
     alert('Success to Create');
-    window.location.href='newwarehouse.php?success';
+    window.location.href='warehouselist.php?success';
     </script>
     <?php
 }
@@ -24,7 +24,7 @@ else
     ?>
     <script>
     alert('Error While Create, Please try again');
-    window.location.href='newwarehouse.php?fail';
+    window.location.href='warehouselist.php?fail';
     </script>
     <?php
 }

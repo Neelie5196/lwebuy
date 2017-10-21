@@ -47,7 +47,7 @@ $userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
 
         <center>
             <div class="container">
-                <div class="row" style="padding-top: 50px; padding-bottom: 25px;">
+                <div class="row" style="padding-top: 10px; padding-bottom: 15px;">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <h2>Customer List</h2>
                     </div>

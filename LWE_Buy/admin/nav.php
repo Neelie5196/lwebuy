@@ -24,10 +24,8 @@
                 <ul class="dropdown-menu menuitem">
                     <li><a href="#">New Item</a></li>
                     <li><a href="#">Transfer Order</a></li>
-                    <li><a href="#">New Slot</a></li>
-                    <li><a href="#">Manage Slot</a></li>
-                    <li><a href="newwarehouse.php">New Warehouse</a></li>
-                    <li><a href="warehouselist.php">Warehouse List</a></li>
+                    <li><a href="slotlist.php">Manage Slot</a></li>
+                    <li><a href="warehouselist.php">Manage Warehouse</a></li>
                 </ul>
             </li>
             <li><a href="tracking.php" class="menuitem">Tracking</a></li>
