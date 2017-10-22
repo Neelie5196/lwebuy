@@ -32,406 +32,129 @@ session_start();
         </div>
 
         <div class="row"> 
-            <div class="col-xs-5 col-md-5 col-lg-5">
-                <a href="purchaselist.php">
+            <div class="col-xs-4 col-md-4 col-lg-4">
+                <a href="orderrequest.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <!-- purchase -->
-                            <h3>Purchase</h3>
+                            <h1>New Orders</h1>
                             
-                            <div class="row">
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box1">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Pending requests</p>
-
-                                            <p>
-                                            <?php
-                                                $purchasesettingQuery = $db->prepare("SELECT status FROM order_list WHERE user_id=:user_id");
-
-                                                $purchasesettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $purchasesetting = $purchasesettingQuery->rowCount() ? $purchasesettingQuery : [];
+                            <h2 class="admindash">
+                                <?php
+                                    $count = 0; 
             
-                                                $count = 0;
-                                                if(!empty($purchasesetting))
-                                                {
-                                                    foreach($purchasesetting as $purchase)
-                                                    {
-                                                        if ($purchase['status']=="pending")
-                                                        {
-                                                            $count += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count = $count;
-                                                        }
-                                                    }
-                                                echo $count;
-                                            ?>
-                                            </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>Error</p>
-
-                                            <?php }?>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Awaiting payment</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $purchasesettingQuery = $db->prepare("SELECT status FROM order_list WHERE user_id=:user_id");
-
-                                                $purchasesettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $purchasesetting = $purchasesettingQuery->rowCount() ? $purchasesettingQuery : [];
+                                    $ordersQuery = $db->prepare("SELECT * FROM order_list");
+                                        
+                                    $ordersQuery->execute();
+                                        
+                                    $orders = $ordersQuery->rowCount() ? $ordersQuery : [];
             
-                                                $count = 0;
-                                                if(!empty($purchasesetting))
-                                                {
-                                                    foreach($purchasesetting as $purchase)
-                                                    {
-                                                        if ($purchase['status']=="approved")
-                                                        {
-                                                            $count += 1;
-                                                        }
-                                                    }
-                                                echo $count;
-                                            ?>
-                                            </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>Error</p>
-
-                                            <?php }?>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Pending parcel</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $purchasesettingQuery = $db->prepare("SELECT status FROM order_list WHERE user_id=:user_id");
-
-                                                $purchasesettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $purchasesetting = $purchasesettingQuery->rowCount() ? $purchasesettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($purchasesetting))
-                                                {
-                                                    foreach($purchasesetting as $purchase)
-                                                    {
-                                                        if ($purchase['status']=="purchased")
-                                                        {
-                                                            $count += 1;
-                                                        }
-                                                    }
-                                                echo $count;
-                                            ?>
-                                            </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>error</p>
-
-                                            <?php }?>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Parcel received</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $purchasesettingQuery = $db->prepare("SELECT status FROM shipping WHERE user_id=:user_id");
-
-                                                $purchasesettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $purchasesetting = $purchasesettingQuery->rowCount() ? $purchasesettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($purchasesetting))
-                                                {
-                                                    foreach($purchasesetting as $purchase)
-                                                    {
-                                                        if ($purchase['status']=="received")
-                                                        {
-                                                            $count += 1;
-                                                        }
-                                                    }
-                                                echo $count;
-                                            ?>
-                                            </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>error</p>
-
-                                            <?php }?>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                            </div>
+                                    $count = 0;
+                                    if(!empty($orders))
+                                    {
+                                        foreach($orders as $o)
+                                        {
+                                            if ($o['status']=="pending")
+                                            {
+                                                $count += 1;
+                                            }
+                                            else
+                                            {
+                                                $count = $count;
+                                            }
+                                        }
+                                        
+                                    echo $count;
+                                        
+                                    }
+                                    else
+                                    {
+                                        echo "Error";
+                                    }
+                                ?>
+                            </h2>
                         </div>
                     </div>
                 </a>
             </div>
             
-            <div class="col-xs-5 col-md-5 col-lg-5">
-                <a href="shippinglist.php">
-                    <div class="row udashrow1">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
-                            <!-- shipping -->
-                            <h3>Shipping</h3>
-                            
-                            <div class="row">
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box1">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Pending requests</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $shippingsettingQuery = $db->prepare("SELECT status FROM shipping WHERE user_id=:user_id");
-
-                                                $shippingsettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $shippingsetting = $shippingsettingQuery->rowCount() ? $shippingsettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($shippingsetting))
-                                                {
-                                                    foreach($shippingsetting as $shipping)
-                                                    {
-                                                        if ($shipping['status']=="pending")
-                                                        {
-                                                            $count += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count = $count;
-                                                        }
-                                                    }
-                                                echo $count;
-                                            ?>
-                                            </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>Error</p>
-
-                                            <?php }?>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Awaiting payment</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $shippingsettingQuery = $db->prepare("SELECT status FROM shipping WHERE user_id=:user_id");
-
-                                                $shippingsettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $shippingsetting = $shippingsettingQuery->rowCount() ? $shippingsettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($shippingsetting))
-                                                {
-                                                    foreach($shippingsetting as $shipping)
-                                                    {
-                                                        if ($shipping['status']=="approved")
-                                                        {
-                                                            $count += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count = $count;
-                                                        }
-                                                    }
-                                                echo $count;
-                                            ?>
-                                            </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>Error</p>
-
-                                            <?php }?>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Items proceeded</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $shippingsettingQuery = $db->prepare("SELECT status FROM shipping WHERE user_id=:user_id");
-
-                                                $shippingsettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $shippingsetting = $shippingsettingQuery->rowCount() ? $shippingsettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($shippingsetting))
-                                                {
-                                                    foreach($shippingsetting as $shipping)
-                                                    {
-                                                        if ($shipping['status']=="proceeded")
-                                                        {
-                                                            $count += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count = $count;
-                                                        }
-                                                    }
-                                                echo $count;
-                                            ?>
-                                            </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>Error</p>
-
-                                            <?php }?>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Pending response</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $shippingsettingQuery = $db->prepare("SELECT status FROM shipping WHERE user_id=:user_id");
-
-                                                $shippingsettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $shippingsetting = $shippingsettingQuery->rowCount() ? $shippingsettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($shippingsetting))
-                                                {
-                                                    foreach($shippingsetting as $shipping)
-                                                    {
-                                                        if ($shipping['status']=="arrived")
-                                                        {
-                                                            $count += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count = $count;
-                                                        }
-                                                    }
-                                                echo $count;
-                                            ?>
-                                            </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>Error</p>
-
-                                            <?php }?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            
-            <div class="col-xs-2 col-md-2 col-lg-2">
+            <div class="col-xs-4 col-md-4 col-lg-4">
                 <a href="#">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <!-- point -->
-                            <h3>Points</h3>
+                            <h1>New Transactions</h1>
                             
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12 udashrow1box1">
-                                    <?php
-                                        $creditsettingQuery = $db->prepare("SELECT * FROM credit WHERE user_id=:user_id");
-
-                                        $creditsettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                        $creditsetting = $creditsettingQuery->rowCount() ? $creditsettingQuery : [];
+                            <h2 class="admindash">
+                                <?php
+                                    $count = 0; 
+            
+                                    $reloadQuery = $db->prepare("SELECT * FROM order_list");
                                         
-                                        if(!empty($creditsetting)):
-                                            foreach($creditsetting as $credit):
-                                    ?>
-                                    
-                                    <p><?php echo $credit['amount']; ?></p>
-                                    
-                                    <?php
-                                        endforeach;
+                                    $reloadQuery->execute();
                                         
-                                        else:
-                                    ?>
-
-                                    <p>Error</p>
-                                    
-                                    <?php endif; ?>
-                                </div>
-                            </div>
+                                    $reload = $reloadQuery->rowCount() ? $reloadQuery : [];
+            
+                                    $count = 0;
+                                    if(!empty($reload))
+                                    {
+                                        foreach($reload as $r)
+                                        {
+                                            if ($o['status']=="pending")
+                                            {
+                                                $count += 1;
+                                            }
+                                            else
+                                            {
+                                                $count = $count;
+                                            }
+                                        }
+                                        
+                                    echo $count;
+                                        
+                                    }
+                                    else
+                                    {
+                                        echo "Error";
+                                    }
+                                ?>
+                            </h2>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-xs-4 col-md-4 col-lg-4">
+                <a href="feedback.php">
+                    <div class="row udashrow1">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <h1>New Feedbacks</h1>
+                            
+                            <h2 class="admindash">
+                                <?php
+                                    $count = 0; 
+            
+                                    $feedbackQuery = $db->prepare("SELECT COUNT(*) FROM inbox");
+                                        
+                                    $feedbackQuery->execute();
+                                        
+                                    $feedback = $ordersQuery->rowCount() ? $ordersQuery : [];
+            
+                                    $count = 0;
+                                    if(!empty($feedback))
+                                    {
+                                        foreach($feedback as $f)
+                                        {
+                                            $count += 1;
+                                        }
+                                        
+                                    echo $count;
+                                        
+                                    }
+                                    else
+                                    {
+                                        echo "Error";
+                                    }
+                                ?>
+                            </h2>
                         </div>
                     </div>
                 </a>
@@ -439,239 +162,184 @@ session_start();
         </div>
         
         <div class="row">
-            <div class="col-xs-6 col-md-6 col-lg-6">
-                <div class="row udashrow2">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <!-- address -->
-                        <h3>Warehouse details</h3>
-                        
-                        <?php
-                            $wh_id = $_SESSION['user_id'] % 2;
-
-                            $warehousesettingQuery = $db->prepare("SELECT * FROM warehouse WHERE wh_id=:wh_id");
-
-                            $warehousesettingQuery->execute(['wh_id' => $wh_id]);
-
-                            $warehousesetting = $warehousesettingQuery->rowCount() ? $warehousesettingQuery : [];
+            <div class="col-xs-3 col-md-3 col-lg-3">
+                <a href="customerlist.php">
+                    <div class="row udashrow1">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <h1>Existing Users</h1>
                             
-                            foreach($warehousesetting as $warehouse):
-                        ?>
-                            
-                        <form>
-                            <div class="row warehousedetr">
-                                <div class="col-xs-1 col-md-1 col-lg-1">
-                                    <label for="stName">Name: </label>
-                                </div>
-
-                                <div class="col-xs-11 col-md-11 col-lg-11">
-                                    <input type="text" id="stName" name="stName" value="<?php echo $warehouse['station_name']; ?>" class=" warehousedetfield" disabled/>
-                                </div>
-                            </div>
-                            
-                            <div class="row warehousedetr">
-                                <div class="col-xs-1 col-md-1 col-lg-1">
-                                    <label for="stAddress">Address: </label>
-                                </div>
-
-                                <div class="col-xs-11 col-md-11 col-lg-11  ">
-                                    <input type="text" id="stAddress" name="stAddress" value="<?php echo $warehouse['station_description']; ?>" class=" warehousedetfield" disabled/>
-                                </div>
-                            </div>
-                            
-                            <div class="row warehousedetr">
-                                <div class="col-xs-1 col-md-1 col-lg-1">
-                                    <label for="stCty">Country: </label>
-                                </div>
-
-                                <div class="col-xs-11 col-md-11 col-lg-11 ">
-                                    <input type="text" id="stCty" name="stCty" value="<?php echo $warehouse['country_description']; ?>" class=" warehousedetfield" disabled/>
-                                </div>
-                            </div>
-                        </form>
-                        
-                        <?php
-                            endforeach;
-                        ?>
+                            <h2 class="admindash">
+                                <?php
+                                    $count = 0; 
+            
+                                    $usersQuery = $db->prepare("SELECT * FROM users");
+                                        
+                                    $usersQuery->execute();
+                                        
+                                    $users = $usersQuery->rowCount() ? $usersQuery : [];
+            
+                                    $count = 0;
+                                    if(!empty($users))
+                                    {
+                                        foreach($users as $u)
+                                        {
+                                            if ($u['type']=="customer")
+                                            {
+                                                $count += 1;
+                                            }
+                                            else
+                                            {
+                                                $count = $count;
+                                            }
+                                        }
+                                        
+                                    echo $count;
+                                        
+                                    }
+                                    else
+                                    {
+                                        echo "Error";
+                                    }
+                                ?>
+                            </h2>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             
             <div class="col-xs-3 col-md-3 col-lg-3">
-                <div class="row udashrow2">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <!-- shipping price -->
-                        <h3>Shipping price calculator</h3> 
-                        <div class="row">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-<form class="center" method="post">
-									<table class="table table-bordered">
-									<tr>
-										<td><label for="from">From</label></td>
-										<td><select name="from">
-											<option value="west">west</option>
-											<option value="east">east</option>
-										</select></td>
-									</tr>
-									
-									<tr>
-										<td><label>Weight</label></td>
-										<td><input type="number" name="camount" required=""/></td>
-									</tr>
-									<tr>
-									<td><label>Answer</label></td>
-									<td><?php 
-									if (isset($_POST['convert'])) {
-										$from=$_POST['from'];
-										$amount=$_POST['camount'];
-
-										if($amount==''||is_int($amount))
-										{
-											echo "Please Enter Valid Amount";
-											exit();
-										}
-
-										echo '<div class="center">';
-										if($from=='west'){
-											if($amount >= 10){
-												$result=$amount*4.5;
-												echo "RM".$result;
-											}
-											else if($amount < 1.5){
-												$result=$amount*6;
-												echo "RM".$result;
-											}
-											else if($amount >1.5 && $amount <3.5){
-												$result=$amount*5.5;
-												echo "RM".$result;
-											}
-											else if($amount >4.0 && $amount <10){
-												$result=$amount*5;
-												echo "RM".$result;
-											}
-									
-										}
-										else if ($from=='east') {
-											if($amount>=1){
-												$result=$amount*19;
-												echo "RM".$result;
-											}
-											
-				
-										}
-											echo '</div>';
-										}
-									 ?></td>
-									</tr>
-									</table>
-									<input type="submit" value="Convert" name="convert"/>
-									</form>
-                            </div>
+                <a href="customerlist.php">
+                    <div class="row udashrow1">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <h1>Total Orders Done</h1>
+                            
+                            <h2 class="admindash">
+                                <?php
+                                    $count = 0; 
+            
+                                    $ordersQuery = $db->prepare("SELECT * FROM order_list");
+                                        
+                                    $ordersQuery->execute();
+                                        
+                                    $orders = $ordersQuery->rowCount() ? $ordersQuery : [];
+            
+                                    $count = 0;
+                                    if(!empty($orders))
+                                    {
+                                        foreach($orders as $o)
+                                        {
+                                            if ($o['status']=="proceeded")
+                                            {
+                                                $count += 1;
+                                            }
+                                            else
+                                            {
+                                                $count = $count;
+                                            }
+                                        }
+                                        
+                                    echo $count;
+                                        
+                                    }
+                                    else
+                                    {
+                                        echo "Error";
+                                    }
+                                ?>
+                            </h2>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
             
             <div class="col-xs-3 col-md-3 col-lg-3">
-                <div class="row udashrow2">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <!-- currency -->
-                        <h3>Currency calculator</h3>
-                        <div class="row">
-                            <div class="col-xs-6 col-md-6 col-lg-6">
-									<form class="center" method="post">
-									<table class="table table-bordered">
-									<tr>
-										<td><label for="from">From</label></td>
-										<td><select name="from">
-											<option value="myr">MYR</option>
-											<option value="rmb">RMB</option>
-											<option value="usd">USD</option>
-										</select></td>
-									</tr>
-									<tr>
-										<td><label for="to">To</label></td>
-										<td><select name="to">
-											<option value="myr">MYR</option>
-											<option value="rmb">RMB</option>
-											<option value="usd">USD</option>
-										</select></td>
-									</tr>
-									<tr>
-										<td><label>Enter Amount</label></td>
-										<td><input type="number" name="camount" required=""/></td>
-									</tr>
-									<tr>
-									<td><label>Answer</label></td>
-									<td><?php 
-									if (isset($_POST['convert'])) {
-										$from=$_POST['from'];
-										$to=$_POST['to'];
-										$amount=$_POST['camount'];
-
-										if($amount==''||is_int($amount))
-										{
-											echo "Please Enter Valid Amount";
-											exit();
-										}
-
-										echo '<div class="center">';
-										if($from=='myr'){
-											if($to=='myr'){
-												$result=$amount*1;
-												echo "MYR to   ".$result." MYR";
-											}
-											else if ($to=='rmb') {
-												$result=$amount*1.57;
-												echo "MYR==>   ".$result." RMB";
-											}
-											else if ($to=='usd') {
-												$result=$amount*0.24;
-												echo "MYR==>   ".$result." USD";
-											}
-										}
-										else if ($from=='rmb') {
-											if($to=='myr'){
-												$result=$amount*0.64;
-												echo "RMB==>   ".$result." MYR";
-											}
-											else if ($to=='rmb') {
-												$result=$amount*1;
-												echo "RMB==>   ".$result." RMB";
-											}
-											else if ($to=='usd') {
-												$result=$amount*0.15;
-												echo "RMB==>   ".$result." USD";
-											}
-										}
-										else if ($from=='usd') {
-											if($to=='usd'){
-												$result=$amount*1;
-												echo "USD==>   ".$result." USD";
-											}
-											else if ($to=='rmb') {
-												$result=$amount*6.65;
-												echo "USD==>   ".$result." RMB";
-											}
-											else if ($to=='usd') {
-												$result=$amount*4.24;
-												echo "USD==>   ".$result." MYR";
-											}
-											}
-											echo '</div>';
-										}
-									 ?></td>
-									</tr>
-									</table>
-									<input type="submit" value="Convert" name="convert"/>
-									</form>
-								</body>
-								</html>
-
-								
-                            </div>
+                <a href="customerlist.php">
+                    <div class="row udashrow1">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <h1>Total Items Shipped</h1>
+                            
+                            <h2 class="admindash">
+                                <?php
+                                    $count = 0; 
+            
+                                    $shippingQuery = $db->prepare("SELECT * FROM shipping");
+                                        
+                                    $shippingQuery->execute();
+                                        
+                                    $shipping = $shippingQuery->rowCount() ? $shippingQuery : [];
+            
+                                    $count = 0;
+                                    if(!empty($shipping))
+                                    {
+                                        foreach($shipping as $s)
+                                        {
+                                            if ($s['status']=="received")
+                                            {
+                                                $count += 1;
+                                            }
+                                            else
+                                            {
+                                                $count = $count;
+                                            }
+                                        }
+                                        
+                                    echo $count;
+                                        
+                                    }
+                                    else
+                                    {
+                                        echo "Error";
+                                    }
+                                ?>
+                            </h2>
                         </div>
                     </div>
-                </div>
+                </a>
+            </div>
+            
+            <div class="col-xs-3 col-md-3 col-lg-3">
+                <a href="customerlist.php">
+                    <div class="row udashrow1">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <h1>Total Profit</h1>
+                            
+                            <h2 class="admindash">
+                                <?php
+                                    $count = 0; 
+            
+                                    $creditQuery = $db->prepare("SELECT * FROM credit_request");
+                                        
+                                    $creditQuery->execute();
+                                        
+                                    $credit = $creditQuery->rowCount() ? $creditQuery : [];
+            
+                                    $count = 0;
+                                    if(!empty($credit))
+                                    {
+                                        foreach($credit as $c)
+                                        {
+                                            if ($c['status']=="approved")
+                                            {
+                                                $count += $c['amount'];
+                                            }
+                                            else
+                                            {
+                                                $count = $count;
+                                            }
+                                        }
+                                        
+                                    echo $count;
+                                        
+                                    }
+                                    else
+                                    {
+                                        echo "0";
+                                    }
+                                ?>
+                            </h2>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </body>

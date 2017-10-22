@@ -155,3 +155,7 @@ body {
 .frmtrans {   
     margin-bottom: 10px;
 }
+
+.admindash {
+    text-align: right;
+}

@@ -12,7 +12,7 @@ if(isset($_POST['transaction']))
     $image_loc = $_FILES['image']['tmp_name'];
 	$image_size = $_FILES['image']['size'];
 	$image_type = $_FILES['image']['type'];
-	$folder = "resources/img/receipts/";
+	$folder = "../resources/img/receipts/";
     
     $new_image_name = strtolower($image);
     

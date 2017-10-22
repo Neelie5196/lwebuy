@@ -81,7 +81,7 @@ session_start();
                                                 {
                                             ?>
 
-                                            <p>Error</p>
+                                            <p>0</p>
 
                                             <?php }?>
                                         </div>
@@ -121,7 +121,7 @@ session_start();
                                                 {
                                             ?>
 
-                                            <p>Error</p>
+                                            <p>0</p>
 
                                             <?php }?>
                                         </div>
@@ -131,7 +131,7 @@ session_start();
                                 <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Pending parcel</p>
+                                            <p>Parcels proceeded</p>
                                             
                                             <p>
                                             <?php
@@ -161,7 +161,7 @@ session_start();
                                                 {
                                             ?>
 
-                                            <p>error</p>
+                                            <p>0</p>
 
                                             <?php }?>
                                         </div>
@@ -171,7 +171,7 @@ session_start();
                                 <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Parcel proceed</p>
+                                            <p>Parcels in-house</p>
                                             
                                             <p>
                                             <?php
@@ -186,7 +186,7 @@ session_start();
                                                 {
                                                     foreach($purchasesetting as $purchase)
                                                     {
-                                                        if ($purchase['status']=="Proceed")
+                                                        if ($purchase['status']=="received")
                                                         {
                                                             $count += 1;
                                                         }
@@ -201,7 +201,7 @@ session_start();
                                                 {
                                             ?>
 
-                                            <p>error</p>
+                                            <p>0</p>
 
                                             <?php }?>
                                         </div>
@@ -259,7 +259,7 @@ session_start();
                                                 {
                                             ?>
 
-                                            <p>Error</p>
+                                            <p>0</p>
 
                                             <?php }?>
                                         </div>
@@ -303,7 +303,7 @@ session_start();
                                                 {
                                             ?>
 
-                                            <p>Error</p>
+                                            <p>0</p>
 
                                             <?php }?>
                                         </div>
@@ -347,7 +347,7 @@ session_start();
                                                 {
                                             ?>
 
-                                            <p>Error</p>
+                                            <p>0</p>
 
                                             <?php }?>
                                         </div>
@@ -391,7 +391,7 @@ session_start();
                                                 {
                                             ?>
 
-                                            <p>Error</p>
+                                            <p>0</p>
 
                                             <?php }?>
                                         </div>
@@ -431,7 +431,7 @@ session_start();
                                         else:
                                     ?>
 
-                                    <p>Error</p>
+                                    <p>0</p>
                                     
                                     <?php endif; ?>
                                     
