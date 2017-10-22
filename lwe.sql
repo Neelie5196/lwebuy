@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2017 at 02:37 PM
+-- Generation Time: Oct 22, 2017 at 01:24 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -151,7 +151,7 @@ CREATE TABLE `inbox_reply` (
 
 CREATE TABLE `item` (
   `i_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `s_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `weight` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -171,23 +171,23 @@ CREATE TABLE `order_item` (
   `unit` int(15) NOT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
-  `status` varchar(15) DEFAULT NULL,
-  `order_code` varchar(20) DEFAULT NULL,
-  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `statuss` varchar(15) DEFAULT NULL,
+  `order_code` varchar(50) DEFAULT NULL,
+  `datetimes` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order_item`
 --
 
-INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`, `status`, `order_code`, `datetime`) VALUES
+INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`, `statuss`, `order_code`, `datetimes`) VALUES
 (85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '13.00', '', NULL, '2017-10-21 11:39:24'),
 (86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00', '', NULL, '2017-10-21 11:39:24'),
 (87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00', '', NULL, '2017-10-21 11:39:24'),
 (88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00', '', NULL, '2017-10-21 11:39:24'),
-(89, 4, '4', '4', '4', 4, '444', '219.00', 'Proceed', 'FREIGHT MARK - AIR', '2017-10-21 11:49:47'),
-(90, 9, '4', '4', '4', 4, '444', '219.00', '', NULL, '2017-10-21 11:39:24'),
-(91, 10, '4', '4', '4', 4, '444', '219.00', '', NULL, '2017-10-21 11:39:24'),
+(89, 4, '4', '4', '4', 4, '444', '219.00', 'Pending', 'FREIGHT MARK', '2017-10-22 11:13:51'),
+(90, 9, '4', '4', '4', 4, '444', '219.00', 'Received', '123', '2017-10-22 11:10:02'),
+(91, 10, '4', '4', '4', 4, '444', '219.00', 'Received', '234', '2017-10-22 11:16:08'),
 (92, 11, 'try', 'try', 'try', 2, 'try', NULL, NULL, NULL, '2017-10-21 11:39:24');
 
 -- --------------------------------------------------------
@@ -288,7 +288,7 @@ CREATE TABLE `receive_request` (
   `rr_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `order_code` int(15) NOT NULL,
+  `order_code` varchar(50) NOT NULL,
   `status` varchar(20) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -298,9 +298,9 @@ CREATE TABLE `receive_request` (
 --
 
 INSERT INTO `receive_request` (`rr_id`, `user_id`, `name`, `order_code`, `status`, `datetime`) VALUES
-(2, 10, '1', 1, 'Request', '2017-10-21 09:16:52'),
-(3, 10, '2', 2, 'Request', '2017-10-21 09:16:52'),
-(5, 10, '2', 3, 'Received', '2017-10-21 09:28:08');
+(2, 10, '1', 'P16050330', 'Request', '2017-10-22 10:07:09'),
+(3, 10, '2', 'FREIGHT MARK -SEA', 'Request', '2017-10-22 10:07:53'),
+(5, 10, '2', '3', 'Received', '2017-10-21 09:28:08');
 
 -- --------------------------------------------------------
 
@@ -721,6 +721,12 @@ ALTER TABLE `work_station`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `order_item`
+--
+ALTER TABLE `order_item`
+  ADD CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order_list` (`ol_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `order_list`

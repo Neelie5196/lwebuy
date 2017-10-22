@@ -67,7 +67,6 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                                             <th>Unit</th>
                                             <th>Price (RM)</th>
                                             <th>Order Code</th>
-                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <?php foreach($orderhistory as $order): 
@@ -84,7 +83,6 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                                             <td width="8%"><?php echo $order['unit']; ?></td>
                                             <td width="14%"><?php echo $order['price']; ?></td>
                                             <td width="15%"><?php echo $order['order_code']; ?></td>
-                                            <td width="10%"><?php echo $order['statuss']; ?></td>
                                         </tr>
                                     </tbody>
                                     <?php endforeach; ?>

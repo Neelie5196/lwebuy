@@ -6,10 +6,10 @@ if(isset($_POST['oi_id']))
     $order_id = $_POST['order_id'];
     $oi_id = $_POST['oi_id'];
     $ordercode = $_POST['ordercode'];
-    $status = 'Proceed';
+    $status = 'Pending';
     
 	
-	$result = mysql_query("UPDATE order_item SET order_code='$ordercode', status = '$status' WHERE oi_id = $oi_id ") or die(mysql_error());
+	$result = mysql_query("UPDATE order_item SET order_code='$ordercode', statuss = '$status' WHERE oi_id = $oi_id ") or die(mysql_error());
     ?>
     <script>
     alert('Success to Update');

@@ -98,7 +98,7 @@ $ordersrequest = $ordersrequestQuery->rowCount() ? $ordersrequestQuery : [];
                                         <td width="15%"><?php echo $order['datetime']; ?></td>
                                         <td width="15%"><?php echo $order['price']; ?></td>
                                         <td width="10%"><?php echo $order['status']; ?></td>
-                                        <td width="15%"><a href="orderhview.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="15%"><a href="orderhviews.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>

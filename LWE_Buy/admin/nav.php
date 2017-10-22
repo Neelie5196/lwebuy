@@ -22,8 +22,8 @@
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Warehouse <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
-                    <li><a href="received.php">Received Item</a></li>
-                    <li><a href="receivedhistory.php">Received History</a></li>
+                    <li><a href="store.php">Warehouse Store</a></li>
+                    <li><a href="storer.php">Store Records</a></li>
                     <li><a href="slotlist.php">Manage Slot</a></li>
                     <li><a href="warehouselist.php">Manage Warehouse</a></li>
                 </ul>

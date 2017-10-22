@@ -59,6 +59,7 @@ session_start();
                                 </div>
                             </div>
                             <input type="submit" class="btn btn-default" name="submit" value="Receive Form">
+                            <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>
                         </form>
                         
                     </div>
