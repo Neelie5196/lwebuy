@@ -30,12 +30,12 @@ session_start();
         <![endif]-->
     </head>
 
-    <body>
+    <body ng-app="">
         <div class="row">
             <?php include_once('nav.php')?>
         </div>
 
-        <div class="row" ng-app=""> 
+        <div class="row"> 
             <div class="col-xs-5 col-md-5 col-lg-5">
                 <a href="purchaselist.php">
                     <div class="row udashrow1">
@@ -537,19 +537,41 @@ session_start();
                         <!-- address -->
                         <h3>Warehouse details</h3>
                         
-                        <?php
-                            $wh_id = $_SESSION['user_id'] % 2;
+                        <form method="post" action="dashboard.php">
+                            <?php
+                                $warehousesettingQuery = $db->prepare("SELECT * FROM warehouse");
 
-                            $warehousesettingQuery = $db->prepare("SELECT * FROM warehouse WHERE wh_id=:wh_id");
+                                $warehousesettingQuery->execute();
 
-                            $warehousesettingQuery->execute(['wh_id' => $wh_id]);
+                                $warehousesetting = $warehousesettingQuery->rowCount() ? $warehousesettingQuery : [];
 
-                            $warehousesetting = $warehousesettingQuery->rowCount() ? $warehousesettingQuery : [];
+                                foreach($warehousesetting as $warehouse):
+                            ?>
+
+                            <input type="submit" name="getwarehouse" value="<?php echo $warehouse['country_description']; ?>"/>
                             
-                            foreach($warehousesetting as $warehouse):
-                        ?>
+                            <?php
+                                endforeach;
+                            ?>
+                        </form>
+                        
+                        <div>
+                            <?php
+                                $wh_id = 0;
                             
-                        <form>
+                                if (isset($_POST['getwarehouse']))
+                                {
+                                    $wh_country = $_POST['getwarehouse'];
+                                    
+                                    $warehousesettingQuery = $db->prepare("SELECT * FROM warehouse country_description=:wh_country");
+
+                                    $warehousesettingQuery->execute(['wh_country' => $wh_country]);
+
+
+                                    $warehousesetting = $warehousesettingQuery->rowCount() ? $warehousesettingQuery : [];
+
+                                    foreach($warehousesetting as $warehouse):
+                            ?>
                             <div class="row warehousedetr">
                                 <div class="col-xs-1 col-md-1 col-lg-1">
                                     <label for="stName">Name: </label>
@@ -579,11 +601,12 @@ session_start();
                                     <input type="text" id="stCty" name="stCty" value="<?php echo $warehouse['country_description']; ?>" class=" warehousedetfield" disabled/>
                                 </div>
                             </div>
-                        </form>
-                        
-                        <?php
-                            endforeach;
-                        ?>
+                            
+                            <?php
+                                    endforeach;
+                                }
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
