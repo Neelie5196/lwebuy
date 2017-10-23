@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         
         // Escape email to protect against SQL injections
         $email = $mysqli->escape_string($_POST['email']);
-        
+        $password = $mysqli->escape_string($_POST['password']);
         $result = $mysqli->query("SELECT * FROM users WHERE email='$email'");
         
         if ( $result->num_rows == 0 )
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $user = $result->fetch_assoc();
             
-            if ($_POST['password'] == $user['password'] )
+			if(password_verify($password, $user["password"]))  
             {    
                 $_SESSION['user_id'] = $user['user_id'];
 				$_SESSION['fname'] = $user['fname'];

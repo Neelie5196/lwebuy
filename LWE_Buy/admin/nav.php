@@ -15,15 +15,14 @@
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shipping <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
                     <li><a href="#">New Shipping</a></li>
-                    <li><a href="#">Updata Status</a></li>
+                    <li><a href="#">Update Status</a></li>
                     <li><a href="#">Shipping Request</a></li>
                     <li><a href="conprice.php">Shipping Price</a></li>
                 </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Warehouse <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
-                    <li><a href="store.php">Warehouse Store</a></li>
-                    <li><a href="storer.php">Store Records</a></li>
+                    <li><a href="store.php">Received Item</a></li>
                     <li><a href="slotlist.php">Manage Slot</a></li>
                     <li><a href="warehouselist.php">Manage Warehouse</a></li>
                 </ul>
@@ -39,8 +38,10 @@
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Other <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
-                    <li><a href="#">Credit History</a></li>
+                    <li><a href="credithistory.php">Credit History</a></li>
                     <li><a href="#">Currency Adjustment</a></li>
+					<li><a href="packagelist.php">Package</a></li>
+					<li><a href="topup.php">Add Point</a></li>
                     <li><a href="feedback.php">Feedback</a></li>
                 </ul>
             </li>

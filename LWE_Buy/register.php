@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $fname = $_POST['fname'];
             $email = $_POST['email'];
             $password = $_POST['password'];
+			$password = password_hash($password, PASSWORD_DEFAULT); 
 
             $sql = "INSERT INTO users (email, password, lname, fname, type) VALUES ('$email', '$password', '$lname', '$fname', 'customer')";
             mysql_query($sql);
@@ -82,11 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                     <table>
 										<tr>
                                             <td class="formfield"><label for="fname">First name:</label></td>
-                                            <td class="formfield"><input type="text" class="form-control" id="fname" name="fname" required/></td>
+                                            <td class="formfield"><input type="text" class="form-control" id="fname" name="fname" required autofocus/></td>
                                         </tr>
                                         <tr>
                                             <td class="formfield"><label for="lname">Last name:</label></td>
-                                            <td class="formfield"><input type="text" class="form-control" id="lname" name="lname" required autofocus/></td>
+                                            <td class="formfield"><input type="text" class="form-control" id="lname" name="lname" required/></td>
                                         </tr>
                                         <tr>
                                             <td class="formfield"><label for="email">Email: </label></td>

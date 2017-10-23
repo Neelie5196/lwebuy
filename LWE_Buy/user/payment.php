@@ -16,6 +16,9 @@ session_start();
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+		<!-- AngularJS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		
         <!--stylesheet-->
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -35,7 +38,7 @@ session_start();
         </style>
     </head>
 
-    <body background="../resources/img/bg.jpg">
+    <body background="../resources/img/bg.jpg" ng-app="">
         <div class="row">
             <?php include_once('nav.php')?>
         </div>

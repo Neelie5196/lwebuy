@@ -36,9 +36,9 @@ session_start();
                 <a href="orderrequest.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <h1>New Orders</h1>
+                            <h2>New Orders</h2>
                             
-                            <h2 class="admindash">
+                            <h3 class="admindash">
                                 <?php
                                     $count = 0; 
             
@@ -71,7 +71,7 @@ session_start();
                                         echo "Error";
                                     }
                                 ?>
-                            </h2>
+                            </h3>
                         </div>
                     </div>
                 </a>
@@ -81,9 +81,9 @@ session_start();
                 <a href="#">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <h1>New Transactions</h1>
+                            <h2>New Transactions</h2>
                             
-                            <h2 class="admindash">
+                            <h3 class="admindash">
                                 <?php
                                     $count = 0; 
             
@@ -116,7 +116,7 @@ session_start();
                                         echo "Error";
                                     }
                                 ?>
-                            </h2>
+                            </h3>
                         </div>
                     </div>
                 </a>
@@ -126,9 +126,9 @@ session_start();
                 <a href="feedback.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <h1>New Feedbacks</h1>
+                            <h2>New Feedbacks</h2>
                             
-                            <h2 class="admindash">
+                            <h3 class="admindash">
                                 <?php
                                     $count = 0; 
             
@@ -154,7 +154,7 @@ session_start();
                                         echo "Error";
                                     }
                                 ?>
-                            </h2>
+                            </h3>
                         </div>
                     </div>
                 </a>
@@ -166,9 +166,9 @@ session_start();
                 <a href="customerlist.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <h1>Existing Users</h1>
+                            <h2>Existing Users</h2>
                             
-                            <h2 class="admindash">
+                            <h3 class="admindash">
                                 <?php
                                     $count = 0; 
             
@@ -201,7 +201,7 @@ session_start();
                                         echo "Error";
                                     }
                                 ?>
-                            </h2>
+                            </h3>
                         </div>
                     </div>
                 </a>
@@ -211,9 +211,9 @@ session_start();
                 <a href="customerlist.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <h1>Total Orders Done</h1>
+                            <h2>Total Orders Done</h2>
                             
-                            <h2 class="admindash">
+                            <h3 class="admindash">
                                 <?php
                                     $count = 0; 
             
@@ -246,7 +246,7 @@ session_start();
                                         echo "Error";
                                     }
                                 ?>
-                            </h2>
+                            </h3>
                         </div>
                     </div>
                 </a>
@@ -256,9 +256,9 @@ session_start();
                 <a href="customerlist.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <h1>Total Items Shipped</h1>
+                            <h2>Total Items Shipped</h2>
                             
-                            <h2 class="admindash">
+                            <h3 class="admindash">
                                 <?php
                                     $count = 0; 
             
@@ -291,7 +291,7 @@ session_start();
                                         echo "Error";
                                     }
                                 ?>
-                            </h2>
+                            </h3>
                         </div>
                     </div>
                 </a>
@@ -301,9 +301,9 @@ session_start();
                 <a href="customerlist.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <h1>Total Profit</h1>
+                            <h2>Total Profit</h2>
                             
-                            <h2 class="admindash">
+                            <h3 class="admindash">
                                 <?php
                                     $count = 0; 
             
@@ -336,7 +336,7 @@ session_start();
                                         echo "0";
                                     }
                                 ?>
-                            </h2>
+                            </h3>
                         </div>
                     </div>
                 </a>

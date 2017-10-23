@@ -12,16 +12,15 @@
             
             <div class="barcode">
                 <?php
-                    require_once('../frameworks/barcode/class/BCGFont.php');
-                    require_once('../frameworks/barcode/class/BCGcolor.php');
-                    require_once('../frameworks/barcode/class/BCGDrawing.php');
-                    require_once('../frameworks/barcode/class/BCGcode128.barcode.php');
+                    require_once('../frameworks/barcode5/class/BCGColor.php');
+                    require_once('../frameworks/barcode5/class/BCGDrawing.php');
+                    require_once('../frameworks/barcode5/class/BCGcode128.barcode.php');
                 
                     $colorFront = new BCGColor(0, 0, 0);
                     $colorBack = new BCGColor(255, 255, 255);
                 
                     $code = new BCGcode128();
-                    $code->setScale(1);
+                    $code->setScale(2);
                     $code->setColor($colorFront, $colorBack);
                     $code->parse('123987');
                 

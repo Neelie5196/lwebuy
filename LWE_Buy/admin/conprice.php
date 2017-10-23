@@ -29,11 +29,14 @@ $result3 = mysqli_query($con, "SELECT * FROM poslaju WHERE place='east'");
         </div>
 		<div class="container">
 			<div class ="row">
+			<div class="col-md-12">
 			<h1>West Malaysia Postage Fee</h1>
+			<a href="#" class="btn btn-xs btn-info">Add New Data</a>
+			</div>
 			<div class="col-md-6">
 			<table class="table table-bordered">
 			<img style="float:left" src="../resources/img/abx.png" class="img-responsive" alt="Cinque Terre" width="60" height="50"> 
-			<h3>&nbsp PosLaju<a href="add.html">Add New Data</a></div></h3>
+			<h3>&nbsp PosLaju</div></h3>
 		
 		<thead>
 						<tr>
@@ -54,7 +57,6 @@ $result3 = mysqli_query($con, "SELECT * FROM poslaju WHERE place='east'");
 			<tbody>
 			</table>
 			</div>
-		
 			<div class="col-md-6">
 						<table class="table table-bordered">
 							<img style="float:left" src="../resources/img/skynet.jpg" class="img-responsive" alt="Cinque Terre" width="60" height="50"> 							
