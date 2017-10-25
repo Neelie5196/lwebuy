@@ -5,17 +5,30 @@ session_start();
 $_SESSION['order_id'] = $_GET['order_id'];
 $counter = 0; 
 
-$orderhistoryQuery = $db->prepare("
+$purchaseitemQuery = $db->prepare("
     SELECT *
     FROM order_item
     WHERE order_id=:order_id
 ");
 
-$orderhistoryQuery->execute([
+$purchaseitemQuery->execute([
     'order_id' => $_SESSION['order_id']
 ]);
 
-$orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
+$purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
+
+
+$bankreceiptQuery = $db->prepare("
+    SELECT *
+    FROM payment
+    WHERE from_id=:from_id
+");
+
+$bankreceiptQuery->execute([
+    'from_id' => $_SESSION['order_id']
+]);
+
+$bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
 
 ?>
 
@@ -56,8 +69,8 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                     <div class="row">
                         <form action="#">
                             <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                                <?php if(!empty($orderhistory)): ?>
-                                <table class="table thead-bordered table-hover orderhistory" style="width:100%">
+                                <?php if(!empty($purchaseitem)): ?>
+                                <table class="table thead-bordered table-hover purchaseitem" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -68,25 +81,32 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                                             <th>Price (RM)</th>
                                         </tr>
                                     </thead>
-                                    <?php foreach($orderhistory as $order): 
+                                    <?php foreach($purchaseitem as $purchase): 
                                     {
                                         $counter++;
                                     }
                                     ?>
-                                    <tbody class="order">
+                                    <tbody class="purchase">
                                         <tr>
                                             <td width="5%"><?php echo $counter; ?></td>
-                                            <td width="20%"><?php echo $order['name']; ?></td>
-                                            <td width="20%"><a href="<?php echo $order['link']; ?>" target="_blank"><?php echo $order['link']; ?></a></td>
-                                            <td width="8%"><?php echo $order['type']; ?></td>
-                                            <td width="8%"><?php echo $order['unit']; ?></td>
-                                            <td width="14%"><?php echo $order['price']; ?></td>
+                                            <td width="20%"><?php echo $purchase['name']; ?></td>
+                                            <td width="20%"><a href="<?php echo $purchase['link']; ?>" target="_blank"><?php echo $purchase['link']; ?></a></td>
+                                            <td width="8%"><?php echo $purchase['type']; ?></td>
+                                            <td width="8%"><?php echo $purchase['unit']; ?></td>
+                                            <td width="14%"><?php echo $purchase['price']; ?></td>
                                         </tr>
                                     </tbody>
                                     <?php endforeach; ?>
                                 </table>
                                 <?php else: 
-                                    Error
+                                
+                                    if(isset($_GET['order_id'])){
+                                        $order_id = $_GET['order_id'];
+
+                                        $result = mysql_query("DELETE FROM order_list WHERE ol_id=$order_id") or die(mysql_error());
+
+                                    }
+                                    header("location: purchaselist.php");
                                 ?>
                                 <?php endif; ?>
                                 <?php
@@ -98,8 +118,21 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                                 <?php
                                     }
                                 ?>
+                                <?php 
+                                    if(!empty($bankreceipt)): 
+                                        foreach($bankreceipt as $bank):
+                                ?>
+                                <tfoot>
+                                    <tr>
+                                        <td><label style="float: left;">Bank in Receipt:</label> <em style="float:left;"> <a href="../resources/img/receipts/<?php echo $bank['file']; ?>" target="_blank"><?php echo $bank['file']; ?></a></em></td>
+                                    </tr>
+                                </tfoot>
+                                <?php 
+                                        endforeach; 
+                                    endif;
+                                ?>
                             </div>
-                            <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>
+                            <a href="javascript:history.go(-1)" class="btn btn-default" name="back">Back</a>
                         </form>
                     </div>
                 </div>

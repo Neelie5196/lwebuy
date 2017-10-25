@@ -3,42 +3,45 @@ require_once '../connection/config.php';
 session_start();
 
 if(isset($_POST['transaction']))
-{
+{    
+     
+	$file = rand(1000,100000)."-".$_FILES['file']['name'];
+    $file_loc = $_FILES['file']['tmp_name'];
+	$file_type = $_FILES['file']['type'];
+	$folder="../resources/img/receipts/";
+    
     $user_id = $_SESSION['user_id'];
-    $transno = $_POST['transno'];
-    $transamt = $_POST['transamt'];
-    
-    $image = $transno.$_FILES['image']['name'];
-    $image_loc = $_FILES['image']['tmp_name'];
-	$image_size = $_FILES['image']['size'];
-	$image_type = $_FILES['image']['type'];
-	$folder = "../resources/img/receipts/";
-    
-    $new_image_name = strtolower($image);
-    
-    $final_image=str_replace(' ','-',$new_image_name);
-    
-    if(move_uploaded_file($image_loc,$folder.$final_image))
-    {
-        $sql="INSERT INTO credit(user_id, amount, status, reference_code, receipt) VALUES('$user_id','$transamt','pending','$transno','$final_image')";
+    $title = $_POST['reloadamt'];
+    $reload = 'Reload';
+    $point = 'Point';
+    $amount = $_POST['amount'];
+    $status = 'Waiting for Approve';
+	
+	// make file name in lower case
+	$new_file_name = strtolower($file);
+	// make file name in lower case
+	
+	$final_file=str_replace(' ','-',$new_file_name);
+	
+	if(move_uploaded_file($file_loc,$folder.$final_file))
+	{
+		$sql="INSERT INTO payment(user_id,datetime,title,amount,file,type,status) VALUES('$user_id', NOW(), '$reload $title $point', '$amount', '$final_file', '$file_type', '$status')";
 		mysql_query($sql);
-?>
-
+		?>
 		<script>
-		alert('Sumission successful!');
-        window.location.href='creditcheck.php?success';
+		alert('successfully Submit');
+        window.location.href='dashboard.php?success';
         </script>
-<?php
-    }
+		<?php
+	}
 	else
 	{
-?>
-
+		?>
 		<script>
-		alert('Submission failed.');
-        window.location.href='creditcheck.php?fail';
+		alert('Error While Submit, please try again!!');
+        window.location.href='dashboard.php?fail';
         </script>
-<?php
-    }
+		<?php
+	}
 }
 ?>

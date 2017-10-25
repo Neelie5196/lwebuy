@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2017 at 08:08 AM
+-- Generation Time: Oct 25, 2017 at 03:06 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -96,27 +96,6 @@ INSERT INTO `contact` (`cu_id`, `name`, `contact`, `email`, `subject`, `tracknum
 -- --------------------------------------------------------
 
 --
--- Table structure for table `credit`
---
-
-CREATE TABLE `credit` (
-  `c_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `amount` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `credit`
---
-
-INSERT INTO `credit` (`c_id`, `user_id`, `description`, `datetime`, `amount`) VALUES
-(1, 10, '', '2017-10-22 19:21:29', '10.00');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `inbox`
 --
 
@@ -181,12 +160,13 @@ CREATE TABLE `order_item` (
 INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`, `statuss`, `order_code`, `datetimes`) VALUES
 (85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '13.00', '', NULL, '0000-00-00 00:00:00'),
 (86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00', '', NULL, '0000-00-00 00:00:00'),
-(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00', '', NULL, '0000-00-00 00:00:00'),
-(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00', '', NULL, '0000-00-00 00:00:00'),
+(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00', 'Pending', '123', '2017-10-25 12:51:35'),
+(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00', 'Pending', '234', '2017-10-25 12:51:38'),
 (89, 4, '4', '4', '4', 4, '444', '219.00', 'Pending', 'FREIGHT MARK', '0000-00-00 00:00:00'),
 (90, 9, '4', '4', '4', 4, '444', '219.00', 'Received', '123', '0000-00-00 00:00:00'),
 (91, 10, '4', '4', '4', 4, '444', '219.00', 'Received', '234', '0000-00-00 00:00:00'),
-(92, 11, 'try', 'try', 'try', 2, 'try', NULL, NULL, NULL, '0000-00-00 00:00:00');
+(92, 11, 'try', 'try', 'try', 2, 'try', NULL, NULL, NULL, '0000-00-00 00:00:00'),
+(93, 12, '1', '2', '1', 2, '12', NULL, NULL, NULL, '2017-10-25 11:58:40');
 
 -- --------------------------------------------------------
 
@@ -208,11 +188,12 @@ CREATE TABLE `order_list` (
 
 INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VALUES
 (2, 10, 'Request', '2017-10-23 06:25:31', '35.00'),
-(3, 10, 'Ready to Pay', '2017-10-23 06:26:04', '35.00'),
+(3, 10, 'Ready to Pay', '2017-10-25 13:04:19', '35.00'),
 (4, 10, 'Paid', '2017-10-23 06:25:45', '23.00'),
 (9, 10, 'Proceed', '2017-10-23 06:25:45', NULL),
 (10, 10, 'Received', '2017-10-23 06:25:45', '219.00'),
-(11, 10, 'Request', '2017-10-22 08:46:13', NULL);
+(11, 10, 'Request', '2017-10-22 08:46:13', NULL),
+(12, 10, 'Request', '2017-10-25 11:58:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -223,7 +204,6 @@ INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VAL
 CREATE TABLE `package` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL,
   `price` double(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -231,11 +211,11 @@ CREATE TABLE `package` (
 -- Dumping data for table `package`
 --
 
-INSERT INTO `package` (`id`, `name`, `image`, `price`) VALUES
-(1, '100 PTS', 'apple_6s.png', 100.00),
-(2, '300 PTS', 'apple_6s.png', 300.00),
-(3, '5000 PTS', '', 5000.00),
-(4, '10000 PTS', '', 10000.00);
+INSERT INTO `package` (`id`, `name`, `price`) VALUES
+(1, '100 PTS', 100.00),
+(2, '300 PTS', 300.00),
+(3, '5000 PTS', 5000.00),
+(4, '10000 PTS', 10000.00);
 
 -- --------------------------------------------------------
 
@@ -269,36 +249,24 @@ CREATE TABLE `payment` (
   `p_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `title` varchar(45) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
-  `order_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `paypack`
---
-
-CREATE TABLE `paypack` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `price` double(10,2) NOT NULL,
-  `details` varchar(255) NOT NULL,
-  `time` datetime NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `add_on` int(11) NOT NULL,
-  `topuptime` datetime NOT NULL,
-  `user_name` varchar(255) NOT NULL
+  `file` varchar(150) NOT NULL,
+  `type` varchar(30) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `from_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `paypack`
+-- Dumping data for table `payment`
 --
 
-INSERT INTO `paypack` (`id`, `user_id`, `name`, `price`, `details`, `time`, `status`, `add_on`, `topuptime`, `user_name`) VALUES
-(1, 1, '100 PTS', 100.00, '1. RHB\r\n2. RM100\r\n3.', '2017-10-23 13:54:15', 'Completed', 100, '2017-10-23 13:55:08', 'Albert'),
-(2, 10, '100 PTS', 100.00, 'ddw', '2017-10-23 14:55:26', 'Completed', 100, '2017-10-23 14:55:50', 'Desmond');
+INSERT INTO `payment` (`p_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`, `from_id`) VALUES
+(5, 10, '2017-10-25 11:25:50', '6666', '66.66', '74679-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', 0),
+(6, 1, '2017-10-25 11:17:10', '444', '4.44', '8761-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0),
+(7, 10, '2017-10-25 09:55:22', 'Reload + 222', '2.22', '27001-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', 0),
+(8, 10, '2017-10-25 11:17:10', 'Reload 1', '0.01', '98523-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0),
+(9, 10, '2017-10-25 10:09:05', 'Reload 444 Point', '4.44', '76809-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0);
 
 -- --------------------------------------------------------
 
@@ -317,7 +285,8 @@ CREATE TABLE `point` (
 --
 
 INSERT INTO `point` (`id`, `user_id`, `point`) VALUES
-(1, 1, 5000);
+(1, 10, 20000),
+(3, 1, 444);
 
 -- --------------------------------------------------------
 
@@ -348,19 +317,6 @@ INSERT INTO `poslaju` (`id`, `weight`, `price`, `place`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `receive_item`
---
-
-CREATE TABLE `receive_item` (
-  `id` int(11) NOT NULL,
-  `barcode` varchar(55) NOT NULL,
-  `o_id` int(11) NOT NULL,
-  `time` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `receive_request`
 --
 
@@ -380,7 +336,8 @@ CREATE TABLE `receive_request` (
 INSERT INTO `receive_request` (`rr_id`, `user_id`, `name`, `order_code`, `status`, `datetime`) VALUES
 (2, 10, '1', '9789861985350', 'Request', '2017-10-23 07:00:30'),
 (3, 10, '2', '2', 'Request', '2017-10-21 09:16:52'),
-(5, 10, '2', '3', 'Received', '2017-10-21 09:28:08');
+(5, 10, '2', '3', 'Received', '2017-10-21 09:28:08'),
+(6, 10, '1', '1', 'Request', '2017-10-25 11:59:03');
 
 -- --------------------------------------------------------
 
@@ -457,7 +414,7 @@ INSERT INTO `slot` (`s_id`, `slot_code`, `slot_num`, `status`, `user_id`) VALUES
 (6, 3000, 6, 'In Use', 7),
 (7, 4000, 7, 'Not in Use', NULL),
 (8, 4000, 8, 'Not in Use', NULL),
-(9, 5000, 9, 'In Use', 24),
+(9, 5000, 9, 'In Use', 2),
 (10, 5000, 10, 'Not in Use', NULL);
 
 -- --------------------------------------------------------
@@ -510,8 +467,7 @@ INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`
 (6, 'Fabian', 'Tang', NULL, 'fabian@email.com', '$2y$10$E3CcjibNLt/D79t7soUKve1j1JoZDUmMuVjgP1Piigugao6GG9F3C', 'staff'),
 (7, 'Gordon', 'Yii', NULL, 'gordon@email.com', '$2y$10$uOpSbmMFqUesTmvPklp56OHMcAb..qshAlOz31xUN0LeXuYMYddYK', 'customer'),
 (8, 'Samuel', 'Hto', NULL, 'samuel@email.com', '$2y$10$nuOJ73sWDmZsWvdrR.bLkOyNaXCXCj2fz1BWTsE3PYJaxA7k2KRo.', 'admin'),
-(10, 'Desmond', 'Kuok', NULL, 'desmond@email.com', '$2y$10$pLraOonvL8szr4M/YISX/uX1xZZbbM9Tabe4CeX0iZVhq.9vXjVoO', 'customer'),
-(24, '5', '', '', '', '', '');
+(10, 'Desmond', 'Kuok', NULL, 'desmond@email.com', '$2y$10$pLraOonvL8szr4M/YISX/uX1xZZbbM9Tabe4CeX0iZVhq.9vXjVoO', 'customer');
 
 -- --------------------------------------------------------
 
@@ -554,8 +510,7 @@ CREATE TABLE `work_station` (
 --
 
 INSERT INTO `work_station` (`ws_id`, `user_id`, `wh_id`) VALUES
-(1, 3, 1),
-(2, 24, 0);
+(1, 3, 1);
 
 --
 -- Indexes for dumped tables
@@ -578,12 +533,6 @@ ALTER TABLE `address`
 --
 ALTER TABLE `contact`
   ADD PRIMARY KEY (`cu_id`);
-
---
--- Indexes for table `credit`
---
-ALTER TABLE `credit`
-  ADD PRIMARY KEY (`c_id`);
 
 --
 -- Indexes for table `inbox`
@@ -636,12 +585,6 @@ ALTER TABLE `payment`
   ADD PRIMARY KEY (`p_id`);
 
 --
--- Indexes for table `paypack`
---
-ALTER TABLE `paypack`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `point`
 --
 ALTER TABLE `point`
@@ -651,12 +594,6 @@ ALTER TABLE `point`
 -- Indexes for table `poslaju`
 --
 ALTER TABLE `poslaju`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `receive_item`
---
-ALTER TABLE `receive_item`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -736,11 +673,6 @@ ALTER TABLE `address`
 ALTER TABLE `contact`
   MODIFY `cu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `credit`
---
-ALTER TABLE `credit`
-  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
 -- AUTO_INCREMENT for table `inbox`
 --
 ALTER TABLE `inbox`
@@ -759,17 +691,17 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT for table `order_item`
 --
 ALTER TABLE `order_item`
-  MODIFY `oi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `oi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 --
 -- AUTO_INCREMENT for table `order_list`
 --
 ALTER TABLE `order_list`
-  MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ol_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `parcel`
 --
@@ -779,32 +711,22 @@ ALTER TABLE `parcel`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `paypack`
---
-ALTER TABLE `paypack`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `point`
 --
 ALTER TABLE `point`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `poslaju`
 --
 ALTER TABLE `poslaju`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT for table `receive_item`
---
-ALTER TABLE `receive_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `receive_request`
 --
 ALTER TABLE `receive_request`
-  MODIFY `rr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `rr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `shipping`
 --
@@ -819,7 +741,7 @@ ALTER TABLE `skynet`
 -- AUTO_INCREMENT for table `slot`
 --
 ALTER TABLE `slot`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `track_detail`
 --
@@ -839,7 +761,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `work_station`
 --

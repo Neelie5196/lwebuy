@@ -17,6 +17,19 @@ $orderhistoryQuery->execute([
 
 $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
 
+$bankreceiptQuery = $db->prepare("
+    SELECT *
+    FROM payment
+    WHERE from_id=:from_id
+");
+
+$bankreceiptQuery->execute([
+    'from_id' => $_SESSION['order_id']
+]);
+
+$bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -102,11 +115,19 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
                                 <?php
                                     }
                                 ?>
+                                <?php 
+                                if(!empty($bankreceipt)): 
+                                    foreach($bankreceipt as $bank):
+                                ?>
                                 <tfoot>
                                     <tr>
-                                        <td><label style="float: left;">Bank in Receipt:</label> <em></em></td>
+                                        <td><label style="float: left;">Bank in Receipt:</label> <em style="float:left;"> <a href="../resources/img/receipts/<?php echo $bank['file']; ?>" target="_blank"><?php echo $bank['file']; ?></a></em></td>
                                     </tr>
                                 </tfoot>
+                                <?php 
+                                        endforeach; 
+                                    endif;
+                                ?>
                             </div>
                             <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>
                         </form>

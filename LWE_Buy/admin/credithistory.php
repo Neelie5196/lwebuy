@@ -6,7 +6,9 @@ session_start();
 $counter = 0; 
 $packagelistQuery = $db->prepare("
     SELECT *
-    FROM paypack
+    FROM payment p
+    JOIN users us
+    ON us.user_id = p.user_id
     WHERE status = 'Completed'
 ");
 
@@ -48,16 +50,24 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
 
         <section class = "content">
             <div class="container">
-			 <div class="row" style="padding-top: 10px; padding-bottom: 15px;">
+                <div class="row" style="padding-top: 10px; padding-bottom: 15px;">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <h2>Credit History</h2>
                     </div>
                 </div>
-                    <div class="row">
+                <div class="row">
 		
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <?php if(!empty($packagelist)): ?>
                             <table class="table thead-bordered table-hover userslist">
+                                <thead>
+                                    <tr>
+                                        <th width = "5%">#</th>
+                                        <th width = "60%">Description</th>
+                                        <th width = "20%">Receipt</th>
+                                        <th width = "15%">Date / Time</th>
+                                    </tr>
+                                </thead>
 
                                 <?php foreach($packagelist as $package): 
                                 {
@@ -68,8 +78,9 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                                 <tbody class="users">
                                     <tr>
 										<td><?php echo $counter; ?></td>
-										<td><strong>Top Up&nbsp;<strong><?php echo $package['add_on']; ?><strong>&nbsp;To&nbsp;</strong><?php echo $package['user_name']; ?>&nbspat&nbsp;<?php echo $package['topuptime']; ?></td>
-                                     
+										<td><strong><?php echo $package['title']; ?> To <?php echo $package['fname']; ?> <?php echo $package['lname']; ?></strong></td>
+										<td><a href="../resources/img/receipts/<?php echo $package['file']; ?>" target="_blank"><?php echo $package['file']; ?></a></td>
+										<td><?php echo $package['datetime']; ?></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
@@ -78,8 +89,8 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                                 <p>There is no history.</p>
                             <?php endif; ?>                                   
                         </div>
-                    </div>
                 </div>
+            </div>
         </section>
 
     </body>

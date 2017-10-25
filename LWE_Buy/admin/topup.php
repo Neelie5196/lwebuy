@@ -6,8 +6,10 @@ session_start();
 $counter = 0; 
 $packagelistQuery = $db->prepare("
     SELECT *
-    FROM paypack
-    WHERE status != 'Completed'
+    FROM payment p
+    JOIN users us
+    ON us.user_id = p.user_id
+    WHERE status = 'Waiting for Approve'
 ");
 
 $packagelistQuery->execute([
@@ -45,6 +47,13 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
         <div class="row">
             <?php include_once('nav.php')?>
         </div>
+        <div class="container">
+            <div class="row" style="padding-top: 10px; padding-bottom: 15px;">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <h2>Top Up Request</h2>
+                </div>
+            </div>
+        </div>
 
         <section class = "content">
             <div class="container">
@@ -53,14 +62,15 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <?php if(!empty($packagelist)): ?>
                             <table class="table thead-bordered table-hover userslist">
-                                <h4 align="left"><a href="createpackage.php" class="btn btn-xs btn-info">Add</a></h4>
 								<thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Package</th>
-										<th>Pay at</th>
-										<th>status</th>
-
+                                        <th width = "4%">#</th>
+                                        <th width = "18%">Name</th>
+                                        <th width = "18%">Detail</th>
+                                        <th width = "10%">Amount</th>
+                                        <th width = "15%">Created</th>
+                                        <th width = "20%">Receipt</th>
+                                        <th width = "10%">Status</th>
                                     </tr>
                                 </thead>
                                 <?php foreach($packagelist as $package): 
@@ -72,10 +82,13 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                                 <tbody class="users">
                                     <tr>
                                         <td><?php echo $counter; ?></td>
-                                        <td width="20%"><?php echo $package['name']; ?></td>
-                                        <td width="20%"><?php echo $package['time']; ?></td>
-										<td width="20%"><?php echo $package['status']; ?></td>
-                                        <td width="20%"><a href="updatepoint.php?id=<?php echo $package['id']; ?>" class="btn btn-xs btn-warning">Top Up</a></td>
+                                        <td><?php echo $package['fname']; ?> <?php echo $package['lname']; ?></td>
+                                        <td><?php echo $package['title']; ?></td>
+                                        <td>RM <?php echo $package['amount']; ?></td>
+                                        <td><?php echo $package['datetime']; ?></td>
+                                        <td><a href="../resources/img/receipts/<?php echo $package['file']; ?>" target="_blank"><?php echo $package['file']; ?></a></td>
+                                        <td><a href="#" class="btn btn-xs btn-info"><?php echo $package['status']; ?></a></td>
+                                        <td><a href="updatepoint.php?user_id=<?php echo $package['user_id']; ?>&p_id=<?php echo $package['p_id']; ?>&point=<?php echo $package['amount']; ?>" class="btn btn-xs btn-warning">Top Up</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>

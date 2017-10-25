@@ -216,7 +216,7 @@ $purchase4list = $purchase4listQuery->rowCount() ? $purchase4listQuery : [];
                                         <td width="40%"><?php echo $purchase3['datetime']; ?></td>
                                         <td width="20%"><?php echo $purchase3['price']; ?></td>
                                         <td width="20%"><?php echo $purchase3['status']; ?></td>
-                                        <td width="15%"><a href="purchasehview.php?order_id=<?php echo $purchase3['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="15%"><a href="purchasephview.php?order_id=<?php echo $purchase3['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>

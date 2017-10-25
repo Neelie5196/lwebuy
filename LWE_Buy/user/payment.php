@@ -65,9 +65,10 @@ session_start();
                                         <h3>Upload Banking Receipt</h3>
                                         <div class="row">
                                             <div class="col-xs-12 col-md-12 col-lg-12">
-                                                <input type="text" name="title" class="form-control" placeholder="Title" style="border-radius: 30px; width: 50%;" required><br/>
-                                                <input type="file" name="file" />
+                                                <label>Transaction receipt: </label>
+                                                <input type="file" name="file" required/>
                                                 <input type="hidden" name="order_id" class="form-control" value="<?php echo $_POST['order_id']; ?>">
+                                                <input type="hidden" name="amount" class="form-control" value="<?php echo $_POST['pricetotal']; ?>">
                                                 <br/>
                                                 <input type="submit" class="btn btn-success" name="submit" value="Upload">
                                             </div>
@@ -79,8 +80,8 @@ session_start();
                                             <p>Banking Details </p>
                                             <div class="details">
                                                 <p>Bank: Maybank</p>
-                                                <p>Acount No: 123456789</p>
-                                                <p>Name: Logistics Worldwide Express(M) Sdn Bhd</p>
+                                                <p>Account No: 123456789</p>
+                                                <p>Account Name: Logistics Worldwide Express(M) Sdn Bhd</p>
                                             </div>
                                         </div>
                                     </div>
@@ -94,9 +95,33 @@ session_start();
                                         <div class="row">
                                             <div class="col-xs-12 col-md-12 col-lg-12">
                                                 <div class="details">
-                                                    <p>LWE point: ######</p>
+                                                    <?php
+                                                        $pointbalanceQuery = $db->prepare("SELECT * FROM point WHERE user_id=:user_id");
+
+                                                        $pointbalanceQuery->execute(['user_id' => $_SESSION['user_id']]);
+
+                                                        $pointbalance = $pointbalanceQuery->rowCount() ? $pointbalanceQuery : [];
+
+                                                        if(!empty($pointbalance)):
+                                                            foreach($pointbalance as $point):
+                                                    ?>
+
+                                                        <p>LWE point: <?php echo $point['point']; ?></p>
+                                                    <?php
+                                                        endforeach;
+                                                        else:
+                                                    ?>
+                                                        <p>0</p>
+                                                    <?php endif; ?>
                                                     <p><button type="button" class="btn btn-default btntopup" data-toggle="modal" data-target="#topupModal">Top Up</button></p>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <p>RM <?php echo $_POST['pricetotal']; ?> = <?php echo $_POST['pricetotal']*100; ?> point</p>
+                                                <input type="submit" class="btn btn-success" name="pay" value="Pay Now">
                                             </div>
                                         </div>
                                     </form>
@@ -111,23 +136,36 @@ session_start();
         <div id="topupModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="reload.php" method="post">
+                    <form action="reload.php" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
-                            <h4 class="modal-title">Credit Reload</h4>
+                            <h4 class="modal-title">Point Reload</h4>
                         </div>
 
                         <div class="modal-body">
-                            <p>Enter credit amount to reload</p>
+                            <p>Enter point amount to reload</p>
                             <p>
                                 <input type="number" name="reloadamt" ng-model="reloadamt" ng-init="reloadamt=1"/>
                             </p>
+
                             <p>
-                                Amount to be paid: RM {{reloadamt*1.57}}
+                                <input type="hidden" name="amount" value="{{reloadamt*0.01}}">
+                                Amount to be paid: RM {{reloadamt*0.01}}
                             </p>
+
+                            <p>Instructions for top up:<br/>
+                                Please bank in amount to the following bank account and submit transaction details. Thank you.</p>
+                            <p>
+                                Bank: Maybank<br/>
+                                Account No.: 123456789<br/>
+                                Account name: Logistics Worldwide Express(M) Sdn Bhd
+                            </p>
+
+                            <label for="file">Transaction receipt: </label>
+                            <input type="file" name="file" id="file" required/>
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-default" name="pay">Pay now</button>
+                            <button type="submit" class="btn btn-success" name="transaction">Submit</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>                                                    
