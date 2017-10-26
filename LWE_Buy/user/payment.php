@@ -90,7 +90,7 @@ session_start();
                                     <div class="vl"></div>
                                 </div>
                                 <div class="col-xs-12 col-md-5 col-lg-5">
-                                    <form action="#" method="post">
+                                    <form action="paidpurchase.php" method="post">
                                         <h3>Pay by LEW Point</h3>
                                         <div class="row">
                                             <div class="col-xs-12 col-md-12 col-lg-12">
@@ -105,7 +105,7 @@ session_start();
                                                         if(!empty($pointbalance)):
                                                             foreach($pointbalance as $point):
                                                     ?>
-
+                                                        <input type="hidden" name="point" class="form-control" value="<?php echo $point['point']; ?>">
                                                         <p>LWE point: <?php echo $point['point']; ?></p>
                                                     <?php
                                                         endforeach;
@@ -120,6 +120,8 @@ session_start();
                                         <br/>
                                         <div class="row">
                                             <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <input type="hidden" name="order_id" class="form-control" value="<?php echo $_POST['order_id']; ?>">
+                                                <input type="hidden" name="paypoint" class="form-control" value="<?php echo $_POST['pricetotal']*100; ?>">
                                                 <p>RM <?php echo $_POST['pricetotal']; ?> = <?php echo $_POST['pricetotal']*100; ?> point</p>
                                                 <input type="submit" class="btn btn-success" name="pay" value="Pay Now">
                                             </div>

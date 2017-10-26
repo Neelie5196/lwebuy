@@ -2,7 +2,7 @@
 require_once '../connection/config.php';
 session_start();
 
-if(isset($_POST['order_id']))
+if(isset($_POST['submit']))
 {    
     $order_id = $_POST['order_id'];
     $status = 'Paid';
@@ -32,7 +32,7 @@ if(isset($_POST['order_id']))
 		mysql_query($sql);
 		?>
 		<script>
-		alert('successfully Submit');
+		alert('Successfully Submit');
         window.location.href='purchaselist.php?success';
         </script>
 		<?php
@@ -47,4 +47,41 @@ if(isset($_POST['order_id']))
 		<?php
 	}
 }
+
+
+if(isset($_POST['pay']))
+{    
+    $order_id = $_POST['order_id'];
+    $status = 'Paid';
+    
+    $user_id = $_SESSION['user_id'];
+    $point = $_POST['point'];
+    $paypoint = $_POST['paypoint'];
+    $title = 'Pay by';
+    $points = 'Points';
+    $statuss = 'Waiting for Proceed';
+
+	if($point >= $paypoint)
+	{
+        $result = mysql_query("UPDATE order_list SET status='$status', datetime=NOW() WHERE ol_id = $order_id ") or die(mysql_error());
+        $result1 = mysql_query("UPDATE point SET point= point - '$paypoint' WHERE user_id = $user_id ") or die(mysql_error());
+		$result2 = mysql_query("INSERT INTO payment SET user_id='$user_id', datetime=NOW(), title='$title $points', file='$paypoint $points', status='$statuss', from_id='$order_id'") or die(mysql_error());
+		?>
+		<script>
+		alert('Successfully Submit');
+        window.location.href='purchaselist.php?success';
+        </script>
+		<?php
+	}
+	else
+	{
+		?>
+		<script>
+		alert('Please Reload before pay again, Thank you..');
+        window.location.href='purchaselist.php?order_id=<?php echo $order_id; ?>&fail';
+        </script>
+		<?php
+	}
+}
+
 ?>

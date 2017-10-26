@@ -53,7 +53,7 @@ session_start();
                                     {
                                         foreach($orders as $o)
                                         {
-                                            if ($o['status']=="pending")
+                                            if ($o['status']=="Request")
                                             {
                                                 $count += 1;
                                             }
@@ -78,7 +78,7 @@ session_start();
             </div>
             
             <div class="col-xs-4 col-md-4 col-lg-4">
-                <a href="#">
+                <a href="topup.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <h2>New Transactions</h2>
@@ -87,7 +87,7 @@ session_start();
                                 <?php
                                     $count = 0; 
             
-                                    $reloadQuery = $db->prepare("SELECT * FROM order_list");
+                                    $reloadQuery = $db->prepare("SELECT * FROM payment");
                                         
                                     $reloadQuery->execute();
                                         
@@ -98,7 +98,7 @@ session_start();
                                     {
                                         foreach($reload as $r)
                                         {
-                                            if ($o['status']=="pending")
+                                            if ($r['status']=="Waiting for Approve")
                                             {
                                                 $count += 1;
                                             }
@@ -132,18 +132,25 @@ session_start();
                                 <?php
                                     $count = 0; 
             
-                                    $feedbackQuery = $db->prepare("SELECT COUNT(*) FROM inbox");
+                                    $feedbackQuery = $db->prepare("SELECT * FROM contact");
                                         
                                     $feedbackQuery->execute();
                                         
-                                    $feedback = $ordersQuery->rowCount() ? $ordersQuery : [];
+                                    $feedback = $feedbackQuery->rowCount() ? $feedbackQuery : [];
             
                                     $count = 0;
                                     if(!empty($feedback))
                                     {
                                         foreach($feedback as $f)
                                         {
-                                            $count += 1;
+                                            if ($f['status']=="unread")
+                                            {
+                                                $count += 1;
+                                            }
+                                            else
+                                            {
+                                                $count = $count;
+                                            }
                                         }
                                         
                                     echo $count;

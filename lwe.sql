@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2017 at 03:06 PM
+-- Generation Time: Oct 26, 2017 at 08:09 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -188,7 +188,7 @@ CREATE TABLE `order_list` (
 
 INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VALUES
 (2, 10, 'Request', '2017-10-23 06:25:31', '35.00'),
-(3, 10, 'Ready to Pay', '2017-10-25 13:04:19', '35.00'),
+(3, 10, 'Ready to pay', '2017-10-26 05:12:56', '35.00'),
 (4, 10, 'Paid', '2017-10-23 06:25:45', '23.00'),
 (9, 10, 'Proceed', '2017-10-23 06:25:45', NULL),
 (10, 10, 'Received', '2017-10-23 06:25:45', '219.00'),
@@ -250,9 +250,9 @@ CREATE TABLE `payment` (
   `user_id` int(11) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `title` varchar(45) NOT NULL,
-  `amount` decimal(10,2) NOT NULL,
+  `amount` decimal(10,2) DEFAULT NULL,
   `file` varchar(150) NOT NULL,
-  `type` varchar(30) NOT NULL,
+  `type` varchar(30) DEFAULT NULL,
   `status` varchar(20) NOT NULL,
   `from_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -285,7 +285,7 @@ CREATE TABLE `point` (
 --
 
 INSERT INTO `point` (`id`, `user_id`, `point`) VALUES
-(1, 10, 20000),
+(1, 10, 16500),
 (3, 1, 444);
 
 -- --------------------------------------------------------
@@ -335,7 +335,7 @@ CREATE TABLE `receive_request` (
 
 INSERT INTO `receive_request` (`rr_id`, `user_id`, `name`, `order_code`, `status`, `datetime`) VALUES
 (2, 10, '1', '9789861985350', 'Request', '2017-10-23 07:00:30'),
-(3, 10, '2', '2', 'Request', '2017-10-21 09:16:52'),
+(3, 10, '2', '2', 'Request', '2017-10-26 04:17:14'),
 (5, 10, '2', '3', 'Received', '2017-10-21 09:28:08'),
 (6, 10, '1', '1', 'Request', '2017-10-25 11:59:03');
 
@@ -701,7 +701,7 @@ ALTER TABLE `order_list`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `parcel`
 --
@@ -711,7 +711,7 @@ ALTER TABLE `parcel`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `point`
 --
@@ -741,7 +741,7 @@ ALTER TABLE `skynet`
 -- AUTO_INCREMENT for table `slot`
 --
 ALTER TABLE `slot`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `track_detail`
 --
@@ -756,17 +756,17 @@ ALTER TABLE `track_summary`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `wh_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `work_station`
 --
 ALTER TABLE `work_station`
-  MODIFY `ws_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ws_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --

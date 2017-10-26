@@ -29,7 +29,7 @@ if(isset($_POST['transaction']))
 		mysql_query($sql);
 		?>
 		<script>
-		alert('successfully Submit');
+		alert('Successfully Submit');
         window.location.href='dashboard.php?success';
         </script>
 		<?php

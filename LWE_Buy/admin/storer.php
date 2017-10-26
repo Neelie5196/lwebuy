@@ -30,7 +30,7 @@ $receiveitemQuery = $db->prepare("
     JOIN receive_request rr
     ON rr.user_id = us.user_id
     WHERE status= 'Received'
-    ORDER BY datetimes desc
+    ORDER BY datetime desc
 
 ");
 

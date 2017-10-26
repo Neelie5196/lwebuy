@@ -106,10 +106,11 @@ $receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
                                                     <table class="table thead-bordered">
                                                         <thead>
                                                             <tr>
-                                                                <th>User Name</th>
-                                                                <th>Item Name</th>
-                                                                <th>Slot Code</th>
-                                                                <th>Slot Number</th>
+                                                                <th width="20%">User Name</th>
+                                                                <th width="20%">Item Name</th>
+                                                                <th width="15%">Slot Code</th>
+                                                                <th width="15%">Slot Number</th>
+                                                                <th width="15%">Weight (kg)</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -130,6 +131,7 @@ $receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
                                                                         </option>
                                                                     </select>
                                                                 </td>
+                                                                <td><input type="text" name="weight" class="form-control" style="border-radius: 30px; width: 100%;" required></td>
                                                                 <td><input type="submit" class="btn btn-xs btn-warning" value="Update"></td>
                                                             </tr>
                                                         </tbody>
@@ -156,10 +158,11 @@ $receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
                                                         <table class="table thead-bordered table-hover">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>User Name</th>
-                                                                    <th>Item Name</th>
-                                                                    <th>Slot Code</th>
-                                                                    <th>Slot Number</th>
+                                                                    <th width="20%">User Name</th>
+                                                                    <th width="20%">Item Name</th>
+                                                                    <th width="15%">Slot Code</th>
+                                                                    <th width="15%">Slot Number</th>
+                                                                    <th width="15%">Weight (kg)</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -180,6 +183,7 @@ $receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
                                                                             </option>
                                                                         </select>
                                                                     </td>
+                                                                    <td><input type="text" name="weight" class="form-control" style="border-radius: 30px; width: 100%;" required></td>
                                                                     <td><input type="submit" class="btn btn-xs btn-warning" value="Update"></td>
                                                                 </tr>
                                                             </tbody>
