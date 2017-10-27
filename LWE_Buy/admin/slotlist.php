@@ -106,7 +106,7 @@ $slotslist = $slotslistQuery->rowCount() ? $slotslistQuery : [];
                                                 <td><?php echo $slot['slot_num']; ?></td>
                                                 <td><?php echo $slot['status']; ?></td>
                                                 <td><?php echo $slot['fname']; ?> <?php echo $slot['lname']; ?></td>
-                                                <td><a href="slotitemview.php?slotcode=<?php echo $slot['slot_code']; ?>&slotnum=<?php echo $slot['slot_num']; ?>&user_id=<?php echo $slot['user_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                <td><a href="slotitemview.php?s_id=<?php echo $slot['s_id']; ?>&slotcode=<?php echo $slot['slot_code']; ?>&slotnum=<?php echo $slot['slot_num']; ?>&user_id=<?php echo $slot['user_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                             </tr>
                                         </tbody>
                                         <?php endforeach; ?>

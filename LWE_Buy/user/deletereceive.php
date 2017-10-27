@@ -11,7 +11,7 @@ if (isset($_GET['rr_id']))
     ?>
 		<script>
 		alert('Successfully Delete');
-        window.location.href='receivelist.php?success';
+        window.location.href='receivehistory.php?success';
         </script>
 		<?php
 	}
@@ -20,7 +20,7 @@ if (isset($_GET['rr_id']))
 		?>
 		<script>
 		alert('Error While Delete Item');
-        window.location.href='receivelist.php?fail';
+        window.location.href='receivehistory.php?fail';
         </script>
 		<?php
 	}

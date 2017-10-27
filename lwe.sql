@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2017 at 03:44 PM
+-- Generation Time: Oct 27, 2017 at 06:09 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -129,9 +129,24 @@ CREATE TABLE `inbox_reply` (
 CREATE TABLE `item` (
   `i_id` int(11) NOT NULL,
   `s_id` int(11) NOT NULL,
-  `from_id` int(11) NOT NULL,
-  `weight` decimal(10,2) DEFAULT NULL
+  `from_id` varchar(20) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `order_code` varchar(25) NOT NULL,
+  `weight` decimal(10,2) DEFAULT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `item`
+--
+
+INSERT INTO `item` (`i_id`, `s_id`, `from_id`, `name`, `order_code`, `weight`, `datetime`) VALUES
+(17, 1, 'Order Item', 'test3', '123', '12.00', '2017-10-27 15:40:15'),
+(18, 1, 'Receive Request', '1', '9789861985350', '21.00', '2017-10-27 15:40:23'),
+(19, 1, 'Order Item', 'test3', '234', '23.00', '2017-10-27 15:40:28'),
+(20, 7, 'Order Item', '4', 'FREIGHT MARK', '32.00', '2017-10-27 15:40:48'),
+(21, 1, 'Receive Request', '2', '2', '12.00', '2017-10-27 15:40:53'),
+(22, 7, 'Receive Request', '1', '1', '43.00', '2017-10-27 15:40:58');
 
 -- --------------------------------------------------------
 
@@ -407,12 +422,12 @@ CREATE TABLE `slot` (
 
 INSERT INTO `slot` (`s_id`, `slot_code`, `slot_num`, `status`, `user_id`) VALUES
 (1, 1000, 1, 'In Use', 10),
-(2, 1000, 2, 'In Use', 1),
+(2, 1000, 2, 'Not in Use', NULL),
 (3, 2000, 3, 'In Use', 3),
 (4, 2000, 4, 'In Use', 5),
 (5, 3000, 5, 'Not in Use', NULL),
 (6, 3000, 6, 'In Use', 7),
-(7, 4000, 7, 'Not in Use', NULL),
+(7, 4000, 7, 'In Use', 1),
 (8, 4000, 8, 'Not in Use', NULL),
 (9, 5000, 9, 'In Use', 2),
 (10, 5000, 10, 'Not in Use', NULL);
@@ -686,7 +701,7 @@ ALTER TABLE `inbox_reply`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `i_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `i_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `order_item`
 --
@@ -706,7 +721,7 @@ ALTER TABLE `package`
 -- AUTO_INCREMENT for table `parcel`
 --
 ALTER TABLE `parcel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `payment`
 --

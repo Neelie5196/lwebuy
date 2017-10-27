@@ -6,8 +6,11 @@ if(isset($_POST['receivesave']))
     $status = 'Received';
     $statuss = 'In Use';
     $rr_id = $_POST['rr_id'];
+    $from = 'Receive Request';
     $user_id = $_POST['user_id'];
     $s_id = $_POST['s_id'];
+    $name = $_POST['name'];
+    $order_code = $_POST['order_code'];
     $weight = $_POST['weight'];
     
     $result = mysql_query("UPDATE receive_request SET status = '$status' WHERE rr_id = $rr_id ") or die(mysql_error());
@@ -18,10 +21,10 @@ if(isset($_POST['receivesave']))
     $results = mysql_query($query);
     $resultss = mysql_num_rows($results);
     if($resultss > 0){
-        $result1 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$rr_id', weight='$weight'") or die(mysql_error());
+        $result1 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight'") or die(mysql_error());
     }else{
         $result1 = mysql_query("UPDATE slot SET status = '$statuss', user_id = '$user_id' WHERE s_id = $s_id ") or die(mysql_error());
-        $result2 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$rr_id', weight='$weight'") or die(mysql_error());
+        $result2 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight'") or die(mysql_error());
     }
     ?>
     <script>
@@ -36,9 +39,12 @@ if(isset($_POST['ordersave']))
     $status = 'Received';
     $statuss = 'In Use';
     $oi_id = $_POST['oi_id'];
+    $from = 'Order Item';
     $user_id = $_POST['user_id'];
     $order_id = $_POST['order_id'];
     $s_id = $_POST['s_id'];
+    $name = $_POST['name'];
+    $order_code = $_POST['order_code'];
     $weight = $_POST['weight'];
     
     $querys = "SELECT * 
@@ -60,10 +66,10 @@ if(isset($_POST['ordersave']))
     $results = mysql_query($query);
     $resultss = mysql_num_rows($results);
     if($resultss > 0){
-        $result1 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$oi_id', weight='$weight'") or die(mysql_error());
+        $result1 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight'") or die(mysql_error());
     }else{
         $result1 = mysql_query("UPDATE slot SET status = '$statuss', user_id = '$user_id' WHERE s_id = $s_id ") or die(mysql_error());
-        $result2 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$oi_id', weight='$weight'") or die(mysql_error());
+        $result2 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight'") or die(mysql_error());
     }
     ?>
     <script>

@@ -128,6 +128,8 @@ $receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
                                                             <tr>
                                                                 <input type="hidden" name="rr_id" value="<?php echo $line['rr_id']; ?>">
                                                                 <input type="hidden" name="user_id" value="<?php echo $line['user_id']; ?>">
+                                                                <input type="hidden" name="name" value="<?php echo $line['name']; ?>">
+                                                                <input type="hidden" name="order_code" value="<?php echo $line['order_code']; ?>">
                                                                 <td><?php echo $line['fname']; ?> <?php echo $line['lname']; ?></td>
                                                                 <td><?php echo $line['name']; ?></td>
                                                                 <?php
@@ -216,6 +218,8 @@ $receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
                                                                 <input type="hidden" name="oi_id" value="<?php echo $line['oi_id']; ?>">
                                                                 <input type="hidden" name="user_id" value="<?php echo $line['user_id']; ?>">
                                                                 <input type="hidden" name="order_id" value="<?php echo $line['order_id']; ?>">
+                                                                <input type="hidden" name="name" value="<?php echo $line['name']; ?>">
+                                                                <input type="hidden" name="order_code" value="<?php echo $line['order_code']; ?>">
                                                                 <td><?php echo $line['fname']; ?> <?php echo $line['lname']; ?></td>
                                                                 <td><?php echo $line['name']; ?></td>
                                                                 <?php
