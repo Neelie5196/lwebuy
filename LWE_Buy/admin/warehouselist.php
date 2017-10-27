@@ -58,7 +58,7 @@ $warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newwarehouse" style="float: right;">New     Warehouse</button>
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newwarehouse" style="float: right;">New     Warehouse</button><br/><hr/>
                             <?php if(!empty($warehouselist)): ?>
                             <table class="table thead-bordered table-hover warehouselist">
                                 <thead>

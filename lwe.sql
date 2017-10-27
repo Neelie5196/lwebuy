@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2017 at 08:09 AM
+-- Generation Time: Oct 27, 2017 at 03:44 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -129,7 +129,7 @@ CREATE TABLE `inbox_reply` (
 CREATE TABLE `item` (
   `i_id` int(11) NOT NULL,
   `s_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `from_id` int(11) NOT NULL,
   `weight` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -160,9 +160,9 @@ CREATE TABLE `order_item` (
 INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `remark`, `price`, `statuss`, `order_code`, `datetimes`) VALUES
 (85, 2, 'test2', 'test2', 'test2', 2, 'test2-1', '13.00', '', NULL, '0000-00-00 00:00:00'),
 (86, 2, 'test2', 'test2', 'test2', 2, 'test2-2', '23.00', '', NULL, '0000-00-00 00:00:00'),
-(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00', 'Pending', '123', '2017-10-25 12:51:35'),
-(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00', 'Pending', '234', '2017-10-25 12:51:38'),
-(89, 4, '4', '4', '4', 4, '444', '219.00', 'Pending', 'FREIGHT MARK', '0000-00-00 00:00:00'),
+(87, 3, 'test3', 'test3', 'test3', 3, 'test3-1', '23.00', 'Pending', '123', '2017-10-27 13:42:35'),
+(88, 3, 'test3', 'test3', 'test3', 3, 'test3-2', '12.00', 'Pending', '234', '2017-10-27 13:26:50'),
+(89, 4, '4', '4', '4', 4, '444', '219.00', 'Pending', 'FREIGHT MARK', '2017-10-27 13:42:38'),
 (90, 9, '4', '4', '4', 4, '444', '219.00', 'Received', '123', '0000-00-00 00:00:00'),
 (91, 10, '4', '4', '4', 4, '444', '219.00', 'Received', '234', '0000-00-00 00:00:00'),
 (92, 11, 'try', 'try', 'try', 2, 'try', NULL, NULL, NULL, '0000-00-00 00:00:00'),
@@ -189,7 +189,7 @@ CREATE TABLE `order_list` (
 INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VALUES
 (2, 10, 'Request', '2017-10-23 06:25:31', '35.00'),
 (3, 10, 'Ready to pay', '2017-10-26 05:12:56', '35.00'),
-(4, 10, 'Paid', '2017-10-23 06:25:45', '23.00'),
+(4, 1, 'Paid', '2017-10-27 13:42:23', '23.00'),
 (9, 10, 'Proceed', '2017-10-23 06:25:45', NULL),
 (10, 10, 'Received', '2017-10-23 06:25:45', '219.00'),
 (11, 10, 'Request', '2017-10-22 08:46:13', NULL),
@@ -334,10 +334,10 @@ CREATE TABLE `receive_request` (
 --
 
 INSERT INTO `receive_request` (`rr_id`, `user_id`, `name`, `order_code`, `status`, `datetime`) VALUES
-(2, 10, '1', '9789861985350', 'Request', '2017-10-23 07:00:30'),
+(2, 10, '1', '9789861985350', 'Request', '2017-10-27 11:45:38'),
 (3, 10, '2', '2', 'Request', '2017-10-26 04:17:14'),
 (5, 10, '2', '3', 'Received', '2017-10-21 09:28:08'),
-(6, 10, '1', '1', 'Request', '2017-10-25 11:59:03');
+(6, 1, '1', '1', 'Request', '2017-10-27 13:26:36');
 
 -- --------------------------------------------------------
 
@@ -407,7 +407,7 @@ CREATE TABLE `slot` (
 
 INSERT INTO `slot` (`s_id`, `slot_code`, `slot_num`, `status`, `user_id`) VALUES
 (1, 1000, 1, 'In Use', 10),
-(2, 1000, 2, 'Not in Use', NULL),
+(2, 1000, 2, 'In Use', 1),
 (3, 2000, 3, 'In Use', 3),
 (4, 2000, 4, 'In Use', 5),
 (5, 3000, 5, 'Not in Use', NULL),
@@ -686,7 +686,7 @@ ALTER TABLE `inbox_reply`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `i_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `i_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `order_item`
 --
@@ -711,7 +711,7 @@ ALTER TABLE `parcel`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `point`
 --

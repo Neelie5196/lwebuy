@@ -1,70 +1,76 @@
 <?php
-
 require_once '../connection/config.php';
-session_start();
-$counter = 0; 
+
+if(isset($_POST['receivesave']))
+{	
+    $status = 'Received';
+    $statuss = 'In Use';
+    $rr_id = $_POST['rr_id'];
+    $user_id = $_POST['user_id'];
+    $s_id = $_POST['s_id'];
+    $weight = $_POST['weight'];
+    
+    $result = mysql_query("UPDATE receive_request SET status = '$status' WHERE rr_id = $rr_id ") or die(mysql_error());
+    
+    $query = "SELECT * 
+              FROM slot
+              WHERE user_id = '$user_id'";
+    $results = mysql_query($query);
+    $resultss = mysql_num_rows($results);
+    if($resultss > 0){
+        $result1 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$rr_id', weight='$weight'") or die(mysql_error());
+    }else{
+        $result1 = mysql_query("UPDATE slot SET status = '$statuss', user_id = '$user_id' WHERE s_id = $s_id ") or die(mysql_error());
+        $result2 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$rr_id', weight='$weight'") or die(mysql_error());
+    }
+    ?>
+    <script>
+    alert('Success to Save');
+    window.location.href='store.php?success';
+    </script>
+    <?php
+}
+
+if(isset($_POST['ordersave']))
+{	
+    $status = 'Received';
+    $statuss = 'In Use';
+    $oi_id = $_POST['oi_id'];
+    $user_id = $_POST['user_id'];
+    $order_id = $_POST['order_id'];
+    $s_id = $_POST['s_id'];
+    $weight = $_POST['weight'];
+    
+    $querys = "SELECT * 
+              FROM order_item
+              WHERE order_id = '$order_id' AND statuss = 'Pending'";
+    
+    $rresults = mysql_query($querys);
+    $rresultss = mysql_num_rows($rresults);
+    if($rresultss > 1){
+        $result = mysql_query("UPDATE order_item SET statuss = '$status' WHERE oi_id = $oi_id ") or die(mysql_error());
+    }else if($rresultss = 1){
+        $result0 = mysql_query("UPDATE order_list SET status = '$status' WHERE ol_id = $order_id ") or die(mysql_error());
+        $result = mysql_query("UPDATE order_item SET statuss = '$status' WHERE oi_id = $oi_id ") or die(mysql_error());
+    }
+    
+    $query = "SELECT * 
+              FROM slot
+              WHERE user_id = '$user_id'";
+    $results = mysql_query($query);
+    $resultss = mysql_num_rows($results);
+    if($resultss > 0){
+        $result1 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$oi_id', weight='$weight'") or die(mysql_error());
+    }else{
+        $result1 = mysql_query("UPDATE slot SET status = '$statuss', user_id = '$user_id' WHERE s_id = $s_id ") or die(mysql_error());
+        $result2 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$oi_id', weight='$weight'") or die(mysql_error());
+    }
+    ?>
+    <script>
+    alert('Success to Save');
+    window.location.href='store.php?success';
+    </script>
+    <?php
+}
 
 ?>
-
-<!DOCTYPE html>
-<html data-ng-app="myApp">
-    <head>
-        <title>LWE Buy</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initialscale=1.0"/>
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-        <!--stylesheet-->
-        <link href="../frameworks/css/style.css" rel="stylesheet"/>
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
-        
-    </head>
-
-    <body background="../resources/img/bg.jpg">
-        <div class="row">
-            <?php include_once('nav.php')?>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <h2>Slot Item - <?php echo $_GET['slotcode']; ?> - <?php echo $_GET['slotnum']; ?></h2>
-                    <hr/>
-                </div>
-            </div>
-        </div>
-
-        <section class = "content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                        <table class="table thead-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                </tr>
-                            </thead>
-                            <?php
-                                $counter++;
-                            ?>
-                            <tbody>
-                                <tr>
-                                    <td><?php echo $counter; ?></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <center><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>
-            </div>
-        </section>
-    </body>
-</html>
