@@ -73,7 +73,6 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
                                         <th>Order Code</th>
                                         <th>Weight</th>
                                         <th>Date / Time</th>
-                                        <th>Price (RM)</th>
                                     </tr>
                                 </thead>
                                 <?php foreach($slotitem as $slot): 
@@ -89,7 +88,6 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
                                         <td><?php echo $slot['order_code']; ?></td>
                                         <td><?php echo $slot['weight']; ?></td>
                                         <td><?php echo $slot['datetime']; ?></td>
-                                        <td>########</td>
                                         <td><input type="checkbox" value="<?php echo $slot['i_id']; ?>"></td>
                                     </tr>
                                 </tbody>

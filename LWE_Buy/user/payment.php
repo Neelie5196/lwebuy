@@ -3,6 +3,12 @@
 require_once '../connection/config.php';
 session_start();
 
+$query = "SELECT * 
+          FROM adjust
+          WHERE name = 'point'";
+$result = mysql_query($query);
+$results = mysql_fetch_assoc($result);
+
 ?>
 
 <!DOCTYPE html>
@@ -122,7 +128,7 @@ session_start();
                                             <div class="col-xs-12 col-md-12 col-lg-12">
                                                 <input type="hidden" name="order_id" class="form-control" value="<?php echo $_POST['order_id']; ?>">
                                                 <input type="hidden" name="paypoint" class="form-control" value="<?php echo $_POST['pricetotal']*100; ?>">
-                                                <p>RM <?php echo $_POST['pricetotal']; ?> = <?php echo $_POST['pricetotal']*100; ?> point</p>
+                                                <p>RM <?php echo $_POST['pricetotal']; ?> = <?php echo number_format((float)$_POST['pricetotal']/$results['value'], 2, '.', ''); ?> point</p>
                                                 <input type="submit" class="btn btn-success" name="pay" value="Pay Now">
                                             </div>
                                         </div>
@@ -150,8 +156,8 @@ session_start();
                             </p>
 
                             <p>
-                                <input type="hidden" name="amount" value="{{reloadamt*0.01}}">
-                                Amount to be paid: RM {{reloadamt*0.01}}
+                                <input type="hidden" name="amount" value="{{reloadamt*<?php echo $results['value']; ?>}}">
+                                Amount to be paid: RM {{reloadamt*<?php echo $results['value']; ?> | number:2}}
                             </p>
 
                             <p>Instructions for top up:<br/>

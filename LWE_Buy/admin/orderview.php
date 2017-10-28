@@ -20,7 +20,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
 ?>
 
 <!DOCTYPE html>
-<html data-ng-app="myApp">
+<html ng-app="">
     <head>
         <title>LWE Buy</title>
         <meta charset="utf-8" />
@@ -29,6 +29,8 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- AngularJS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
         <!--stylesheet-->
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
@@ -65,6 +67,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                         <th>Type</th>
                                         <th>Unit</th>
                                         <th>Remark</th>
+                                        <th>Price (RMB)</th>
                                         <th>Price (RM)</th>
                                     </tr>
                                 </thead>
@@ -76,13 +79,14 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                 <form action="updateprice.php" method="post">
                                     <tbody class="purchase">
                                         <tr>
-                                            <td width="5%"><?php echo $counter; ?></td>
-                                            <td width="15%"><?php echo $purchase['name']; ?></td>
-                                            <td width="20%"><a href="<?php echo $purchase['link']; ?>" target="_blank"><?php echo $purchase['link']; ?></a></td>
-                                            <td width="8%"><?php echo $purchase['type']; ?></td>
-                                            <td width="8%"><?php echo $purchase['unit']; ?></td>
-                                            <td width="20%"><?php echo $purchase['remark']; ?></td>
-                                            <td width="9%"><input type="text" name="price" value="<?php echo $purchase['price']; ?>"></td>
+                                            <td width="4%"><?php echo $counter; ?></td>
+                                            <td width="13%"><?php echo $purchase['name']; ?></td>
+                                            <td width="18%"><a href="<?php echo $purchase['link']; ?>" target="_blank"><?php echo $purchase['link']; ?></a></td>
+                                            <td width="6%"><?php echo $purchase['type']; ?></td>
+                                            <td width="6%"><?php echo $purchase['unit']; ?></td>
+                                            <td width="18%"><?php echo $purchase['remark']; ?></td>
+                                            <td width="9%"><input type="text" name="price"/></td>
+                                            <td width="9%"><input type="text" name="myr" value="<?php echo $purchase['price']; ?>" readonly></td>
                                             <td width="15%">
                                                 <input type="hidden" name="oi_id" value="<?php echo $purchase['oi_id']; ?>">
                                                 <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">

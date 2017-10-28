@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2017 at 06:09 PM
+-- Generation Time: Oct 28, 2017 at 12:50 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -64,6 +64,26 @@ CREATE TABLE `address` (
 INSERT INTO `address` (`a_id`, `user_id`, `address`, `state`, `city`, `postcode`) VALUES
 (1, 1, 'erwer,wer,wer,wer,wer,wer', 'ewdzf', 'wdasd', 12345),
 (2, 1, 'qwedzxcwr ,awsdad,asdqw', 'asda', 'sfasf', 23455);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adjust`
+--
+
+CREATE TABLE `adjust` (
+  `id` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `value` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `adjust`
+--
+
+INSERT INTO `adjust` (`id`, `name`, `value`) VALUES
+(1, 'currency', '1.57'),
+(2, 'point', '1.00');
 
 -- --------------------------------------------------------
 
@@ -181,7 +201,7 @@ INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `
 (90, 9, '4', '4', '4', 4, '444', '219.00', 'Received', '123', '0000-00-00 00:00:00'),
 (91, 10, '4', '4', '4', 4, '444', '219.00', 'Received', '234', '0000-00-00 00:00:00'),
 (92, 11, 'try', 'try', 'try', 2, 'try', NULL, NULL, NULL, '0000-00-00 00:00:00'),
-(93, 12, '1', '2', '1', 2, '12', NULL, NULL, NULL, '2017-10-25 11:58:40');
+(93, 12, '1', '2', '1', 2, '12', '31.85', NULL, NULL, '2017-10-28 10:47:22');
 
 -- --------------------------------------------------------
 
@@ -544,6 +564,12 @@ ALTER TABLE `address`
   ADD PRIMARY KEY (`a_id`);
 
 --
+-- Indexes for table `adjust`
+--
+ALTER TABLE `adjust`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `contact`
 --
 ALTER TABLE `contact`
@@ -683,6 +709,11 @@ ALTER TABLE `abx`
 ALTER TABLE `address`
   MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT for table `adjust`
+--
+ALTER TABLE `adjust`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
@@ -721,7 +752,7 @@ ALTER TABLE `package`
 -- AUTO_INCREMENT for table `parcel`
 --
 ALTER TABLE `parcel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `payment`
 --

@@ -3,6 +3,12 @@
 require_once '../connection/config.php';
 session_start();
 
+$query = "SELECT * 
+          FROM adjust
+          WHERE name = 'point'";
+$result = mysql_query($query);
+$results = mysql_fetch_assoc($result);
+
 ?>
 
 <!DOCTYPE html>
@@ -454,8 +460,8 @@ session_start();
                                                         </p>
 
                                                         <p>
-                                                            <input type="hidden" name="amount" value="{{reloadamt*0.01}}">
-                                                            Amount to be paid: RM {{reloadamt*0.01}}
+                                                            <input type="hidden" name="amount" value="{{reloadamt*<?php echo $results['value']; ?> | number:2}}">
+                                                            Amount to be paid: RM {{reloadamt*<?php echo $results['value']; ?> | number:2}}
                                                         </p>
                                                         
                                                         <p>Instructions for top up:<br/>

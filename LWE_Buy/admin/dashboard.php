@@ -3,6 +3,26 @@
 require_once '../connection/config.php';
 session_start();
 
+$pointratioQuery = $db->prepare("
+    SELECT *
+    FROM adjust
+    WHERE name = 'point'
+");
+
+$pointratioQuery->execute();
+
+$pointratio = $pointratioQuery->rowCount() ? $pointratioQuery : [];
+
+$pointsratioQuery = $db->prepare("
+    SELECT *
+    FROM adjust
+    WHERE name = 'currency'
+");
+
+$pointsratioQuery->execute();
+
+$pointsratio = $pointsratioQuery->rowCount() ? $pointsratioQuery : [];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -348,6 +368,64 @@ session_start();
                     </div>
                 </a>
             </div>
+        </div>
+        <div class="row">
+            <form action="updateratio.php" method="post">
+                <?php 
+                    if(!empty($pointratio)):
+                    foreach($pointratio as $point): 
+                ?>
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="row udashrow1">
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <h2>Point Ratio</h2>
+                                <hr/>
+                                <center>
+                                    <h4>
+                                        1 points = RM <input type="text" name="pointratio" value="<?php echo $point['value']; ?>" style="width: 20%;" />
+                                        <br/><br/>
+                                        <input type="hidden" name="adjust_id" value="<?php echo $point['id']; ?>"/>
+                                        <input type="submit" class="btn btn-success" name="update-point" value="Save">
+                                    </h4>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                <?php 
+                    endforeach;
+                    else: 
+                ?>
+                    <p>Error.</p>
+                <?php endif; ?>
+            </form>
+            <form action="updateratio.php" method="post">
+                <?php 
+                    if(!empty($pointsratio)):
+                    foreach($pointsratio as $points): 
+                ?>
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="row udashrow1">
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <h2>Currency Ratio</h2>
+                                <hr/>
+                                <center>
+                                    <h4>
+                                        RM 1.00 = RMB <input type="text" name="currencyratio" value="<?php echo $points['value']; ?>" style="width: 20%;" />
+                                        <br/><br/>
+                                        <input type="hidden" name="adjust_id" value="<?php echo $points['id']; ?>"/>
+                                        <input type="submit" class="btn btn-success" name="update-currency" value="Save">
+                                    </h4>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                <?php 
+                    endforeach;
+                    else: 
+                ?>
+                    <p>Error.</p>
+                <?php endif; ?>
+            </form>
         </div>
     </body>
 </html>
