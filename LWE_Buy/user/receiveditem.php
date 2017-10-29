@@ -21,6 +21,11 @@ $slotitemQuery->execute([
 
 $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
 
+$query = "SELECT * 
+          FROM shipping_price";
+$result = mysql_query($query);
+$results = mysql_fetch_assoc($result);
+
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +93,7 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
                                         <td><?php echo $slot['order_code']; ?></td>
                                         <td><?php echo $slot['weight']; ?></td>
                                         <td><?php echo $slot['datetime']; ?></td>
-                                        <td><input type="checkbox" value="<?php echo $slot['i_id']; ?>"></td>
+                                        <td><input type="checkbox" weight="<?php echo $slot['weight']; ?>" name="item[]"></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
@@ -96,6 +101,20 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
                             <?php else: ?>
                                 <p>There is no item in slot.</p>
                             <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php
+                        $total = "<span id='output'></span>";
+                            echo $total;
+                    ?>
+                    
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 col-lg-12">
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <center>
@@ -106,4 +125,22 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
             </div>
         </section>
     </body>
+    <script>
+        
+        $(document).ready(function() {
+            function recalculate() {
+                var sum = 0;
+
+                $("input[type=checkbox]:checked").each(function() {
+                    sum += parseInt($(this).attr("weight"));
+                });
+
+                $("#output").html(sum);
+            }
+
+            $("input[type=checkbox]").change(function() {
+                recalculate();
+            });
+        });
+    </script>
 </html>

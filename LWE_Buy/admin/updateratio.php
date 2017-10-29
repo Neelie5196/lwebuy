@@ -28,4 +28,20 @@ if(isset($_POST['update-currency']))
     </script>
     <?php
 }
+
+if(isset($_POST['update-weight']))
+{    
+    $bweight = $_POST['bweight'];
+    $oweight = $_POST['oweight'];
+    $sp_id = $_POST['sp_id'];
+
+	
+	$result = mysql_query("UPDATE shipping_price SET bprice='$bweight', oprice='$oweight' WHERE sp_id = $sp_id ") or die(mysql_error());
+    ?>
+    <script>
+    alert('Success to Update');
+    window.location.href='dashboard.php?success';
+    </script>
+    <?php
+}
 ?>

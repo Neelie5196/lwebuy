@@ -6,8 +6,9 @@ if(isset($_POST['name']))
 
     $name = $_POST['name'];
     $price = $_POST['price'];
+    $pts = 'PTS';
 	
-	$result = mysql_query("INSERT INTO package SET name='$name', price='$price'") or die(mysql_error());
+	$result = mysql_query("INSERT INTO package SET name='$name ' '$pts', price='$price'") or die(mysql_error());
     
     ?>
     <script>

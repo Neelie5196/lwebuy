@@ -54,11 +54,10 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
             <section class = "content">
                 <div class="container">
                     <div class="row">
-		
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newpackage" style="float: right;">New     Package</button><br/><hr/>
                             <?php if(!empty($packagelist)): ?>
-                            <table class="table thead-bordered table-hover userslist">
-                                <h4 align="left"><a href="createpackage.php" class="btn btn-xs btn-info">Add</a></h4>
+                            <table class="table thead-bordered table-hover">
 								<thead>
                                     <tr>
                                         <th>#</th>
@@ -72,7 +71,7 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                                 }
                                 
                                 ?>
-                                <tbody class="users">
+                                <tbody>
                                     <tr>
                                         <td><?php echo $counter; ?></td>
                                         <td width="20%"><?php echo $package['name']; ?></td>
@@ -90,5 +89,41 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                 </div>
             </section>
         </center>
+        <div id="newpackage" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="addpackage.php" method="post">
+                        <div class="modal-header">
+                            <h4 class="modal-title">New Package Information</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                    <label>Package Point</label>
+                                </div>
+                                <div class="col-xs-8 col-md-8 col-lg-8">
+                                    <input type="text" name="name" class="form-control" style="border-radius: 30px; float: left;" required>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                    <label>Package Price</label>
+                                </div>
+                                <div class="col-xs-8 col-md-8 col-lg-8">
+                                    <input type="text" name="price" class="form-control" style="border-radius: 30px; float: left;" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success" >Add</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>                                                    
+                </div>
+            </div>
+        </div>
     </body>
 </html>

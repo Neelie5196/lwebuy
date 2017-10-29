@@ -3,10 +3,18 @@ require_once '../connection/config.php';
 
 if(isset($_GET['p_id']))
 {	
+    $query1 = "SELECT * 
+              FROM adjust
+              WHERE name = 'point'";
+              $result1 = mysql_query($query1);
+              $results1 = mysql_fetch_assoc($result1);
+    
+    $pointratio = $results1['value'];
+    
     $user_id = $_GET['user_id'];
     $p_id = $_GET['p_id'];
     $status = 'Completed';
-    $point = $_GET['point']*100;
+    $point = $_GET['point']/$pointratio;
     
     $result = mysql_query("UPDATE payment SET status = '$status' WHERE p_id = $p_id ") or die(mysql_error());
     

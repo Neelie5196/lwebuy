@@ -127,7 +127,7 @@ $results = mysql_fetch_assoc($result);
                                         <div class="row">
                                             <div class="col-xs-12 col-md-12 col-lg-12">
                                                 <input type="hidden" name="order_id" class="form-control" value="<?php echo $_POST['order_id']; ?>">
-                                                <input type="hidden" name="paypoint" class="form-control" value="<?php echo $_POST['pricetotal']*100; ?>">
+                                                <input type="hidden" name="paypoint" class="form-control" value="<?php echo number_format((float)$_POST['pricetotal']/$results['value'], 2, '.', ''); ?>">
                                                 <p>RM <?php echo $_POST['pricetotal']; ?> = <?php echo number_format((float)$_POST['pricetotal']/$results['value'], 2, '.', ''); ?> point</p>
                                                 <input type="submit" class="btn btn-success" name="pay" value="Pay Now">
                                             </div>

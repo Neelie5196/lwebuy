@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2017 at 12:50 PM
+-- Generation Time: Oct 29, 2017 at 10:40 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -223,7 +223,7 @@ CREATE TABLE `order_list` (
 
 INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VALUES
 (2, 10, 'Request', '2017-10-23 06:25:31', '35.00'),
-(3, 10, 'Ready to pay', '2017-10-26 05:12:56', '35.00'),
+(3, 10, 'Ready to pay', '2017-10-29 08:09:26', '35.00'),
 (4, 1, 'Paid', '2017-10-27 13:42:23', '23.00'),
 (9, 10, 'Proceed', '2017-10-23 06:25:45', NULL),
 (10, 10, 'Received', '2017-10-23 06:25:45', '219.00'),
@@ -301,7 +301,9 @@ INSERT INTO `payment` (`p_id`, `user_id`, `datetime`, `title`, `amount`, `file`,
 (6, 1, '2017-10-25 11:17:10', '444', '4.44', '8761-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0),
 (7, 10, '2017-10-25 09:55:22', 'Reload + 222', '2.22', '27001-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', 0),
 (8, 10, '2017-10-25 11:17:10', 'Reload 1', '0.01', '98523-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0),
-(9, 10, '2017-10-25 10:09:05', 'Reload 444 Point', '4.44', '76809-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0);
+(9, 10, '2017-10-25 10:09:05', 'Reload 444 Point', '4.44', '76809-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0),
+(10, 10, '2017-10-29 07:50:37', 'Reload 5 Point', '5.00', '68676-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', NULL),
+(11, 10, '2017-10-29 08:04:27', 'Reload 5 Point', '5.00', '93248-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', NULL);
 
 -- --------------------------------------------------------
 
@@ -320,7 +322,7 @@ CREATE TABLE `point` (
 --
 
 INSERT INTO `point` (`id`, `user_id`, `point`) VALUES
-(1, 10, 16500),
+(1, 10, 13470),
 (3, 1, 444);
 
 -- --------------------------------------------------------
@@ -398,6 +400,27 @@ CREATE TABLE `shipping` (
 INSERT INTO `shipping` (`s_id`, `user_id`, `tracking_code`, `order_number`, `ship_to`, `courier`, `order_date`, `status`) VALUES
 (1, 10, 'ASFLF214', 112214141, 'house', 'Skynet', '2017-10-04 06:12:29', 'pending'),
 (2, 10, 'SGLH12H3', 0, '', '', '0000-00-00 00:00:00', 'proceeded');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_price`
+--
+
+CREATE TABLE `shipping_price` (
+  `sp_id` int(11) NOT NULL,
+  `below` varchar(10) NOT NULL,
+  `bprice` decimal(10,2) NOT NULL,
+  `over` varchar(10) NOT NULL,
+  `oprice` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `shipping_price`
+--
+
+INSERT INTO `shipping_price` (`sp_id`, `below`, `bprice`, `over`, `oprice`) VALUES
+(1, '1kg', '15.00', '500g', '7.50');
 
 -- --------------------------------------------------------
 
@@ -650,6 +673,12 @@ ALTER TABLE `shipping`
   ADD PRIMARY KEY (`s_id`);
 
 --
+-- Indexes for table `shipping_price`
+--
+ALTER TABLE `shipping_price`
+  ADD PRIMARY KEY (`sp_id`);
+
+--
 -- Indexes for table `skynet`
 --
 ALTER TABLE `skynet`
@@ -757,7 +786,7 @@ ALTER TABLE `parcel`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `point`
 --
@@ -778,6 +807,11 @@ ALTER TABLE `receive_request`
 --
 ALTER TABLE `shipping`
   MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `shipping_price`
+--
+ALTER TABLE `shipping_price`
+  MODIFY `sp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `skynet`
 --
