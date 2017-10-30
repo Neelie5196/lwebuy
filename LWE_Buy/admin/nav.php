@@ -14,9 +14,7 @@
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shipping <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
-                    <li><a href="#">New Shipping</a></li>
-                    <li><a href="#">Update Status</a></li>
-                    <li><a href="#">Shipping Request</a></li>
+                    <li><a href="shippinglist.php">Shipping List</a></li>
                     <li><a href="conprice.php">Shipping Price</a></li>
                 </ul>
             </li>
