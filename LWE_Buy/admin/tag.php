@@ -24,7 +24,33 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
         
         <script src="../frameworks/js/prototype.js" type="text/javascript"></script>
         <script src="../frameworks/js/prototype-barcode.js" type="text/javascript"></script>
-        <script src="../frameworks/js/barcode.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function generateBarcode()
+            {
+                $("barcode").update();
+                var value = 'ASFLF214';
+                var btype = 'code128';
+                var renderer ='css';
+
+                var settings = 
+                {
+                  output:renderer,
+                  bgColor: '#FFFFFF',
+                  color: '#000000',
+                  barWidth: 2,
+                  barHeight: 100,
+                  addQuietZone: false
+                };
+
+                $("barcode").update().show().barcode(value, btype, settings);      
+            }
+
+        $(function()
+          {
+            generateBarcode();
+            }
+         );
+        </script>
         
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
     </head>
