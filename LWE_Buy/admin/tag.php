@@ -1,37 +1,47 @@
+<?php
+    
+?>
 <html>
     <head>
         <title>LWE Buy</title>
+        
+        <script src="../frameworks/js/prototype.js" type="text/javascript"></script>
+        <script src="../frameworks/js/prototype-barcode.js" type="text/javascript"></script>
+        <script type="text/javascript">
+    
+            function generateBarcode(){
+            $("barcode").update();
+            var value = 'Hello World';
+            var btype = 'code128';
+            var renderer ='css';
 
+            var settings = {
+              output:renderer,
+              bgColor: '#FFFFFF',
+              color: '#000000',
+              barWidth: 2,
+              barHeight: 100,
+              addQuietZone: false
+            };
+
+            $("barcode").update().show().barcode(value, btype, settings);      
+          }
+
+            $(function(){
+            generateBarcode();
+            });
+        </script>
+        
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
     </head>
     
-    <body>
+    <body onload="generateBarcode()">
         <div class="parceltag">
             <h1>Logistic Worldwides Express</h1>
             <hr/>
             
-            <div class="barcode">
-                <?php
-                    require_once('../frameworks/barcode5/class/BCGColor.php');
-                    require_once('../frameworks/barcode5/class/BCGDrawing.php');
-                    require_once('../frameworks/barcode5/class/BCGcode128.barcode.php');
+            <div id="barcode" class="barcode">
                 
-                    $colorFront = new BCGColor(0, 0, 0);
-                    $colorBack = new BCGColor(255, 255, 255);
-                
-                    $code = new BCGcode128();
-                    $code->setScale(2);
-                    $code->setColor($colorFront, $colorBack);
-                    $code->parse('123987');
-                
-                    $drawing = new BCGDrawing('', $colorBack);
-                    $drawing->setBarcode($code);
-                    $drawing->draw();
-                    
-                    header('Content-Type: image/png');
-                    
-                    $drawing->finish(BCGDrawing::IMG_FORMAT_PNG);
-                ?>
             </div>
             
             <h3>Ship to:</h3>

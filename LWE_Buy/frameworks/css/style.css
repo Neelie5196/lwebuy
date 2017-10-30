@@ -168,3 +168,7 @@ body {
 .parceltag > h1 {
     margin-left: 10px;
 }
+
+.barcode {
+    margin: auto;
+}
