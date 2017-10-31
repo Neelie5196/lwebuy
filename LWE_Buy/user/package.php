@@ -1,5 +1,5 @@
 <?php
-$connect = mysqli_connect("localhost", "root", "", "lwe");
+require_once '../connection/config.php';
 session_start();
 
 ?>
@@ -26,24 +26,24 @@ session_start();
 	<h2 align="center">Value Package</h2>
     <?php
 	$query = "SELECT * FROM package ORDER BY id ASC";
-	$result = mysqli_query($connect, $query);
+	$result = mysqli_query($con, $query);
 	if(mysqli_num_rows($result) > 0)
 	{
 		while($row = mysqli_fetch_array($result))
 		{
 			?>
-            <div class="col-md-3">
-            <form method="post" action="shop.php?action=add&id=<?php echo $row["id"]; ?>">
-            <div style="border: 1px solid #eaeaec; margin: -1px 19px 3px -1px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding:10px;" align="center">
-            <h5 class="text-info"><?php echo $row["name"]; ?></h5>
-            <h5 class="text-danger">Rm <?php echo $row["price"]; ?></h5>
-            <input type="hidden" name="quantity" class="form-control" value="1">
-            <input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>">
-            <input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>">
-            <input type="submit" name="add" style="margin-top:5px;" class="btn btn-default" value="Add to Bag">
-            </div>
-            </form>
-            </div>
+                <div class="col-md-3">
+                    <form method="post" action="shop.php?action=add&id=<?php echo $row["id"]; ?>">
+                        <div style="border: 1px solid #eaeaec; margin: -1px 19px 3px -1px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding:10px;" align="center">
+                            <h5 class="text-info"><?php echo $row["name"]; ?></h5>
+                            <h5 class="text-danger">Rm <?php echo $row["price"]; ?></h5>
+                            <input type="hidden" name="quantity" class="form-control" value="1">
+                            <input type="hidden" name="hidden_name" value="<?php echo $row["name"]; ?>">
+                            <input type="hidden" name="hidden_price" value="<?php echo $row["price"]; ?>">
+                            <input type="submit" name="add" style="margin-top:5px;" class="btn btn-default" value="Add to Bag">
+                        </div>
+                    </form>
+                </div>
             <?php
 		}
 	}

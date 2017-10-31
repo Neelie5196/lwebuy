@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2017 at 10:40 AM
+-- Generation Time: Oct 31, 2017 at 07:13 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -23,28 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `abx`
---
-
-CREATE TABLE `abx` (
-  `id` int(11) NOT NULL,
-  `weight` varchar(25) NOT NULL,
-  `price` varchar(25) NOT NULL,
-  `place` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `abx`
---
-
-INSERT INTO `abx` (`id`, `weight`, `price`, `place`) VALUES
-(1, 'First 1 KG', 'RM19', 'east'),
-(2, '1.5 - 10 KG', 'RM8/ 0.5 KG', 'east'),
-(3, 'above 10 KG', 'RM7.5 / 0.5 KG', 'east');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `address`
 --
 
@@ -54,6 +32,7 @@ CREATE TABLE `address` (
   `address` varchar(100) NOT NULL,
   `state` varchar(20) NOT NULL,
   `city` varchar(20) NOT NULL,
+  `country` varchar(20) NOT NULL,
   `postcode` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -61,9 +40,9 @@ CREATE TABLE `address` (
 -- Dumping data for table `address`
 --
 
-INSERT INTO `address` (`a_id`, `user_id`, `address`, `state`, `city`, `postcode`) VALUES
-(1, 1, 'erwer,wer,wer,wer,wer,wer', 'ewdzf', 'wdasd', 12345),
-(2, 1, 'qwedzxcwr ,awsdad,asdqw', 'asda', 'sfasf', 23455);
+INSERT INTO `address` (`a_id`, `user_id`, `address`, `state`, `city`, `country`, `postcode`) VALUES
+(1, 10, 'erwer,wer,wer,wer,wer,wer', 'sarawak', 'kuching', 'malaysia', 12345),
+(2, 10, 'qwedzxcwr ,awsdad,asdqw', 'sarawak', 'kuching', 'malaysia', 23455);
 
 -- --------------------------------------------------------
 
@@ -328,32 +307,6 @@ INSERT INTO `point` (`id`, `user_id`, `point`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `poslaju`
---
-
-CREATE TABLE `poslaju` (
-  `id` int(11) NOT NULL,
-  `weight` varchar(25) NOT NULL,
-  `price` varchar(25) NOT NULL,
-  `place` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `poslaju`
---
-
-INSERT INTO `poslaju` (`id`, `weight`, `price`, `place`) VALUES
-(1, '0.5 - 1.5 KG', 'RM6 / 0.5 KG', 'west'),
-(2, '2.0 - 3.5 KG', 'RM5.5 / 0.5 KG', 'west'),
-(3, '4.0 - 10 KG', 'RM5.0 / 0.5 KG', 'west'),
-(4, 'above 10 KG', 'RM4.5 / 0.5 KG', 'west'),
-(5, 'First 1 KG', 'RM19', 'east'),
-(6, '1.5 - 10 KG', 'RM8 / 0.5 KG', 'east'),
-(7, 'above 10 KG', 'RM7.5 / 0.5 KG', 'east');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `receive_request`
 --
 
@@ -421,29 +374,6 @@ CREATE TABLE `shipping_price` (
 
 INSERT INTO `shipping_price` (`sp_id`, `below`, `bprice`, `over`, `oprice`) VALUES
 (1, '1kg', '15.00', '500g', '7.50');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `skynet`
---
-
-CREATE TABLE `skynet` (
-  `id` int(11) NOT NULL,
-  `weight` varchar(25) NOT NULL,
-  `price` varchar(25) NOT NULL,
-  `place` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `skynet`
---
-
-INSERT INTO `skynet` (`id`, `weight`, `price`, `place`) VALUES
-(1, '0.5 - 2.0 KG', 'RM6 / 0.5 KG', 'west'),
-(2, '2.5 KG', 'RM5.5 / 0.5 KG', 'west'),
-(3, '3.0 - 10 KG', 'RM5 / 0.5 KG', 'west'),
-(4, 'above 10 KG', 'RM4.5 / 0.5 KG', 'west');
 
 -- --------------------------------------------------------
 
@@ -575,12 +505,6 @@ INSERT INTO `work_station` (`ws_id`, `user_id`, `wh_id`) VALUES
 --
 
 --
--- Indexes for table `abx`
---
-ALTER TABLE `abx`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `address`
 --
 ALTER TABLE `address`
@@ -655,12 +579,6 @@ ALTER TABLE `point`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `poslaju`
---
-ALTER TABLE `poslaju`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `receive_request`
 --
 ALTER TABLE `receive_request`
@@ -677,12 +595,6 @@ ALTER TABLE `shipping`
 --
 ALTER TABLE `shipping_price`
   ADD PRIMARY KEY (`sp_id`);
-
---
--- Indexes for table `skynet`
---
-ALTER TABLE `skynet`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `slot`
@@ -727,11 +639,6 @@ ALTER TABLE `work_station`
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `abx`
---
-ALTER TABLE `abx`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `address`
 --
@@ -786,17 +693,12 @@ ALTER TABLE `parcel`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `point`
 --
 ALTER TABLE `point`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `poslaju`
---
-ALTER TABLE `poslaju`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `receive_request`
 --
@@ -811,12 +713,7 @@ ALTER TABLE `shipping`
 -- AUTO_INCREMENT for table `shipping_price`
 --
 ALTER TABLE `shipping_price`
-  MODIFY `sp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `skynet`
---
-ALTER TABLE `skynet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `sp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `slot`
 --

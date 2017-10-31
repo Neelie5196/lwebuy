@@ -2,7 +2,7 @@
 
 require_once '../connection/config.php';
 session_start();
-$counter = 0; 
+$counter = 0;
 
 
 $slotitemQuery = $db->prepare("
@@ -20,11 +20,6 @@ $slotitemQuery->execute([
 ]);
 
 $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
-
-$query = "SELECT * 
-          FROM shipping_price";
-$result = mysql_query($query);
-$results = mysql_fetch_assoc($result);
 
 ?>
 
@@ -66,7 +61,7 @@ $results = mysql_fetch_assoc($result);
 
         <section class = "content">
             <div class="container">
-                <form action="#" method="post">
+                <form action="shippingrequest.php" method="post">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <?php if(!empty($slotitem)): ?>
@@ -99,48 +94,17 @@ $results = mysql_fetch_assoc($result);
                                 <?php endforeach; ?>
                             </table>
                             <?php else: ?>
-                                <p>There is no item in slot.</p>
+                                <p>There is no item in warehouse.</p>
                             <?php endif; ?>
                         </div>
                     </div>
-                    <?php
-                        $total = "<span id='output'></span>";
-                            echo $total;
-                    ?>
-                    
                     <div class="row">
-                        <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-
-                                </div>
-                            </div>
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <input type="submit" class="btn btn-success" name="shipnow" value="Ship Now" style="float:right;">
                         </div>
                     </div>
-                    <center>
-                        <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>
-                        <input type="submit" class="btn btn-success" name="pay" value="Pay Now">
-                    </center>
                 </form>
             </div>
         </section>
     </body>
-    <script>
-        
-        $(document).ready(function() {
-            function recalculate() {
-                var sum = 0;
-
-                $("input[type=checkbox]:checked").each(function() {
-                    sum += parseInt($(this).attr("weight"));
-                });
-
-                $("#output").html(sum);
-            }
-
-            $("input[type=checkbox]").change(function() {
-                recalculate();
-            });
-        });
-    </script>
 </html>
