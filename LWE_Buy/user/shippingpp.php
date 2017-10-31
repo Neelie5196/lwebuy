@@ -34,13 +34,13 @@ session_start();
             </div>
             
             <div class="container">
-                <h2>Shipping History</h2>
+                <h2>Pending Payment</h2>
                 <hr/>
             </div>
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
-                        <strong>Delivery</strong>
+                        <strong>Waiting</strong>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@ session_start();
                             <?php endforeach; ?>
                         </table>
                         <?php else: ?>
-                            <p>There is no shipping successful records.</p>
+                            <p>There is no pending payment.</p>
                         <?php endif; ?>
                     </div>
                 </div>
