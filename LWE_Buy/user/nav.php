@@ -12,11 +12,15 @@
                     <li><a href="purchasehistory.php">Purchase History</a></li>
                 </ul>
             </li>
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shipping <span class="caret"></span></a>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Receive <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
                     <li><a href="receive-1.php">Receive Request</a></li>
                     <li><a href="receivehistory.php">Receive History</a></li>
                     <li><a href="receiveditem.php">Received Item</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shipping <span class="caret"></span></a>
+                <ul class="dropdown-menu menuitem">
                     <li><a href="shippinglist.php">Shipping List</a></li>
                     <li><a href="shippingrequest.php">Shipping Request</a></li>
                     <li><a href="shippinghistory.php">Shipping History</a></li>

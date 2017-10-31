@@ -4,7 +4,6 @@ require_once '../connection/config.php';
 session_start();
 $counter = 0;
 
-
 $slotitemQuery = $db->prepare("
 
     SELECT *
@@ -20,6 +19,11 @@ $slotitemQuery->execute([
 ]);
 
 $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
+
+$query = "SELECT * 
+          FROM shipping_price";
+$result = mysql_query($query);
+$results = mysql_fetch_assoc($result);
 
 ?>
 
@@ -58,9 +62,10 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
                 </div>
             </div>
         </div>
-
+        
         <section class = "content">
             <div class="container">
+                <p>Below 1kg = RM <?php echo $results['bprice']; ?>, above 1kg each 0.5kg = RM <?php echo $results['oprice']; ?></p>
                 <form action="shippingrequest.php" method="post">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
@@ -88,7 +93,7 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
                                         <td><?php echo $slot['order_code']; ?></td>
                                         <td><?php echo $slot['weight']; ?></td>
                                         <td><?php echo $slot['datetime']; ?></td>
-                                        <td><input type="checkbox" weight="<?php echo $slot['weight']; ?>" name="item[]"></td>
+                                        <td><input type="checkbox" weight="<?php echo $slot['weight']; ?>" value="<?php echo $slot['i_id']; ?>" name="item[]"></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
@@ -98,13 +103,33 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
                             <?php endif; ?>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
-                            <input type="submit" class="btn btn-success" name="shipnow" value="Ship Now" style="float:right;">
+                    <center>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <input type="hidden" id="totalweight" name="totalweight" class="form-control" value="">
+                                <input type="submit" class="btn btn-success" name="shipnow" value="Ship Now">
+                            </div>
                         </div>
-                    </div>
+                    </center>
                 </form>
             </div>
         </section>
     </body>
+    <script>
+        
+        $(document).ready(function() {
+            function recalculate() {
+                var sum = 0;
+
+                $("input[type=checkbox]:checked").each(function() {
+                    sum += parseFloat($(this).attr("weight"));
+                });
+                document.getElementById('totalweight').value = sum;
+            }
+
+            $("input[type=checkbox]").change(function() {
+                recalculate();
+            });
+        });
+    </script>
 </html>

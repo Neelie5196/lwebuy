@@ -2,9 +2,28 @@
 require_once '../connection/config.php';
 session_start();
 $user_id = $_SESSION['user_id'];
+$item = $_POST['item'];
+$totalweight = $_POST['totalweight'];
 
 $query = "SELECT * FROM address WHERE user_id = '$user_id'";
 $result = mysqli_query($con, $query);
+
+$slotitemQuery = $db->prepare("
+
+    SELECT *
+    FROM item
+    WHERE i_id IN (".implode(',',$item).")
+
+");
+
+$slotitemQuery->execute();
+
+$slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
+
+$query1 = "SELECT * 
+          FROM shipping_price";
+$result1 = mysql_query($query1);
+$results1 = mysql_fetch_assoc($result1);
 
 ?>
 
@@ -79,34 +98,57 @@ $result = mysqli_query($con, $query);
         <br/>
         <section class = "content">
             <div class="container">
-                <form action="shippingrequest.php" method="post">
+                <form action="payment.php" method="post">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
+                            <?php if(!empty($slotitem)): ?>
                             <table class="table thead-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th width="33%">Item Name</th>
                                         <th width="33%">Weight (KG)</th>
-                                        <th width="33%">Price (RM)</th>
                                     </tr>
                                 </thead>
+                                <?php foreach($slotitem as $slot): ?>
                                 <tbody>
                                     <tr>
-                                        <td>###</td>
-                                        <td>###</td>
+                                        <td><?php echo $slot['name']; ?></td>
+                                        <td><?php echo $slot['weight']; ?></td>
                                     </tr>
                                 </tbody>
+                                <?php endforeach; ?>
                             </table>
+                            <?php else: ?>
+                                <p>There is no item ready to ship</p>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-md-6 col-lg-6">
                             
                         </div>
-                        <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-md-6 col-lg-6" style="padding-bottom: 20px;">
                             <div class="row">
                                 <div class="col-xs-8 col-md-8 col-lg-8">
-                                    <p style="float: right; ">Total Shipping Fee:</p>
+                                    <?php
+                                        $over = '';
+                                        $over1 = '0.5';
+                                        if($totalweight <= 1){
+                                            ?>
+                                                <input type="hidden" name="pricetotal" class="form-control" value="<?php echo $results1['bprice']; ?>">
+                                                <h4 style="float: right; ">Total Shipping Fee: RM <?php echo $results1['bprice']; ?></h4>
+                                            <?php
+                                        }else{
+                                            while ($over < $totalweight){
+                                                $over += $over1;
+                                            }
+                                            ?>
+                                                <input type="hidden" name="pricetotal" class="form-control" value="<?php echo number_format((float)$over*$results1['bprice'], 2, '.', ''); ?>">
+                                                <h4 style="float: right; ">Total Shipping Fee: RM <?php echo number_format((float)$over*$results1['bprice'], 2, '.', ''); ?></h4>
+                                            <?php
+                                        }
+                                    ?>
+                                    
                                 </div>
                                 <div class="col-xs-4 col-md-4 col-lg-4">
                                     <input type="submit" class="btn btn-success" name="pay" value="Pay Now" style="float:right;">
@@ -120,11 +162,11 @@ $result = mysqli_query($con, $query);
         <div id="newaddress" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="addslot.php" method="post">
+                    <form action="addaddress.php" method="post">
                         <div class="modal-header">
                             <h4 class="modal-title">New Address</h4>
                         </div>
-
+                        <input type="hidden" name="user_id" class="form-control" value="<?php echo $user_id ?>">
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-xs-4 col-md-4 col-lg-4">

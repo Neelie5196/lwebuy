@@ -12,12 +12,7 @@
                     <li><a href="orderhistory.php">Order History</a></li>
                 </ul>
             </li>
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shipping <span class="caret"></span></a>
-                <ul class="dropdown-menu menuitem">
-                    <li><a href="shippinglist.php">Shipping List</a></li>
-                    <li><a href="conprice.php">Shipping Price</a></li>
-                </ul>
-            </li>
+            <li><a href="shippinglist.php" class="menuitem">Shipping</a></li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Warehouse <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
                     <li><a href="store.php">Warehouse Store</a></li>

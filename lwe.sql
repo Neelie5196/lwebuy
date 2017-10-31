@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2017 at 07:13 AM
+-- Generation Time: Oct 31, 2017 at 12:14 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -42,7 +42,8 @@ CREATE TABLE `address` (
 
 INSERT INTO `address` (`a_id`, `user_id`, `address`, `state`, `city`, `country`, `postcode`) VALUES
 (1, 10, 'erwer,wer,wer,wer,wer,wer', 'sarawak', 'kuching', 'malaysia', 12345),
-(2, 10, 'qwedzxcwr ,awsdad,asdqw', 'sarawak', 'kuching', 'malaysia', 23455);
+(2, 10, 'qwedzxcwr ,awsdad,asdqw', 'sarawak', 'kuching', 'malaysia', 23455),
+(7, 10, '123', 'sarawak', 'kuching', 'Malaysia', 32145);
 
 -- --------------------------------------------------------
 
@@ -140,12 +141,12 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`i_id`, `s_id`, `from_id`, `name`, `order_code`, `weight`, `datetime`) VALUES
-(17, 1, 'Order Item', 'test3', '123', '12.00', '2017-10-27 15:40:15'),
-(18, 1, 'Receive Request', '1', '9789861985350', '21.00', '2017-10-27 15:40:23'),
-(19, 1, 'Order Item', 'test3', '234', '23.00', '2017-10-27 15:40:28'),
+(17, 1, 'Order Item', 'test3', '123', '1.00', '2017-10-31 08:58:39'),
+(18, 1, 'Receive Request', '1', '9789861985350', '1.01', '2017-10-31 09:03:00'),
+(19, 1, 'Order Item', 'test3', '234', '1.49', '2017-10-31 09:03:20'),
 (20, 7, 'Order Item', '4', 'FREIGHT MARK', '32.00', '2017-10-27 15:40:48'),
-(21, 1, 'Receive Request', '2', '2', '12.00', '2017-10-27 15:40:53'),
-(22, 7, 'Receive Request', '1', '1', '43.00', '2017-10-27 15:40:58');
+(21, 1, 'Receive Request', '2', '2', '1.51', '2017-10-31 09:03:39'),
+(22, 7, 'Receive Request', '1', '1', '3.00', '2017-10-31 08:59:19');
 
 -- --------------------------------------------------------
 
@@ -373,7 +374,7 @@ CREATE TABLE `shipping_price` (
 --
 
 INSERT INTO `shipping_price` (`sp_id`, `below`, `bprice`, `over`, `oprice`) VALUES
-(1, '1kg', '15.00', '500g', '7.50');
+(1, '1kg', '30.00', '500g', '15.00');
 
 -- --------------------------------------------------------
 
@@ -643,7 +644,7 @@ ALTER TABLE `work_station`
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `adjust`
 --
@@ -683,7 +684,7 @@ ALTER TABLE `order_list`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `parcel`
 --
