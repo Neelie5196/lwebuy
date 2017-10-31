@@ -3,7 +3,33 @@
 require_once '../connection/config.php';
 session_start();
 
+$shippinglistQuery = $db->prepare("
 
+    SELECT *
+    FROM shipping
+    WHERE user_id=:user_id AND status = 'Request'
+
+");
+
+$shippinglistQuery->execute([
+    'user_id' => $_SESSION['user_id']
+]);
+
+$shippinglist = $shippinglistQuery->rowCount() ? $shippinglistQuery : [];
+
+$shippingslistQuery = $db->prepare("
+
+    SELECT *
+    FROM shipping
+    WHERE user_id=:user_id AND status = 'Proceed'
+
+");
+
+$shippingslistQuery->execute([
+    'user_id' => $_SESSION['user_id']
+]);
+
+$shippingslist = $shippingslistQuery->rowCount() ? $shippingslistQuery : [];
 ?>
 
 <!DOCTYPE html>
@@ -70,7 +96,7 @@ session_start();
                                 <?php foreach($shippinglist as $shipping): ?>
                                 <tbody>
                                     <tr>
-                                        <td width="5%"><?php echo $shipping['']; ?></td>
+                                        <td width="5%"><?php echo $shipping['s_id']; ?></td>
                                         <td width="40%"><?php echo $shipping['datetime']; ?></td>
                                         <td width="20%"><?php echo $shipping['price']; ?></td>
                                         <td width="20%"><?php echo $shipping['status']; ?></td>
@@ -99,7 +125,7 @@ session_start();
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="proceed">
-                            <?php if(!empty($shippinglist)): ?>
+                            <?php if(!empty($shippingslist)): ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
@@ -109,13 +135,13 @@ session_start();
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($shippinglist as $shipping): ?>
+                                <?php foreach($shippingslist as $shippings): ?>
                                 <tbody>
                                     <tr>
-                                        <td width="5%"><?php echo $shipping['']; ?></td>
-                                        <td width="40%"><?php echo $shipping['datetime']; ?></td>
-                                        <td width="20%"><?php echo $shipping['price']; ?></td>
-                                        <td width="20%"><?php echo $shipping['status']; ?></td>
+                                        <td width="5%"><?php echo $shippings['s_id']; ?></td>
+                                        <td width="40%"><?php echo $shippings['datetime']; ?></td>
+                                        <td width="20%"><?php echo $shippings['price']; ?></td>
+                                        <td width="20%"><?php echo $shippings['status']; ?></td>
                                         <td width="15%"><a href="#" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>

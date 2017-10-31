@@ -3,6 +3,19 @@
 require_once '../connection/config.php';
 session_start();
 
+$shippinglistQuery = $db->prepare("
+
+    SELECT *
+    FROM shipping
+    WHERE user_id=:user_id AND status = 'Pending Payment'
+
+");
+
+$shippinglistQuery->execute([
+    'user_id' => $_SESSION['user_id']
+]);
+
+$shippinglist = $shippinglistQuery->rowCount() ? $shippinglistQuery : [];
 
 ?>
 
@@ -60,7 +73,7 @@ session_start();
                             <?php foreach($shippinglist as $shipping): ?>
                             <tbody>
                                 <tr>
-                                    <td width="5%"><?php echo $shipping['']; ?></td>
+                                    <td width="5%"><?php echo $shipping['s_id']; ?></td>
                                     <td width="40%"><?php echo $shipping['datetime']; ?></td>
                                     <td width="20%"><?php echo $shipping['price']; ?></td>
                                     <td width="20%"><?php echo $shipping['status']; ?></td>

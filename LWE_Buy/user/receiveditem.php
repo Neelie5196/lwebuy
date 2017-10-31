@@ -10,7 +10,7 @@ $slotitemQuery = $db->prepare("
     FROM slot s
     JOIN item i
     ON i.s_id = s.s_id
-    WHERE user_id=:user_id
+    WHERE user_id=:user_id AND action = 'In'
 
 ");
 

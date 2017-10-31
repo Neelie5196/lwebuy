@@ -1,6 +1,7 @@
 <?php
 require_once '../connection/config.php';
 session_start();
+$counter = 0;
 $user_id = $_SESSION['user_id'];
 $item = $_POST['item'];
 $totalweight = $_POST['totalweight'];
@@ -62,56 +63,62 @@ $results1 = mysql_fetch_assoc($result1);
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
-                    <strong>Address</strong>
-                    <button style="float: right;" class="btn btn-default" type="button" data-toggle="modal" data-target="#newaddress">Add New Address</button>
+        <form action="payments.php" method="post">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                        <strong>Address</strong>
+                        <button style="float: right;" class="btn btn-default" type="button" data-toggle="modal" data-target="#newaddress">Add New Address</button>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <?php
+                            if(mysqli_num_rows($result) > 0)
+                            {
+                                while($row = mysqli_fetch_array($result))
+                                {
+                                    ?>
+                                        <div class="col-md-3">
+                                            <div style="border: 1px solid #eaeaec; margin: -1px 19px 3px -1px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding:10px;" align="center">
+                                                <h5 class="text-info">
+                                                    <?php echo $row["address"]; ?>,<br/>
+                                                    <?php echo $row["postcode"]; ?>, <?php echo $row["city"]; ?>,<br/>
+                                                    <?php echo $row["state"]; ?>, <?php echo $row["country"]; ?><br/>
+                                                </h5>
+                                                <input type="checkbox" value="<?php echo $row["a_id"]; ?>" name="address">
+                                            </div>
+                                        </div>
+                                    <?php
+                                }
+                            }
+                        ?>
+                    </div>
                 </div>
             </div>
             <br/>
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <?php
-                        if(mysqli_num_rows($result) > 0)
-                        {
-                            while($row = mysqli_fetch_array($result))
-                            {
-                                ?>
-                                    <div class="col-md-3">
-                                        <div style="border: 1px solid #eaeaec; margin: -1px 19px 3px -1px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding:10px;" align="center">
-                                            <h5 class="text-info">
-                                                <?php echo $row["address"]; ?>,<br/>
-                                                <?php echo $row["postcode"]; ?>, <?php echo $row["city"]; ?>,<br/>
-                                                <?php echo $row["state"]; ?>, <?php echo $row["country"]; ?><br/>
-                                            </h5>
-                                            <input type="checkbox" name="address">
-                                        </div>
-                                    </div>
-                                <?php
-                            }
-                        }
-                    ?>
-                </div>
-            </div>
-        </div>
-        <br/>
-        <section class = "content">
-            <div class="container">
-                <form action="payment.php" method="post">
+            <section class = "content">
+                <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <?php if(!empty($slotitem)): ?>
                             <table class="table thead-bordered table-hover">
                                 <thead>
                                     <tr>
+                                        <th width="33%">#</th>
                                         <th width="33%">Item Name</th>
                                         <th width="33%">Weight (KG)</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($slotitem as $slot): ?>
+                                <?php foreach($slotitem as $slot): 
+                                    $counter++;
+                                ?>
                                 <tbody>
                                     <tr>
+                                        <input type="hidden" value="<?php echo $counter; ?>" name="counter"/>
+                                        <input type="hidden" name="i_id[]" class="form-control" value="<?php echo $slot['i_id']; ?>">
+                                        <td><?php echo $counter; ?></td>
                                         <td><?php echo $slot['name']; ?></td>
                                         <td><?php echo $slot['weight']; ?></td>
                                     </tr>
@@ -151,14 +158,15 @@ $results1 = mysql_fetch_assoc($result1);
                                     
                                 </div>
                                 <div class="col-xs-4 col-md-4 col-lg-4">
+                                    <input type="hidden" name="weight" class="form-control" value="<?php echo $totalweight; ?>">
                                     <input type="submit" class="btn btn-success" name="pay" value="Pay Now" style="float:right;">
                                 </div>
                             </div>                            
                         </div>
                     </div>
-                </form>
-            </div>
-        </section>
+                </div>
+            </section>
+        </form>
         <div id="newaddress" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">

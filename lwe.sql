@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2017 at 12:14 PM
+-- Generation Time: Oct 31, 2017 at 04:53 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -133,20 +133,22 @@ CREATE TABLE `item` (
   `name` varchar(50) NOT NULL,
   `order_code` varchar(25) NOT NULL,
   `weight` decimal(10,2) DEFAULT NULL,
-  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `shipping_id` int(11) DEFAULT NULL,
+  `action` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `item`
 --
 
-INSERT INTO `item` (`i_id`, `s_id`, `from_id`, `name`, `order_code`, `weight`, `datetime`) VALUES
-(17, 1, 'Order Item', 'test3', '123', '1.00', '2017-10-31 08:58:39'),
-(18, 1, 'Receive Request', '1', '9789861985350', '1.01', '2017-10-31 09:03:00'),
-(19, 1, 'Order Item', 'test3', '234', '1.49', '2017-10-31 09:03:20'),
-(20, 7, 'Order Item', '4', 'FREIGHT MARK', '32.00', '2017-10-27 15:40:48'),
-(21, 1, 'Receive Request', '2', '2', '1.51', '2017-10-31 09:03:39'),
-(22, 7, 'Receive Request', '1', '1', '3.00', '2017-10-31 08:59:19');
+INSERT INTO `item` (`i_id`, `s_id`, `from_id`, `name`, `order_code`, `weight`, `datetime`, `shipping_id`, `action`) VALUES
+(17, 1, 'Order Item', 'test3', '123', '1.00', '2017-10-31 15:31:54', 13, 'Packing'),
+(18, 1, 'Receive Request', '1', '9789861985350', '1.01', '2017-10-31 15:37:02', 14, 'Packing'),
+(19, 1, 'Order Item', 'test3', '234', '1.49', '2017-10-31 15:44:22', 15, 'Packing'),
+(20, 7, 'Order Item', '4', 'FREIGHT MARK', '32.00', '2017-10-31 13:11:27', NULL, 'In'),
+(21, 1, 'Receive Request', '2', '2', '1.51', '2017-10-31 15:29:07', NULL, 'In'),
+(22, 7, 'Receive Request', '1', '1', '3.00', '2017-10-31 13:11:29', NULL, 'In');
 
 -- --------------------------------------------------------
 
@@ -203,7 +205,7 @@ CREATE TABLE `order_list` (
 
 INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VALUES
 (2, 10, 'Request', '2017-10-23 06:25:31', '35.00'),
-(3, 10, 'Ready to pay', '2017-10-29 08:09:26', '35.00'),
+(3, 10, 'Paid', '2017-10-31 15:32:12', '35.00'),
 (4, 1, 'Paid', '2017-10-27 13:42:23', '23.00'),
 (9, 10, 'Proceed', '2017-10-23 06:25:45', NULL),
 (10, 10, 'Received', '2017-10-23 06:25:45', '219.00'),
@@ -283,7 +285,10 @@ INSERT INTO `payment` (`p_id`, `user_id`, `datetime`, `title`, `amount`, `file`,
 (8, 10, '2017-10-25 11:17:10', 'Reload 1', '0.01', '98523-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0),
 (9, 10, '2017-10-25 10:09:05', 'Reload 444 Point', '4.44', '76809-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0),
 (10, 10, '2017-10-29 07:50:37', 'Reload 5 Point', '5.00', '68676-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', NULL),
-(11, 10, '2017-10-29 08:04:27', 'Reload 5 Point', '5.00', '93248-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', NULL);
+(11, 10, '2017-10-29 08:04:27', 'Reload 5 Point', '5.00', '93248-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', NULL),
+(12, 10, '2017-10-31 15:32:12', 'Pay Order 3', '35.00', '74555-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Proceed', 3),
+(13, 10, '2017-10-31 15:37:12', 'Pay Shipping 14', '45.00', '39400-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Proceed', 14),
+(14, 10, '2017-10-31 15:44:25', 'Pay by Points', NULL, '45.00 Points', NULL, 'Waiting for Proceed', 15);
 
 -- --------------------------------------------------------
 
@@ -302,7 +307,7 @@ CREATE TABLE `point` (
 --
 
 INSERT INTO `point` (`id`, `user_id`, `point`) VALUES
-(1, 10, 13470),
+(1, 10, 13425),
 (3, 1, 444);
 
 -- --------------------------------------------------------
@@ -339,21 +344,23 @@ INSERT INTO `receive_request` (`rr_id`, `user_id`, `name`, `order_code`, `status
 CREATE TABLE `shipping` (
   `s_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `tracking_code` varchar(20) NOT NULL,
-  `order_number` int(11) NOT NULL,
-  `ship_to` varchar(25) NOT NULL,
-  `courier` varchar(25) NOT NULL,
-  `order_date` datetime NOT NULL,
-  `status` text NOT NULL
+  `a_id` int(11) NOT NULL,
+  `weight` decimal(10,2) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `status` text NOT NULL,
+  `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `tracking_code` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `shipping`
 --
 
-INSERT INTO `shipping` (`s_id`, `user_id`, `tracking_code`, `order_number`, `ship_to`, `courier`, `order_date`, `status`) VALUES
-(1, 10, 'ASFLF214', 112214141, 'house', 'Skynet', '2017-10-04 06:12:29', 'pending'),
-(2, 10, 'SGLH12H3', 0, '', '', '0000-00-00 00:00:00', 'proceeded');
+INSERT INTO `shipping` (`s_id`, `user_id`, `a_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`) VALUES
+(12, 10, 7, '1.00', '30.00', 'Pending Payment', '2017-10-31 15:30:09', NULL),
+(13, 10, 7, '1.00', '30.00', 'Pending Payment', '2017-10-31 15:31:54', NULL),
+(14, 10, 7, '1.01', '45.00', 'Request', '2017-10-31 15:37:12', NULL),
+(15, 10, 7, '1.49', '45.00', 'Request', '2017-10-31 15:44:25', NULL);
 
 -- --------------------------------------------------------
 
@@ -694,7 +701,7 @@ ALTER TABLE `parcel`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `point`
 --
@@ -709,7 +716,7 @@ ALTER TABLE `receive_request`
 -- AUTO_INCREMENT for table `shipping`
 --
 ALTER TABLE `shipping`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `shipping_price`
 --
