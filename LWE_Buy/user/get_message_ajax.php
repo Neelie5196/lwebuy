@@ -1,5 +1,5 @@
 <?php
-    require_once("connect.php");
+    require_once '../connection/config.php';
     if(isset($_GET['c_id'])){
         //get the conversation id and
         $conversation_id = base64_decode($_GET['c_id']);
