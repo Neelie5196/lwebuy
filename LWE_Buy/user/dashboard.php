@@ -22,7 +22,6 @@ $results = mysql_fetch_assoc($result);
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>    
-
         <!-- AngularJS -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         
@@ -499,79 +498,55 @@ $results = mysql_fetch_assoc($result);
                         <!-- address -->
                         <h3>Warehouse details</h3>
                         
-                        <form method="post" action="dashboard.php">
-                            <?php
-                                $warehousesettingQuery = $db->prepare("SELECT * FROM warehouse");
-
-                                $warehousesettingQuery->execute();
-
-                                $warehousesetting = $warehousesettingQuery->rowCount() ? $warehousesettingQuery : [];
-
-                                foreach($warehousesetting as $warehouse):
-                            ?>
-
-                            <input type="submit" name="getwarehouse" value="<?php echo $warehouse['country_description']; ?>"/>
-                            
-                            <?php
-                                endforeach;
-                            ?>
-                        </form>
-                        
+	
                         <div>
-                            <?php
-                                $wh_id = 0;
-                            
-                                if (isset($_POST['getwarehouse']))
-                                {
-                                    $wh_country = $_POST['getwarehouse'];
-                                    
-                                    $warehousesettingQuery = $db->prepare("SELECT * FROM warehouse country_description=:wh_country");
-
-                                    $warehousesettingQuery->execute(['wh_country' => $wh_country]);
-
-
-                                    $warehousesetting = $warehousesettingQuery->rowCount() ? $warehousesettingQuery : [];
-
-                                    foreach($warehousesetting as $warehouse):
-                            ?>
                             <div class="row warehousedetr">
-                                <div class="col-xs-1 col-md-1 col-lg-1">
+                                <div class="col-xs-12 col-md-12 col-lg-12">
                                     <label for="stName">Name: </label>
                                 </div>
 
+                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                  <input type="text" id="name" autocomplete="off"  style="border-radius: 30px; width: 30%;">
+                                </div>			
+                            </div>
+							<div class="row warehousedetr">                  
                                 <div class="col-xs-11 col-md-11 col-lg-11">
-                                    <input type="text" id="stName" name="stName" value="<?php echo $warehouse['station_name']; ?>" class=" warehousedetfield" disabled/>
-                                </div>
+								 <label for="stName">Address: </label>
+									<div id ="name-data"></div>	
+                                </div>			
                             </div>
-                            
-                            <div class="row warehousedetr">
-                                <div class="col-xs-1 col-md-1 col-lg-1">
-                                    <label for="stAddress">Address: </label>
-                                </div>
-
-                                <div class="col-xs-11 col-md-11 col-lg-11  ">
-                                    <input type="text" id="stAddress" name="stAddress" value="<?php echo $warehouse['station_description']; ?>" class=" warehousedetfield" disabled/>
-                                </div>
-                            </div>
-                            
-                            <div class="row warehousedetr">
-                                <div class="col-xs-1 col-md-1 col-lg-1">
-                                    <label for="stCty">Country: </label>
-                                </div>
-
-                                <div class="col-xs-11 col-md-11 col-lg-11 ">
-                                    <input type="text" id="stCty" name="stCty" value="<?php echo $warehouse['country_description']; ?>" class=" warehousedetfield" disabled/>
-                                </div>
-                            </div>
-                            
-                            <?php
-                                    endforeach;
-                                }
-                            ?>
+                             <div class="row warehousedetr">                  
+                                <div class="col-xs-11 col-md-11 col-lg-11">
+									 <input type= "submit" id ="name-submit" class="btn btn-info" value="Get" >
+									 
+                                </div>			
+                            </div>                      
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </body>
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/global.js"></script>
+	<script type="text/javascript" src="js/typeahead.js"></script>
+	<script>
+    $(document).ready(function () {
+        $('#name').typeahead({
+            source: function (query, result) {
+                $.ajax({
+                    url: "server.php",
+					data: 'query=' + query,            
+                    dataType: "json",
+                    type: "POST",
+                    success: function (data) {
+						result($.map(data, function (item) {
+							return item;
+                        }));
+                    }
+                });
+            }
+        });
+    });
+</script>
 </html>

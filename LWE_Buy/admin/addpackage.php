@@ -12,7 +12,6 @@ if(isset($_POST['name']))
     
     ?>
     <script>
-    alert('Success to Create');
     window.location.href='packagelist.php?success';
     </script>
     <?php

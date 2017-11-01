@@ -30,12 +30,12 @@
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Point <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
                     <li><a href="package.php">Buy Point</a></li>
-                    <li><a href="mypoint.php">Check Point</a></li>
                     <li><a href="transaction.php">Transaction History</a></li>
                 </ul>
             </li>
             <li><a href="service.php" class="menuitem">Service</a></li>
             <li><a href="contact.php" class="menuitem">Contact us</a></li>
+			 <li><a href="message.php" class="menuitem">Inbox</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">

@@ -38,6 +38,7 @@
                     <li><a href="feedback.php">Feedback</a></li>
                 </ul>
             </li>
+			<li><a href="message.php" class="menuitem">Inbox</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">

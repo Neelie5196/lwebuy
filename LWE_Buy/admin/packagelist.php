@@ -55,7 +55,7 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newpackage" style="float: right;">New     Package</button><br/><hr/>
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newpackage" style="float: right;">New Package</button><br/><hr/>
                             <?php if(!empty($packagelist)): ?>
                             <table class="table thead-bordered table-hover">
 								<thead>
