@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2017 at 10:22 AM
+-- Generation Time: Nov 01, 2017 at 10:50 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -112,7 +112,13 @@ CREATE TABLE `conversation` (
 INSERT INTO `conversation` (`id`, `user_one`, `user_two`) VALUES
 (1, 1, 8),
 (2, 3, 1),
-(3, 3, 2);
+(3, 3, 2),
+(4, 10, 3),
+(5, 10, 5),
+(6, 3, 5),
+(7, 3, 6),
+(8, 3, 8),
+(9, 10, 8);
 
 -- --------------------------------------------------------
 
@@ -159,6 +165,14 @@ CREATE TABLE `messages` (
   `user_to` int(11) NOT NULL,
   `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `conversation_id`, `user_from`, `user_to`, `message`) VALUES
+(1, 7, 3, 6, '122'),
+(2, 2, 3, 1, '123');
 
 -- --------------------------------------------------------
 
@@ -460,22 +474,23 @@ CREATE TABLE `users` (
   `contact` varchar(15) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `type` varchar(10) NOT NULL
+  `type` varchar(10) NOT NULL,
+  `image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`, `type`) VALUES
-(1, 'Albert', 'Ling', NULL, 'albert@email.com', '$2y$10$4Qss.2kEXKmEciQ0HZ0N1OOaYqXrbymg38gtdjiLlG5e4sFkGvarS', 'customer'),
-(2, 'Bobby ', 'Tang', NULL, 'bobby@email.com', '$2y$10$2453Uie/j6yywD02UOFlU.9cH0acQPlkXZsvL3XSbEEQjUTy9/sKS', 'customer'),
-(3, 'Clement', 'Chuo', NULL, 'clement@email.com', '$2y$10$xzv/iSSjAuxLhLbR4rgTdeYHuy01BPZjzHJ.9R9hPix5Dpw0nGr2y', 'admin'),
-(5, 'Eileeen', 'Kho', NULL, 'eileen@email.com', '$2y$10$NKkhLKxM46HnB/4EeRpjw.gWuvwiz/mfcsds7Q4zEMZxgq2N1vJ96', 'admin'),
-(6, 'Fabian', 'Tang', NULL, 'fabian@email.com', '$2y$10$E3CcjibNLt/D79t7soUKve1j1JoZDUmMuVjgP1Piigugao6GG9F3C', 'staff'),
-(7, 'Gordon', 'Yii', NULL, 'gordon@email.com', '$2y$10$uOpSbmMFqUesTmvPklp56OHMcAb..qshAlOz31xUN0LeXuYMYddYK', 'customer'),
-(8, 'Samuel', 'Hto', NULL, 'samuel@email.com', '$2y$10$nuOJ73sWDmZsWvdrR.bLkOyNaXCXCj2fz1BWTsE3PYJaxA7k2KRo.', 'admin'),
-(10, 'Desmond', 'Kuok', NULL, 'desmond@email.com', '$2y$10$pLraOonvL8szr4M/YISX/uX1xZZbbM9Tabe4CeX0iZVhq.9vXjVoO', 'customer');
+INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`, `type`, `image`) VALUES
+(1, 'Albert', 'Ling', NULL, 'albert@email.com', '$2y$10$4Qss.2kEXKmEciQ0HZ0N1OOaYqXrbymg38gtdjiLlG5e4sFkGvarS', 'customer', '../resources/avatar1.jpg'),
+(2, 'Bobby ', 'Tang', NULL, 'bobby@email.com', '$2y$10$2453Uie/j6yywD02UOFlU.9cH0acQPlkXZsvL3XSbEEQjUTy9/sKS', 'customer', '../resources/avatar1.jpg'),
+(3, 'Clement', 'Chuo', NULL, 'clement@email.com', '$2y$10$xzv/iSSjAuxLhLbR4rgTdeYHuy01BPZjzHJ.9R9hPix5Dpw0nGr2y', 'admin', '../resources/avatar1.jpg'),
+(5, 'Eileeen', 'Kho', NULL, 'eileen@email.com', '$2y$10$NKkhLKxM46HnB/4EeRpjw.gWuvwiz/mfcsds7Q4zEMZxgq2N1vJ96', 'admin', '../resources/avatar1.jpg'),
+(6, 'Fabian', 'Tang', NULL, 'fabian@email.com', '$2y$10$E3CcjibNLt/D79t7soUKve1j1JoZDUmMuVjgP1Piigugao6GG9F3C', 'staff', '../resources/avatar1.jpg'),
+(7, 'Gordon', 'Yii', NULL, 'gordon@email.com', '$2y$10$uOpSbmMFqUesTmvPklp56OHMcAb..qshAlOz31xUN0LeXuYMYddYK', 'customer', '../resources/avatar1.jpg'),
+(8, 'Samuel', 'Hto', NULL, 'samuel@email.com', '$2y$10$nuOJ73sWDmZsWvdrR.bLkOyNaXCXCj2fz1BWTsE3PYJaxA7k2KRo.', 'admin', '../resources/avatar1.jpg'),
+(10, 'Desmond', 'Kuok', NULL, 'desmond@email.com', '$2y$10$pLraOonvL8szr4M/YISX/uX1xZZbbM9Tabe4CeX0iZVhq.9vXjVoO', 'customer', '../resources/avatar1.jpg');
 
 -- --------------------------------------------------------
 
@@ -683,7 +698,7 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `conversation`
 --
 ALTER TABLE `conversation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `item`
 --
@@ -693,7 +708,7 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `order_item`
 --
