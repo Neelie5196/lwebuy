@@ -7,7 +7,7 @@ $shippinglistQuery = $db->prepare("
 
     SELECT *
     FROM shipping
-    WHERE user_id=:user_id AND status = 'Delivery'
+    WHERE user_id=:user_id AND status = 'Delivered'
 
 ");
 
@@ -53,7 +53,7 @@ $shippinglist = $shippinglistQuery->rowCount() ? $shippinglistQuery : [];
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
-                        <strong>Delivery</strong>
+                        <strong>Delivered</strong>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,6 @@ $shippinglist = $shippinglistQuery->rowCount() ? $shippinglistQuery : [];
                                     <th>Shipping#</th>
                                     <th>Placed on</th>
                                     <th>Total (RM)</th>
-                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <?php foreach($shippinglist as $shipping): ?>
@@ -76,7 +75,6 @@ $shippinglist = $shippinglistQuery->rowCount() ? $shippinglistQuery : [];
                                     <td width="5%"><?php echo $shipping['s_id']; ?></td>
                                     <td width="40%"><?php echo $shipping['datetime']; ?></td>
                                     <td width="20%"><?php echo $shipping['price']; ?></td>
-                                    <td width="20%"><?php echo $shipping['status']; ?></td>
                                     <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $shipping['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                 </tr>
                             </tbody>

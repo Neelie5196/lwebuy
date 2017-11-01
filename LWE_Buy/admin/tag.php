@@ -8,6 +8,8 @@ $shippingdetailQuery = $db->prepare("
     FROM shipping sh
     JOIN users us
     ON us.user_id = sh.user_id
+    JOIN address ad
+    on ad.a_id = sh.a_id
     WHERE s_id=:s_id
 ");
 
@@ -74,7 +76,7 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
                 <?php echo $sd['fname']. " " . $sd['lname'] ?>
             </p>
             <h3>Address</h3>
-            <p><?php echo $sd['ship_to']; ?></p>
+            <p><?php echo $sd['address'] . ", " . $sd['postcode'] . " " . $sd['city'] . ", " . $sd['state'] . ", " . $sd['country']; ?></p>
             
             <?php
                         }

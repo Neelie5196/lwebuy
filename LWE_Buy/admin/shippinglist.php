@@ -8,7 +8,7 @@ $newshippingQuery = $db->prepare("
     FROM shipping sh
     JOIN users us
     ON us.user_id = sh.user_id
-    WHERE status = 'pending'
+    WHERE status = 'request'
     ORDER BY datetime desc
 ");
 
@@ -34,7 +34,7 @@ $shippingresponseQuery = $db->prepare("
     FROM shipping sh
     JOIN users us
     ON us.user_id = sh.user_id
-    WHERE status = 'awaiting'
+    WHERE status = 'delivered'
     ORDER BY datetime desc
 ");
 

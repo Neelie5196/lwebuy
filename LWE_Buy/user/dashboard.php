@@ -180,7 +180,7 @@ $results = mysql_fetch_assoc($result);
                                             
                                             <p>
                                             <?php
-                                                $purchasesettingQuery = $db->prepare("SELECT status FROM order_list WHERE user_id=:user_id");
+                                                $purchasesettingQuery = $db->prepare("SELECT * FROM order_list ol JOIN order_item oi ON oi.order_id = ol.ol_id WHERE user_id=:user_id");
 
                                                 $purchasesettingQuery->execute(['user_id' => $_SESSION['user_id']]);
 
@@ -191,7 +191,7 @@ $results = mysql_fetch_assoc($result);
                                                 {
                                                     foreach($purchasesetting as $purchase)
                                                     {
-                                                        if ($purchase['status']=="received")
+                                                        if ($purchase['statuss']=="Received")
                                                         {
                                                             $count += 1;
                                                         }
