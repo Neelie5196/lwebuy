@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2017 at 10:50 AM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Nov 01, 2017 at 02:27 PM
+-- Server version: 10.1.25-MariaDB
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -412,6 +414,62 @@ INSERT INTO `shipping_price` (`sp_id`, `below`, `bprice`, `over`, `oprice`) VALU
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `shipping_update_details`
+--
+
+CREATE TABLE `shipping_update_details` (
+  `det_id` int(11) NOT NULL,
+  `ErrorCode` varchar(10) NOT NULL,
+  `ErrorMessage` varchar(1000) NOT NULL,
+  `EventList` varchar(1000) NOT NULL,
+  `HawbNo` varchar(20) NOT NULL,
+  `Events` varchar(1000) NOT NULL,
+  `TransactionDate` datetime NOT NULL,
+  `StationCode` varchar(10) NOT NULL,
+  `StationDescription` varchar(50) NOT NULL,
+  `CountryCode` varchar(10) NOT NULL,
+  `CountryDescription` varchar(50) NOT NULL,
+  `EventCode` varchar(10) NOT NULL,
+  `EventDescription` varchar(1000) NOT NULL,
+  `ReasonCode` varchar(10) NOT NULL,
+  `ReasonDescription` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_update_summary`
+--
+
+CREATE TABLE `shipping_update_summary` (
+  `sum_id` int(11) NOT NULL,
+  `ErrorCode` varchar(10) NOT NULL,
+  `ErrorMessage` varchar(100) NOT NULL,
+  `SummaryList` varchar(10000) NOT NULL,
+  `HawbNo` varchar(20) NOT NULL,
+  `XR1` varchar(20) NOT NULL,
+  `XR2` varchar(100) NOT NULL,
+  `ShipmentDate` datetime NOT NULL,
+  `DeliveryDate` datetime NOT NULL,
+  `RecipientName` varchar(50) NOT NULL,
+  `SignedName` varchar(50) NOT NULL,
+  `OriginStationCode` varchar(10) NOT NULL,
+  `OriginStationDescription` varchar(50) NOT NULL,
+  `OriginCountryCode` varchar(10) NOT NULL,
+  `OriginCountryDescription` varchar(50) NOT NULL,
+  `DestinationStationCode` varchar(10) NOT NULL,
+  `DestinationStationDescription` varchar(50) NOT NULL,
+  `DestinationCountryCode` varchar(10) NOT NULL,
+  `DestinationCountryDescription` varchar(50) NOT NULL,
+  `EventCode` varchar(10) NOT NULL,
+  `EventDescription` varchar(1000) NOT NULL,
+  `ReasonCode` varchar(10) NOT NULL,
+  `ReasonDescription` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `slot`
 --
 
@@ -637,6 +695,18 @@ ALTER TABLE `shipping_price`
   ADD PRIMARY KEY (`sp_id`);
 
 --
+-- Indexes for table `shipping_update_details`
+--
+ALTER TABLE `shipping_update_details`
+  ADD PRIMARY KEY (`det_id`);
+
+--
+-- Indexes for table `shipping_update_summary`
+--
+ALTER TABLE `shipping_update_summary`
+  ADD PRIMARY KEY (`sum_id`);
+
+--
 -- Indexes for table `slot`
 --
 ALTER TABLE `slot`
@@ -755,6 +825,16 @@ ALTER TABLE `shipping`
 ALTER TABLE `shipping_price`
   MODIFY `sp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `shipping_update_details`
+--
+ALTER TABLE `shipping_update_details`
+  MODIFY `det_id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `shipping_update_summary`
+--
+ALTER TABLE `shipping_update_summary`
+  MODIFY `sum_id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `slot`
 --
 ALTER TABLE `slot`
@@ -821,6 +901,7 @@ ALTER TABLE `slot`
 ALTER TABLE `work_station`
   ADD CONSTRAINT `work_station_ibfk_1` FOREIGN KEY (`wh_id`) REFERENCES `warehouse` (`wh_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `work_station_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
