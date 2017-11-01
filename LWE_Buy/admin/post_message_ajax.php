@@ -1,5 +1,5 @@
 <?php
-    require_once("connect.php");
+   require_once '../connection/config.php';
     //post message
     if(isset($_POST['message'])){
         $message = mysqli_real_escape_string($con, $_POST['message']);
