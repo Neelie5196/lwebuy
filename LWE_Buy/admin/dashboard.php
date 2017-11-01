@@ -234,7 +234,7 @@ $results2 = mysql_fetch_assoc($result2);
             </div>
             
             <div class="col-xs-3 col-md-3 col-lg-3">
-                <a href="customerlist.php">
+                <a href="orderhistory.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <h2>Total Orders Done</h2>
@@ -254,7 +254,7 @@ $results2 = mysql_fetch_assoc($result2);
                                     {
                                         foreach($orders as $o)
                                         {
-                                            if ($o['status']=="proceeded")
+                                            if ($o['status']!="Request")
                                             {
                                                 $count += 1;
                                             }
@@ -279,7 +279,7 @@ $results2 = mysql_fetch_assoc($result2);
             </div>
             
             <div class="col-xs-3 col-md-3 col-lg-3">
-                <a href="customerlist.php">
+                <a href="shippinglist.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <h2>Total Items Shipped</h2>
@@ -324,7 +324,7 @@ $results2 = mysql_fetch_assoc($result2);
             </div>
             
             <div class="col-xs-3 col-md-3 col-lg-3">
-                <a href="customerlist.php">
+                <a href="credithistory.php">
                     <div class="row udashrow1">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <h2>Total Profit</h2>
@@ -333,7 +333,7 @@ $results2 = mysql_fetch_assoc($result2);
                                 <?php
                                     $count = 0; 
             
-                                    $creditQuery = $db->prepare("SELECT * FROM credit_request");
+                                    $creditQuery = $db->prepare("SELECT * FROM payment");
                                         
                                     $creditQuery->execute();
                                         
@@ -344,7 +344,7 @@ $results2 = mysql_fetch_assoc($result2);
                                     {
                                         foreach($credit as $c)
                                         {
-                                            if ($c['status']=="approved")
+                                            if ($c['status']=="Completed")
                                             {
                                                 $count += $c['amount'];
                                             }

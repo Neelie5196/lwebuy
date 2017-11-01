@@ -22,12 +22,25 @@ $shippingQuery = $db->prepare("
     JOIN users us
     ON us.user_id = sh.user_id
     WHERE status = 'proceeded'
-    ORDER BY datetime desc
+    ORDER BY order_date desc
 ");
 
 $shippingQuery->execute();
 
 $shipping = $shippingQuery->rowCount() ? $shippingQuery : [];
+
+$shippingresponseQuery = $db->prepare("
+    SELECT *
+    FROM shipping sh
+    JOIN users us
+    ON us.user_id = sh.user_id
+    WHERE status = 'awaiting'
+    ORDER BY order_date desc
+");
+
+$shippingresponseQuery->execute();
+
+$shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery : [];
 
 ?>
 
@@ -97,7 +110,7 @@ $shipping = $shippingQuery->rowCount() ? $shippingQuery : [];
                                 <?php endforeach; ?>
                             </table>
                             <?php else: ?>
-                                <p>There is no order pending.</p>
+                                <p>There is no shipping pending.</p>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -127,21 +140,20 @@ $shipping = $shippingQuery->rowCount() ? $shippingQuery : [];
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($ordersrequest as $orders): ?>
+                                <?php foreach($shipping as $s): ?>
                                 <tbody>
                                     <tr>
-                                        <td width="5%"><?php echo $orders['ol_id']; ?></td>
-                                        <td width="40%"><?php echo $orders['fname']; ?> <?php echo $orders['lname']; ?></td>
-                                        <td width="15%"><?php echo $orders['datetime']; ?></td>
-                                        <td width="15%"><?php echo $orders['price']; ?></td>
-                                        <td width="10%"><?php echo $orders['status']; ?></td>
-                                        <td width="15%"><a href="porderview.php?order_id=<?php echo $orders['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="5%"><?php echo $s['s_id']; ?></td>
+                                        <td width="40%"><?php echo $s['fname']; ?> <?php echo $s['lname']; ?></td>
+                                        <td width="15%"><?php echo $s['order_date']; ?></td>
+                                        <td width="10%"><?php echo $s['status']; ?></td>
+                                        <td width="5%"><a href=# class="btn btn-xs btn-info">Update</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
                             </table>
                             <?php else: ?>
-                                <p>There is no order pending.</p>
+                                <p>There is no proceeded shipping.</p>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -161,32 +173,27 @@ $shipping = $shippingQuery->rowCount() ? $shippingQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse3">
-                            <?php if(!empty($ordersrequest)): ?>
+                            <?php if(!empty($shippingrepsonse)): ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
-                                        <th>Order#</th>
+                                        <th>Shipping No.</th>
                                         <th>Name</th>
                                         <th>Placed on</th>
-                                        <th>Total (RM)</th>
-                                        <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($ordersrequest as $orders): ?>
+                                <?php foreach($shippingresponse as $sr): ?>
                                 <tbody>
                                     <tr>
-                                        <td width="5%"><?php echo $orders['ol_id']; ?></td>
-                                        <td width="40%"><?php echo $orders['fname']; ?> <?php echo $orders['lname']; ?></td>
-                                        <td width="15%"><?php echo $orders['datetime']; ?></td>
-                                        <td width="15%"><?php echo $orders['price']; ?></td>
-                                        <td width="10%"><?php echo $orders['status']; ?></td>
-                                        <td width="15%"><a href="porderview.php?order_id=<?php echo $orders['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="5%"><?php echo $sr['s_id']; ?></td>
+                                        <td width="40%"><?php echo $sr['fname']; ?> <?php echo $sr['lname']; ?></td>
+                                        <td width="15%"><?php echo $sr['order_date']; ?></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
                             </table>
                             <?php else: ?>
-                                <p>There is no order pending.</p>
+                                <p>There is no pending response.</p>
                             <?php endif; ?>
                         </div>
                     </div>
