@@ -9,7 +9,7 @@ $newshippingQuery = $db->prepare("
     JOIN users us
     ON us.user_id = sh.user_id
     WHERE status = 'pending'
-    ORDER BY order_date desc
+    ORDER BY datetime desc
 ");
 
 $newshippingQuery->execute();
@@ -22,7 +22,7 @@ $shippingQuery = $db->prepare("
     JOIN users us
     ON us.user_id = sh.user_id
     WHERE status = 'proceeded'
-    ORDER BY order_date desc
+    ORDER BY datetime desc
 ");
 
 $shippingQuery->execute();
@@ -35,7 +35,7 @@ $shippingresponseQuery = $db->prepare("
     JOIN users us
     ON us.user_id = sh.user_id
     WHERE status = 'awaiting'
-    ORDER BY order_date desc
+    ORDER BY datetime desc
 ");
 
 $shippingresponseQuery->execute();
@@ -102,7 +102,7 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                     <tr>
                                         <td width="5%"><?php echo $ns['s_id']; ?></td>
                                         <td width="40%"><?php echo $ns['fname']; ?> <?php echo $ns['lname']; ?></td>
-                                        <td width="20%"><?php echo $ns['order_date']; ?></td>
+                                        <td width="20%"><?php echo $ns['datetime']; ?></td>
                                         <td width="5%"><a href="tag.php?s_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">Print tag</a></td>
                                         <td width="5%"><a href=# class="btn btn-xs btn-info">Update</a></td>
                                     </tr>
@@ -145,7 +145,7 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                     <tr>
                                         <td width="5%"><?php echo $s['s_id']; ?></td>
                                         <td width="40%"><?php echo $s['fname']; ?> <?php echo $s['lname']; ?></td>
-                                        <td width="15%"><?php echo $s['order_date']; ?></td>
+                                        <td width="15%"><?php echo $s['datetime']; ?></td>
                                         <td width="10%"><?php echo $s['status']; ?></td>
                                         <td width="5%"><a href=# class="btn btn-xs btn-info">Update</a></td>
                                     </tr>
@@ -187,7 +187,7 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                     <tr>
                                         <td width="5%"><?php echo $sr['s_id']; ?></td>
                                         <td width="40%"><?php echo $sr['fname']; ?> <?php echo $sr['lname']; ?></td>
-                                        <td width="15%"><?php echo $sr['order_date']; ?></td>
+                                        <td width="15%"><?php echo $sr['datetime']; ?></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
