@@ -96,6 +96,35 @@ $results1 = mysql_fetch_assoc($result1);
                         ?>
                     </div>
                 </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                        <strong>Recipient Information</strong>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="col-xs-4 col-md-4 col-lg-4">
+                                <label>Recipient Name</label>
+                            </div>
+                            <div class="col-xs-8 col-md-8 col-lg-8">
+                                <input type="text" name="rname" class="form-control" style="border-radius: 30px; width: 80%;" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="col-xs-4 col-md-4 col-lg-4">
+                                <label>Recipient Contact</label>
+                            </div>
+                            <div class="col-xs-8 col-md-8 col-lg-8">
+                                <input type="text" name="rcontact" class="form-control" style="border-radius: 30px; width: 80%;" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <br/>
             <section class = "content">

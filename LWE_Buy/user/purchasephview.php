@@ -124,7 +124,7 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
                                 ?>
                                 <tfoot>
                                     <tr>
-                                        <td><label style="float: left;">Bank in Receipt:</label> <em style="float:left;"> <a href="../resources/img/receipts/<?php echo $bank['file']; ?>" target="_blank"><?php echo $bank['file']; ?></a></em></td>
+                                        <td><label style="float: left;">Bank in Receipt:</label> <em style="float:left;"> <a href="../resources/img/receipts/<?php echo $bank['file']; ?>" target="_blank"><?php echo $bank['title']; ?></a></em></td>
                                     </tr>
                                 </tfoot>
                                 <?php 

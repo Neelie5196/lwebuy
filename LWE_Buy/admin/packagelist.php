@@ -62,7 +62,7 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Price</th>
+                                        <th>Price (RM)</th>
                                     </tr>
                                 </thead>
                                 <?php foreach($packagelist as $package): 

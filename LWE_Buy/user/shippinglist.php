@@ -100,7 +100,7 @@ $shippingslist = $shippingslistQuery->rowCount() ? $shippingslistQuery : [];
                                         <td width="40%"><?php echo $shipping['datetime']; ?></td>
                                         <td width="20%"><?php echo $shipping['price']; ?></td>
                                         <td width="20%"><?php echo $shipping['status']; ?></td>
-                                        <td width="15%"><a href="#" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="15%"><a href="shippinglrview.php?shipping_id=<?php echo $shipping['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
@@ -142,7 +142,7 @@ $shippingslist = $shippingslistQuery->rowCount() ? $shippingslistQuery : [];
                                         <td width="40%"><?php echo $shippings['datetime']; ?></td>
                                         <td width="20%"><?php echo $shippings['price']; ?></td>
                                         <td width="20%"><?php echo $shippings['status']; ?></td>
-                                        <td width="15%"><a href="#" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $shippings['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>

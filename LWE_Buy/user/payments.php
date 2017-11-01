@@ -2,19 +2,26 @@
 require_once '../connection/config.php';
 session_start();
 
- 
-$user_id = $_SESSION['user_id'];
-$a_id = $_POST['address'];
-$weight = $_POST['weight'];
-$price = $_POST['pricetotal'];
-$status = "Pending Payment";
-$action = 'Packing';
-$i_id = $_POST['i_id'];
+if(isset($_POST['pay'])){
+    $user_id = $_SESSION['user_id'];
+    $rname = $_POST['rname'];
+    $rcontact = $_POST['rcontact'];
+    $a_id = $_POST['address'];
+    $weight = $_POST['weight'];
+    $price = $_POST['pricetotal'];
+    $status = "Pending Payment";
+    $action = 'Packing';
+    $i_id = $_POST['i_id'];
 
-$result = mysql_query("INSERT INTO shipping SET user_id='$user_id', a_id='$a_id', weight='$weight', price='$price', status='$status'") or die(mysql_error());
-$s_id = mysql_insert_id();
+    $result = mysql_query("INSERT INTO shipping SET user_id='$user_id', recipient_name='$rname', recipient_contact='$rcontact', a_id='$a_id', weight='$weight', price='$price', status='$status'") or die(mysql_error());
+    $s_id = mysql_insert_id();
 
-$result = mysql_query("UPDATE item SET shipping_id ='$s_id', action='$action' WHERE i_id IN (".implode(',',$i_id).")") or die(mysql_error());
+    $result = mysql_query("UPDATE item SET shipping_id ='$s_id', action='$action' WHERE i_id IN (".implode(',',$i_id).")") or die(mysql_error());
+}
+
+if(isset($_POST['ppay'])){
+    $s_id = $_POST['s_id'];
+}
 
 $query = "SELECT * 
           FROM adjust
