@@ -2,20 +2,49 @@
 require_once '../connection/config.php';
 
 
-if(isset($_POST["name"]))
+if(isset($_POST["title"]))
 {    
-	$user_id = $_POST['user_id'];
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-	$details = $_POST['details'];
-	$status = $_POST['status'];
-	$user_name = $_POST['user_name'];
+		$file = $_FILES['file'];
+
+		$fileName = $file['name'];
+		$fileTmpName = $file['tmp_name'];
+		$fileSize = $file['size'];
+		$fileError = $file['error'];
+		$fileType = $file['type'];
+
+		$fileExt = explode('.', $fileName);
+		$fileActualExt = strtolower(end($fileExt));
+
+		$allowed = array('jpg', 'jpeg', 'png', 'pdf');
+
+		if (in_array($fileActualExt, $allowed)) {
+			if ($fileError === 0) {
+				if ($fileSize < 1000000) {
+					$fileNameNew = uniqid('', true).".".$fileActualExt;
+					$fileDestination = '../resources/img/receipts/'.$fileNameNew;
+					move_uploaded_file($fileTmpName, $fileDestination);
+				} else {
+					echo "Your file is too big!";
+				}
+			} else {
+				echo "There was an error uploading your file!";
+			}
+		} else {
+			echo "You cannot upload files of this type!";
+		}
 	
-	$result = mysql_query("INSERT INTO paypack SET user_id ='$user_id', name='$name', price='$price', details='$details', time=now(), status='$status',user_name='$user_name'") or die(mysql_error());
+	$user_id = $_POST['user_id'];
+	$title = $_POST['title'];
+	$amount = $_POST['amount'];
+	$file = $fileName;
+	$type = $fileType;
+	$status = $_POST['status'];
+	
+	$result = mysql_query("INSERT INTO payment SET user_id='$user_id', datetime=now(), title='$title', amount='$amount', file = '$file', type = '$type',status='$status'") or die(mysql_error());
     ?>
     <script>
-    alert('Submit Completed!');
-    window.location.href='dashboard.php?success';
+    alert('Request Sent!');
+    window.location.href='package.php?success';
 	
     </script>
     <?php

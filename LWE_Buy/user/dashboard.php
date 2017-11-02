@@ -517,7 +517,7 @@ $results = mysql_fetch_assoc($result);
                             </div>
                              <div class="row warehousedetr">                  
                                 <div class="col-xs-11 col-md-11 col-lg-11">
-									 <input type= "submit" id ="name-submit" class="btn btn-info" value="Get" >
+									 <input type= "submit" id ="name-submit" class="btn btn-success" value="Get" >
 									 
                                 </div>			
                             </div>                      

@@ -27,10 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             $lname = $_POST['lname'];
             $fname = $_POST['fname'];
             $email = $_POST['email'];
+			$image = $_POST['image'];
             $password = $_POST['password'];
 			$password = password_hash($password, PASSWORD_DEFAULT); 
-
-            $sql = "INSERT INTO users (email, password, lname, fname, type) VALUES ('$email', '$password', '$lname', '$fname', 'customer')";
+			
+			
+            $sql = "INSERT INTO users (email, password, lname, fname, type, image) VALUES ('$email', '$password', '$lname', '$fname', 'customer','$image')";
             mysql_query($sql);
             ?>
             <script>
@@ -109,8 +111,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                             <td class="formfield">
                                                 <p data-ng-show="password!=repassword">Password does not match</p>
                                             </td>
+											<td><input type="hidden" class="form-control" id="image" name="image" value="../resources/avatar1.jpg"/></td>
                                         </tr>
-                                        
+										
                                         <tr>
                                             <td colspan="2" class="formfield">
                                                 <center>
