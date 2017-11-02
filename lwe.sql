@@ -388,7 +388,7 @@ CREATE TABLE `shipping` (
 --
 
 INSERT INTO `shipping` (`s_id`, `user_id`, `recipient_name`, `recipient_contact`, `a_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`) VALUES
-(17, 10, 'desmond', '012345678910', 2, '1.00', '30.00', 'Delivered', '2017-11-02 03:41:07', '12873t587541'),
+(17, 10, 'desmond', '012345678910', 2, '1.00', '30.00', 'Request', '2017-11-02 03:41:07', '12873t587541'),
 (18, 10, '123', '1232', 2, '1.01', '45.00', 'Proceed', '2017-11-02 03:39:47', NULL);
 
 -- --------------------------------------------------------
