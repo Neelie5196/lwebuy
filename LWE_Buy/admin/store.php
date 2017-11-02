@@ -291,7 +291,7 @@ $receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
                                         }else{
                                             ?>
                                                 <p>This item no record in database, please contact owner..</p>
-                                                <center><a href='feedback.php' class='btn btn-default' name='contact'>Contact User</a></center>
+                                                <center><a href='message.php' class='btn btn-info' name='contact'>Contact User</a></center>
                                             <?php
                                         }
                                             

@@ -26,7 +26,6 @@
                     <li><a href="shippinghistory.php">Shipping History</a></li>
                 </ul>
             </li>
-            <li><a href="tracking.php" class="menuitem">Tracking</a></li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Point <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
                     <li><a href="package.php">Buy Point</a></li>

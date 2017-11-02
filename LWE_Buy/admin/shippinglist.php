@@ -21,7 +21,7 @@ $shippingQuery = $db->prepare("
     FROM shipping sh
     JOIN users us
     ON us.user_id = sh.user_id
-    WHERE status = 'proceeded'
+    WHERE status = 'proceed'
     ORDER BY datetime desc
 ");
 

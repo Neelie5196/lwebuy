@@ -100,7 +100,7 @@ $purchase4list = $purchase4listQuery->rowCount() ? $purchase4listQuery : [];
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <a href='purchaseproduct-1.php' class='btn btn-default' name='new' style="float: right;">New Purchase</a>
+                        <p style="float: right;"><a href='message.php' class='btn btn-info' name='contact'>Contact Admin</a> <a href='purchaseproduct-1.php' class='btn btn-default' name='new'>New Purchase</a></p>
                     </div>
                 </div>
             </div>

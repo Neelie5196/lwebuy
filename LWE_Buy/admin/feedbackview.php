@@ -112,6 +112,28 @@ $cfeedback = $cfeedbackQuery->rowCount() ? $cfeedbackQuery : [];
                             </div>
                         </div>
                         <br/>
+                        <?php
+                            $email = $c['email'];
+
+                            $contactQuery = $db->prepare("SELECT * FROM users WHERE email = '$email'");
+
+                            $contactQuery->execute();
+
+                            $contact = $contactQuery->rowCount() ? $contactQuery : [];
+                        
+                            if(!empty($contact))
+                            {
+                                ?>
+                                    <a href='message.php' class='btn btn-info' name='contact'>Contact User</a>    
+                                <?php 
+                            }
+                            else
+                            {
+                                ?>
+                                    <p>Not LWE Member</p><br/>    
+                                <?php
+                            }
+                        ?>
                         <a href="javascript:history.go(-1)" class="btn btn-default" name="back">Back</a>
                     </div>
                 </div>

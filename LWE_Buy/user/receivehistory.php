@@ -67,7 +67,7 @@ $receiveslist = $receiveslistQuery->rowCount() ? $receiveslistQuery : [];
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <a href='receive-1.php' class='btn btn-default' name='new' style="float: right;">New Receive</a>
+                        <p style="float: right;"><a href='message.php' class='btn btn-info' name='contact'>Contact Admin</a> <a href='receive-1.php' class='btn btn-default' name='new'>New Receive</a></p>
                     </div>
                 </div>
             </div>

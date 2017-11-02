@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2017 at 02:27 PM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Generation Time: Nov 02, 2017 at 05:22 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -93,7 +91,8 @@ INSERT INTO `contact` (`cu_id`, `name`, `contact`, `email`, `subject`, `tracknum
 (2, 'SAD', '123', 'qwe@as.com', 'qwe', 'qwe', 'df', '2017-10-15 03:15:26', 'unread'),
 (3, '123', '123', '123@d.com', '123', '12', '123', '2017-10-15 05:23:07', 'read'),
 (4, 'SAD', '123', 'qwe@as.com', 'qwe', 'qwe', 'df', '2017-10-15 03:15:26', 'read'),
-(5, '123', '123', '123@d.com', '123', '12', '123', '2017-10-15 05:23:07', 'read');
+(5, '123', '123', '123@d.com', '123', '12', '123', '2017-10-15 05:23:07', 'read'),
+(6, 'Desmond Kuok', '0123456789', 'desmond@email.com', 'test', '', 'testtesttesttesttest', '2017-11-02 12:09:20', 'read');
 
 -- --------------------------------------------------------
 
@@ -120,7 +119,8 @@ INSERT INTO `conversation` (`id`, `user_one`, `user_two`) VALUES
 (6, 3, 5),
 (7, 3, 6),
 (8, 3, 8),
-(9, 10, 8);
+(9, 10, 8),
+(10, 3, 7);
 
 -- --------------------------------------------------------
 
@@ -316,7 +316,8 @@ INSERT INTO `payment` (`p_id`, `user_id`, `datetime`, `title`, `amount`, `file`,
 (11, 10, '2017-10-29 08:04:27', 'Reload 5 Point', '5.00', '93248-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', NULL),
 (12, 10, '2017-10-31 15:32:12', 'Pay Order 3', '35.00', '74555-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Proceed', 3),
 (15, 10, '2017-11-01 07:43:18', 'Pay Order 13', '7.64', '55361-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', 13),
-(16, 10, '2017-11-01 08:48:31', 'Pay Shipping 17', '30.00', '62742-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Proceed', 17);
+(16, 10, '2017-11-01 08:48:31', 'Pay Shipping 17', '30.00', '62742-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Proceed', 17),
+(17, 10, '2017-11-02 02:50:11', 'Pay by Points', NULL, '45.00 Points', NULL, 'Waiting for Proceed', 18);
 
 -- --------------------------------------------------------
 
@@ -335,7 +336,7 @@ CREATE TABLE `point` (
 --
 
 INSERT INTO `point` (`id`, `user_id`, `point`) VALUES
-(1, 10, 13425),
+(1, 10, 13380),
 (3, 1, 444);
 
 -- --------------------------------------------------------
@@ -387,8 +388,8 @@ CREATE TABLE `shipping` (
 --
 
 INSERT INTO `shipping` (`s_id`, `user_id`, `recipient_name`, `recipient_contact`, `a_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`) VALUES
-(17, 10, 'desmond', '012345678910', 2, '1.00', '30.00', 'Delivery', '2017-11-01 09:08:25', '12873t587541'),
-(18, 10, '123', '1232', 2, '1.01', '45.00', 'Pending Payment', '2017-11-01 08:45:24', NULL);
+(17, 10, 'desmond', '012345678910', 2, '1.00', '30.00', 'Delivered', '2017-11-02 03:41:07', '12873t587541'),
+(18, 10, '123', '1232', 2, '1.01', '45.00', 'Proceed', '2017-11-02 03:39:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -409,7 +410,7 @@ CREATE TABLE `shipping_price` (
 --
 
 INSERT INTO `shipping_price` (`sp_id`, `below`, `bprice`, `over`, `oprice`) VALUES
-(1, '1kg', '30.00', '500g', '15.00');
+(1, '1kg', '50.00', '500g', '25.00');
 
 -- --------------------------------------------------------
 
@@ -419,11 +420,7 @@ INSERT INTO `shipping_price` (`sp_id`, `below`, `bprice`, `over`, `oprice`) VALU
 
 CREATE TABLE `shipping_update_details` (
   `det_id` int(11) NOT NULL,
-  `ErrorCode` varchar(10) NOT NULL,
-  `ErrorMessage` varchar(1000) NOT NULL,
-  `EventList` varchar(1000) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
-  `Events` varchar(1000) NOT NULL,
   `TransactionDate` datetime NOT NULL,
   `StationCode` varchar(10) NOT NULL,
   `StationDescription` varchar(50) NOT NULL,
@@ -432,8 +429,17 @@ CREATE TABLE `shipping_update_details` (
   `EventCode` varchar(10) NOT NULL,
   `EventDescription` varchar(1000) NOT NULL,
   `ReasonCode` varchar(10) NOT NULL,
-  `ReasonDescription` varchar(1000) NOT NULL
+  `ReasonDescription` varchar(1000) NOT NULL,
+  `Remark` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `shipping_update_details`
+--
+
+INSERT INTO `shipping_update_details` (`det_id`, `HawbNo`, `TransactionDate`, `StationCode`, `StationDescription`, `CountryCode`, `CountryDescription`, `EventCode`, `EventDescription`, `ReasonCode`, `ReasonDescription`, `Remark`) VALUES
+(1, '12873t587541', '2017-11-02 04:16:08', 'SZX', 'SHENZHEN, CHINA, PEOPLE\'S REPUBLIC', 'CN', 'CHINA, PEOPLE\'S REPUBLIC', 'RDL', 'Shipment info registered at SHENZHEN.', 'IS', 'In Shipping', NULL),
+(2, '12873t587541', '2017-11-03 10:16:08', 'SZX', 'SHENZHEN, CHINA, PEOPLE\'S REPUBLIC', 'CN', 'CHINA, PEOPLE\'S REPUBLIC', 'PKI', 'Pickup shipment checked in at SHENZHEN.', 'IS', 'In Shipping', NULL);
 
 -- --------------------------------------------------------
 
@@ -443,16 +449,13 @@ CREATE TABLE `shipping_update_details` (
 
 CREATE TABLE `shipping_update_summary` (
   `sum_id` int(11) NOT NULL,
-  `ErrorCode` varchar(10) NOT NULL,
-  `ErrorMessage` varchar(100) NOT NULL,
-  `SummaryList` varchar(10000) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
-  `XR1` varchar(20) NOT NULL,
-  `XR2` varchar(100) NOT NULL,
+  `XR1` varchar(20) DEFAULT NULL,
+  `XR2` varchar(20) NOT NULL,
   `ShipmentDate` datetime NOT NULL,
-  `DeliveryDate` datetime NOT NULL,
+  `DeliveryDate` datetime DEFAULT NULL,
   `RecipientName` varchar(50) NOT NULL,
-  `SignedName` varchar(50) NOT NULL,
+  `SignedName` varchar(50) DEFAULT NULL,
   `OriginStationCode` varchar(10) NOT NULL,
   `OriginStationDescription` varchar(50) NOT NULL,
   `OriginCountryCode` varchar(10) NOT NULL,
@@ -461,11 +464,19 @@ CREATE TABLE `shipping_update_summary` (
   `DestinationStationDescription` varchar(50) NOT NULL,
   `DestinationCountryCode` varchar(10) NOT NULL,
   `DestinationCountryDescription` varchar(50) NOT NULL,
-  `EventCode` varchar(10) NOT NULL,
-  `EventDescription` varchar(1000) NOT NULL,
+  `EventCode` varchar(10) DEFAULT NULL,
+  `EventDescription` varchar(1000) DEFAULT NULL,
   `ReasonCode` varchar(10) NOT NULL,
-  `ReasonDescription` varchar(1000) NOT NULL
+  `ReasonDescription` varchar(1000) NOT NULL,
+  `Remark` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `shipping_update_summary`
+--
+
+INSERT INTO `shipping_update_summary` (`sum_id`, `HawbNo`, `XR1`, `XR2`, `ShipmentDate`, `DeliveryDate`, `RecipientName`, `SignedName`, `OriginStationCode`, `OriginStationDescription`, `OriginCountryCode`, `OriginCountryDescription`, `DestinationStationCode`, `DestinationStationDescription`, `DestinationCountryCode`, `DestinationCountryDescription`, `EventCode`, `EventDescription`, `ReasonCode`, `ReasonDescription`, `Remark`) VALUES
+(1, '12873t587541', NULL, '12873t587541', '2017-11-02 02:07:11', NULL, 'desmond', NULL, 'SZX', 'SHENZHEN', 'HK', 'HONGKONG', 'KUL', 'KUALA LUMPUR', 'MY', 'MALAYSIA', 'IP', 'In Proceed', 'IS', 'In Shipping', NULL);
 
 -- --------------------------------------------------------
 
@@ -496,28 +507,6 @@ INSERT INTO `slot` (`s_id`, `slot_code`, `slot_num`, `status`, `user_id`) VALUES
 (8, 4000, 8, 'Not in Use', NULL),
 (9, 5000, 9, 'In Use', 2),
 (10, 5000, 10, 'Not in Use', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `track_detail`
---
-
-CREATE TABLE `track_detail` (
-  `td_id` int(11) NOT NULL,
-  `shipping_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `track_summary`
---
-
-CREATE TABLE `track_summary` (
-  `ts_id` int(11) NOT NULL,
-  `shipping_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -714,18 +703,6 @@ ALTER TABLE `slot`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `track_detail`
---
-ALTER TABLE `track_detail`
-  ADD PRIMARY KEY (`td_id`);
-
---
--- Indexes for table `track_summary`
---
-ALTER TABLE `track_summary`
-  ADD PRIMARY KEY (`ts_id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -763,12 +740,12 @@ ALTER TABLE `adjust`
 -- AUTO_INCREMENT for table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `cu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `conversation`
 --
 ALTER TABLE `conversation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `item`
 --
@@ -803,7 +780,7 @@ ALTER TABLE `parcel`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `point`
 --
@@ -828,27 +805,17 @@ ALTER TABLE `shipping_price`
 -- AUTO_INCREMENT for table `shipping_update_details`
 --
 ALTER TABLE `shipping_update_details`
-  MODIFY `det_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `det_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `shipping_update_summary`
 --
 ALTER TABLE `shipping_update_summary`
-  MODIFY `sum_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sum_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `slot`
 --
 ALTER TABLE `slot`
   MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
---
--- AUTO_INCREMENT for table `track_detail`
---
-ALTER TABLE `track_detail`
-  MODIFY `td_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `track_summary`
---
-ALTER TABLE `track_summary`
-  MODIFY `ts_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -901,7 +868,6 @@ ALTER TABLE `slot`
 ALTER TABLE `work_station`
   ADD CONSTRAINT `work_station_ibfk_1` FOREIGN KEY (`wh_id`) REFERENCES `warehouse` (`wh_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `work_station_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

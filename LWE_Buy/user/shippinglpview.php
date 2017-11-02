@@ -92,7 +92,8 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
                         <p>Delivery Address: <?php echo $results1['address']; ?>, <?php echo $results1["postcode"]; ?>, <?php echo $results1["city"]; ?>, <?php echo $results1["state"]; ?>, <?php echo $results1["country"]; ?></p>
                         <p>Total Weight: <?php echo $results['weight']; ?></p>
                         <p>Shipping Fee: RM <?php echo $results['price']; ?></p>
-                        <p><strong>Tracking Code: <a href="<?php echo $results['tracking_code']; ?>" target="_blank"><?php echo $results['tracking_code']; ?></a></strong></p>
+                        <p><strong>Tracking Code: <a href="track.php?tracking_code=<?php echo $results['tracking_code']; ?>"><?php echo $results['tracking_code']; ?></a></strong></p>
+                        
                     </div>
                 </div>
                 <div class="row">

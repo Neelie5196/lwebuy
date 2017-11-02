@@ -3,8 +3,24 @@
 require_once 'connection/config.php';
 session_start();
 $hawb = $_POST['hawb'];
-$id = 0;
 
+$query = "SELECT * 
+          FROM shipping_update_summary
+          WHERE HawbNo = '$hawb'
+          ";
+$result = mysql_query($query);
+$results = mysql_fetch_assoc($result);
+
+$trackdetailsQuery = $db->prepare("
+    SELECT * 
+    FROM shipping_update_details
+    WHERE HawbNo = '$hawb'
+
+");
+
+$trackdetailsQuery->execute();
+
+$trackdetails = $trackdetailsQuery->rowCount() ? $trackdetailsQuery : [];
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +30,9 @@ $id = 0;
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initialscale=1.0"/>
         <!-- Bootstrap -->
-        <link href="frameworks/css/bootstrap.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--stylesheet-->
         <link href="frameworks/css/style.css" rel="stylesheet"/>
@@ -51,75 +69,35 @@ $id = 0;
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <form action="track.php" method="post" enctype="multipart/form-data">
-                                        <input type="text" name="hawb" class="form-control" placeholder="Tracking Number" style="border-radius: 30px; width: 25%; float: left;" autocomplete="off" required>
-                                        <button type="submit" class="btn btn-success" style="border-radius: 30px; float: left;">Track <span class="glyphicon glyphicon-search"></span></button>
-                                    </form>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:120%; text-align: left;">
                                     <strong>Tracking No</strong> <?php echo $hawb ?>
                                 </div>
                             </div>
-                            <?php
-                                $curl = curl_init();
-
-                                curl_setopt_array($curl, array(
-                                  CURLOPT_URL => "http://api.unixus.com.my/Tracking/V2/Tracking.svc/json/$hawb",
-                                  CURLOPT_RETURNTRANSFER => true,
-                                  CURLOPT_TIMEOUT => 30,
-                                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                  CURLOPT_CUSTOMREQUEST => "GET",
-                                  CURLOPT_HTTPHEADER => array(
-                                    "cache-control: no-cache"
-                                  ),
-                                ));
-
-                                $response = curl_exec($curl);
-                                $err = curl_error($curl);
-
-                                curl_close($curl);
-                                $response = json_decode($response, true); //because of true, it's in an array
-            
-                                $x = $response['TrackSummaryResponse']['SummaryList'];
-                                $x = array_shift($x);
-                            ?>
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-12" style="padding:15px;">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-3 col-lg-3">
                                             <strong>Status</strong><br>
-                                            <?php echo $x['ReasonDescription']; ?>
+                                            <?php echo $results['ReasonDescription']; ?>
                                         </div>
                                         <div class="col-xs-12 col-md-2 col-lg-2">
                                             <strong>Customer Ref</strong><br>
-                                            <?php echo $x['XR1']; ?>
+                                            <?php echo $results['XR1']; ?>
                                         </div>
                                         <div class="col-xs-12 col-md-3 col-lg-3">
                                             <strong>Carrier No</strong><br>
-                                            <a href="<?php echo $x['TrackingURL']; ?>" target="_blank"><?php echo $x['HawbNo']; ?></a>
+                                            <?php echo $results['HawbNo']; ?>
                                         </div>
                                         <div class="col-xs-12 col-md-2 col-lg-2">
                                             <strong>Send Date</strong><br>
                                             <small>
-                                                <?php echo $x['ShipmentDate']; ?>
+                                                <?php echo $results['ShipmentDate']; ?>
                                             </small>
-                                            <?php
-                                            #    $xy = str_replace('/Date(', '', substr($x['ShipmentDate'], 0, 30));
-                                            #    $xyz = str_replace(')/', '', substr($xy, 0, 30));
-                                            #    $wxyz = str_replace('+', '', substr($xyz, 0, 30));
-                                            #    $originalDate = $wxyz;
-                                            #    echo $wxyz;
-                                            #    echo $newDate = date("l, d F Y, h:i:s", strtotime($originalDate));
-                                            #?>
                                         </div>
                                         <div class="col-xs-12 col-md-2 col-lg-2">
                                             <strong>Delivered Date</strong><br>
                                             <small>
-                                                <?php echo $x['DeliveryDate']; ?>
+                                                <?php echo $results['DeliveryDate']; ?>
                                             </small>
                                         </div>
                                     </div>
@@ -130,33 +108,10 @@ $id = 0;
                                         </div>
                                     </div>
                                     <br/>
-                                    <?php
-                                        $curls = curl_init();
-
-                                        curl_setopt_array($curls, array(
-                                          CURLOPT_URL => "http://api.unixus.com.my/Tracking/V2/Tracking.svc/json/$hawb/Details",
-                                          CURLOPT_RETURNTRANSFER => true,
-                                          CURLOPT_TIMEOUT => 30,
-                                          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                                          CURLOPT_CUSTOMREQUEST => "GET",
-                                          CURLOPT_HTTPHEADER => array(
-                                            "cache-control: no-cache"
-                                          ),
-                                        ));
-
-                                        $responses = curl_exec($curls);
-                                        $errs = curl_error($curls);
-
-                                        curl_close($curls);
-                                        $responses = json_decode($responses, true); //because of true, it's in an array
-
-                                        $y = $responses['TrackDetailsResponse']['EventList'];
-                                        $y = $y[0]['Events'];
-                                        
-                                    ?>
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                                             <div class="span12 collapse" id="collapse">
+                                                <?php if(!empty($trackdetails)): ?>
                                                 <table class="table table-striped table-hover">
                                                     <thead>
                                                         <tr>
@@ -166,48 +121,30 @@ $id = 0;
                                                             <th width="20%">Remarks</th>
                                                         </tr>
                                                     </thead>
-                                                    <?php foreach($y as $records): 
-                                                    {
-                                                        
-                                                        $id++;
-                                                    }
-                                                    ?>
+                                                    <?php foreach($trackdetails as $track): ?>
                                                     <tbody>
                                                         <tr height="50">
-                                                            <td>
-                                                                <?php echo $records['TransactionDate']; ?>
-                                                                <?php
-                                                                #    $originalDate = $records['TransactionDate'];
-                                                                #    echo $newDate = date("l, d F Y, h:i:s", strtotime($originalDate));
-                                                                #?>
-                                                            </td>
-                                                            <td><?php echo $records['StationDescription']; ?></td>
-                                                            <td><?php echo $records['EventDescription']; ?></td>
-                                                            <td><?php echo $records['Remarks']; ?></td>
+                                                            <td><?php echo $track['TransactionDate']; ?></td>
+                                                            <td><?php echo $track['StationDescription']; ?></td>
+                                                            <td><?php echo $track['EventDescription']; ?></td>
+                                                            <td><?php echo $track['Remark']; ?></td>
                                                         </tr>
                                                     </tbody>
                                                     <?php endforeach; ?>
                                                 </table>
+                                                <?php else: ?>
+                                                    <p>Not found</p>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                 </div>
             </section>
+            <a href="javascript:history.go(-1)"  class="btn btn-default" name="back">Back</a>
         </center>
-        
-        
-        <script src="frameworks/js/angular.min.js"></script>
-        <script src="frameworks/js/getdata.js"></script>
-        
-        <!-- jQuery – required for Bootstrap's JavaScript plugins) -->
-        <script src="frameworks/js/jquery.min.js"></script>
-
-        <!-- All Bootstrap plug-ins file -->
-        <script src="frameworks/js/bootstrap.min.js"></script>
     </body>
 </html>

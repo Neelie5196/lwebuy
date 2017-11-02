@@ -21,7 +21,6 @@
                     <li><a href="warehouselist.php">Manage Warehouse</a></li>
                 </ul>
             </li>
-            <li><a href="tracking.php" class="menuitem">Tracking</a></li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">System User <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
                     <li><a href="createnew.php">Create New</a></li>

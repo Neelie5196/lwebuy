@@ -66,7 +66,7 @@ $shippingslist = $shippingslistQuery->rowCount() ? $shippingslistQuery : [];
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <a href='receiveditem.php' class='btn btn-default' name='new' style="float: right;">New Shipping</a>
+                        <p style="float: right;"><a href='message.php' class='btn btn-info' name='contact'>Contact Admin</a> <a href='receiveditem.php' class='btn btn-default' name='new'>New Shipping</a></p>
                     </div>
                 </div>
             </div>
