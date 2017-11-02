@@ -26,63 +26,84 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
         
         <script src="../frameworks/js/prototype.js" type="text/javascript"></script>
         <script src="../frameworks/js/prototype-barcode.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            function generateBarcode()
-            {
-                $("barcode").update();
-                var value = 'ASFLF214';
-                var btype = 'code128';
-                var renderer ='css';
-
-                var settings = 
-                {
-                  output:renderer,
-                  bgColor: '#FFFFFF',
-                  color: '#000000',
-                  barWidth: 2,
-                  barHeight: 100,
-                  addQuietZone: false
-                };
-
-                $("barcode").update().show().barcode(value, btype, settings);      
-            }
-
-        $(function()
-          {
-            generateBarcode();
-            }
-         );
-        </script>
-        
+    
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
     </head>
     
     <body onload="generateBarcode()">
-        <div class="parceltag">
-            <h1>Logistic Worldwides Express</h1>
-            <hr/>
-            
-            <div id="barcode" class="barcode">
+        <div id="parceltag">
+            <div class="parceltag">
+                <h1>Logistic Worldwides Express</h1>
+                <hr/>
+
                 
-            </div>
-            <?php 
-                if(!empty($shippingdetail))
-                {
-                    foreach($shippingdetail as $sd)
+                
+                <?php 
+                    if(!empty($shippingdetail))
                     {
-            ?>
-            <h3>Ship to:</h3>
-            <p>
-                <?php echo $sd['fname']. " " . $sd['lname'] ?>
-            </p>
-            <h3>Address</h3>
-            <p><?php echo $sd['address'] . ", " . $sd['postcode'] . " " . $sd['city'] . ", " . $sd['state'] . ", " . $sd['country']; ?></p>
-            
-            <?php
-                        }
-                    }
+                        foreach($shippingdetail as $sd)
+                        {
                 ?>
+                
+                <script type="text/javascript">
+                    function printDiv(parceltag)
+                    {
+                        var printContents = document.getElementById(parceltag).innerHTML;
+                        var originalContents = document.body.innerHTML;
+
+                        document.body.innerHTML = printContents;
+
+                        window.print();
+
+                        document.body.innerHTML = originalContents;
+                    }
+
+                    function generateBarcode()
+                    {
+                        $("barcode").update();
+                        var value = '<?php echo $sd['tracking_code']; ?>';
+                        var btype = 'code128';
+                        var renderer ='css';
+
+                        var settings = 
+                        {
+                          output:renderer,
+                          bgColor: '#FFFFFF',
+                          color: '#000000',
+                          barWidth: 2,
+                          barHeight: 100,
+                          addQuietZone: false
+                        };
+
+                        $("barcode").update().show().barcode(value, btype, settings);      
+                    }
+
+                $(function()
+                  {
+                    generateBarcode();
+                    }
+                 );
+                </script>
+                
+                <div id="barcode" class="barcode">
+
+                </div>
+                
+                <h3>Ship to:</h3>
+                <p>
+                    <?php echo $sd['fname'] . " " . $sd['lname']; ?>
+                </p>
+                <h3>Address</h3>
+                <p><?php echo $sd['address'] . ", " . $sd['postcode'] . " " . $sd['city'] . ", " . $sd['state'] . ", " . $sd['country']; ?></p>
+
+                <?php
+                            }
+                        }
+                    ?>
+            </div>
         </div>
+        
+        <p><button onclick="printDiv('parceltag')">Print</button></p>
         
         
     </body>

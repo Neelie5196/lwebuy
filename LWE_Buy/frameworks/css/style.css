@@ -165,7 +165,7 @@ body {
     border: solid 1px black;
 }
 
-.parceltag > h1 {
+.parceltag > h1, h3, p {
     margin-left: 10px;
 }
 
