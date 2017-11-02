@@ -7,31 +7,24 @@ if (isset($_POST['updateshipping']))
 {
     $trackcode = $_POST['trackcode'];
     
-    $updateshippingQuery = $db->prepare("UPDATE shipping SET status='Proceeded' WHERE tracking_code=:trackcode");
-
-    $updateshippingQuery->execute(['trackcode' => $trackcode]);
-    /*$updateshippingQuery = $db->prepare("SELECT * FROM shipping WHERE tracking_code=:trackcode");
+    $getshippingQuery = $db->prepare("SELECT * FROM shipping WHERE tracking_code=:trackcode");
     
-    $updateshippingQuery->execute(['trackcode' => $trackcode]);
+    $getshippingQuery->execute(['trackcode' => $trackcode]);
     
-    $updateshipping = $updateshippingQuery->rowCount() ? $updateshippingQuery : [];
+    $getshipping = $getshippingQuery->rowCount() ? $getshippingQuery : [];
     
-    if(!empty($updateshipping))
+    if(!empty($getshipping))
     {
-        foreach($updateshipping as $up)
+        foreach($getshipping as $up)
         {
-            if ($up['status']=="Request")
+            if($up['status'] == "Request")
             {
-                $sql = "UPDATE shipping SET status='Proceeded' WHERE tracking_code=$trackcode";
-                mysql_query($sql);
-                
+                $updateshippingQuery = $db->prepare("UPDATE shipping SET status='Proceeded' WHERE tracking_code=:trackcode");
+
+                $updateshippingQuery->execute(['trackcode' => $trackcode]);
             }
         }
     }
-    else
-    {
-        
-    }*/
 }
 ?>
 
