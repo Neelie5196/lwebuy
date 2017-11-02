@@ -165,10 +165,23 @@ body {
     border: solid 1px black;
 }
 
-.parceltag > h1, h3, p {
+.parceltag > table {
+    width: 100%;
+    margin-top: 15px;
     margin-left: 10px;
 }
 
+.parceltag > h1 {
+    margin-left: 10px;
+}
+
+.parceltag > h3 {
+    margin-left: 10px;
+}
+
+.parceltag > p {
+    margin-left: 10px;
+}
 .barcode {
     margin: auto;
 }

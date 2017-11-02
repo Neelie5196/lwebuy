@@ -104,7 +104,6 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                         <td width="40%"><?php echo $ns['fname']; ?> <?php echo $ns['lname']; ?></td>
                                         <td width="20%"><?php echo $ns['datetime']; ?></td>
                                         <td width="5%"><a href="tag.php?s_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">Print tag</a></td>
-                                        <td width="5%"><a href=# class="btn btn-xs btn-info">Update</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
@@ -147,7 +146,6 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                         <td width="40%"><?php echo $s['fname']; ?> <?php echo $s['lname']; ?></td>
                                         <td width="15%"><?php echo $s['datetime']; ?></td>
                                         <td width="10%"><?php echo $s['status']; ?></td>
-                                        <td width="5%"><a href=# class="btn btn-xs btn-info">Update</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>

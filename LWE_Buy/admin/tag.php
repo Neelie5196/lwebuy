@@ -35,8 +35,6 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
             <div class="parceltag">
                 <h1>Logistic Worldwides Express</h1>
                 <hr/>
-
-                
                 
                 <?php 
                     if(!empty($shippingdetail))
@@ -45,6 +43,7 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
                         {
                 ?>
                 
+                <p>Weight(KG): <?php echo $sd['weight'] ?></p>
                 <script type="text/javascript">
                     function printDiv(parceltag)
                     {
@@ -89,12 +88,22 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
 
                 </div>
                 
-                <h3>Ship to:</h3>
-                <p>
-                    <?php echo $sd['fname'] . " " . $sd['lname']; ?>
-                </p>
+                <table>
+                    <tr>
+                        <td><h3>Ship to:</h3></td>
+                        <td><h3>Recipient contact:</h3></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><p><?php echo $sd['fname'] . " " . $sd['lname']; ?></p></td>
+                        <td><p><?php echo $sd['recipient_contact']; ?></p></td>
+                    </tr>
+                </table>
+                
                 <h3>Address</h3>
+                
                 <p><?php echo $sd['address'] . ", " . $sd['postcode'] . " " . $sd['city'] . ", " . $sd['state'] . ", " . $sd['country']; ?></p>
+                
 
                 <?php
                             }
@@ -103,8 +112,9 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
             </div>
         </div>
         
-        <p><button onclick="printDiv('parceltag')">Print</button></p>
-        
-        
+        <p>
+            <button onclick="printDiv('parceltag')">Print</button>
+            <a href="shippinglist.php"><button>Back</button></a>
+        </p>
     </body>
 </html>
