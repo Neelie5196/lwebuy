@@ -39,7 +39,7 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
 $bankreceiptQuery = $db->prepare("
     SELECT *
     FROM payment
-    WHERE from_id='$shipping_id'
+    WHERE from_shipping='$shipping_id'
 ");
 
 $bankreceiptQuery->execute();

@@ -28,7 +28,7 @@ if(isset($_POST['submit']))
     
 	if(move_uploaded_file($file_loc,$folder.$final_file))
 	{
-		$sql="INSERT INTO payment(user_id,datetime,title,amount,file,type,status,from_id) VALUES('$user_id', NOW(), '$pay $title', '$amount', '$final_file', '$file_type', '$statuss', '$s_id')";
+		$sql="INSERT INTO payment(user_id,datetime,title,amount,file,type,status,from_shipping) VALUES('$user_id', NOW(), '$pay $title', '$amount', '$final_file', '$file_type', '$statuss', '$s_id')";
 		mysql_query($sql);
 		?>
 		<script>
@@ -65,7 +65,7 @@ if(isset($_POST['pay']))
 	{
         $result = mysql_query("UPDATE shipping SET status='$status' WHERE s_id = $s_id ") or die(mysql_error());
         $result1 = mysql_query("UPDATE point SET point= point - '$paypoint' WHERE user_id = $user_id ") or die(mysql_error());
-		$result2 = mysql_query("INSERT INTO payment SET user_id='$user_id', datetime=NOW(), title='$title $points', file='$paypoint $points', status='$statuss', from_id='$s_id'") or die(mysql_error());
+		$result2 = mysql_query("INSERT INTO payment SET user_id='$user_id', datetime=NOW(), title='$title $points', file='$paypoint $points', status='$statuss', from_shipping='$s_id'") or die(mysql_error());
 		?>
 		<script>
 		alert('Successfully Submit');

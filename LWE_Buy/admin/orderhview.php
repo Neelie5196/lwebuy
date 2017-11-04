@@ -20,11 +20,11 @@ $orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
 $bankreceiptQuery = $db->prepare("
     SELECT *
     FROM payment
-    WHERE from_id=:from_id
+    WHERE from_order=:from_order
 ");
 
 $bankreceiptQuery->execute([
-    'from_id' => $_SESSION['order_id']
+    'from_order' => $_SESSION['order_id']
 ]);
 
 $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2017 at 05:22 AM
+-- Generation Time: Nov 04, 2017 at 06:56 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -238,7 +238,7 @@ INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VAL
 (10, 10, 'Received', '2017-10-23 06:25:45', '219.00'),
 (11, 10, 'Request', '2017-10-22 08:46:13', NULL),
 (12, 10, 'Request', '2017-10-25 11:58:40', NULL),
-(13, 10, 'Received', '2017-11-01 07:44:31', '7.64');
+(13, 10, 'Paid', '2017-11-04 05:44:58', '7.64');
 
 -- --------------------------------------------------------
 
@@ -299,25 +299,26 @@ CREATE TABLE `payment` (
   `file` varchar(150) NOT NULL,
   `type` varchar(30) DEFAULT NULL,
   `status` varchar(20) NOT NULL,
-  `from_id` int(11) DEFAULT NULL
+  `from_order` int(11) DEFAULT NULL,
+  `from_shipping` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`p_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`, `from_id`) VALUES
-(5, 10, '2017-10-25 11:25:50', '6666', '66.66', '74679-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', 0),
-(6, 1, '2017-10-25 11:17:10', '444', '4.44', '8761-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0),
-(7, 10, '2017-10-25 09:55:22', 'Reload + 222', '2.22', '27001-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', 0),
-(8, 10, '2017-10-25 11:17:10', 'Reload 1', '0.01', '98523-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0),
-(9, 10, '2017-10-25 10:09:05', 'Reload 444 Point', '4.44', '76809-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0),
-(10, 10, '2017-10-29 07:50:37', 'Reload 5 Point', '5.00', '68676-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', NULL),
-(11, 10, '2017-10-29 08:04:27', 'Reload 5 Point', '5.00', '93248-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', NULL),
-(12, 10, '2017-10-31 15:32:12', 'Pay Order 3', '35.00', '74555-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Proceed', 3),
-(15, 10, '2017-11-01 07:43:18', 'Pay Order 13', '7.64', '55361-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', 13),
-(16, 10, '2017-11-01 08:48:31', 'Pay Shipping 17', '30.00', '62742-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Proceed', 17),
-(17, 10, '2017-11-02 02:50:11', 'Pay by Points', NULL, '45.00 Points', NULL, 'Waiting for Proceed', 18);
+INSERT INTO `payment` (`p_id`, `user_id`, `datetime`, `title`, `amount`, `file`, `type`, `status`, `from_order`, `from_shipping`) VALUES
+(5, 10, '2017-10-25 11:25:50', '6666', '66.66', '74679-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', 0, NULL),
+(6, 1, '2017-10-25 11:17:10', '444', '4.44', '8761-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0, NULL),
+(7, 10, '2017-10-25 09:55:22', 'Reload + 222', '2.22', '27001-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', 0, NULL),
+(8, 10, '2017-10-25 11:17:10', 'Reload 1', '0.01', '98523-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0, NULL),
+(9, 10, '2017-10-25 10:09:05', 'Reload 444 Point', '4.44', '76809-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Approve', 0, NULL),
+(10, 10, '2017-10-29 07:50:37', 'Reload 5 Point', '5.00', '68676-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', NULL, NULL),
+(11, 10, '2017-10-29 08:04:27', 'Reload 5 Point', '5.00', '93248-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', NULL, NULL),
+(12, 10, '2017-10-31 15:32:12', 'Pay Order 3', '35.00', '74555-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Proceed', 3, NULL),
+(15, 10, '2017-11-01 07:43:18', 'Pay Order 13', '7.64', '55361-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Completed', 13, NULL),
+(16, 10, '2017-11-04 05:32:12', 'Pay Shipping 17', '30.00', '62742-clone-pc.xlsx', 'application/vnd.openxmlformats', 'Waiting for Proceed', NULL, 17),
+(17, 10, '2017-11-04 05:32:14', 'Pay by Points', NULL, '45.00 Points', NULL, 'Waiting for Proceed', NULL, 18);
 
 -- --------------------------------------------------------
 
@@ -388,8 +389,8 @@ CREATE TABLE `shipping` (
 --
 
 INSERT INTO `shipping` (`s_id`, `user_id`, `recipient_name`, `recipient_contact`, `a_id`, `weight`, `price`, `status`, `datetime`, `tracking_code`) VALUES
-(17, 10, 'desmond', '012345678910', 2, '1.00', '30.00', 'Request', '2017-11-02 03:41:07', '12873t587541'),
-(18, 10, '123', '1232', 2, '1.01', '45.00', 'Proceed', '2017-11-02 03:39:47', NULL);
+(17, 10, 'desmond', '012345678910', 2, '1.00', '30.00', 'Delivered', '2017-11-02 03:41:07', '12873t587541'),
+(18, 10, '123', '1232', 2, '1.01', '45.00', 'Request', '2017-11-02 04:34:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -770,7 +771,7 @@ ALTER TABLE `order_list`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `parcel`
 --
