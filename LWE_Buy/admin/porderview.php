@@ -97,7 +97,7 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
                                             <td width="8%"><?php echo $order['unit']; ?></td>
                                             <td width="20%"><?php echo $order['remark']; ?></td>
                                             <td width="9%"><?php echo $order['price']; ?></td>
-                                            <td width="9%"><input type="text" name="ordercode" value="<?php echo $order['order_code']; ?>"></td>
+                                            <td width="9%"><input type="text" name="ordercode" value="<?php echo $order['order_code']; ?>" required></td>
                                             <td width="15%">
                                                 <input type="hidden" name="oi_id" value="<?php echo $order['oi_id']; ?>">
                                                 <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">

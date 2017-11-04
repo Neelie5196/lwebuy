@@ -16,7 +16,7 @@
         ?>
         <script>
         alert('Success to Submit');
-        window.location.href='receive-1.php?success';
+        window.location.href='receivehistory.php?success';
         </script>
         <?php
     }

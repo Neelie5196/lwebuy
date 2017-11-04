@@ -107,7 +107,7 @@ $results = mysql_fetch_assoc($result);
                         <div class="row">
                             <div class="col-xs-12 col-md-12 col-lg-12">
                                 <input type="hidden" id="totalweight" name="totalweight" class="form-control" value="">
-                                <input type="submit" class="btn btn-success" name="shipnow" value="Ship Now">
+                                <input type="submit" class="btn btn-success" name="shipnow" value="Ship Now" onclick="return val();">
                             </div>
                         </div>
                     </center>
@@ -115,8 +115,9 @@ $results = mysql_fetch_assoc($result);
             </div>
         </section>
     </body>
+
     <script>
-        
+        /*Weight*/
         $(document).ready(function() {
             function recalculate() {
                 var sum = 0;
@@ -131,5 +132,27 @@ $results = mysql_fetch_assoc($result);
                 recalculate();
             });
         });
+        
+        
+        /*Validate*/
+        function val(){
+            var items = document.getElementsByName('item[]');
+            var hasChecked = false;
+            
+            for (var i = 0; i < items.length; i++)
+            {
+                if (items[i].checked)
+                {
+                    hasChecked = true;
+                    break;
+                }
+            }
+            if (hasChecked == false)
+            {
+                alert("Please select at least one item");
+                return false;
+            }
+            return true;
+        }
     </script>
 </html>

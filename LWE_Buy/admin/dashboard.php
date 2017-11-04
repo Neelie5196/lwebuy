@@ -377,7 +377,7 @@ $results2 = mysql_fetch_assoc($result2);
                             <hr/>
                             <center>
                                 <h4>
-                                    1 points = RM <input type="text" name="pointratio" value="<?php echo $results['value']; ?>" style="width: 20%;" />
+                                    1 points = RM <input type="number" name="pointratio" step="0.01" value="<?php echo $results['value']; ?>" style="width: 20%;" />
                                     <br/><br/>
                                     <input type="hidden" name="adjust_id" value="<?php echo $results['id']; ?>"/>
                                     <input type="submit" class="btn btn-success" name="update-point" value="Save">
@@ -395,7 +395,7 @@ $results2 = mysql_fetch_assoc($result2);
                             <hr/>
                             <center>
                                 <h4>
-                                    RM 1.00 = RMB <input type="text" name="currencyratio" value="<?php echo $results1['value']; ?>" style="width: 20%;" />
+                                    RM 1.00 = RMB <input type="number" name="currencyratio" step="0.01" value="<?php echo $results1['value']; ?>" style="width: 20%;" />
                                     <br/><br/>
                                     <input type="hidden" name="adjust_id" value="<?php echo $results1['id']; ?>"/>
                                     <input type="submit" class="btn btn-success" name="update-currency" value="Save">
@@ -413,7 +413,7 @@ $results2 = mysql_fetch_assoc($result2);
                     <hr/>
                     <center>
                         <h4>
-                            Weight ≤ 1KG = RM <input type="text" name="bweight" ng-model="bweight" ng-init="bweight=<?php echo $results2['bprice']; ?>" style="width: 20%;" />
+                            Weight ≤ 1KG = RM <input type="number" step="0.01" name="bweight" ng-model="bweight" ng-init="bweight=<?php echo $results2['bprice']; ?>" style="width: 20%;" />
                             <br/><br/>
                             Over 1KG = RM {{bweight/2 | number:2}}/500g
                             <br/><br/>

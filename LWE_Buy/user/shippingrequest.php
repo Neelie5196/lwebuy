@@ -87,7 +87,7 @@ $results1 = mysql_fetch_assoc($result1);
                                                     <?php echo $row["postcode"]; ?>, <?php echo $row["city"]; ?>,<br/>
                                                     <?php echo $row["state"]; ?>, <?php echo $row["country"]; ?><br/>
                                                 </h5>
-                                                <input type="checkbox" value="<?php echo $row["a_id"]; ?>" name="address">
+                                                <input type="checkbox" value="<?php echo $row["a_id"]; ?>" name="address[]">
                                             </div>
                                         </div>
                                     <?php
@@ -188,7 +188,7 @@ $results1 = mysql_fetch_assoc($result1);
                                 </div>
                                 <div class="col-xs-4 col-md-4 col-lg-4">
                                     <input type="hidden" name="weight" class="form-control" value="<?php echo $totalweight; ?>">
-                                    <input type="submit" class="btn btn-success" name="pay" value="Pay Now" style="float:right;">
+                                    <input type="submit" class="btn btn-success" name="pay" value="Pay Now" onclick="return val();" style="float:right;">
                                 </div>
                             </div>                            
                         </div>
@@ -260,4 +260,26 @@ $results1 = mysql_fetch_assoc($result1);
             </div>
         </div>
     </body>
+    <script>
+        /*Validate*/
+        function val(){
+            var address = document.getElementsByName('address[]');
+            var hasChecked = false;
+            
+            for (var i = 0; i < address.length; i++)
+            {
+                if (address[i].checked)
+                {
+                    hasChecked = true;
+                    break;
+                }
+            }
+            if (hasChecked == false)
+            {
+                alert("Please select an address");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </html>

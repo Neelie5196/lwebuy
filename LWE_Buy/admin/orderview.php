@@ -85,7 +85,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                             <td width="6%"><?php echo $purchase['type']; ?></td>
                                             <td width="6%"><?php echo $purchase['unit']; ?></td>
                                             <td width="18%"><?php echo $purchase['remark']; ?></td>
-                                            <td width="9%"><input type="text" name="price"/></td>
+                                            <td width="9%"><input type="number" step="0.01" name="price" required/></td>
                                             <td width="9%"><input type="text" name="myr" value="<?php echo $purchase['price']; ?>" readonly></td>
                                             <td width="15%">
                                                 <input type="hidden" name="oi_id" value="<?php echo $purchase['oi_id']; ?>">

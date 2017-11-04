@@ -80,7 +80,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                                         <label>Item Link</label>
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" name="link" type="text" required required value="<?php echo $purchase['link']; ?>">
+                                                        <input class="form-control" name="link" type="text" required value="<?php echo $purchase['link']; ?>">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -88,13 +88,13 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                                         <label>Item Type</label>
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" name="type" type="text" required required value="<?php echo $purchase['type']; ?>">
+                                                        <input class="form-control" name="type" type="text" required value="<?php echo $purchase['type']; ?>">
                                                     </td>
                                                     <td>
                                                         <label>Unit</label>
                                                     </td>
                                                     <td>
-                                                        <input class="form-control" name="unit" type="number" required required value="<?php echo $purchase['unit']; ?>">
+                                                        <input class="form-control" name="unit" type="number" required value="<?php echo $purchase['unit']; ?>">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -102,7 +102,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                                         <label>Remark</label>
                                                     </td>
                                                     <td colspan="3">
-                                                        <input class="form-control" name="remark" type="text" width="80"  required value="<?php echo $purchase['remark']; ?>">
+                                                        <input class="form-control" name="remark" type="text" width="80" value="<?php echo $purchase['remark']; ?>">
                                                     </td>
                                                 </tr>
                                             </tbody>

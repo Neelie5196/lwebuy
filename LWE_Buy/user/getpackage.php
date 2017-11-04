@@ -68,13 +68,13 @@ while($pack = mysqli_fetch_array($result))
                                     <div class="row">
                                         <div class="col-xs-12 col-md-6 col-lg-6">
                                             <label>Image: </label> 
-											<input type="file" name="file">
+											<input type="file" name="file" required>
                                         </div>
                                     </div>
                          </div>
 			</div>
 			<input type="hidden" name="status" value="Waiting for approve">
-			<br></br>
+			<br>
 			<div class="row">
                        <div class="col-xs-12 col-md-6 col-lg-6">
                                     <div class="row">
