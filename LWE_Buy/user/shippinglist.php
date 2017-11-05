@@ -142,7 +142,7 @@ $shippingslist = $shippingslistQuery->rowCount() ? $shippingslistQuery : [];
                                         <td width="40%"><?php echo $shippings['datetime']; ?></td>
                                         <td width="20%"><?php echo $shippings['price']; ?></td>
                                         <td width="20%"><?php echo $shippings['status']; ?></td>
-                                        <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $shippings['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $shippings['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>

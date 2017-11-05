@@ -70,6 +70,7 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
             <div class="container">
                 <h2>Shipping# <?php echo $_GET['shipping_id']; ?></h2>
                 <hr/>
+                <img src="../resources/timeline/payment.PNG" alt="timeline" width="500px"/>
             </div>
         </center>
         <form action="payments.php" method="post">

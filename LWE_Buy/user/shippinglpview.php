@@ -4,6 +4,7 @@ require_once '../connection/config.php';
 session_start();
 
 $shipping_id = $_GET['shipping_id'];
+$timeline = $_GET['timeline'];
 $counter = 0;
 
 $query = "SELECT * 
@@ -46,6 +47,30 @@ $bankreceiptQuery->execute();
 
 $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
 
+$hawb = $results['tracking_code'];
+
+$tracksummarysQuery = $db->prepare("
+    SELECT * 
+    FROM shipping_update_summary
+    WHERE HawbNo = '$hawb'
+
+");
+
+$tracksummarysQuery->execute();
+
+$tracksummarys = $tracksummarysQuery->rowCount() ? $tracksummarysQuery : [];
+
+$trackdetailsQuery = $db->prepare("
+    SELECT * 
+    FROM shipping_update_details
+    WHERE HawbNo = '$hawb'
+
+");
+
+$trackdetailsQuery->execute();
+
+$trackdetails = $trackdetailsQuery->rowCount() ? $trackdetailsQuery : [];
+
 
 ?>
 
@@ -80,6 +105,17 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
             <div class="container">
                 <h2>Shipping# <?php echo $_GET['shipping_id']; ?></h2>
                 <hr/>
+                <?php
+                    if($timeline == 'Proceed'){
+                        ?>
+                            <img src="../resources/timeline/proceed.PNG" alt="timeline" width="500px"/>
+                        <?php
+                    }else if($timeline == 'Delivered'){
+                        ?>
+                            <img src="../resources/timeline/delivered.PNG" alt="timeline" width="500px"/>
+                        <?php
+                    }else
+                ?>
             </div>
         </center>
         <section class = "content">
@@ -92,10 +128,92 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
                         <p>Delivery Address: <?php echo $results1['address']; ?>, <?php echo $results1["postcode"]; ?>, <?php echo $results1["city"]; ?>, <?php echo $results1["state"]; ?>, <?php echo $results1["country"]; ?></p>
                         <p>Total Weight: <?php echo $results['weight']; ?></p>
                         <p>Shipping Fee: RM <?php echo $results['price']; ?></p>
-                        <p><strong>Tracking Code: <a href="track.php?tracking_code=<?php echo $results['tracking_code']; ?>"><?php echo $results['tracking_code']; ?></a></strong></p>
+                        <p><strong>Tracking Code: <?php echo $results['tracking_code']; ?></strong></p>
                         
                     </div>
                 </div>
+                <?php if(!empty($tracksummarys)): ?>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:120%; text-align: left;">
+                                <strong>Tracking No</strong> <?php echo $hawb ?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <?php foreach($tracksummarys as $tracks): ?>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-3 col-lg-3">
+                                        <strong>Status</strong><br>
+                                        <?php echo $tracks['ReasonDescription']; ?>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2 col-lg-2">
+                                        <strong>Customer Ref</strong><br>
+                                        <?php echo $tracks['XR1']; ?>
+                                    </div>
+                                    <div class="col-xs-12 col-md-3 col-lg-3">
+                                        <strong>Carrier No</strong><br>
+                                        <?php echo $tracks['HawbNo']; ?>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2 col-lg-2">
+                                        <strong>Send Date</strong><br>
+                                        <small>
+                                            <?php echo $tracks['ShipmentDate']; ?>
+                                        </small>
+                                    </div>
+                                    <div class="col-xs-12 col-md-2 col-lg-2">
+                                        <strong>Delivered Date</strong><br>
+                                        <small>
+                                            <?php echo $tracks['DeliveryDate']; ?>
+                                        </small>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse">More Shipping Details</button>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
+                                        <div class="span12 collapse" id="collapse">
+                                            <?php if(!empty($trackdetails)): ?>
+                                            <table class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="20%">Date</th>
+                                                        <th width="30%">Location</th>
+                                                        <th width="30%">Description</th>
+                                                        <th width="20%">Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <?php foreach($trackdetails as $track): ?>
+                                                <tbody>
+                                                    <tr height="50">
+                                                        <td><?php echo $track['TransactionDate']; ?></td>
+                                                        <td><?php echo $track['StationDescription']; ?></td>
+                                                        <td><?php echo $track['EventDescription']; ?></td>
+                                                        <td><?php echo $track['Remark']; ?></td>
+                                                    </tr>
+                                                </tbody>
+                                                <?php endforeach; ?>
+                                            </table>
+                                            <?php else: ?>
+                                                <p>Not found</p>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php else: ?>
+                    <p>Tracking Summary Not found</p>
+                <?php endif; ?>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                         <?php if(!empty($slotitem)): ?>
@@ -136,7 +254,7 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
                             endif;
                         ?>
                     </div>
-                    <center>
+                    <center style="padding: 15px;">
                         <a href="javascript:history.go(-1)"  class="btn btn-default" name="back">Back</a>
                     </center>
                 </div>

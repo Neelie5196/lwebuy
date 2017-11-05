@@ -75,7 +75,7 @@ $shippinglist = $shippinglistQuery->rowCount() ? $shippinglistQuery : [];
                                     <td width="5%"><?php echo $shipping['s_id']; ?></td>
                                     <td width="40%"><?php echo $shipping['datetime']; ?></td>
                                     <td width="20%"><?php echo $shipping['price']; ?></td>
-                                    <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $shipping['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                    <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $shipping['s_id']; ?>&timeline=Delivered" class="btn btn-xs btn-info">View</a></td>
                                 </tr>
                             </tbody>
                             <?php endforeach; ?>

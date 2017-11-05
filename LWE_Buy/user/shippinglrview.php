@@ -80,6 +80,7 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
             <div class="container">
                 <h2>Shipping# <?php echo $_GET['shipping_id']; ?></h2>
                 <hr/>
+                <img src="../resources/timeline/request.PNG" alt="timeline" width="500px"/>
             </div>
         </center>
         <section class = "content">
