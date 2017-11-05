@@ -4,6 +4,7 @@ require_once '../connection/config.php';
 session_start();
 $_SESSION['order_id'] = $_GET['order_id'];
 $counter = 0; 
+$timeline = $_GET['timeline'];
 
 $purchaseitemQuery = $db->prepare("
     SELECT *
@@ -63,7 +64,19 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
             <div class="container">
                 <h2>Order# <?php echo $_SESSION['order_id']; ?></h2>
                 <hr/>
+                <?php
+                    if($timeline == 'Shipping'){
+                        ?>
+                            <img src="../resources/timeline/shipping.PNG" alt="timeline" width="600px"/>
+                        <?php
+                    }else if($timeline == 'Received'){
+                        ?>
+                            <img src="../resources/timeline/received.PNG" alt="timeline" width="600px"/>
+                        <?php
+                    }else
+                ?>
             </div>
+            <br/>
             <section class = "content">
                 <div class="container">
                     <div class="row">

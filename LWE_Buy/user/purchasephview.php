@@ -63,7 +63,9 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
             <div class="container">
                 <h2>Order# <?php echo $_SESSION['order_id']; ?></h2>
                 <hr/>
+                <img src="../resources/timeline/proceeds.PNG" alt="timeline" width="600px"/>
             </div>
+            <br/>
             <section class = "content">
                 <div class="container">
                     <div class="row">
