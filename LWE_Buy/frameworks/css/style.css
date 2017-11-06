@@ -186,6 +186,28 @@ body {
     margin: auto;
 }
 
-.updateshipping {
-    margin-top: 10px;
+.updateform {
+    margin-left: 15px;
+    width: 80%;
+}
+
+.lblUpdate {
+    width: 2%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.inputUpdate {
+    width: 20%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.textUpdate > input {
+    width: 30%;
+}
+
+.btnUpdate {
+    text-align: left;
+    margin-top: 15px;
 }

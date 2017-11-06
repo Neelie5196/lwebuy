@@ -204,7 +204,7 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse3">
-                            <?php if(!empty($shippingrepsonse)): ?>
+                            <?php if(!empty($shippingresponse)): ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
