@@ -19,14 +19,15 @@ SET time_zone = "+00:00";
 --
 -- Database: `lwe`
 --
-
+CREATE DATABASE IF NOT EXISTS `lwe`;
+USE `lwe`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `address`
 --
 
-CREATE TABLE `address` (
+CREATE TABLE IF NOT EXISTS `address` (
   `a_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `address` varchar(100) NOT NULL,
@@ -51,7 +52,7 @@ INSERT INTO `address` (`a_id`, `user_id`, `address`, `state`, `city`, `country`,
 -- Table structure for table `adjust`
 --
 
-CREATE TABLE `adjust` (
+CREATE TABLE IF NOT EXISTS `adjust` (
   `id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
   `value` decimal(10,2) NOT NULL
@@ -71,7 +72,7 @@ INSERT INTO `adjust` (`id`, `name`, `value`) VALUES
 -- Table structure for table `contact`
 --
 
-CREATE TABLE `contact` (
+CREATE TABLE IF NOT EXISTS `contact` (
   `cu_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `contact` varchar(11) NOT NULL,
@@ -100,7 +101,7 @@ INSERT INTO `contact` (`cu_id`, `name`, `contact`, `email`, `subject`, `tracknum
 -- Table structure for table `conversation`
 --
 
-CREATE TABLE `conversation` (
+CREATE TABLE IF NOT EXISTS `conversation` (
   `id` int(11) NOT NULL,
   `user_one` int(11) NOT NULL,
   `user_two` int(11) NOT NULL
@@ -128,7 +129,7 @@ INSERT INTO `conversation` (`id`, `user_one`, `user_two`) VALUES
 -- Table structure for table `item`
 --
 
-CREATE TABLE `item` (
+CREATE TABLE IF NOT EXISTS `item` (
   `i_id` int(11) NOT NULL,
   `s_id` int(11) NOT NULL,
   `from_id` varchar(20) NOT NULL,
@@ -160,7 +161,7 @@ INSERT INTO `item` (`i_id`, `s_id`, `from_id`, `name`, `order_code`, `weight`, `
 -- Table structure for table `messages`
 --
 
-CREATE TABLE `messages` (
+CREATE TABLE IF NOT EXISTS `messages` (
   `id` int(11) NOT NULL,
   `conversation_id` int(11) NOT NULL,
   `user_from` int(11) NOT NULL,
@@ -182,7 +183,7 @@ INSERT INTO `messages` (`id`, `conversation_id`, `user_from`, `user_to`, `messag
 -- Table structure for table `order_item`
 --
 
-CREATE TABLE `order_item` (
+CREATE TABLE IF NOT EXISTS `order_item` (
   `oi_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -218,7 +219,7 @@ INSERT INTO `order_item` (`oi_id`, `order_id`, `name`, `link`, `type`, `unit`, `
 -- Table structure for table `order_list`
 --
 
-CREATE TABLE `order_list` (
+CREATE TABLE IF NOT EXISTS `order_list` (
   `ol_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `status` varchar(15) NOT NULL,
@@ -246,7 +247,7 @@ INSERT INTO `order_list` (`ol_id`, `user_id`, `status`, `datetime`, `price`) VAL
 -- Table structure for table `package`
 --
 
-CREATE TABLE `package` (
+CREATE TABLE IF NOT EXISTS `package` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `price` double(10,2) NOT NULL
@@ -268,7 +269,7 @@ INSERT INTO `package` (`id`, `name`, `price`) VALUES
 -- Table structure for table `parcel`
 --
 
-CREATE TABLE `parcel` (
+CREATE TABLE IF NOT EXISTS `parcel` (
   `id` int(11) NOT NULL,
   `fromsender` text NOT NULL,
   `toreceiver` text NOT NULL,
@@ -290,7 +291,7 @@ INSERT INTO `parcel` (`id`, `fromsender`, `toreceiver`, `content`, `value`) VALU
 -- Table structure for table `payment`
 --
 
-CREATE TABLE `payment` (
+CREATE TABLE IF NOT EXISTS `payment` (
   `p_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -326,7 +327,7 @@ INSERT INTO `payment` (`p_id`, `user_id`, `datetime`, `title`, `amount`, `file`,
 -- Table structure for table `point`
 --
 
-CREATE TABLE `point` (
+CREATE TABLE IF NOT EXISTS `point` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `point` int(11) NOT NULL
@@ -346,7 +347,7 @@ INSERT INTO `point` (`id`, `user_id`, `point`) VALUES
 -- Table structure for table `receive_request`
 --
 
-CREATE TABLE `receive_request` (
+CREATE TABLE IF NOT EXISTS `receive_request` (
   `rr_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -371,7 +372,7 @@ INSERT INTO `receive_request` (`rr_id`, `user_id`, `name`, `order_code`, `status
 -- Table structure for table `shipping`
 --
 
-CREATE TABLE `shipping` (
+CREATE TABLE IF NOT EXISTS `shipping` (
   `s_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `recipient_name` varchar(50) NOT NULL,
@@ -398,7 +399,7 @@ INSERT INTO `shipping` (`s_id`, `user_id`, `recipient_name`, `recipient_contact`
 -- Table structure for table `shipping_price`
 --
 
-CREATE TABLE `shipping_price` (
+CREATE TABLE IF NOT EXISTS `shipping_price` (
   `sp_id` int(11) NOT NULL,
   `below` varchar(10) NOT NULL,
   `bprice` decimal(10,2) NOT NULL,
@@ -419,7 +420,7 @@ INSERT INTO `shipping_price` (`sp_id`, `below`, `bprice`, `over`, `oprice`) VALU
 -- Table structure for table `shipping_update_details`
 --
 
-CREATE TABLE `shipping_update_details` (
+CREATE TABLE IF NOT EXISTS `shipping_update_details` (
   `det_id` int(11) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
   `TransactionDate` datetime NOT NULL,
@@ -448,7 +449,7 @@ INSERT INTO `shipping_update_details` (`det_id`, `HawbNo`, `TransactionDate`, `S
 -- Table structure for table `shipping_update_summary`
 --
 
-CREATE TABLE `shipping_update_summary` (
+CREATE TABLE IF NOT EXISTS `shipping_update_summary` (
   `sum_id` int(11) NOT NULL,
   `HawbNo` varchar(20) NOT NULL,
   `XR1` varchar(20) DEFAULT NULL,
@@ -485,7 +486,7 @@ INSERT INTO `shipping_update_summary` (`sum_id`, `HawbNo`, `XR1`, `XR2`, `Shipme
 -- Table structure for table `slot`
 --
 
-CREATE TABLE `slot` (
+CREATE TABLE IF NOT EXISTS `slot` (
   `s_id` int(11) NOT NULL,
   `slot_code` int(100) NOT NULL,
   `slot_num` int(100) NOT NULL,
@@ -515,7 +516,7 @@ INSERT INTO `slot` (`s_id`, `slot_code`, `slot_num`, `status`, `user_id`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL,
   `fname` varchar(50) NOT NULL,
   `lname` varchar(50) NOT NULL,
@@ -546,7 +547,7 @@ INSERT INTO `users` (`user_id`, `fname`, `lname`, `contact`, `email`, `password`
 -- Table structure for table `warehouse`
 --
 
-CREATE TABLE `warehouse` (
+CREATE TABLE IF NOT EXISTS `warehouse` (
   `wh_id` int(11) NOT NULL,
   `station_code` varchar(10) NOT NULL,
   `station_description` text NOT NULL,
@@ -570,7 +571,7 @@ INSERT INTO `warehouse` (`wh_id`, `station_code`, `station_description`, `countr
 -- Table structure for table `work_station`
 --
 
-CREATE TABLE `work_station` (
+CREATE TABLE IF NOT EXISTS `work_station` (
   `ws_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `wh_id` int(11) NOT NULL
