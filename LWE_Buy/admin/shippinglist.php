@@ -69,19 +69,6 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <!--<script type="text/javascript">
-            function genCode()
-            {
-                document.getElementById("generateC").style.visibility = "hidden";
-                
-                var itemid = Math.floor(Math.random() * 999) + 100;
-                itemid.toString;
-                var defaultno = "122352562";
-                var code = defaultno.concat(itemid);
-                
-                document.getElementById("tCode").innerHTML = code;
-            }
-        </script>-->
         
         <!--stylesheet-->
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
