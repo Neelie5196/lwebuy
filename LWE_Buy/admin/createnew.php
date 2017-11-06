@@ -151,6 +151,16 @@ $warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
                                     </div>
                                 </div>
                             </div>
+							<div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <input type="hidden" name="image" class="form-control" style="border-radius: 30px; float: left;" value="../resources/avatar1.jpg" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
                             <input type="submit" class="btn btn-success" name="new-users" value="Create" style="float: right;">
                         </form>
                     </div>

@@ -9,10 +9,12 @@ if(isset($_POST['fname']))
     $contact = $_POST['contact'];
     $email = $_POST['email'];
     $password = $_POST['password'];
+	$password = password_hash($password, PASSWORD_DEFAULT);
     $type = $_POST['type'];
     $workstation = $_POST['workstation'];
+	$image = $_POST['image'];
 	
-	$result = mysql_query("INSERT INTO users SET fname='$fname', lname='$lname', contact='$contact', email='$email', password='$password', type='$type'") or die(mysql_error());
+	$result = mysql_query("INSERT INTO users SET fname='$fname', lname='$lname', contact='$contact', email='$email', password='$password', type='$type', image='$image'") or die(mysql_error());
     
     $user_id = mysql_insert_id();
     

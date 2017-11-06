@@ -112,7 +112,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                         <h3>Password<br/><small> Change your password</small></h3>
                         <hr/>
                         <center>
-                            <form action="updates.php" method="post">
+                            <form action="update.php" method="post">
                                 <div class="row">
                                     <div class="col-xs-4 col-md-4 col-lg-4">
                                         <label>Current Password</label>

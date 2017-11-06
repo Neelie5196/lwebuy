@@ -64,7 +64,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                         <h3>Profile Settings<br/><small> Change your account settings</small></h3>
                         <hr/>
                         <center>
-                            <form action="update.php" method="post" class="profilesetting">
+                            <form action="update.php" method="post">
                                 <div class="row">
                                     <div class="col-xs-4 col-md-4 col-lg-4">
                                         <label>First Name</label>
@@ -112,7 +112,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                         <h3>Password<br/><small> Change your password</small></h3>
                         <hr/>
                         <center>
-                            <form action="updates.php" method="post">
+                            <form action="update.php" method="post">
                                 <div class="row">
                                     <div class="col-xs-4 col-md-4 col-lg-4">
                                         <label>Current Password</label>
@@ -129,7 +129,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                                         <label>New Password</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="np" id="np" class="form-control" style="border-radius: 30px; width: 50%;float: left;">
+                                        <input type="password" name="np" id="np" class="form-control" style="border-radius: 30px; width: 50%;float: left;">
                                     </div>
                                 </div>
                                 <br/>
@@ -138,7 +138,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                                         <label>Confirm Password</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="cnp" id="cnp" class="form-control" style="border-radius: 30px; width: 50%;float: left;">
+                                        <input type="password" name="cnp" id="cnp" class="form-control" style="border-radius: 30px; width: 50%;float: left;">
                                     </div>
                                 </div>
                                 <br/>
