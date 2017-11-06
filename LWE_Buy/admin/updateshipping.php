@@ -26,7 +26,12 @@ if (isset($_POST['updateshipping']))
 {
     $trackcode = $_POST['trackcode'];
     $eventType = $_POST['eventType'];
-    $eventMore = $_POST['eventMore'];
+    
+    $stationCode = $_POST['stCode'];
+    $stationName = $_POST['stDesc'];
+    $countryCode = $_POST['CtyCode'];
+    $countryName = $_POST['CtyDesc'];
+    $remark = $_POST['remark'];
     
     if($eventType == 'in')
     {
@@ -34,11 +39,72 @@ if (isset($_POST['updateshipping']))
 
         if($eventAct == 'arrive')
         {
+            $eventMore = $_POST['eventMore'];
             
+            if($eventMore == 'airport')
+            {
+                $eventDesc = 'Shipment arrived at airport.';
+            }
+            else
+            {
+                $eventDesc = 'Shipment arrived at ' . $stationName . ' station.';
+            }
+            
+            $arriveshippingdetQuery = $db->prepare("
+            INSERT INTO shipping_update_details
+            (HawbNo, 
+            StationCode, 
+            StationDescription, 
+            CountryCode, 
+            CountryDescription, 
+            EventCode, 
+            EventDescription, 
+            ReasonCode, 
+            ReasonDescription, 
+            Remark) 
+            VALUES (
+            '$trackcode', 
+            '$stationCode', 
+            '$stationName', 
+            '$countryCode', 
+            '$countryName', 
+            'ARV', 
+            '$eventDesc', 
+            'IS', 
+            'Is Shipping',
+            '$remark'
+            )");
+
+            $arriveshippingdetQuery->execute();
         }
         else
         {
-            
+            $eventDesc = 'Custom cleared and arrived at ' . $stationName . '.';
+                
+            $arriveshippingdetQuery = $db->prepare("
+            INSERT INTO shipping_update_details
+            (HawbNo, 
+            StationCode, 
+            StationDescription, 
+            CountryCode, 
+            CountryDescription, 
+            EventCode, 
+            EventDescription, 
+            ReasonCode, 
+            ReasonDescription, 
+            Remark) 
+            VALUES (
+            '$trackcode', 
+            '$stationCode', 
+            '$stationName', 
+            '$countryCode', 
+            '$countryName', 
+            'CAV', 
+            '$eventDesc', 
+            'IS', 
+            'Is Shipping',
+            '$remark'
+            )");
         }
     }
     else if($eventType == 'out')
@@ -47,53 +113,214 @@ if (isset($_POST['updateshipping']))
         
         if($eventAct == 'depart')
         {
-            
+            $eventDesc = 'Shipment departed from/to ' . $stationName . ' station.';
+                
+            $arriveshippingdetQuery = $db->prepare("
+            INSERT INTO shipping_update_details
+            (HawbNo, 
+            StationCode, 
+            StationDescription, 
+            CountryCode, 
+            CountryDescription, 
+            EventCode, 
+            EventDescription, 
+            ReasonCode, 
+            ReasonDescription, 
+            Remark) 
+            VALUES (
+            '$trackcode', 
+            '$stationCode', 
+            '$stationName', 
+            '$countryCode', 
+            '$countryName', 
+            'DPT', 
+            '$eventDesc', 
+            'IS', 
+            'Is Shipping',
+            '$remark'
+            )");
+
+            $arriveshippingdetQuery->execute();
         }
         else if($eventAct == 'register')
         {
-            $proceedshippingQuery = $db->prepare("UPDATE shipping SET status = 'Proceed' WHERE tracking_code = $trackcode");
-    
-            $proceedshippingQuery->execute();
-
-            $proceedshipping = $proceedshippingQuery->rowCount() ? $proceedshippingQuery : [];
+            $desStation = $_POST['desStation'];
+            $eventDesc = 'Shipment info registered at ' . $stationName . '.';
             
-            header("Refresh:0");
+            $proceedshippingQuery = $db->prepare("UPDATE shipping SET status = 'Proceed' WHERE tracking_code = $trackcode");
+            $proceedshippingQuery->execute();
+            
+            $proceedshippingdetQuery = $db->prepare("
+            INSERT INTO shipping_update_details
+            (HawbNo, 
+            StationCode, 
+            StationDescription, 
+            CountryCode, 
+            CountryDescription, 
+            EventCode, 
+            EventDescription, 
+            ReasonCode, 
+            ReasonDescription, 
+            Remark) 
+            VALUES (
+            '$trackcode', 
+            '$stationCode', 
+            '$stationName', 
+            '$countryCode', 
+            '$countryName', 
+            'RDL', 
+            '$eventDesc', 
+            'IS', 
+            'In Shipping',
+            '$remark'
+            )");
+            
+            $proceedshippingdetQuery->execute();            
+            
+            $getrecipientQuery = $db->prepare("SELECT * FROM shipping");
+            $getrecipientQuery->execute();
+            $getrecipient = $getrecipientQuery->rowCount() ? $getrecipientQuery : [];
+            
+            if(!empty($getrecipient))
+            {
+                foreach($getrecipient as $gr)
+                {
+                    if($gr['tracking_code'] == $trackcode)
+                    {
+                        $recipient = $gr['recipient_name'];
+                    }
+                }
+            }
+            
+            $getdestinationQuery = $db->prepare("SELECT * FROM warehouse");
+            $getdestinationQuery->execute();
+            $getdestination = $getdestinationQuery->rowCount() ? $getdestinationQuery : [];
+            
+            if(!empty($getdestination))
+            {
+                foreach($getdestination as $gd)
+                {
+                    if($gd['station_description'] == $desStation)
+                    {
+                        $destinationStationCode = $gd['station_code'];
+                        $destinationCountryCode = $gd['country_code'];
+                        $destinationCountryName = $gd['country_description'];
+                    }
+                }
+            }
+            
+            $proceedshippingsumQuery = $db->prepare("
+            INSERT INTO shipping_update_summary(
+            HawbNo,
+            DeliveryDate,
+            RecipientName,
+            SignedName,
+            OriginStationCode, 
+            OriginStationDescription, 
+            OriginCountryCode, 
+            OriginCountryDescription,
+            DestinationStationCode, 
+            DestinationStationDescription, 
+            DestinationCountryCode,
+            DestinationCountryDescription,
+            EventCode, 
+            EventDescription, 
+            ReasonCode, 
+            ReasonDescription, 
+            Remark) 
+            VALUES (
+            '$trackcode', 
+            '',
+            '$recipient',
+            '',
+            '$stationCode', 
+            '$stationName', 
+            '$countryCode', 
+            '$countryName',
+            '$destinationStationCode',
+            '$desStation',
+            '$destinationCountryCode',
+            '$destinationCountryName',
+            'IP', 
+            'In Proceed', 
+            'IS', 
+            'In Shipping', 
+            '$remark'
+            )");
+    
+            $proceedshippingsumQuery->execute();
         }
         else
         {
-            
+            $eventDesc = 'Pickup shipment checked in at ' . $stationName . '.';
+
+            $checkshippingdetQuery = $db->prepare("
+            INSERT INTO shipping_update_details
+            (HawbNo, 
+            StationCode, 
+            StationDescription, 
+            CountryCode, 
+            CountryDescription, 
+            EventCode, 
+            EventDescription, 
+            ReasonCode, 
+            ReasonDescription, 
+            Remark) 
+            VALUES (
+            '$trackcode', 
+            '$stationCode', 
+            '$stationName', 
+            '$countryCode', 
+            '$countryName', 
+            'PKI', 
+            '$eventDesc', 
+            'IS', 
+            'Is Shipping',
+            '$remark'
+            )");
+
+            $checkshippingdetQuery->execute();
         }
     }
     else
     {
+        $signedName = $_POST['signedName'];
+        
         $endshippingQuery = $db->prepare("UPDATE shipping SET status = 'Delivered' WHERE tracking_code = $trackcode");
-    
         $endshippingQuery->execute();
 
-        $endshipping = $endshippingQuery->rowCount() ? $endshippingQuery : [];
+        $endshippingsumQuery = $db->prepare("UPDATE shipping_update_summary SET SignedName = '$signedName', EventCode = 'DL', EventDescription = 'Delivered', ReasonCode = 'DL', ReasonDescription = 'Delivered' WHERE HawbNo = $trackcode");
+        $endshippingsumQuery->execute();
+        
+        $eventDesc = 'SHIPMENT DELIVERED';
 
-        header("Refresh:0");
+        $endshippingdetQuery = $db->prepare("
+        INSERT INTO shipping_update_details
+        (HawbNo, 
+        StationCode, 
+        StationDescription, 
+        CountryCode, 
+        CountryDescription, 
+        EventCode, 
+        EventDescription, 
+        ReasonCode, 
+        ReasonDescription, 
+        Remark) 
+        VALUES (
+        '$trackcode', 
+        '$stationCode', 
+        '$stationName', 
+        '$countryCode', 
+        '$countryName', 
+        'DLV', 
+        '$eventDesc', 
+        'DL', 
+        'Delivered',
+        '$remark'
+        )");
+
+        $endshippingdetQuery->execute();
     }
-    
-    header("Refresh:0");
-    /*$getshippingQuery = $db->prepare("SELECT * FROM shipping WHERE tracking_code=:trackcode");
-    
-    $getshippingQuery->execute(['trackcode' => $trackcode]);
-    
-    $getshipping = $getshippingQuery->rowCount() ? $getshippingQuery : [];
-    
-    if(!empty($getshipping))
-    {
-        foreach($getshipping as $up)
-        {
-            if($up['status'] == "Request")
-            {
-                $updateshippingQuery = $db->prepare("UPDATE shipping SET status='Proceeded' WHERE tracking_code=:trackcode");
-
-                $updateshippingQuery->execute(['trackcode' => $trackcode]);
-            }
-        }
-    }*/
 }
 ?>
 
@@ -144,12 +371,12 @@ if (isset($_POST['updateshipping']))
                         <table class="tblUpdate">
                             <tr>
                                 <td class="lblUpdate"><label for="stDesc">Station Name: </label></td>
-                                <td class="inputUpdate textUpdate"><input type="text" name="stDesc" id="stDesc" value="<?php echo $w['station_description']; ?>" disabled="disabled" /></td>
+                                <td class="inputUpdate textUpdate"><input type="text" name="stDesc" id="stDesc" value="<?php echo $w['station_description']; ?>" readonly="readonly" /></td>
                             </tr>
                             
                             <tr>
                                 <td class="lblUpdate"><label for="CtyDesc">Country: </label></td>
-                                <td class="inputUpdate textUpdate"><input type="text" name="CtyDesc" id="CtyDesc" value="<?php echo $w['country_description']; ?>" disabled="disabled" /></td>
+                                <td class="inputUpdate textUpdate"><input type="text" name="CtyDesc" id="CtyDesc" value="<?php echo $w['country_description']; ?>" readonly="readonly" /></td>
                             </tr>
                         </table>
 
@@ -187,7 +414,7 @@ if (isset($_POST['updateshipping']))
                                 </td>
                                 
                                 <td class="inputUpdate" ng-show="register">
-                                    <select name="eventMore">
+                                    <select name="desStation">
                                         <?php
                                             if(!empty($getstations))
                                             {
