@@ -77,11 +77,11 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
                         $("barcode").update().show().barcode(value, btype, settings);      
                     }
 
-                $(function()
-                  {
-                    generateBarcode();
-                    }
-                 );
+                    $(function()
+                      {
+                        generateBarcode();
+                        }
+                     );
                 </script>
                 
                 <div id="barcode" class="barcode">

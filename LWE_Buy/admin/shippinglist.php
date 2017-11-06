@@ -3,6 +3,21 @@
 require_once '../connection/config.php';
 session_start();
 
+if(isset($_POST['genCode']))
+{
+    $defaultno = "122352562";
+    $itemno = rand(100, 999);
+    $tCode = $defaultno . $itemno;
+    
+    $gencodeQuery = $db->prepare("UPDATE shipping SET tracking_code = $tCode WHERE s_id=:s_id");
+    
+    $gencodeQuery->execute(['s_id' => $_POST['shippingid']]);
+    
+    $gencode = $gencodeQuery->rowCount() ? $gencodeQuery : [];
+    
+    header("Refresh:0");
+}
+
 $newshippingQuery = $db->prepare("
     SELECT *
     FROM shipping sh
@@ -54,7 +69,20 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+        <!--<script type="text/javascript">
+            function genCode()
+            {
+                document.getElementById("generateC").style.visibility = "hidden";
+                
+                var itemid = Math.floor(Math.random() * 999) + 100;
+                itemid.toString;
+                var defaultno = "122352562";
+                var code = defaultno.concat(itemid);
+                
+                document.getElementById("tCode").innerHTML = code;
+            }
+        </script>-->
+        
         <!--stylesheet-->
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -94,6 +122,7 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                     <tr>
                                         <th>Shipping No.</th>
                                         <th>Name</th>
+                                        <th>Tracking code</th>
                                         <th>Placed on</th>
                                     </tr>
                                 </thead>
@@ -101,7 +130,24 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                 <tbody>
                                     <tr>
                                         <td width="5%"><?php echo $ns['s_id']; ?></td>
-                                        <td width="40%"><?php echo $ns['fname']; ?> <?php echo $ns['lname']; ?></td>
+                                        <td width="30%"><?php echo $ns['fname']; ?> <?php echo $ns['lname']; ?></td>
+                                        <td width="10%">
+                                            <?php
+                                            if($ns['tracking_code'] != "")
+                                            {
+                                                echo $ns['tracking_code'];
+                                            }
+                                            else
+                                            {
+                                            ?>
+                                            <form method="post" action="shippinglist.php">
+                                                <input type="text" value="<?php echo $ns['s_id']; ?>" name="shippingid" hidden="hidden" />
+                                                <input type="submit" value="Generate tracking code" name="genCode" class="btn btn-xs btn-info" />
+                                            </form>
+                                            <?php
+                                            }
+                                            ?>
+                                        </td>
                                         <td width="20%"><?php echo $ns['datetime']; ?></td>
                                         <td width="5%"><a href="tag.php?s_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">Print tag</a></td>
                                     </tr>
