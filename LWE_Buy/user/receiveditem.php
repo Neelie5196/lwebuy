@@ -3,27 +3,19 @@
 require_once '../connection/config.php';
 session_start();
 $counter = 0;
+$user_id = $_SESSION['user_id'];
 
-$slotitemQuery = $db->prepare("
-
-    SELECT *
-    FROM slot s
-    JOIN item i
-    ON i.s_id = s.s_id
-    WHERE user_id=:user_id AND action = 'In'
-
-");
-
-$slotitemQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
+$query1 = "SELECT *
+           FROM slot s
+           JOIN item i
+           ON i.s_id = s.s_id
+           WHERE user_id='$user_id' AND action = 'In'";
+$result1 = mysqli_query($con, $query1);
 
 $query = "SELECT * 
           FROM shipping_price";
-$result = mysql_query($query);
-$results = mysql_fetch_assoc($result);
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
 ?>
 
@@ -69,7 +61,6 @@ $results = mysql_fetch_assoc($result);
                 <form action="shippingrequest.php" method="post">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($slotitem)): ?>
                             <table class="table thead-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -80,27 +71,32 @@ $results = mysql_fetch_assoc($result);
                                         <th>Date / Time</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($slotitem as $slot): 
-                                {
-                                    $counter++;
-                                }
-
+                                <?php 
+                                    if(mysqli_num_rows($result1) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            $counter++;
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td><?php echo $counter; ?></td>
+                                                    <td><?php echo $row['name']; ?></td>
+                                                    <td><?php echo $row['order_code']; ?></td>
+                                                    <td><?php echo $row['weight']; ?></td>
+                                                    <td><?php echo $row['datetime']; ?></td>
+                                                    <td><input type="checkbox" weight="<?php echo $row['weight']; ?>" value="<?php echo $row['i_id']; ?>" name="item[]"></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                    ?>
+                                        <p>There is no item in warehouse.</p>
+                                    <?php
+                                    }
                                 ?>
-                                <tbody>
-                                    <tr>
-                                        <td><?php echo $counter; ?></td>
-                                        <td><?php echo $slot['name']; ?></td>
-                                        <td><?php echo $slot['order_code']; ?></td>
-                                        <td><?php echo $slot['weight']; ?></td>
-                                        <td><?php echo $slot['datetime']; ?></td>
-                                        <td><input type="checkbox" weight="<?php echo $slot['weight']; ?>" value="<?php echo $slot['i_id']; ?>" name="item[]"></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no item in warehouse.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                     <center>

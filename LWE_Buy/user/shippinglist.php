@@ -2,34 +2,18 @@
 
 require_once '../connection/config.php';
 session_start();
+$user_id = $_SESSION['user_id'];
 
-$shippinglistQuery = $db->prepare("
+$query = "SELECT *
+          FROM shipping
+          WHERE user_id='$user_id' AND status = 'Request'";
+$result = mysqli_query($con, $query);
 
-    SELECT *
-    FROM shipping
-    WHERE user_id=:user_id AND status = 'Request'
+$query1 = "SELECT *
+          FROM shipping
+          WHERE user_id='$user_id' AND status = 'Proceed'";
+$result1 = mysqli_query($con, $query1);
 
-");
-
-$shippinglistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$shippinglist = $shippinglistQuery->rowCount() ? $shippinglistQuery : [];
-
-$shippingslistQuery = $db->prepare("
-
-    SELECT *
-    FROM shipping
-    WHERE user_id=:user_id AND status = 'Proceed'
-
-");
-
-$shippingslistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$shippingslist = $shippingslistQuery->rowCount() ? $shippingslistQuery : [];
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +67,6 @@ $shippingslist = $shippingslistQuery->rowCount() ? $shippingslistQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="request">
-                            <?php if(!empty($shippinglist)): ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
@@ -93,21 +76,30 @@ $shippingslist = $shippingslistQuery->rowCount() ? $shippingslistQuery : [];
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($shippinglist as $shipping): ?>
-                                <tbody>
-                                    <tr>
-                                        <td width="5%"><?php echo $shipping['s_id']; ?></td>
-                                        <td width="40%"><?php echo $shipping['datetime']; ?></td>
-                                        <td width="20%"><?php echo $shipping['price']; ?></td>
-                                        <td width="20%"><?php echo $shipping['status']; ?></td>
-                                        <td width="15%"><a href="shippinglrview.php?shipping_id=<?php echo $shipping['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
+                                <?php 
+                                    if(mysqli_num_rows($result) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['s_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="20%"><?php echo $row['price']; ?></td>
+                                                    <td width="20%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="shippinglrview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                    ?>
+                                        <p>There is no shipping request.</p>
+                                    <?php
+                                    }
+                                ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no shipping request.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -125,7 +117,6 @@ $shippingslist = $shippingslistQuery->rowCount() ? $shippingslistQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="proceed">
-                            <?php if(!empty($shippingslist)): ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
@@ -135,21 +126,30 @@ $shippingslist = $shippingslistQuery->rowCount() ? $shippingslistQuery : [];
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($shippingslist as $shippings): ?>
-                                <tbody>
-                                    <tr>
-                                        <td width="5%"><?php echo $shippings['s_id']; ?></td>
-                                        <td width="40%"><?php echo $shippings['datetime']; ?></td>
-                                        <td width="20%"><?php echo $shippings['price']; ?></td>
-                                        <td width="20%"><?php echo $shippings['status']; ?></td>
-                                        <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $shippings['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-info">View</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
+                                <?php 
+                                    if(mysqli_num_rows($result1) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['s_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="20%"><?php echo $row['price']; ?></td>
+                                                    <td width="20%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $row['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-info">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                    ?>
+                                        <p>There is no shipping in proceed.</p>
+                                    <?php
+                                    }
+                                ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no shipping in proceed.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

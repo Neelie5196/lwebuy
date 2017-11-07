@@ -12,8 +12,8 @@ $query = "SELECT *
           ON s.user_id = us.user_id
           WHERE s_id = '$shipping_id'
           ";
-$result = mysql_query($query);
-$results = mysql_fetch_assoc($result);
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
 $address = $results['a_id'];
 
@@ -21,20 +21,13 @@ $query1 = "SELECT *
           FROM address
           WHERE a_id = '$address'
           ";
-$result1 = mysql_query($query1);
-$results1 = mysql_fetch_assoc($result1);
+$result1 = mysqli_query($con, $query1);
+$results1 = mysqli_fetch_assoc($result1);
 
-$slotitemQuery = $db->prepare("
-
-    SELECT *
-    FROM item
-    WHERE shipping_id = '$shipping_id'
-
-");
-
-$slotitemQuery->execute();
-
-$slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
+$query2 = "SELECT *
+           FROM item
+           WHERE shipping_id = '$shipping_id'";
+$result2 = mysqli_query($con, $query2);
 
 
 ?>
@@ -90,7 +83,6 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($slotitem)): ?>
                             <table class="table thead-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -99,23 +91,31 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
                                         <th width="33%">Item Weight</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($slotitem as $slot): 
-                                    $counter++;
+                                <?php 
+                                    if(mysqli_num_rows($result2) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result2))
+                                        {
+                                            $counter++;
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td><?php echo $counter; ?></td>
+                                                    <td><?php echo $row['name']; ?></td>
+                                                    <td><?php echo $row['weight']; ?></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                    ?>
+                                        <p>There is no item ready to ship</p>
+                                    <?php
+                                    }
                                 ?>
-                                <tbody>
-                                    <tr>
-                                        <td><?php echo $counter; ?></td>
-                                        <td><?php echo $slot['name']; ?></td>
-                                        <td><?php echo $slot['weight']; ?></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no item ready to ship</p>
-                            <?php endif; ?>
                         </div>
-                        <center>
+                        <center style="padding-bottom: 15px;">
                             <input type="submit" class="btn btn-success" name="ppay" value="Pay Now">
                             <a href="javascript:history.go(-1)"  class="btn btn-default" name="back">Back</a>
                         </center>

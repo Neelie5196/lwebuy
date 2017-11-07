@@ -26,7 +26,7 @@ if(isset($_POST['transaction']))
 	if(move_uploaded_file($file_loc,$folder.$final_file))
 	{
 		$sql="INSERT INTO payment(user_id,datetime,title,amount,file,type,status) VALUES('$user_id', NOW(), '$reload $title $point', '$amount', '$final_file', '$file_type', '$status')";
-		mysql_query($sql);
+		mysqli_query($con, $sql);
 		?>
 		<script>
 		alert('Successfully Submit');

@@ -12,7 +12,7 @@ if(isset($_POST['name']))
     $message = $_POST['message'];
     $status = 'unread';
 	
-	$result = mysql_query("INSERT INTO contact SET name='$name', contact='$contact', email='$email', subject='$subject', tracknum='$tracknum', message='$message', datetime=NOW(), status = '$status'") or die(mysql_error());
+	$result = mysqli_query($con, "INSERT INTO contact SET name='$name', contact='$contact', email='$email', subject='$subject', tracknum='$tracknum', message='$message', datetime=NOW(), status = '$status'") or die(mysqli_error($con));
     
     
     ?>

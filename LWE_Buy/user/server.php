@@ -1,4 +1,4 @@
-<?php		
+<?php
 	$keyword = strval($_POST['query']);
 	$search_param = "{$keyword}%";
 	$conn =new mysqli('localhost', 'root', '' , 'lwe');

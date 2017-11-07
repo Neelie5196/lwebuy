@@ -2,20 +2,14 @@
 
 require_once '../connection/config.php';
 session_start();
-$_SESSION['order_id'] = $_GET['order_id'];
-$_SESSION['oi_id'] = $_GET['oi_id'];
+$order_id = $_GET['order_id'];
+$oi_id = $_GET['oi_id'];
 
-$purchaseitemQuery = $db->prepare("
-    SELECT *
-    FROM order_item
-    WHERE oi_id=:oi_id
-");
-
-$purchaseitemQuery->execute([
-    'oi_id' => $_SESSION['oi_id']
-]);
-
-$purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
+$query = "SELECT *
+          FROM order_item
+          WHERE oi_id='$oi_id'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
 ?>
 <!DOCTYPE html>
@@ -63,55 +57,59 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 jumbotron">
                                     <form method="post" action="update.php">
-                                        <?php if(!empty($purchaseitem)): ?>
-                                        <table class="table table-bordered purchaseitem">
-                                            <?php foreach($purchaseitem as $purchase): ?>
-                                            <tbody class="purchase">
-                                                <tr>
-                                                    <td>
-                                                        <label>Item Name</label>
-                                                    </td>
-                                                    <td>
-                                                        <input class="form-control" name="name" type="text" required value="<?php echo $purchase['name']; ?>">
-                                                        <input type="hidden" name="order_id" value="<?php echo $_SESSION['order_id']; ?>">
-                                                        <input type="hidden" name="oi_id" value="<?php echo $_SESSION['oi_id']; ?>">
-                                                    </td>
-                                                    <td>
-                                                        <label>Item Link</label>
-                                                    </td>
-                                                    <td>
-                                                        <input class="form-control" name="link" type="text" required value="<?php echo $purchase['link']; ?>">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label>Item Type</label>
-                                                    </td>
-                                                    <td>
-                                                        <input class="form-control" name="type" type="text" required value="<?php echo $purchase['type']; ?>">
-                                                    </td>
-                                                    <td>
-                                                        <label>Unit</label>
-                                                    </td>
-                                                    <td>
-                                                        <input class="form-control" name="unit" type="number" required value="<?php echo $purchase['unit']; ?>">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <label>Remark</label>
-                                                    </td>
-                                                    <td colspan="3">
-                                                        <input class="form-control" name="remark" type="text" width="80" value="<?php echo $purchase['remark']; ?>">
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <?php endforeach; ?>
+                                        <table class="table table-bordered">
+                                            <?php
+                                                if($results > 0){
+                                                    ?>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <label>Item Name</label>
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="name" type="text" required value="<?php echo $results['name']; ?>">
+                                                                <input type="hidden" name="order_id" value="<?php echo $order_id; ?>">
+                                                                <input type="hidden" name="oi_id" value="<?php echo $oi_id; ?>">
+                                                            </td>
+                                                            <td>
+                                                                <label>Item Link</label>
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="link" type="text" required value="<?php echo $results['link']; ?>">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label>Item Type</label>
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="type" type="text" required value="<?php echo $results['type']; ?>">
+                                                            </td>
+                                                            <td>
+                                                                <label>Unit</label>
+                                                            </td>
+                                                            <td>
+                                                                <input class="form-control" name="unit" type="number" required value="<?php echo $results['unit']; ?>">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label>Remark</label>
+                                                            </td>
+                                                            <td colspan="3">
+                                                                <input class="form-control" name="remark" type="text" width="80" value="<?php echo $results['remark']; ?>">
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <?php
+                                                }else{
+                                                    ?>
+                                                        <p>Error</p>
+                                                    <?php
+                                                }
+                                            ?>
                                         </table>
-                                        <?php else: ?>
-                                            <p>Error.</p>
-                                        <?php endif; ?>
-                                        <a href="purchaseview.php?order_id=<?php echo $purchase['order_id']; ?>" class='btn btn-default' name='back'>Back to Purchase View</a>
+                                        <a href="purchaseview.php?order_id=<?php echo $results['order_id']; ?>" class='btn btn-default' name='back'>Back to Purchase View</a>
                                         
                                         <button type="submit" class="btn btn-default" name="editpurchase">Update</button>
                                     </form>

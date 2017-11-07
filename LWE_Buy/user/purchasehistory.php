@@ -2,19 +2,13 @@
 
 require_once '../connection/config.php';
 session_start();
+$user_id = $_SESSION['user_id'];
 
-$purchaselistQuery = $db->prepare("
-    SELECT *
-    FROM order_list
-    WHERE user_id=:user_id AND status = 'received'
-    ORDER BY datetime desc
-");
-
-$purchaselistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
+$query = "SELECT *
+          FROM order_list
+          WHERE user_id='$user_id' AND status = 'received'
+          ORDER BY datetime desc";
+$result = mysqli_query($con, $query);
 
 ?>
 
@@ -59,8 +53,7 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <?php if(!empty($purchaselist)): ?>
-                        <table class="table thead-bordered table-hover purchaselist" style="width:80%">
+                        <table class="table thead-bordered table-hover" style="width:80%">
                             <thead>
                                 <tr>
                                     <th>Order#</th>
@@ -69,21 +62,30 @@ $purchaselist = $purchaselistQuery->rowCount() ? $purchaselistQuery : [];
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <?php foreach($purchaselist as $purchase): ?>
-                            <tbody class="purchase">
-                                <tr>
-                                    <td width="5%"><?php echo $purchase['ol_id']; ?></td>
-                                    <td width="40%"><?php echo $purchase['datetime']; ?></td>
-                                    <td width="20%"><?php echo $purchase['price']; ?></td>
-                                    <td width="20%"><?php echo $purchase['status']; ?></td>
-                                    <td width="15%"><a href="purchasehview.php?order_id=<?php echo $purchase['ol_id']; ?>&timeline=Received" class="btn btn-xs btn-info">View</a></td>
-                                </tr>
-                            </tbody>
-                            <?php endforeach; ?>
-                        </table>
-                        <?php else: ?>
-                            <p>There is no purchase item.</p>
-                        <?php endif; ?>
+                            <?php 
+                                if(mysqli_num_rows($result) > 0)
+                                {
+                                    while($row = mysqli_fetch_array($result))
+                                    {
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                <td width="20%"><?php echo $row['price']; ?></td>
+                                                <td width="20%"><?php echo $row['status']; ?></td>
+                                                <td width="15%"><a href="purchasehview.php?order_id=<?php echo $row['ol_id']; ?>&timeline=Received" class="btn btn-xs btn-info">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                    }
+                                }else{
+                                ?>
+                                    <p>There is no conpleted purchase order.</p>
+                                <?php
+                                }
+                            ?>
+                        </table>        
                     </div>
                 </div>
             </section>

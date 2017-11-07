@@ -1,6 +1,5 @@
 <?php
 session_start();
-$connect = mysqli_connect("localhost", "root", "", "lwe");
 if(isset($_POST["add"]))
 {
 	if(isset($_SESSION["cart"]))

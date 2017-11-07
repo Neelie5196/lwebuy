@@ -73,7 +73,7 @@ while($pack = mysqli_fetch_array($result))
                                     </div>
                          </div>
 			</div>
-			<input type="hidden" name="status" value="Waiting for approve">
+			<input type="hidden" name="status" value="Waiting for Approve">
 			<br>
 			<div class="row">
                        <div class="col-xs-12 col-md-6 col-lg-6">

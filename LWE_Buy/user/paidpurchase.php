@@ -24,12 +24,12 @@ if(isset($_POST['submit']))
 	
 	$final_file=str_replace(' ','-',$new_file_name);
     
-	$result = mysql_query("UPDATE order_list SET status='$status', datetime=NOW() WHERE ol_id = $order_id ") or die(mysql_error());
+	$result = mysqli_query($con, "UPDATE order_list SET status='$status', datetime=NOW() WHERE ol_id = $order_id ") or die(mysqli_error($con));
     
 	if(move_uploaded_file($file_loc,$folder.$final_file))
 	{
 		$sql="INSERT INTO payment(user_id,datetime,title,amount,file,type,status,from_order) VALUES('$user_id', NOW(), '$pay $title', '$amount', '$final_file', '$file_type', '$statuss', '$order_id')";
-		mysql_query($sql);
+		mysqli_query($con, $sql);
 		?>
 		<script>
 		alert('Successfully Submit');
@@ -63,9 +63,9 @@ if(isset($_POST['pay']))
 
 	if($point >= $paypoint)
 	{
-        $result = mysql_query("UPDATE order_list SET status='$status', datetime=NOW() WHERE ol_id = $order_id ") or die(mysql_error());
-        $result1 = mysql_query("UPDATE point SET point= point - '$paypoint' WHERE user_id = $user_id ") or die(mysql_error());
-		$result2 = mysql_query("INSERT INTO payment SET user_id='$user_id', datetime=NOW(), title='$title $points', file='$paypoint $points', status='$statuss', from_order='$order_id'") or die(mysql_error());
+        $result = mysqli_query($con, "UPDATE order_list SET status='$status', datetime=NOW() WHERE ol_id = $order_id ") or die(mysqli_error($con));
+        $result1 = mysqli_query($con, "UPDATE point SET point= point - '$paypoint' WHERE user_id = $user_id ") or die(mysqli_error($con));
+		$result2 = mysqli_query($con, "INSERT INTO payment SET user_id='$user_id', datetime=NOW(), title='$title $points', file='$paypoint $points', status='$statuss', from_order='$order_id'") or die(mysqli_error($con));
 		?>
 		<script>
 		alert('Successfully Submit');

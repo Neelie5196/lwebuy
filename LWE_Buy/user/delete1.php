@@ -10,9 +10,9 @@ if (isset($_GET['oi_id']))
     $price = $_GET['price'];
     
 
-    $result = mysql_query("DELETE FROM order_item WHERE oi_id=$oi_id") or die(mysql_error());
+    $result = mysqli_query($con, "DELETE FROM order_item WHERE oi_id=$oi_id") or die(mysqli_error($con));
     
-    $result1 = mysql_query("UPDATE order_list SET price= price - '$price' WHERE ol_id=$order_id") or die(mysql_error());
+    $result1 = mysqli_query($con, "UPDATE order_list SET price= price - '$price' WHERE ol_id=$order_id") or die(mysqli_error($con));
     
     
     ?>

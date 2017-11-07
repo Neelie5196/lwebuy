@@ -13,7 +13,7 @@ if (isset($_POST['editpurchase']))
     $unit = $_POST['unit'];
     $remark = $_POST['remark'];
 
-    $result = mysql_query("UPDATE order_item SET name='$name', link='$link', type='$type', unit='$unit', remark='$remark' WHERE oi_id=$oi_id") or die(mysql_error());
+    $result = mysqli_query($con, "UPDATE order_item SET name='$name', link='$link', type='$type', unit='$unit', remark='$remark' WHERE oi_id=$oi_id") or die(mysqli_error($con));
     ?>
 		<script>
 		alert('Successfully Update');
@@ -41,7 +41,7 @@ if (isset($_POST['update-profile']))
     $contact = $_POST['contact'];
 	 
 
-    $result = mysql_query("UPDATE users SET fname='$fname', lname='$lname', email='$email', contact='$contact' WHERE user_id=$user_id") or die(mysql_error());
+    $result = mysqli_query($con, "UPDATE users SET fname='$fname', lname='$lname', email='$email', contact='$contact' WHERE user_id=$user_id") or die(mysqli_error($con));
     ?>
 		<script>
 		alert('Successfully Update');
@@ -64,7 +64,7 @@ if (isset($_POST['update-password']))
             {
 				$password = $_POST['np'];
 				$password = password_hash($password, PASSWORD_DEFAULT); 
-                $result = mysql_query("UPDATE users SET password='$password' WHERE user_id=$user_id") or die(mysql_error());
+                $result = mysqli_query($con, "UPDATE users SET password='$password' WHERE user_id=$user_id") or die(mysql_error($con));
                 ?>
                 <script>
                 alert('Successfully Update');
@@ -113,6 +113,10 @@ else
     </script>
     <?php
 }
+
+
+?>
+
 
 
 ?>

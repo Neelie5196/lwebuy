@@ -8,7 +8,7 @@ if (isset($_GET['oi_id']))
     $order_id = $_GET['order_id'];
     $oi_id = $_GET['oi_id'];
 
-    $result = mysql_query("DELETE FROM order_item WHERE oi_id=$oi_id") or die(mysql_error());
+    $result = mysqli_query($con, "DELETE FROM order_item WHERE oi_id=$oi_id") or die(mysqli_error($con));
     ?>
 		<script>
 		alert('Successfully Delete');

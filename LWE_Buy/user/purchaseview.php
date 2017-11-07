@@ -2,20 +2,13 @@
 
 require_once '../connection/config.php';
 session_start();
-$_SESSION['order_id'] = $_GET['order_id'];
+$order_id = $_GET['order_id'];
 $counter = 0; 
 
-$purchaseitemQuery = $db->prepare("
-    SELECT *
-    FROM order_item
-    WHERE order_id=:order_id
-");
-
-$purchaseitemQuery->execute([
-    'order_id' => $_SESSION['order_id']
-]);
-
-$purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
+$query = "SELECT *
+          FROM order_item
+          WHERE order_id='$order_id'";
+$result = mysqli_query($con, $query);
 
 ?>
 
@@ -48,7 +41,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
             </div>
             
             <div class="container">
-                <h2>Order# <?php echo $_SESSION['order_id']; ?></h2>
+                <h2>Order# <?php echo $order_id; ?></h2>
                 <hr/>
                 <img src="../resources/timeline/requests.PNG" alt="timeline" width="600px"/>
             </div>
@@ -57,8 +50,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($purchaseitem)): ?>
-                            <table class="table thead-bordered table-hover purchaseitem" style="width:100%">
+                            <table class="table thead-bordered table-hover" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -69,38 +61,43 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                         <th>Remark</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($purchaseitem as $purchase): 
-                                {
-                                    $counter++;
-                                }
+                                <?php 
+                                    if(mysqli_num_rows($result) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result))
+                                        {
+                                            $counter++;
+                                            ?>
+                                            <tbody class="purchase">
+                                                <tr>
+                                                    <td width="5%"><?php echo $counter; ?></td>
+                                                    <td width="15%"><?php echo $row['name']; ?></td>
+                                                    <td width="20%"><a href="<?php echo $row['link']; ?>" target="_blank"><?php echo $row['link']; ?></a></td>
+                                                    <td width="8%"><?php echo $row['type']; ?></td>
+                                                    <td width="8%"><?php echo $row['unit']; ?></td>
+                                                    <td width="20%"><?php echo $row['remark']; ?></td>
+                                                    <td width="15%">
+                                                        <a href="editpurchase.php?order_id=<?php echo $order_id; ?>&oi_id=<?php echo $row['oi_id']; ?>" class="btn btn-xs btn-warning">Edit</a>
+                                                        <a href="delete.php?order_id=<?php echo $order_id; ?>&oi_id=<?php echo $row['oi_id']; ?>" class="btn btn-xs btn-danger delete-button">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                        if(isset($_GET['order_id'])){
+                                            $order_id = $_GET['order_id'];
+
+                                            $result = mysqli_query($con, "DELETE FROM order_list WHERE ol_id=$order_id") or die(mysql_error());
+                                            ?>
+                                                <script>
+                                                    window.location.href='purchaselist.php';
+                                                </script>
+                                            <?php
+                                        }
+                                    }
                                 ?>
-                                <tbody class="purchase">
-                                    <tr>
-                                        <td width="5%"><?php echo $counter; ?></td>
-                                        <td width="15%"><?php echo $purchase['name']; ?></td>
-                                        <td width="20%"><a href="<?php echo $purchase['link']; ?>" target="_blank"><?php echo $purchase['link']; ?></a></td>
-                                        <td width="8%"><?php echo $purchase['type']; ?></td>
-                                        <td width="8%"><?php echo $purchase['unit']; ?></td>
-                                        <td width="20%"><?php echo $purchase['remark']; ?></td>
-                                        <td width="15%">
-                                            <a href="editpurchase.php?order_id=<?php echo $_SESSION['order_id']; ?>&oi_id=<?php echo $purchase['oi_id']; ?>" class="btn btn-xs btn-warning">Edit</a>
-                                            <a href="delete.php?order_id=<?php echo $_SESSION['order_id']; ?>&oi_id=<?php echo $purchase['oi_id']; ?>" class="btn btn-xs btn-danger delete-button">Delete</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
                             </table>
-                            <?php else: 
-
-                                if(isset($_GET['order_id'])){
-                                    $order_id = $_GET['order_id'];
-
-                                    $result = mysql_query("DELETE FROM order_list WHERE ol_id=$order_id") or die(mysql_error());
-
-                                }
-                                header("location: purchaselist.php");
-                            ?>
-                            <?php endif; ?>
                         </div>
                         <a href="purchaselist.php" class="btn btn-default" name="back">Back</a>
                     </div>

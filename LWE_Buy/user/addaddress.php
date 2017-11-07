@@ -12,7 +12,7 @@ if(isset($_POST['address']))
     $country = $_POST['country'];
     
 	
-	$result = mysql_query("INSERT INTO address SET user_id='$user_id', address='$address', state='$state', city='$city', country='$country', postcode='$postcode'") or die(mysql_error());
+	$result = mysqli_query($con, "INSERT INTO address SET user_id='$user_id', address='$address', state='$state', city='$city', country='$country', postcode='$postcode'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Add Address');

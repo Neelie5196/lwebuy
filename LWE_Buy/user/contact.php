@@ -2,19 +2,13 @@
 
 require_once '../connection/config.php';
 session_start();
+$user_id = $_SESSION['user_id'];
 
-$profilesettingQuery = $db->prepare("
-    SELECT *
-    FROM users
-    WHERE user_id=:user_id
-");
-
-$profilesettingQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
-
+$query = "SELECT *
+          FROM users
+          WHERE user_id='$user_id'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
 ?>
 
@@ -49,8 +43,6 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
             <h2>Contact Us</h2>
             <hr/>
         </div>
-        <?php if(!empty($profilesetting)): ?>
-        <?php foreach($profilesetting as $profile): ?>
         <section class = "content">
             <div class="container">
                 <div class="row">
@@ -60,11 +52,11 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                                 <h3>Get In Touch With Us!</h3>
                                 <hr/>
                                 <form action="submitform.php" method="post">
-                                    <input type="text" name="name" class="form-control" value="<?php echo $profile['fname']; ?> <?php echo $profile['lname']; ?>" placeholder="Your Name (Required)" style="border-radius: 30px;" required><br/>
+                                    <input type="text" name="name" class="form-control" value="<?php echo $results['fname']; ?> <?php echo $results['lname']; ?>" placeholder="Your Name (Required)" style="border-radius: 30px;" required><br/>
 
-                                    <input type="tel" name="contact" class="form-control" value="<?php echo $profile['contact']; ?>" placeholder="Your Phone Number (Required)" style="border-radius: 30px;" required><br/>
+                                    <input type="tel" name="contact" class="form-control" value="<?php echo $results['contact']; ?>" placeholder="Your Phone Number (Required)" style="border-radius: 30px;" required><br/>
 
-                                    <input type="email" name="email" class="form-control" value="<?php echo $profile['email']; ?>" placeholder="Your Email (Required)" style="border-radius: 30px;" required><br/>
+                                    <input type="email" name="email" class="form-control" value="<?php echo $results['email']; ?>" placeholder="Your Email (Required)" style="border-radius: 30px;" required><br/>
 
                                     <input type="text" name="subject" class="form-control" placeholder="Subject (Required)" style="border-radius: 30px;" required><br/>
 
@@ -159,9 +151,5 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                 </div>
             </div>
         </section>
-        <?php endforeach; ?>
-        <?php else: ?>
-            <p>Error.</p>
-        <?php endif; ?>
     </body>
 </html>

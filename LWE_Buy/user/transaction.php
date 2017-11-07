@@ -2,32 +2,19 @@
 
 require_once '../connection/config.php';
 session_start();
+$user_id = $_SESSION['user_id'];
 
 $i= 0;
-$transactionlistQuery = $db->prepare("
-    SELECT *
-    FROM payment
-    WHERE user_id=:user_id AND status='Pending'
-");
-
-$transactionlistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$transactionlist = $transactionlistQuery->rowCount() ? $transactionlistQuery : [];
+$query = "SELECT *
+          FROM payment
+          WHERE user_id='$user_id' AND status='Waiting for Approve'";
+$result = mysqli_query($con, $query);
 
 $is= 0;
-$transactionslistQuery = $db->prepare("
-    SELECT *
-    FROM payment
-    WHERE user_id=:user_id AND status='Completed'
-");
-
-$transactionslistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$transactionslist = $transactionslistQuery->rowCount() ? $transactionslistQuery : [];
+$query1 = "SELECT *
+          FROM payment
+          WHERE user_id='$user_id' AND status='Completed'";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -73,7 +60,6 @@ $transactionslist = $transactionslistQuery->rowCount() ? $transactionslistQuery 
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <?php if(!empty($transactionlist)): ?>
                         <table class="table thead-bordered" style="width:80%">
                             <thead>
                                 <tr>
@@ -85,25 +71,32 @@ $transactionslist = $transactionslistQuery->rowCount() ? $transactionslistQuery 
                                     <th width = "13%">Status</th>
                                 </tr>
                             </thead>
-                            <?php foreach($transactionlist as $transaction):
-                            {                             
+                            <?php 
+                                if(mysqli_num_rows($result) > 0)
+                                {
+                                    while($row = mysqli_fetch_array($result))
+                                    {
                                         $i++;
-                            }?>
-                            <tbody>
-                                <tr>
-                                    <td><?php echo $i; ?></td>
-                                    <td><?php echo $transaction['title']; ?></td>
-                                    <td>RM <?php echo $transaction['amount']; ?></td>
-                                    <td><?php echo $transaction['datetime']; ?></td>
-                                    <td><a href="../resources/img/receipts/<?php echo $transaction['file']; ?>" target="_blank"><?php echo $transaction['file']; ?></a></td>
-                                    <td><a href="#" class="btn btn-xs btn-info"><?php echo $transaction['status']; ?></a></td>
-                                </tr>
-                            </tbody>
-                            <?php endforeach; ?>
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $i; ?></td>
+                                                <td><?php echo $row['title']; ?></td>
+                                                <td>RM <?php echo $row['amount']; ?></td>
+                                                <td><?php echo $row['datetime']; ?></td>
+                                                <td><a href="../resources/img/receipts/<?php echo $row['file']; ?>" target="_blank"><?php echo $row['file']; ?></a></td>
+                                                <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                    }
+                                }else{
+                                ?>
+                                    <p>There is no reload request.</p>
+                                <?php
+                                }
+                            ?>
                         </table>
-                        <?php else: ?>
-                            <p>There is no reload request</p>
-                        <?php endif; ?>
                     </div>
                 </div>
             </section>
@@ -117,9 +110,7 @@ $transactionslist = $transactionslistQuery->rowCount() ? $transactionslistQuery 
             </div>
             <section class = "content">
                 <div class="row">
-			
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <?php if(!empty($transactionslist)): ?>
                         <table class="table thead-bordered" style="width:80%">
                             <thead>
                                 <tr>
@@ -131,25 +122,32 @@ $transactionslist = $transactionslistQuery->rowCount() ? $transactionslistQuery 
                                     <th width = "13%">Status</th>
                                 </tr>
                             </thead>
-                            <?php foreach($transactionslist as $transactions):
-							{                             
-										$is++;
-							}?>
-                            <tbody>
-                                <tr>
-									<td><?php echo $is; ?></td>
-                                    <td><?php echo $transactions['title']; ?></td>
-                                    <td>RM <?php echo $transactions['amount']; ?></td>
-                                    <td><?php echo $transactions['datetime']; ?></td>
-                                    <td><a href="../resources/img/receipts/<?php echo $transactions['file']; ?>" target="_blank"><?php echo $transactions['file']; ?></a></td>
-                                    <td><a href="#" class="btn btn-xs btn-info"><?php echo $transactions['status']; ?></a></td>
-                                </tr>
-                            </tbody>
-                            <?php endforeach; ?>
+                            <?php 
+                                if(mysqli_num_rows($result1) > 0)
+                                {
+                                    while($row = mysqli_fetch_array($result1))
+                                    {
+                                        $is++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $is; ?></td>
+                                                <td><?php echo $row['title']; ?></td>
+                                                <td>RM <?php echo $row['amount']; ?></td>
+                                                <td><?php echo $row['datetime']; ?></td>
+                                                <td><a href="../resources/img/receipts/<?php echo $row['file']; ?>" target="_blank"><?php echo $row['file']; ?></a></td>
+                                                <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                    }
+                                }else{
+                                ?>
+                                    <p>No Transaction Record.</p>
+                                <?php
+                                }
+                            ?>
                         </table>
-                        <?php else: ?>
-                            <p>No Transaction Record</p>
-                        <?php endif; ?>
                     </div>
                 </div>
             </section>

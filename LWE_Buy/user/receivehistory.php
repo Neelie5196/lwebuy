@@ -4,32 +4,19 @@ require_once '../connection/config.php';
 session_start();
 $counter=0;
 $counters=0;
+$user_id = $_SESSION['user_id'];
 
-$receivelistQuery = $db->prepare("
-    SELECT *
-    FROM receive_request
-    WHERE user_id = :user_id AND status = 'Request'
-    ORDER BY datetime desc
-");
+$query = "SELECT *
+          FROM receive_request
+          WHERE user_id = '$user_id' AND status = 'Request'
+          ORDER BY datetime desc";
+$result = mysqli_query($con, $query);
 
-$receivelistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$receivelist = $receivelistQuery->rowCount() ? $receivelistQuery : [];
-
-$receiveslistQuery = $db->prepare("
-    SELECT *
-    FROM receive_request
-    WHERE user_id = :user_id AND status = 'Received'
-    ORDER BY datetime desc
-");
-
-$receiveslistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$receiveslist = $receiveslistQuery->rowCount() ? $receiveslistQuery : [];
+$query1 = "SELECT *
+           FROM receive_request
+           WHERE user_id = '$user_id' AND status = 'Received'
+           ORDER BY datetime desc";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -84,7 +71,6 @@ $receiveslist = $receiveslistQuery->rowCount() ? $receiveslistQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="request">
-                            <?php if(!empty($receivelist)): ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
@@ -95,27 +81,32 @@ $receiveslist = $receiveslistQuery->rowCount() ? $receiveslistQuery : [];
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($receivelist as $receive): 
-                                {
-                                    $counter++;
-                                }
-                                
+                                <?php 
+                                    if(mysqli_num_rows($result) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result))
+                                        {
+                                            $counter++;
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $counter; ?></td>
+                                                    <td width="40%"><?php echo $row['name']; ?></td>
+                                                    <td width="15%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="15%"><?php echo $row['order_code']; ?></td>
+                                                    <td width="10%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="deletereceive.php?rr_id=<?php echo $row['rr_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                    ?>
+                                        <p>There is no receive request.</p>
+                                    <?php
+                                    }
                                 ?>
-                                <tbody>
-                                    <tr>
-                                        <td width="5%"><?php echo $counter; ?></td>
-                                        <td width="40%"><?php echo $receive['name']; ?></td>
-                                        <td width="15%"><?php echo $receive['datetime']; ?></td>
-                                        <td width="15%"><?php echo $receive['order_code']; ?></td>
-                                        <td width="10%"><?php echo $receive['status']; ?></td>
-                                        <td width="15%"><a href="deletereceive.php?rr_id=<?php echo $receive['rr_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no receive request.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -133,7 +124,6 @@ $receiveslist = $receiveslistQuery->rowCount() ? $receiveslistQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="received">
-                            <?php if(!empty($receiveslist)): ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
@@ -144,25 +134,31 @@ $receiveslist = $receiveslistQuery->rowCount() ? $receiveslistQuery : [];
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($receiveslist as $receives): 
-                                {
-                                    $counters++;
-                                }
+                                <?php 
+                                    if(mysqli_num_rows($result1) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            $counters++;
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $counters; ?></td>
+                                                    <td width="40%"><?php echo $row['name']; ?></td>
+                                                    <td width="20%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="20%"><?php echo $row['order_code']; ?></td>
+                                                    <td width="15%"><?php echo $row['status']; ?></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                    ?>
+                                        <p>There is no received items.</p>
+                                    <?php
+                                    }
                                 ?>
-                                <tbody>
-                                    <tr>
-                                        <td width="5%"><?php echo $counters; ?></td>
-                                        <td width="40%"><?php echo $receives['name']; ?></td>
-                                        <td width="20%"><?php echo $receives['datetime']; ?></td>
-                                        <td width="20%"><?php echo $receives['order_code']; ?></td>
-                                        <td width="15%"><?php echo $receives['status']; ?></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no received item.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

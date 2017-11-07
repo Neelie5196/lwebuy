@@ -9,22 +9,15 @@ $totalweight = $_POST['totalweight'];
 $query = "SELECT * FROM address WHERE user_id = '$user_id'";
 $result = mysqli_query($con, $query);
 
-$slotitemQuery = $db->prepare("
-
-    SELECT *
-    FROM item
-    WHERE i_id IN (".implode(',',$item).")
-
-");
-
-$slotitemQuery->execute();
-
-$slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
+$query2 = "SELECT *
+           FROM item
+           WHERE i_id IN (".implode(',',$item).")";
+$result2 = mysqli_query($con, $query2);
 
 $query1 = "SELECT * 
           FROM shipping_price";
-$result1 = mysql_query($query1);
-$results1 = mysql_fetch_assoc($result1);
+$result1 = mysqli_query($con, $query1);
+$results1 = mysqli_fetch_assoc($result1);
 
 ?>
 
@@ -87,7 +80,7 @@ $results1 = mysql_fetch_assoc($result1);
                                                     <?php echo $row["postcode"]; ?>, <?php echo $row["city"]; ?>,<br/>
                                                     <?php echo $row["state"]; ?>, <?php echo $row["country"]; ?><br/>
                                                 </h5>
-                                                <input type="checkbox" value="<?php echo $row["a_id"]; ?>" name="address[]">
+                                                <input type="checkbox" value="<?php echo $row["a_id"]; ?>" name="address">
                                             </div>
                                         </div>
                                     <?php
@@ -131,7 +124,6 @@ $results1 = mysql_fetch_assoc($result1);
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($slotitem)): ?>
                             <table class="table thead-bordered table-hover">
                                 <thead>
                                     <tr>
@@ -140,23 +132,31 @@ $results1 = mysql_fetch_assoc($result1);
                                         <th width="33%">Weight (KG)</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($slotitem as $slot): 
-                                    $counter++;
+                                <?php 
+                                    if(mysqli_num_rows($result2) > 0)
+                                    {
+                                        while($row = mysqli_fetch_array($result2))
+                                        {
+                                            $counter++;
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <input type="hidden" value="<?php echo $counter; ?>" name="counter"/>
+                                                    <input type="hidden" name="i_id[]" class="form-control" value="<?php echo $row['i_id']; ?>">
+                                                    <td><?php echo $counter; ?></td>
+                                                    <td><?php echo $row['name']; ?></td>
+                                                    <td><?php echo $row['weight']; ?></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                    ?>
+                                        <p>There is no item in warehouse.</p>
+                                    <?php
+                                    }
                                 ?>
-                                <tbody>
-                                    <tr>
-                                        <input type="hidden" value="<?php echo $counter; ?>" name="counter"/>
-                                        <input type="hidden" name="i_id[]" class="form-control" value="<?php echo $slot['i_id']; ?>">
-                                        <td><?php echo $counter; ?></td>
-                                        <td><?php echo $slot['name']; ?></td>
-                                        <td><?php echo $slot['weight']; ?></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no item ready to ship</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="row">
@@ -260,26 +260,4 @@ $results1 = mysql_fetch_assoc($result1);
             </div>
         </div>
     </body>
-    <script>
-        /*Validate*/
-        function val(){
-            var address = document.getElementsByName('address[]');
-            var hasChecked = false;
-            
-            for (var i = 0; i < address.length; i++)
-            {
-                if (address[i].checked)
-                {
-                    hasChecked = true;
-                    break;
-                }
-            }
-            if (hasChecked == false)
-            {
-                alert("Please select an address");
-                return false;
-            }
-            return true;
-        }
-    </script>
 </html>

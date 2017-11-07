@@ -3,9 +3,9 @@
 require_once '../connection/config.php';
 session_start();
 
-$result = mysql_query('SELECT ol_id FROM order_list ORDER BY ol_id DESC LIMIT 1;');
-if (mysql_num_rows($result) > 0) {
-   $max_public_id = mysql_fetch_row($result);
+$result = mysqli_query($con, 'SELECT ol_id FROM order_list ORDER BY ol_id DESC LIMIT 1;');
+if (mysqli_num_rows($result) > 0) {
+   $max_public_id = mysqli_fetch_row($result);
    $orderid = $max_public_id[0]+1;
 }else
 {

@@ -1,17 +1,13 @@
 <?php
 require_once '../connection/config.php';
 session_start();
-$pointlistQuery = $db->prepare("
-    SELECT *
+$user_id = $_SESSION['user_id'];
+
+$query = "SELECT *
     FROM point
-    WHERE user_id=:user_id
-");
-
-$pointlistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$pointlist = $pointlistQuery->rowCount() ? $pointlistQuery : [];
+    WHERE user_id= '$user_id'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
 ?>
 <!doctype html>
@@ -35,19 +31,15 @@ $pointlist = $pointlistQuery->rowCount() ? $pointlistQuery : [];
             </div>
 		<div class="container" style="width:60%;">
 		<div class="table">
-		<table ="table table-bordered">
-			<?php foreach($pointlist as $row):
-							{                             
-							}?>
+		<table class="table table-bordered">
 			<div class="row">
                      <div class="col-md-12">
 					<div style="border: 1px solid #eaeaec; margin: -1px 19px 3px -1px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding:10px;" align="center">
 					<h5 class="text-danger">Current Point:</h5>
-					<h5 class="text-info"><?php echo $row['point']; ?></h5>
+					<h5 class="text-info"><?php echo $results['point']; ?></h5>
 					</div>
 			</div>
 			</div>
-			<?php endforeach; ?>
     </table>
 	</div>
 	<hr>

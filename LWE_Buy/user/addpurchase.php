@@ -11,7 +11,7 @@
         $status = "Request";
 
         $sql = "INSERT INTO order_list (ol_id, user_id, status, datetime) VALUES ('$order_id','$user_id','$status',NOW())";
-        mysql_query($sql);
+        mysqli_query($con, $sql);
 
 
         $s = "INSERT INTO order_item (order_id, name, link, type, unit, remark) values";
@@ -20,7 +20,7 @@
 
         }
         $s = rtrim($s,",");
-        mysql_query($s);
+        mysqli_query($con, $s);
         ?>
         <script>
         alert('Success to Submit');

@@ -12,7 +12,7 @@
 
         }
         $s = rtrim($s,",");
-        mysql_query($s);
+        mysqli_query($con, $s);
         ?>
         <script>
         alert('Success to Submit');

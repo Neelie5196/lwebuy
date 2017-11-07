@@ -2,12 +2,13 @@
 
 require_once '../connection/config.php';
 session_start();
+$user_id = $_SESSION['user_id'];
 
 $query = "SELECT * 
           FROM adjust
           WHERE name = 'point'";
-$result = mysql_query($query);
-$results = mysql_fetch_assoc($result);
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
 ?>
 
@@ -56,39 +57,28 @@ $results = mysql_fetch_assoc($result);
 
                                             <p>
                                             <?php
-                                                $purchasesettingQuery = $db->prepare("SELECT status FROM order_list WHERE user_id=:user_id");
-
-                                                $purchasesettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $purchasesetting = $purchasesettingQuery->rowCount() ? $purchasesettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($purchasesetting))
+                                                $query1 = "SELECT status FROM order_list WHERE user_id='$user_id'";
+                                                $result1 = mysqli_query($con, $query1);
+                                                $count1 = 0;
+                                                if(mysqli_num_rows($result1) > 0)
                                                 {
-                                                    foreach($purchasesetting as $purchase)
+                                                    while($row = mysqli_fetch_array($result1))
                                                     {
-                                                        if ($purchase['status']=="Request")
+                                                        if ($row['status']=="Request")
                                                         {
-                                                            $count += 1;
+                                                            $count1 += 1;
                                                         }
                                                         else
                                                         {
-                                                            $count = $count;
+                                                            $count1 = $count1;
                                                         }
                                                     }
-                                                echo $count;
+                                                    echo $count1;
+                                                }else{
+                                                    echo '<p>0</p>';
+                                                }
                                             ?>
                                             </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>0</p>
-
-                                            <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -100,35 +90,28 @@ $results = mysql_fetch_assoc($result);
                                             
                                             <p>
                                             <?php
-                                                $purchasesettingQuery = $db->prepare("SELECT status FROM order_list WHERE user_id=:user_id");
-
-                                                $purchasesettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $purchasesetting = $purchasesettingQuery->rowCount() ? $purchasesettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($purchasesetting))
+                                                $query2 = "SELECT status FROM order_list WHERE user_id='$user_id'";
+                                                $result2 = mysqli_query($con, $query2);
+                                                $count2 = 0;
+                                                if(mysqli_num_rows($result2) > 0)
                                                 {
-                                                    foreach($purchasesetting as $purchase)
+                                                    while($row = mysqli_fetch_array($result2))
                                                     {
-                                                        if ($purchase['status']=="Ready to Pay")
+                                                        if ($row['status']=="Ready to pay")
                                                         {
-                                                            $count += 1;
+                                                            $count2 += 1;
+                                                        }
+                                                        else
+                                                        {
+                                                            $count2 = $count2;
                                                         }
                                                     }
-                                                echo $count;
+                                                    echo $count2;
+                                                }else{
+                                                    echo '<p>0</p>';
+                                                }
                                             ?>
                                             </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>0</p>
-
-                                            <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -140,35 +123,28 @@ $results = mysql_fetch_assoc($result);
                                             
                                             <p>
                                             <?php
-                                                $purchasesettingQuery = $db->prepare("SELECT status FROM order_list WHERE user_id=:user_id");
-
-                                                $purchasesettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $purchasesetting = $purchasesettingQuery->rowCount() ? $purchasesettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($purchasesetting))
+                                                $query3 = "SELECT status FROM order_list WHERE user_id='$user_id'";
+                                                $result3 = mysqli_query($con, $query3);
+                                                $count3 = 0;
+                                                if(mysqli_num_rows($result3) > 0)
                                                 {
-                                                    foreach($purchasesetting as $purchase)
+                                                    while($row = mysqli_fetch_array($result3))
                                                     {
-                                                        if ($purchase['status']=="Paid")
+                                                        if ($row['status']=="Paid")
                                                         {
-                                                            $count += 1;
+                                                            $count3 += 1;
+                                                        }
+                                                        else
+                                                        {
+                                                            $count3 = $count3;
                                                         }
                                                     }
-                                                echo $count;
+                                                    echo $count3;
+                                                }else{
+                                                    echo '<p>0</p>';
+                                                }
                                             ?>
                                             </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>0</p>
-
-                                            <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -180,35 +156,28 @@ $results = mysql_fetch_assoc($result);
                                             
                                             <p>
                                             <?php
-                                                $purchasesettingQuery = $db->prepare("SELECT * FROM slot sl JOIN item it ON sl.s_id = it.s_id WHERE user_id=:user_id");
-
-                                                $purchasesettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $purchasesetting = $purchasesettingQuery->rowCount() ? $purchasesettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($purchasesetting))
+                                                $query4 = "SELECT * FROM slot sl JOIN item it ON sl.s_id = it.s_id WHERE user_id='$user_id'";
+                                                $result4 = mysqli_query($con, $query4);
+                                                $count4 = 0;
+                                                if(mysqli_num_rows($result4) > 0)
                                                 {
-                                                    foreach($purchasesetting as $purchase)
+                                                    while($row = mysqli_fetch_array($result4))
                                                     {
-                                                        if ($purchase['action']=="In")
+                                                        if ($row['action']=="In")
                                                         {
-                                                            $count += 1;
+                                                            $count4 += 1;
+                                                        }
+                                                        else
+                                                        {
+                                                            $count4 = $count4;
                                                         }
                                                     }
-                                                echo $count;
+                                                    echo $count4;
+                                                }else{
+                                                    echo '<p>0</p>';
+                                                }
                                             ?>
                                             </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>0</p>
-
-                                            <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -234,39 +203,28 @@ $results = mysql_fetch_assoc($result);
                                             
                                             <p>
                                             <?php
-                                                $shippingsettingQuery = $db->prepare("SELECT status FROM shipping WHERE user_id=:user_id");
-
-                                                $shippingsettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $shippingsetting = $shippingsettingQuery->rowCount() ? $shippingsettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($shippingsetting))
+                                                $query5 = "SELECT status FROM shipping WHERE user_id='$user_id'";
+                                                $result5 = mysqli_query($con, $query5);
+                                                $count5 = 0;
+                                                if(mysqli_num_rows($result5) > 0)
                                                 {
-                                                    foreach($shippingsetting as $shipping)
+                                                    while($row = mysqli_fetch_array($result5))
                                                     {
-                                                        if ($shipping['status']=="pending")
+                                                        if ($row['status']=="Request")
                                                         {
-                                                            $count += 1;
+                                                            $count5 += 1;
                                                         }
                                                         else
                                                         {
-                                                            $count = $count;
+                                                            $count5 = $count5;
                                                         }
                                                     }
-                                                echo $count;
+                                                    echo $count5;
+                                                }else{
+                                                    echo '<p>0</p>';
+                                                }
                                             ?>
                                             </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>0</p>
-
-                                            <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -278,39 +236,28 @@ $results = mysql_fetch_assoc($result);
                                             
                                             <p>
                                             <?php
-                                                $shippingsettingQuery = $db->prepare("SELECT status FROM shipping WHERE user_id=:user_id");
-
-                                                $shippingsettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $shippingsetting = $shippingsettingQuery->rowCount() ? $shippingsettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($shippingsetting))
+                                                $query6 = "SELECT status FROM shipping WHERE user_id='$user_id'";
+                                                $result6 = mysqli_query($con, $query5);
+                                                $count6 = 0;
+                                                if(mysqli_num_rows($result6) > 0)
                                                 {
-                                                    foreach($shippingsetting as $shipping)
+                                                    while($row = mysqli_fetch_array($result6))
                                                     {
-                                                        if ($shipping['status']=="approved")
+                                                        if ($row['status']=="Pending Payment")
                                                         {
-                                                            $count += 1;
+                                                            $count6 += 1;
                                                         }
                                                         else
                                                         {
-                                                            $count = $count;
+                                                            $count6 = $count6;
                                                         }
                                                     }
-                                                echo $count;
+                                                    echo $count6;
+                                                }else{
+                                                    echo '<p>0</p>';
+                                                }
                                             ?>
                                             </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>0</p>
-
-                                            <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -322,39 +269,28 @@ $results = mysql_fetch_assoc($result);
                                             
                                             <p>
                                             <?php
-                                                $shippingsettingQuery = $db->prepare("SELECT status FROM shipping WHERE user_id=:user_id");
-
-                                                $shippingsettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $shippingsetting = $shippingsettingQuery->rowCount() ? $shippingsettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($shippingsetting))
+                                                $query7 = "SELECT status FROM shipping WHERE user_id='$user_id'";
+                                                $result7 = mysqli_query($con, $query7);
+                                                $count7 = 0;
+                                                if(mysqli_num_rows($result7) > 0)
                                                 {
-                                                    foreach($shippingsetting as $shipping)
+                                                    while($row = mysqli_fetch_array($result7))
                                                     {
-                                                        if ($shipping['status']=="proceeded")
+                                                        if ($row['status']=="Proceed")
                                                         {
-                                                            $count += 1;
+                                                            $count7 += 1;
                                                         }
                                                         else
                                                         {
-                                                            $count = $count;
+                                                            $count7 = $count7;
                                                         }
                                                     }
-                                                echo $count;
-                                            ?>
-                                            </p>
-                                            
-                                            <?php
+                                                    echo $count7;
+                                                }else{
+                                                    echo '<p>0</p>';
                                                 }
-                                                else
-                                                {
                                             ?>
-
-                                            <p>0</p>
-
-                                            <?php }?>
+                                            </p>                                            
                                         </div>
                                     </div>
                                 </div>
@@ -362,43 +298,32 @@ $results = mysql_fetch_assoc($result);
                                 <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Pending response</p>
+                                            <p>Delivered Items</p>
                                             
                                             <p>
                                             <?php
-                                                $shippingsettingQuery = $db->prepare("SELECT status FROM shipping WHERE user_id=:user_id");
-
-                                                $shippingsettingQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                $shippingsetting = $shippingsettingQuery->rowCount() ? $shippingsettingQuery : [];
-            
-                                                $count = 0;
-                                                if(!empty($shippingsetting))
+                                                $query8 = "SELECT status FROM shipping WHERE user_id='$user_id'";
+                                                $result8 = mysqli_query($con, $query8);
+                                                $count8 = 0;
+                                                if(mysqli_num_rows($result8) > 0)
                                                 {
-                                                    foreach($shippingsetting as $shipping)
+                                                    while($row = mysqli_fetch_array($result8))
                                                     {
-                                                        if ($shipping['status']=="arrived")
+                                                        if ($row['status']=="Delivered")
                                                         {
-                                                            $count += 1;
+                                                            $count8 += 1;
                                                         }
                                                         else
                                                         {
-                                                            $count = $count;
+                                                            $count8 = $count8;
                                                         }
                                                     }
-                                                echo $count;
+                                                    echo $count8;
+                                                }else{
+                                                    echo '<p>0</p>';
+                                                }
                                             ?>
                                             </p>
-                                            
-                                            <?php
-                                                }
-                                                else
-                                                {
-                                            ?>
-
-                                            <p>0</p>
-
-                                            <?php }?>
                                         </div>
                                     </div>
                                 </div>
@@ -418,28 +343,18 @@ $results = mysql_fetch_assoc($result);
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-12 udashrow1box1">
                                     <?php
-                                        $pointbalanceQuery = $db->prepare("SELECT * FROM point WHERE user_id=:user_id");
-
-                                        $pointbalanceQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                        $pointbalance = $pointbalanceQuery->rowCount() ? $pointbalanceQuery : [];
-                                        
-                                        if(!empty($pointbalance)):
-                                            foreach($pointbalance as $point):
-                                    ?>
+                                        $query9 = "SELECT * FROM point WHERE user_id='$user_id'";
+                                        $result9 = mysqli_query($con, $query9);
+                                        $results9 = mysqli_fetch_assoc($result9);
                                     
-                                    <p><?php echo $point['point']; ?></p>
-                                    
-                                    <?php
-                                        endforeach;
-                                        
-                                        else:
-                                    ?>
-
-                                    <p>0</p>
-                                    
-                                    <?php endif; ?>
-                                    
+                                        if($results9 > 0){
+                                            ?>
+                                                <p><?php echo $results9['point']; ?></p>
+                                            <?php
+                                        }else{
+                                            echo '<p>0</p>';
+                                        }
+                                    ?>                                    
                                     <p>
                                         <button type="button" class="btn btn-default btntopup" data-toggle="modal" data-target="#topupModal">Top up</button>
                                     </p>

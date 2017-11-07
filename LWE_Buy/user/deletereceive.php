@@ -7,7 +7,7 @@ if (isset($_GET['rr_id']))
 {
     $rr_id = $_GET['rr_id'];
 
-    $result = mysql_query("DELETE FROM receive_request WHERE rr_id=$rr_id") or die(mysql_error());
+    $result = mysqli_query($con, "DELETE FROM receive_request WHERE rr_id=$rr_id") or die(mysqli_error($con));
     ?>
 		<script>
 		alert('Successfully Delete');

@@ -2,12 +2,13 @@
 
 require_once '../connection/config.php';
 session_start();
+$user_id = $_SESSION['user_id'];
 
 $query = "SELECT * 
           FROM adjust
           WHERE name = 'point'";
-$result = mysql_query($query);
-$results = mysql_fetch_assoc($result);
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
 ?>
 
@@ -63,7 +64,7 @@ $results = mysql_fetch_assoc($result);
         <section class = "content">
             <div class="container">
                 <div class="row">
-                    <center>
+                    <center style="padding-bottom: 15px;">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <div class="row">
                                 <div class="col-xs-12 col-md-6 col-lg-6">
@@ -102,23 +103,19 @@ $results = mysql_fetch_assoc($result);
                                             <div class="col-xs-12 col-md-12 col-lg-12">
                                                 <div class="details">
                                                     <?php
-                                                        $pointbalanceQuery = $db->prepare("SELECT * FROM point WHERE user_id=:user_id");
+                                                        $query9 = "SELECT * FROM point WHERE user_id='$user_id'";
+                                                        $result9 = mysqli_query($con, $query9);
+                                                        $results9 = mysqli_fetch_assoc($result9);
 
-                                                        $pointbalanceQuery->execute(['user_id' => $_SESSION['user_id']]);
-
-                                                        $pointbalance = $pointbalanceQuery->rowCount() ? $pointbalanceQuery : [];
-
-                                                        if(!empty($pointbalance)):
-                                                            foreach($pointbalance as $point):
+                                                        if($results9 > 0){
+                                                            ?>
+                                                                <input type="hidden" name="point" class="form-control" value="<?php echo $results9['point']; ?>">
+                                                                <p>LWE point: <?php echo $results9['point']; ?></p>
+                                                            <?php
+                                                        }else{
+                                                            echo '<p>0</p>';
+                                                        }
                                                     ?>
-                                                        <input type="hidden" name="point" class="form-control" value="<?php echo $point['point']; ?>">
-                                                        <p>LWE point: <?php echo $point['point']; ?></p>
-                                                    <?php
-                                                        endforeach;
-                                                        else:
-                                                    ?>
-                                                        <p>0</p>
-                                                    <?php endif; ?>
                                                     <p><button type="button" class="btn btn-default btntopup" data-toggle="modal" data-target="#topupModal">Top Up</button></p>
                                                 </div>
                                             </div>

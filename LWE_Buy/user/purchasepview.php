@@ -2,20 +2,13 @@
 
 require_once '../connection/config.php';
 session_start();
-$_SESSION['order_id'] = $_GET['order_id'];
+$order_id = $_GET['order_id'];
 $counter = 0; 
 
-$purchaseitemQuery = $db->prepare("
-    SELECT *
-    FROM order_item
-    WHERE order_id=:order_id
-");
-
-$purchaseitemQuery->execute([
-    'order_id' => $_SESSION['order_id']
-]);
-
-$purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
+$query = "SELECT *
+          FROM order_item
+          WHERE order_id='$order_id'";
+$result = mysqli_query($con, $query);
 
 ?>
 
@@ -48,7 +41,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
             </div>
             
             <div class="container">
-                <h2>Order# <?php echo $_SESSION['order_id']; ?></h2>
+                <h2>Order# <?php echo $order_id; ?></h2>
                 <hr/>
                 <img src="../resources/timeline/payments.PNG" alt="timeline" width="600px"/>
             </div>
@@ -58,8 +51,7 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                     <div class="row">
                         <form action="payment.php" method="post">
                             <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                                <?php if(!empty($purchaseitem)): ?>
-                                <table class="table thead-bordered table-hover purchaseitem" style="width:100%">
+                                <table class="table thead-bordered table-hover" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -71,53 +63,59 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
                                             <th>Price (RM)</th>
                                         </tr>
                                     </thead>
-                                    <?php foreach($purchaseitem as $purchase): 
-                                    {
-                                        $counter++;
-                                    }
-                                    ?>
-                                    <tbody class="purchase">
-                                        <tr>
-                                            <td width="5%"><?php echo $counter; ?></td>
-                                            <td width="20%"><?php echo $purchase['name']; ?></td>
-                                            <td width="20%"><a href="<?php echo $purchase['link']; ?>" target="_blank"><?php echo $purchase['link']; ?></a></td>
-                                            <td width="5%"><?php echo $purchase['type']; ?></td>
-                                            <td width="5%"><?php echo $purchase['unit']; ?></td>
-                                            <td width="20%"><?php echo $purchase['remark']; ?></td>
-                                            <td width="10%"><?php echo $purchase['price']; ?></td>
-                                            <td width="15%">
-                                                <a href="delete1.php?order_id=<?php echo $_SESSION['order_id']; ?>&oi_id=<?php echo $purchase['oi_id']; ?>&price=<?php echo $purchase['price']; ?>" class="btn btn-xs btn-danger delete-button">Delete</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <?php endforeach; ?>
+                                    <?php 
+                                        if(mysqli_num_rows($result) > 0)
+                                        {
+                                            while($row = mysqli_fetch_array($result))
+                                            {
+                                                $counter++;
+                                                ?>
+                                                <tbody class="purchase">
+                                                    <tr>
+                                                        <td width="5%"><?php echo $counter; ?></td>
+                                                        <td width="20%"><?php echo $row['name']; ?></td>
+                                                        <td width="20%"><a href="<?php echo $row['link']; ?>" target="_blank"><?php echo $row['link']; ?></a></td>
+                                                        <td width="5%"><?php echo $row['type']; ?></td>
+                                                        <td width="5%"><?php echo $row['unit']; ?></td>
+                                                        <td width="20%"><?php echo $row['remark']; ?></td>
+                                                        <td width="10%"><?php echo $row['price']; ?></td>
+                                                        <td width="15%">
+                                                            <a href="delete1.php?order_id=<?php echo $order_id; ?>&oi_id=<?php echo $row['oi_id']; ?>&price=<?php echo $row['price']; ?>" class="btn btn-xs btn-danger delete-button">Delete</a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <?php
+                                            }
+                                        }else{
+                                            if(isset($order_id)){
+                                                $order_id = $order_id;
+
+                                                $result = mysqli_query($con, "DELETE FROM order_list WHERE ol_id=$order_id") or die(mysql_error());
+                                                ?>
+                                                    <script>
+                                                        window.location.href='purchaselist.php';
+                                                    </script>
+                                                <?php
+                                            }
+                                        }
+                                    ?>                        
                                 </table>
-                                <?php else: 
-
-                                    if(isset($_GET['order_id'])){
-                                        $order_id = $_GET['order_id'];
-
-                                        $result = mysql_query("DELETE FROM order_list WHERE ol_id=$order_id") or die(mysql_error());
-
-                                    }
-                                    header("location: purchaselist.php");
-                                ?>
-                                <?php endif; ?>
                                 <?php
-                                    $order = $_SESSION['order_id'];
-                                    $result = mysql_query("SELECT sum(price) FROM order_item WHERE order_id= $order") or die(mysql_error());
-                                    while ($rows = mysql_fetch_array($result)) {
+                                    $query2 = "SELECT sum(price) FROM order_item WHERE order_id= '$order_id'";
+                                    $result2 = mysqli_query($con, $query2);
+                                    $results2 = mysqli_fetch_assoc($result2);
+                                
+                                    if($results2 > 1){
                                 ?>
-
-                                <h2 style="text-align: right; padding-right: 150px;" name="total"><small>RM</small> <?php echo $rows['sum(price)']; ?></h2>
+                                <h2 style="text-align: right; padding-right: 150px;" name="total"><small>RM</small> <?php echo $results2['sum(price)']; ?></h2>
                                 <small style="float: right; padding-right: 150px;">*Price not include shipping charge</small>
-                                <input type="hidden" name="pricetotal" value="<?php echo $rows['sum(price)']; ?>">
+                                <input type="hidden" name="pricetotal" value="<?php echo $results2['sum(price)']; ?>">
                                 <?php
                                     }
                                 ?>
-                                <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
+                                <input type="hidden" name="order_id" value="<?php echo $order_id; ?>">
                             </div>
-                            <a href="purchaselist.php" class="btn btn-default" name="back">Back</a>
+                            <a href="javascript:history.go(-1)" class="btn btn-default" name="back">Back</a>
 
                             <input type="submit" class="btn btn-success" value="Pay Now">
                         </form>
