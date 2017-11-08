@@ -15,7 +15,7 @@
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shipping <span class="caret"></span></a>
                 <ul class="dropdown-menu menuitem">
                     <li><a href="shippinglist.php">Shipping List</a></li>
-                    <li><a href="updateshipping.php">Update Shipping</a></li>
+                    <li><a href="updateshipping.php?tracking_code=<?php echo '' ?>">Update Shipping</a></li>
                 </ul>
             </li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Warehouse <span class="caret"></span></a>

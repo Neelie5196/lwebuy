@@ -135,10 +135,11 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                             }
                                             ?>
                                         </td>
-                                        <td width="15%"><?php echo $ns['datetime']; ?></td>
-                                        <td width="10%">
+                                        <td width="10%"><?php echo $ns['datetime']; ?></td>
+                                        <td width="15%">
                                             <a href="tag.php?s_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">Print tag</a>
                                             <a href="shippinglrview.php?shipping_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">View</a>
+                                            <a href="updateshipping.php?tracking_code=<?php echo $ns['tracking_code']; ?>" class="btn btn-xs btn-info">Update</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -182,7 +183,11 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                         <td width="40%"><?php echo $s['fname']; ?> <?php echo $s['lname']; ?></td>
                                         <td width="15%"><?php echo $s['datetime']; ?></td>
                                         <td width="10%"><?php echo $s['status']; ?></td>
-                                        <td width="5"><a href="shippinglpview.php?shipping_id=<?php echo $s['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-info">View</a></td>
+                                        <td width="5">
+                                            <a href="tag.php?s_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">Reprint tag</a>
+                                            <a href="shippinglpview.php?shipping_id=<?php echo $s['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-info">View</a>
+                                            <a href="updateshipping.php?tracking_code=<?php echo $ns['tracking_code']; ?>" class="btn btn-xs btn-info">Update</a>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>

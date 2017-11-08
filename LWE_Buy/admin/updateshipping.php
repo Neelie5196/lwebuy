@@ -3,6 +3,8 @@
 require_once '../connection/config.php';
 session_start();
 
+$tracking_code = $_GET['tracking_code'];
+
 $workstQuery = $db->prepare("
     SELECT *
     FROM warehouse wh
@@ -22,6 +24,17 @@ $getstationsQuery->execute();
 
 $getstations = $getstationsQuery->rowCount() ? $getstationsQuery : [];
 
+$getaddressQuery = $db->prepare("
+    SELECT *
+    FROM shipping sh
+    JOIN address ad
+    ON ad.a_id = sh.a_id
+");
+
+$getaddressQuery->execute();
+
+$getaddress = $getaddressQuery->rowCount() ? $getaddressQuery : [];
+                                                
 if (isset($_POST['updateshipping'])) 
 {
     $trackcode = $_POST['trackcode'];
@@ -406,27 +419,59 @@ if (isset($_POST['updateshipping']))
                                 </td>
                             </tr>
                             
-                            <tr ng-show="register || arrive">
+                            <tr ng-show="arrive">
                                 <td class="lblUpdate">More event details: </td>
                                 <td class="inputUpdate" ng-show="arrive">
                                     <input type="radio" name="eventMore" value="aiport" /> Airport&nbsp;
                                     <input type="radio" name="eventMore" value="station" /> Station&nbsp;
                                 </td>
-                                
-                                <td class="inputUpdate" ng-show="register">
+                            </tr>
+                            
+                            <tr ng-show="register">
+                                <td class="lblUpdate">Destination station: </td>
+                                <td class="inputUpdate">
                                     <select name="desStation">
                                         <?php
-                                            if(!empty($getstations))
+                                            if($tracking_code != '')
                                             {
-                                                foreach($getstations as $gs)
+                                                if(!empty($getaddress))
                                                 {
+                                                    foreach($getaddress as $ga)
+                                                    {
+                                                        if($ga['tracking_code'] == $tracking_code)
+                                                        {
+                                                            $desCountry = $ga['country'];
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                if(!empty($getstations))
+                                                {
+                                                    foreach($getstations as $gs)
+                                                    {
+                                                        if($gs['country_description'] == $desCountry)
+                                                        {
                                         ?>
                                         <option value="<?php echo $gs['station_description']; ?>"><?php echo $gs['station_description']; ?></option>
-                                        
                                         <?php
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if(!empty($getstations))
+                                                {
+                                                    foreach($getstations as $gs)
+                                                    {
+                                        ?>
+                                        <option value="<?php echo $gs['station_description']; ?>"><?php echo $gs['station_description']; ?></option>
+                                        <?php
+                                                    }
                                                 }
                                             }
                                         ?>
+                                        
                                     </select>
                                 </td>
                             </tr>
@@ -442,8 +487,8 @@ if (isset($_POST['updateshipping']))
                             </tr>
                             
                             <tr>
-                                <td><label for="trackcode">Tracking code: </label></td> 
-                                <td class="inputUpdate textUpdate"><input type="text" name="trackcode" id="trackcode"/></td>                             
+                                <td><label for="trackcode">Tracking code: </label></td>
+                                <td class="inputUpdate textUpdate"><input type="text" name="trackcode" id="trackcode" value="<?php echo $tracking_code; ?>" /></td>    
                             </tr>
                         </table>
                         
