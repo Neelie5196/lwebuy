@@ -3,17 +3,14 @@
 require_once '../connection/config.php';
 session_start();
 
-$packageinfoQuery = $db->prepare("
-    SELECT *
-    FROM package
-    WHERE id=:user_id
-");
+$package = $_GET['users'];
 
-$packageinfoQuery->execute([
-    'user_id' => $_GET['users']
-]);
+$query = "SELECT *
+            FROM package
+            WHERE id='$package'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
-$packageinfo = $packageinfoQuery->rowCount() ? $packageinfoQuery : [];
 ?>
 
 <!DOCTYPE html>
@@ -53,42 +50,32 @@ $packageinfo = $packageinfoQuery->rowCount() ? $packageinfoQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                         <form action="updatepackage.php" method="post">
-                            <?php 
-                                if(!empty($packageinfo)): 
-                                    foreach($packageinfo as $package):
-                            ?>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <label>Package Name</label>
-                                                </div>
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <input type="text" name="pname" class="form-control" value="<?php echo $package['name'] ?>" style="border-radius: 30px; float: left;" required>
-                                                </div>
-                                            </div>
+                                            <label>Package Name</label>
                                         </div>
-                                     </div>
-                                     <br>
-                                     <div class ="row">
                                         <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <label>Package Price</label>
-                                                </div>
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <input type="hidden" name="p_id" value="<?php echo $package['id'] ?>">
-                                                    <input type="text" name="pprice" class="form-control" value="<?php echo $package['price'] ?>" style="border-radius: 30px; float: left;" required>
-                                                </div>
-                                            </div>
+                                            <input type="text" name="pname" class="form-control" value="<?php echo $results['name'] ?>" style="border-radius: 30px; float: left;" required>
                                         </div>
                                     </div>
-                            <?php 
-                                    endforeach;
-                                else:
-                            ?>
-                                <p>Error.</p>
-                            <?php endif; ?>
+                                </div>
+                             </div>
+                             <br>
+                             <div class ="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <label>Package Price</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <input type="hidden" name="p_id" value="<?php echo $results['id'] ?>">
+                                            <input type="text" name="pprice" class="form-control" value="<?php echo $results['price'] ?>" style="border-radius: 30px; float: left;" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <br/>
                             <input type="submit" class="btn btn-success" value="Update">
                         </form>

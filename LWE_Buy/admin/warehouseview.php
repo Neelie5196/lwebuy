@@ -3,21 +3,14 @@
 require_once '../connection/config.php';
 session_start();
 $counter = 0; 
+$wh_id = $_GET['wh_id'];
 
-$wsinfoQuery = $db->prepare("
-    SELECT *
-    FROM users us
-    JOIN work_station ws
-    ON ws.user_id = us.user_id
-    WHERE wh_id=:wh_id
-    
-");
-
-$wsinfoQuery->execute([
-    'wh_id' => $_GET['wh_id']
-]);
-
-$wsinfo = $wsinfoQuery->rowCount() ? $wsinfoQuery : [];
+$query1 = "SELECT *
+            FROM users us
+            JOIN work_station ws
+            ON ws.user_id = us.user_id
+            WHERE wh_id='$wh_id'";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -61,8 +54,11 @@ $wsinfo = $wsinfoQuery->rowCount() ? $wsinfoQuery : [];
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($wsinfo)): ?>
-                            <table class="table thead-bordered table-hover">
+                            <?php 
+                            if(mysqli_num_rows($result1) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered table-hover" id="receive">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -72,26 +68,29 @@ $wsinfo = $wsinfoQuery->rowCount() ? $wsinfoQuery : [];
                                         <th>Contact</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($wsinfo as $ws): 
-                                {
-                                    $counter++;
+                                <?php
+                                    while($row = mysqli_fetch_array($result1))
+                                    {
+                                        $counter++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td width="4%"><?php echo $counter; ?></td>
+                                                <td width="24%"><?php echo $row['fname']; ?></td>
+                                                <td width="24%"><?php echo $row['lname']; ?></td>
+                                                <td width="24%"><?php echo $row['email']; ?></td>
+                                                <td width="24%"><?php echo $row['contact']; ?></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>There is no admin/staff in this station.</p>
+                                    <?php
                                 }
-                                
-                                ?>
-                                <tbody>
-                                    <tr>
-                                        <td width="4%"><?php echo $counter; ?></td>
-                                        <td width="24%"><?php echo $ws['fname']; ?></td>
-                                        <td width="24%"><?php echo $ws['lname']; ?></td>
-                                        <td width="24%"><?php echo $ws['email']; ?></td>
-                                        <td width="24%"><?php echo $ws['contact']; ?></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
-                            </table>
-                            <?php else: ?>
-                                <p>There is no admin/staff in this station.</p>
-                            <?php endif; ?>      
+                            ?>
+                            </table>    
                         </div>
                     </div>
                     <center><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>

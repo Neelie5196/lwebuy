@@ -3,36 +3,21 @@
 require_once '../connection/config.php';
 session_start();
 
-$orderhistoryQuery = $db->prepare("
-    SELECT *
-    FROM order_list ol
-    JOIN users us
-    ON us.user_id = ol.user_id
-    WHERE status = 'proceed'
-    ORDER BY datetime desc
-");
+$query1 = "SELECT *
+            FROM order_list ol
+            JOIN users us
+            ON us.user_id = ol.user_id
+            WHERE status = 'proceed'
+            ORDER BY datetime desc";
+$result1 = mysqli_query($con, $query1);
 
-$orderhistoryQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
-
-$ordershistoryQuery = $db->prepare("
-    SELECT *
-    FROM order_list ol
-    JOIN users us
-    ON us.user_id = ol.user_id
-    WHERE status = 'received'
-    ORDER BY datetime desc
-");
-
-$ordershistoryQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
-
+$query2 = "SELECT *
+            FROM order_list ol
+            JOIN users us
+            ON us.user_id = ol.user_id
+            WHERE status = 'received'
+            ORDER BY datetime desc";
+$result2 = mysqli_query($con, $query2);
 
 ?>
 
@@ -79,33 +64,43 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse">
-                            <?php if(!empty($orderhistory)): ?>
-                            <table class="table thead-bordered table-hover orderhistory" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>Name</th>
-                                        <th>Placed on</th>
-                                        <th>Total (RM)</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <?php foreach($orderhistory as $order): ?>
-                                <tbody class="order">
-                                    <tr>
-                                        <td width="5%"><?php echo $order['ol_id']; ?></td>
-                                        <td width="40%"><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
-                                        <td width="15%"><?php echo $order['datetime']; ?></td>
-                                        <td width="15%"><?php echo $order['price']; ?></td>
-                                        <td width="10%"><?php echo $order['status']; ?></td>
-                                        <td width="15%"><a href="orderhview.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
+                            <?php 
+                                if(mysqli_num_rows($result1) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:80%">
+                                    <thead>
+                                        <tr>
+                                            <th>Order#</th>
+                                            <th>Name</th>
+                                            <th>Placed on</th>
+                                            <th>Total (RM)</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                    <td width="15%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="15%"><?php echo $row['price']; ?></td>
+                                                    <td width="10%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="orderhview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                            <p>There is no order in proceed.</p>
+                                        <?php
+                                    }
+                                ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no order histpry.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -123,33 +118,43 @@ $ordershistory = $ordershistoryQuery->rowCount() ? $ordershistoryQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse1">
-                            <?php if(!empty($ordershistory)): ?>
-                            <table class="table thead-bordered table-hover orderhistory" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>Name</th>
-                                        <th>Placed on</th>
-                                        <th>Total (RM)</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <?php foreach($ordershistory as $orders): ?>
-                                <tbody class="order">
-                                    <tr>
-                                        <td width="5%"><?php echo $orders['ol_id']; ?></td>
-                                        <td width="40%"><?php echo $orders['fname']; ?> <?php echo $orders['lname']; ?></td>
-                                        <td width="15%"><?php echo $orders['datetime']; ?></td>
-                                        <td width="15%"><?php echo $orders['price']; ?></td>
-                                        <td width="10%"><?php echo $orders['status']; ?></td>
-                                        <td width="15%"><a href="orderhview.php?order_id=<?php echo $orders['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
+                            <?php 
+                                if(mysqli_num_rows($result2) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:80%">
+                                    <thead>
+                                        <tr>
+                                            <th>Order#</th>
+                                            <th>Name</th>
+                                            <th>Placed on</th>
+                                            <th>Total (RM)</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result2))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                    <td width="15%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="15%"><?php echo $row['price']; ?></td>
+                                                    <td width="10%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="orderhview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                            <p>There is no order history.</p>
+                                        <?php
+                                    }
+                                ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no order histpry.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

@@ -3,20 +3,13 @@
 require_once '../connection/config.php';
 session_start();
 
-$orderrequestQuery = $db->prepare("
-    SELECT *
-    FROM order_list ol
-    JOIN users us
-    ON us.user_id = ol.user_id
-    WHERE status = 'request'
-    ORDER BY datetime desc
-");
-
-$orderrequestQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$orderrequest = $orderrequestQuery->rowCount() ? $orderrequestQuery : [];
+$query1 = "SELECT *
+           FROM order_list ol
+           JOIN users us
+           ON us.user_id = ol.user_id
+           WHERE status = 'request'
+           ORDER BY datetime desc";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -61,31 +54,41 @@ $orderrequest = $orderrequestQuery->rowCount() ? $orderrequestQuery : [];
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <?php if(!empty($orderrequest)): ?>
-                        <table class="table thead-bordered table-hover" style="width:80%">
-                            <thead>
-                                <tr>
-                                    <th>Order#</th>
-                                    <th>Name</th>
-                                    <th>Placed on</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <?php foreach($orderrequest as $order): ?>
-                            <tbody>
-                                <tr>
-                                    <td width="5%"><?php echo $order['ol_id']; ?></td>
-                                    <td width="40%"><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
-                                    <td width="20%"><?php echo $order['datetime']; ?></td>
-                                    <td width="20%"><?php echo $order['status']; ?></td>
-                                    <td width="15%"><a href="orderview.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                </tr>
-                            </tbody>
-                            <?php endforeach; ?>
+                        <?php 
+                            if(mysqli_num_rows($result1) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered table-hover" style="width:80%">
+                                <thead>
+                                    <tr>
+                                        <th>Order#</th>
+                                        <th>Name</th>
+                                        <th>Placed on</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result1))
+                                    {
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                <td width="20%"><?php echo $row['datetime']; ?></td>
+                                                <td width="20%"><?php echo $row['status']; ?></td>
+                                                <td width="15%"><a href="orderview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>There is no order request.</p>
+                                    <?php
+                                }
+                            ?>
                         </table>
-                        <?php else: ?>
-                            <p>There is no order request.</p>
-                        <?php endif; ?>
                     </div>
                 </div>
             </section>

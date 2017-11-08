@@ -8,7 +8,7 @@ if (isset($_GET['user_id']))
 {
     $id = $_GET['user_id'];
 
-    $result = mysql_query("DELETE FROM package WHERE id=$id") or die(mysql_error());
+    $result = mysqli_query($con, "DELETE FROM package WHERE id=$id") or die(mysqli_error($con));
     ?>
 		<script>
 		alert('Successfully Delete');

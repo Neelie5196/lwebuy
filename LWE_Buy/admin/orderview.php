@@ -2,20 +2,13 @@
 
 require_once '../connection/config.php';
 session_start();
-$_SESSION['order_id'] = $_GET['order_id'];
+$order_id = $_GET['order_id'];
 $counter = 0; 
 
-$purchaseitemQuery = $db->prepare("
-    SELECT *
-    FROM order_item
-    WHERE order_id=:order_id
-");
-
-$purchaseitemQuery->execute([
-    'order_id' => $_SESSION['order_id']
-]);
-
-$purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
+$query1 = "SELECT *
+           FROM order_item
+           WHERE order_id='$order_id'";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -50,71 +43,68 @@ $purchaseitem = $purchaseitemQuery->rowCount() ? $purchaseitemQuery : [];
             </div>
             
             <div class="container">
-                <h2>Order# <?php echo $_SESSION['order_id']; ?></h2>
+                <h2>Order# <?php echo $order_id; ?></h2>
                 <hr/>
             </div>
             <section class = "content">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($purchaseitem)): ?>
-                            <table class="table thead-bordered table-hover purchaseitem" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Link</th>
-                                        <th>Type</th>
-                                        <th>Unit</th>
-                                        <th>Remark</th>
-                                        <th>Price (RMB)</th>
-                                        <th>Price (RM)</th>
-                                    </tr>
-                                </thead>
-                                <?php foreach($purchaseitem as $purchase): 
+                            <?php 
+                                if(mysqli_num_rows($result1) > 0)
                                 {
-                                    $counter++;
-                                }
                                 ?>
-                                <form action="updateprice.php" method="post">
-                                    <tbody class="purchase">
+                                <table class="table thead-bordered table-hover">
+                                    <thead>
                                         <tr>
-                                            <td width="4%"><?php echo $counter; ?></td>
-                                            <td width="13%"><?php echo $purchase['name']; ?></td>
-                                            <td width="18%"><a href="<?php echo $purchase['link']; ?>" target="_blank"><?php echo $purchase['link']; ?></a></td>
-                                            <td width="6%"><?php echo $purchase['type']; ?></td>
-                                            <td width="6%"><?php echo $purchase['unit']; ?></td>
-                                            <td width="18%"><?php echo $purchase['remark']; ?></td>
-                                            <td width="9%"><input type="number" step="0.01" name="price" required/></td>
-                                            <td width="9%"><input type="text" name="myr" value="<?php echo $purchase['price']; ?>" readonly></td>
-                                            <td width="15%">
-                                                <input type="hidden" name="oi_id" value="<?php echo $purchase['oi_id']; ?>">
-                                                <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
-                                                <input type="submit" class="btn btn-xs btn-warning" value="Update">
-                                            </td>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Link</th>
+                                            <th>Type</th>
+                                            <th>Unit</th>
+                                            <th>Remark</th>
+                                            <th>Price (RMB)</th>
+                                            <th>Price (RM)</th>
                                         </tr>
-                                    </tbody>
-                                </form>
-                                <?php endforeach; ?>
-                            </table>
-                            <?php else: 
-
-                                if(isset($_GET['order_id'])){
-                                    $order_id = $_GET['order_id'];
-
-                                    $result = mysql_query("DELETE FROM order_list WHERE ol_id=$order_id") or die(mysql_error());
-
+                                    </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            $counter++;
+                                        ?>
+                                        <form action="updateprice.php" method="post">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="4%"><?php echo $counter; ?></td>
+                                                    <td width="13%"><?php echo $row['name']; ?></td>
+                                                    <td width="18%"><a href="<?php echo $row['link']; ?>" target="_blank"><?php echo $row['link']; ?></a></td>
+                                                    <td width="6%"><?php echo $row['type']; ?></td>
+                                                    <td width="6%"><?php echo $row['unit']; ?></td>
+                                                    <td width="18%"><?php echo $row['remark']; ?></td>
+                                                    <td width="9%"><input type="number" step="0.01" name="price" required/></td>
+                                                    <td width="9%"><input type="text" name="myr" value="<?php echo $row['price']; ?>" readonly></td>
+                                                    <td width="15%">
+                                                        <input type="hidden" name="oi_id" value="<?php echo $row['oi_id']; ?>">
+                                                        <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
+                                                        <input type="submit" class="btn btn-xs btn-warning" value="Update">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </form>
+                                        <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>Error.</p>
+                                    <?php
                                 }
-                                header("location: purchaselist.php");
                             ?>
-                            <?php endif; ?>
-
+                            </table>
                         </div>
                         <form action="acceptorder.php" method="post">
                             <?php
-                                $order = $_SESSION['order_id'];
-                                $result = mysql_query("SELECT sum(price) FROM order_item WHERE order_id= $order") or die(mysql_error());
-                                while ($rows = mysql_fetch_array($result)) {
+                                $result = mysqli_query($con, "SELECT sum(price) FROM order_item WHERE order_id= $order_id") or die(mysqli_error($con));
+                                while ($rows = mysqli_fetch_array($result)) {
                             ?>
                             <h2 style="text-align: right; padding-right: 70px;"><small>RM</small> <?php echo $rows['sum(price)']; ?></h2>
                             <input type="hidden" name="pricetotal" value="<?php echo $rows['sum(price)']; ?>">

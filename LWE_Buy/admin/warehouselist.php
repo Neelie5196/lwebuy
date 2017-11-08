@@ -3,18 +3,9 @@
 require_once '../connection/config.php';
 session_start();
 $counter = 0; 
-$warehouselistQuery = $db->prepare("
-    SELECT *
-    FROM warehouse
 
-");
-
-$warehouselistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
-
+$query1 = "SELECT * FROM warehouse";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -59,8 +50,11 @@ $warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newwarehouse" style="float: right;">New     Warehouse</button><br/><hr/>
-                            <?php if(!empty($warehouselist)): ?>
-                            <table class="table thead-bordered table-hover warehouselist">
+                            <?php 
+                            if(mysqli_num_rows($result1) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered table-hover" id="receive">
                                 <thead>
                                     <tr>
                                         <th width="2%">#</th>
@@ -72,31 +66,34 @@ $warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
                                         <th width="24%">Station Name</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($warehouselist as $warehouse): 
-                                {
-                                    $counter++;
+                                <?php
+                                    while($row = mysqli_fetch_array($result1))
+                                    {
+                                        $counter++;
+                                        ?>
+                                        <tbody>
+                                            <tr height="50">
+                                                <td><?php echo $counter; ?></td>
+                                                <td><?php echo $row['station_code']; ?></td>
+                                                <td><?php echo $row['station_description']; ?></td>
+                                                <td><?php echo $row['country_code']; ?></td>
+                                                <td><?php echo $row['country_description']; ?></td>
+                                                <td><?php echo $row['company_name']; ?></td>
+                                                <td><?php echo $row['station_name']; ?></td>
+                                                <td><a href="warehouseview.php?wh_id=<?php echo $row['wh_id'] ?>&station=<?php echo $row['station_name']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                <td><a href="editwarehouse.php?wh_id=<?php echo $row['wh_id']; ?>" class="btn btn-xs btn-warning">Edit</a></td>
+                                                <td><a href="delete.php?wh_id=<?php echo $row['wh_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>There is no warehouse records.</p>
+                                    <?php
                                 }
-                                
-                                ?>
-                                <tbody class="warehouse">
-                                    <tr height="50">
-                                        <td><?php echo $counter; ?></td>
-                                        <td><?php echo $warehouse['station_code']; ?></td>
-                                        <td><?php echo $warehouse['station_description']; ?></td>
-                                        <td><?php echo $warehouse['country_code']; ?></td>
-                                        <td><?php echo $warehouse['country_description']; ?></td>
-                                        <td><?php echo $warehouse['company_name']; ?></td>
-                                        <td><?php echo $warehouse['station_name']; ?></td>
-                                        <td><a href="warehouseview.php?wh_id=<?php echo $warehouse['wh_id'] ?>&station=<?php echo $warehouse['station_name']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                        <td><a href="editwarehouse.php?wh_id=<?php echo $warehouse['wh_id']; ?>" class="btn btn-xs btn-warning">Edit</a></td>
-                                        <td><a href="delete.php?wh_id=<?php echo $warehouse['wh_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
-                            </table>
-                            <?php else: ?>
-                                <p>There is no warehouse records.</p>
-                            <?php endif; ?>      
+                            ?>
+                            </table>   
                         </div>
                     </div>
                 </div>

@@ -6,8 +6,8 @@ if(isset($_GET['p_id']))
     $query1 = "SELECT * 
               FROM adjust
               WHERE name = 'point'";
-              $result1 = mysql_query($query1);
-              $results1 = mysql_fetch_assoc($result1);
+              $result1 = mysqli_query($con, $query1);
+              $results1 = mysqli_fetch_assoc($result1);
     
     $pointratio = $results1['value'];
     
@@ -16,17 +16,17 @@ if(isset($_GET['p_id']))
     $status = 'Completed';
     $point = $_GET['point']/$pointratio;
     
-    $result = mysql_query("UPDATE payment SET status = '$status' WHERE p_id = $p_id ") or die(mysql_error());
+    $result = mysqli_query($con, "UPDATE payment SET status = '$status' WHERE p_id = $p_id ") or die(mysqli_error($con));
     
     $query = "SELECT * 
               FROM point
               WHERE user_id = '$user_id'";
-    $results = mysql_query($query);
-    $resultss = mysql_num_rows($results);
+    $results = mysqli_query($con, $query);
+    $resultss = mysqli_num_rows($results);
     if($resultss > 0){
-        $result1 = mysql_query("UPDATE point SET point = point + '$point' WHERE user_id = $user_id ") or die(mysql_error());
+        $result1 = mysqli_query($con, "UPDATE point SET point = point + '$point' WHERE user_id = $user_id ") or die(mysqli_error($con));
     }else{
-        $result1 = mysql_query("INSERT INTO point SET user_id='$user_id', point='$point'") or die(mysql_error());
+        $result1 = mysqli_query($con, "INSERT INTO point SET user_id='$user_id', point='$point'") or die(mysqli_error($con));
     }
     ?>
     <script>

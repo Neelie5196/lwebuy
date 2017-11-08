@@ -6,19 +6,19 @@ session_start();
 $query = "SELECT * 
           FROM adjust
           WHERE name = 'point'";
-$result = mysql_query($query);
-$results = mysql_fetch_assoc($result);
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
 $query1 = "SELECT * 
           FROM adjust
           WHERE name = 'currency'";
-$result1 = mysql_query($query1);
-$results1 = mysql_fetch_assoc($result1);
+$result1 = mysqli_query($con, $query1);
+$results1 = mysqli_fetch_assoc($result1);
 
 $query2 = "SELECT * 
           FROM shipping_price";
-$result2 = mysql_query($query2);
-$results2 = mysql_fetch_assoc($result2);
+$result2 = mysqli_query($con, $query2);
+$results2 = mysqli_fetch_assoc($result2);
 
 ?>
 <!DOCTYPE html>
@@ -59,35 +59,25 @@ $results2 = mysql_fetch_assoc($result2);
                             
                             <h3 class="admindash">
                                 <?php
-                                    $count = 0; 
-            
-                                    $ordersQuery = $db->prepare("SELECT * FROM order_list");
-                                        
-                                    $ordersQuery->execute();
-                                        
-                                    $orders = $ordersQuery->rowCount() ? $ordersQuery : [];
-            
-                                    $count = 0;
-                                    if(!empty($orders))
+                                    $query3 = "SELECT * FROM order_list";
+                                    $result3 = mysqli_query($con, $query3);
+                                    $count3 = 0;
+                                    if(mysqli_num_rows($result3) > 0)
                                     {
-                                        foreach($orders as $o)
+                                        while($row = mysqli_fetch_array($result3))
                                         {
-                                            if ($o['status']=="Request")
+                                            if ($row['status']=="Request")
                                             {
-                                                $count += 1;
+                                                $count3 += 1;
                                             }
                                             else
                                             {
-                                                $count = $count;
+                                                $count3 = $count3;
                                             }
                                         }
-                                        
-                                    echo $count;
-                                        
-                                    }
-                                    else
-                                    {
-                                        echo "Error";
+                                        echo $count3;
+                                    }else{
+                                        echo '<p>0</p>';
                                     }
                                 ?>
                             </h3>
@@ -104,35 +94,25 @@ $results2 = mysql_fetch_assoc($result2);
                             
                             <h3 class="admindash">
                                 <?php
-                                    $count = 0; 
-            
-                                    $reloadQuery = $db->prepare("SELECT * FROM payment");
-                                        
-                                    $reloadQuery->execute();
-                                        
-                                    $reload = $reloadQuery->rowCount() ? $reloadQuery : [];
-            
-                                    $count = 0;
-                                    if(!empty($reload))
+                                    $query4 = "SELECT * FROM payment";
+                                    $result4 = mysqli_query($con, $query4);
+                                    $count4 = 0;
+                                    if(mysqli_num_rows($result4) > 0)
                                     {
-                                        foreach($reload as $r)
+                                        while($row = mysqli_fetch_array($result4))
                                         {
-                                            if ($r['status']=="Waiting for Approve")
+                                            if ($row['status']=="Waiting for Approve")
                                             {
-                                                $count += 1;
+                                                $count4 += 1;
                                             }
                                             else
                                             {
-                                                $count = $count;
+                                                $count4 = $count4;
                                             }
                                         }
-                                        
-                                    echo $count;
-                                        
-                                    }
-                                    else
-                                    {
-                                        echo "Error";
+                                        echo $count4;
+                                    }else{
+                                        echo '<p>0</p>';
                                     }
                                 ?>
                             </h3>
@@ -149,35 +129,25 @@ $results2 = mysql_fetch_assoc($result2);
                             
                             <h3 class="admindash">
                                 <?php
-                                    $count = 0; 
-            
-                                    $feedbackQuery = $db->prepare("SELECT * FROM contact");
-                                        
-                                    $feedbackQuery->execute();
-                                        
-                                    $feedback = $feedbackQuery->rowCount() ? $feedbackQuery : [];
-            
-                                    $count = 0;
-                                    if(!empty($feedback))
+                                    $query5 = "SELECT * FROM contact";
+                                    $result5 = mysqli_query($con, $query5);
+                                    $count5 = 0;
+                                    if(mysqli_num_rows($result5) > 0)
                                     {
-                                        foreach($feedback as $f)
+                                        while($row = mysqli_fetch_array($result5))
                                         {
-                                            if ($f['status']=="unread")
+                                            if ($row['status']=="unread")
                                             {
-                                                $count += 1;
+                                                $count5 += 1;
                                             }
                                             else
                                             {
-                                                $count = $count;
+                                                $count5 = $count5;
                                             }
                                         }
-                                        
-                                    echo $count;
-                                        
-                                    }
-                                    else
-                                    {
-                                        echo "Error";
+                                        echo $count5;
+                                    }else{
+                                        echo '<p>0</p>';
                                     }
                                 ?>
                             </h3>
@@ -196,35 +166,25 @@ $results2 = mysql_fetch_assoc($result2);
                             
                             <h3 class="admindash">
                                 <?php
-                                    $count = 0; 
-            
-                                    $usersQuery = $db->prepare("SELECT * FROM users");
-                                        
-                                    $usersQuery->execute();
-                                        
-                                    $users = $usersQuery->rowCount() ? $usersQuery : [];
-            
-                                    $count = 0;
-                                    if(!empty($users))
+                                    $query6 = "SELECT * FROM users";
+                                    $result6 = mysqli_query($con, $query6);
+                                    $count6 = 0;
+                                    if(mysqli_num_rows($result6) > 0)
                                     {
-                                        foreach($users as $u)
+                                        while($row = mysqli_fetch_array($result6))
                                         {
-                                            if ($u['type']=="customer")
+                                            if ($row['type']=="customer")
                                             {
-                                                $count += 1;
+                                                $count6 += 1;
                                             }
                                             else
                                             {
-                                                $count = $count;
+                                                $count6 = $count6;
                                             }
                                         }
-                                        
-                                    echo $count;
-                                        
-                                    }
-                                    else
-                                    {
-                                        echo "Error";
+                                        echo $count6;
+                                    }else{
+                                        echo '<p>0</p>';
                                     }
                                 ?>
                             </h3>
@@ -241,35 +201,25 @@ $results2 = mysql_fetch_assoc($result2);
                             
                             <h3 class="admindash">
                                 <?php
-                                    $count = 0; 
-            
-                                    $ordersQuery = $db->prepare("SELECT * FROM order_list");
-                                        
-                                    $ordersQuery->execute();
-                                        
-                                    $orders = $ordersQuery->rowCount() ? $ordersQuery : [];
-            
-                                    $count = 0;
-                                    if(!empty($orders))
+                                    $query7 = "SELECT * FROM order_list";
+                                    $result7 = mysqli_query($con, $query7);
+                                    $count7 = 0;
+                                    if(mysqli_num_rows($result7) > 0)
                                     {
-                                        foreach($orders as $o)
+                                        while($row = mysqli_fetch_array($result7))
                                         {
-                                            if ($o['status']!="Request")
+                                            if ($row['status']=="Received")
                                             {
-                                                $count += 1;
+                                                $count7 += 1;
                                             }
                                             else
                                             {
-                                                $count = $count;
+                                                $count7 = $count7;
                                             }
                                         }
-                                        
-                                    echo $count;
-                                        
-                                    }
-                                    else
-                                    {
-                                        echo "Error";
+                                        echo $count7;
+                                    }else{
+                                        echo '<p>0</p>';
                                     }
                                 ?>
                             </h3>
@@ -286,35 +236,25 @@ $results2 = mysql_fetch_assoc($result2);
                             
                             <h3 class="admindash">
                                 <?php
-                                    $count = 0; 
-            
-                                    $shippingQuery = $db->prepare("SELECT * FROM shipping");
-                                        
-                                    $shippingQuery->execute();
-                                        
-                                    $shipping = $shippingQuery->rowCount() ? $shippingQuery : [];
-            
-                                    $count = 0;
-                                    if(!empty($shipping))
+                                    $query8 = "SELECT * FROM shipping";
+                                    $result8 = mysqli_query($con, $query8);
+                                    $count8 = 0;
+                                    if(mysqli_num_rows($result8) > 0)
                                     {
-                                        foreach($shipping as $s)
+                                        while($row = mysqli_fetch_array($result8))
                                         {
-                                            if ($s['status']=="received")
+                                            if ($row['status']=="Received")
                                             {
-                                                $count += 1;
+                                                $count8 += 1;
                                             }
                                             else
                                             {
-                                                $count = $count;
+                                                $count8 = $count8;
                                             }
                                         }
-                                        
-                                    echo $count;
-                                        
-                                    }
-                                    else
-                                    {
-                                        echo "Error";
+                                        echo $count8;
+                                    }else{
+                                        echo '<p>0</p>';
                                     }
                                 ?>
                             </h3>
@@ -331,35 +271,25 @@ $results2 = mysql_fetch_assoc($result2);
                             
                             <h3 class="admindash">
                                 <?php
-                                    $count = 0; 
-            
-                                    $creditQuery = $db->prepare("SELECT * FROM payment");
-                                        
-                                    $creditQuery->execute();
-                                        
-                                    $credit = $creditQuery->rowCount() ? $creditQuery : [];
-            
-                                    $count = 0;
-                                    if(!empty($credit))
+                                    $query9 = "SELECT * FROM payment";
+                                    $result9 = mysqli_query($con, $query9);
+                                    $count9 = 0;
+                                    if(mysqli_num_rows($result9) > 0)
                                     {
-                                        foreach($credit as $c)
+                                        while($row = mysqli_fetch_array($result9))
                                         {
-                                            if ($c['status']=="Completed")
+                                            if ($row['status']=="Completed")
                                             {
-                                                $count += $c['amount'];
+                                                $count9 += 1;
                                             }
                                             else
                                             {
-                                                $count = $count;
+                                                $count9 = $count9;
                                             }
                                         }
-                                        
-                                    echo $count;
-                                        
-                                    }
-                                    else
-                                    {
-                                        echo "0";
+                                        echo $count9;
+                                    }else{
+                                        echo '<p>0</p>';
                                     }
                                 ?>
                             </h3>

@@ -2,33 +2,19 @@
 
 require_once '../connection/config.php';
 session_start();
-$_SESSION['order_id'] = $_GET['order_id'];
+$order_id = $_GET['order_id'];
 $counter = 0; 
 
-$orderhistoryQuery = $db->prepare("
-    SELECT *
-    FROM order_item
-    WHERE order_id=:order_id
-");
+$query1 = "SELECT *
+            FROM order_item
+            WHERE order_id='$order_id'";
+$result1 = mysqli_query($con, $query1);
 
-$orderhistoryQuery->execute([
-    'order_id' => $_SESSION['order_id']
-]);
-
-$orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
-
-$bankreceiptQuery = $db->prepare("
-    SELECT *
-    FROM payment
-    WHERE from_order=:from_order
-");
-
-$bankreceiptQuery->execute([
-    'from_order' => $_SESSION['order_id']
-]);
-
-$bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
-
+$query2 = "SELECT *
+            FROM payment
+            WHERE from_order='$order_id'";
+$result2 = mysqli_query($con, $query2);
+$results2 = mysqli_fetch_assoc($result2);
 
 ?>
 
@@ -61,86 +47,91 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
             </div>
             
             <div class="container">
-                <h2>Order# <?php echo $_SESSION['order_id']; ?></h2>
+                <h2>Order# <?php echo $order_id; ?></h2>
                 <hr/>
             </div>
             <section class = "content">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($orderhistory)): ?>
-                            <table class="table thead-bordered table-hover orderhistory" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Link</th>
-                                        <th>Type</th>
-                                        <th>Unit</th>
-                                        <th>Remark</th>
-                                        <th>Price (RM)</th>
-                                        <th>Order Code</th>
-                                    </tr>
-                                </thead>
-                                <?php foreach($orderhistory as $order): 
+                            <?php 
+                                if(mysqli_num_rows($result1) > 0)
                                 {
-                                    $counter++;
-                                }
                                 ?>
-                                <form action="updateorder.php" method="post">
-                                    <tbody class="order">
+                                <table class="table thead-bordered table-hover">
+                                    <thead>
                                         <tr>
-                                            <td width="5%"><?php echo $counter; ?></td>
-                                            <td width="15%"><?php echo $order['name']; ?></td>
-                                            <td width="15%"><a href="<?php echo $order['link']; ?>" target="_blank"><?php echo $order['link']; ?></a></td>
-                                            <td width="8%"><?php echo $order['type']; ?></td>
-                                            <td width="8%"><?php echo $order['unit']; ?></td>
-                                            <td width="20%"><?php echo $order['remark']; ?></td>
-                                            <td width="9%"><?php echo $order['price']; ?></td>
-                                            <td width="9%"><input type="text" name="ordercode" value="<?php echo $order['order_code']; ?>" required></td>
-                                            <td width="15%">
-                                                <input type="hidden" name="oi_id" value="<?php echo $order['oi_id']; ?>">
-                                                <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
-                                                <input type="submit" class="btn btn-xs btn-warning" value="Update">
-                                            </td>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Link</th>
+                                            <th>Type</th>
+                                            <th>Unit</th>
+                                            <th>Remark</th>
+                                            <th>Price (RM)</th>
+                                            <th>Order Code</th>
                                         </tr>
-                                    </tbody>
-                                </form>
-                                <?php endforeach; ?>
-                            </table>
-                            <?php else: 
-                                Error
+                                    </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            $counter++;
+                                        ?>
+                                        <form action="updateorder.php" method="post">
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $counter; ?></td>
+                                                    <td width="15%"><?php echo $row['name']; ?></td>
+                                                    <td width="15%"><a href="<?php echo $row['link']; ?>" target="_blank"><?php echo $row['link']; ?></a></td>
+                                                    <td width="8%"><?php echo $row['type']; ?></td>
+                                                    <td width="8%"><?php echo $row['unit']; ?></td>
+                                                    <td width="20%"><?php echo $row['remark']; ?></td>
+                                                    <td width="9%"><?php echo $row['price']; ?></td>
+                                                    <td width="9%"><input type="text" name="ordercode" value="<?php echo $row['order_code']; ?>" required></td>
+                                                    <td width="15%">
+                                                        <input type="hidden" name="oi_id" value="<?php echo $row['oi_id']; ?>">
+                                                        <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
+                                                        <input type="submit" class="btn btn-xs btn-warning" value="Update">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </form>
+                                        <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>Error.</p>
+                                    <?php
+                                }
                             ?>
-                            <?php endif; ?>
+                            </table>
                             <?php
-                                $order = $_SESSION['order_id'];
-                                $result = mysql_query("SELECT sum(price) FROM order_item WHERE order_id= $order") or die(mysql_error());
-                                while ($rows = mysql_fetch_array($result)) {
+                                $result = mysqli_query($con, "SELECT sum(price) FROM order_item WHERE order_id= $order_id") or die(mysqli_error($con));
+                                while ($rows = mysqli_fetch_array($result)) {
                             ?>
                             <h2 style="text-align: right; padding-right: 70px;"><small>RM</small> <?php echo $rows['sum(price)']; ?></h2>
                             <?php
                                 }
                             ?>
-                            <?php 
-                                if(!empty($bankreceipt)): 
-                                    foreach($bankreceipt as $bank):
-                            ?>
-                            <tfoot>
-                                <tr>
-                                    <td><label style="float: left;">Bank in Receipt:</label> <em style="float:left;"> <a href="../resources/img/receipts/<?php echo $bank['file']; ?>" target="_blank"><?php echo $bank['title']; ?></a></em></td>
-                                </tr>
-                            </tfoot>
+                            <?php
+                                if($results2 > 0){
+                                    ?>
+                                        <tfoot>
+                                            <tr>
+                                                <td><label style="float: left;">Bank in Receipt:</label> <em style="float:left;"> <a href="../resources/img/receipts/<?php echo $results2['file']; ?>" target="_blank"><?php echo $results2['title']; ?></a></em></td>
+                                            </tr>
+                                        </tfoot>
+                                    <?php
+                                }else{
+
+                                }
+                            ?>                            
                         </div>
                         <form action="proceedorder.php" method="post">
-                            <input type="hidden" name="p_id" value="<?php echo $bank['p_id']; ?>">
+                            <input type="hidden" name="p_id" value="<?php echo $results2['p_id']; ?>">
                             <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
                             <input type="submit" class="btn btn-success" value="Proceed">
                             <a href="orderpending.php" class="btn btn-default" name="back">Back</a>
                         </form>
-                        <?php 
-                                endforeach; 
-                            endif;
-                        ?>
                     </div>
                 </div>
             </section>

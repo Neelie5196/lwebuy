@@ -3,31 +3,21 @@
 require_once '../connection/config.php';
 session_start();
 
-$orderrequestQuery = $db->prepare("
-    SELECT *
-    FROM order_list ol
-    JOIN users us
-    ON us.user_id = ol.user_id
-    WHERE status = 'ready to pay'
-    ORDER BY datetime desc
-");
+$query1 = "SELECT *
+            FROM order_list ol
+            JOIN users us
+            ON us.user_id = ol.user_id
+            WHERE status = 'ready to pay'
+            ORDER BY datetime desc";
+$result1 = mysqli_query($con, $query1);
 
-$orderrequestQuery->execute();
-
-$orderrequest = $orderrequestQuery->rowCount() ? $orderrequestQuery : [];
-
-$ordersrequestQuery = $db->prepare("
-    SELECT *
-    FROM order_list ol
-    JOIN users us
-    ON us.user_id = ol.user_id
-    WHERE status = 'paid'
-    ORDER BY datetime desc
-");
-
-$ordersrequestQuery->execute();
-
-$ordersrequest = $ordersrequestQuery->rowCount() ? $ordersrequestQuery : [];
+$query2 = "SELECT *
+            FROM order_list ol
+            JOIN users us
+            ON us.user_id = ol.user_id
+            WHERE status = 'paid'
+            ORDER BY datetime desc";
+$result2 = mysqli_query($con, $query2);
 
 ?>
 
@@ -75,33 +65,43 @@ $ordersrequest = $ordersrequestQuery->rowCount() ? $ordersrequestQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse1">
-                            <?php if(!empty($orderrequest)): ?>
-                            <table class="table thead-bordered table-hover" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>Name</th>
-                                        <th>Placed on</th>
-                                        <th>Total (RM)</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <?php foreach($orderrequest as $order): ?>
-                                <tbody>
-                                    <tr>
-                                        <td width="5%"><?php echo $order['ol_id']; ?></td>
-                                        <td width="40%"><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
-                                        <td width="15%"><?php echo $order['datetime']; ?></td>
-                                        <td width="15%"><?php echo $order['price']; ?></td>
-                                        <td width="10%"><?php echo $order['status']; ?></td>
-                                        <td width="15%"><a href="orderhviews.php?order_id=<?php echo $order['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
+                            <?php 
+                                if(mysqli_num_rows($result1) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:80%">
+                                    <thead>
+                                        <tr>
+                                            <th>Order#</th>
+                                            <th>Name</th>
+                                            <th>Placed on</th>
+                                            <th>Total (RM)</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                    <td width="15%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="15%"><?php echo $row['price']; ?></td>
+                                                    <td width="10%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="orderhviews.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                            <p>There is no order pending.</p>
+                                        <?php
+                                    }
+                                ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no order pending.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -119,33 +119,43 @@ $ordersrequest = $ordersrequestQuery->rowCount() ? $ordersrequestQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse">
-                            <?php if(!empty($ordersrequest)): ?>
-                            <table class="table thead-bordered table-hover" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>Name</th>
-                                        <th>Placed on</th>
-                                        <th>Total (RM)</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <?php foreach($ordersrequest as $orders): ?>
-                                <tbody>
-                                    <tr>
-                                        <td width="5%"><?php echo $orders['ol_id']; ?></td>
-                                        <td width="40%"><?php echo $orders['fname']; ?> <?php echo $orders['lname']; ?></td>
-                                        <td width="15%"><?php echo $orders['datetime']; ?></td>
-                                        <td width="15%"><?php echo $orders['price']; ?></td>
-                                        <td width="10%"><?php echo $orders['status']; ?></td>
-                                        <td width="15%"><a href="porderview.php?order_id=<?php echo $orders['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
+                            <?php 
+                                if(mysqli_num_rows($result2) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:80%">
+                                    <thead>
+                                        <tr>
+                                            <th>Order#</th>
+                                            <th>Name</th>
+                                            <th>Placed on</th>
+                                            <th>Total (RM)</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result2))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                    <td width="15%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="15%"><?php echo $row['price']; ?></td>
+                                                    <td width="10%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="porderview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                            <p>There is no order pending.</p>
+                                        <?php
+                                    }
+                                ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no order pending.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

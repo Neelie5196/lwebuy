@@ -3,21 +3,12 @@
 require_once '../connection/config.php';
 session_start();
 $counter = 0; 
+$s_id = $_GET['s_id'];
 
-
-$slotitemQuery = $db->prepare("
-
-    SELECT *
-    FROM item
-    WHERE s_id =:s_id
-
-");
-
-$slotitemQuery->execute([
-    's_id' => $_GET['s_id']
-]);
-
-$slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
+$query1 = "SELECT *
+            FROM item
+            WHERE s_id ='$s_id'";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -61,8 +52,11 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                        <?php if(!empty($slotitem)): ?>
-                        <table class="table thead-bordered table-hover">
+                        <?php 
+                        if(mysqli_num_rows($result1) > 0)
+                        {
+                        ?>
+                        <table class="table thead-bordered table-hover" id="receive">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -73,27 +67,30 @@ $slotitem = $slotitemQuery->rowCount() ? $slotitemQuery : [];
                                     <th>From</th>
                                 </tr>
                             </thead>
-                            <?php foreach($slotitem as $slot): 
-                            {
-                                $counter++;
+                            <?php
+                                while($row = mysqli_fetch_array($result1))
+                                {
+                                    $counter++;
+                                    ?>
+                                    <tbody>
+                                        <tr>
+                                            <td><?php echo $counter; ?></td>
+                                            <td><?php echo $row['name']; ?></td>
+                                            <td><?php echo $row['order_code']; ?></td>
+                                            <td><?php echo $row['weight']; ?></td>
+                                            <td><?php echo $row['datetime']; ?></td>
+                                            <td><?php echo $row['from_id']; ?></td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
+                                }
+                            }else{
+                                ?>
+                                    <p>There is no item in slot.</p>
+                                <?php
                             }
-
-                            ?>
-                            <tbody>
-                                <tr>
-                                    <td><?php echo $counter; ?></td>
-                                    <td><?php echo $slot['name']; ?></td>
-                                    <td><?php echo $slot['order_code']; ?></td>
-                                    <td><?php echo $slot['weight']; ?></td>
-                                    <td><?php echo $slot['datetime']; ?></td>
-                                    <td><?php echo $slot['from_id']; ?></td>
-                                </tr>
-                            </tbody>
-                            <?php endforeach; ?>
+                        ?>
                         </table>
-                        <?php else: ?>
-                            <p>There is no item in slot.</p>
-                        <?php endif; ?>
                     </div>
                 </div>
                 <center><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>

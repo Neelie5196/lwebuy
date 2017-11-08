@@ -9,7 +9,7 @@ if(isset($_POST['pname']))
     $pprice = $_POST['pprice'];
     
 	
-	$result = mysql_query("UPDATE package SET name='$pname', price='$pprice' WHERE id = $p_id ") or die(mysql_error());
+	$result = mysqli_query($con, "UPDATE package SET name='$pname', price='$pprice' WHERE id = $p_id ") or die(mysqli_error($con));
     
     ?>
     <script>

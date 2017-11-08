@@ -9,7 +9,7 @@ if(isset($_POST['slotcode']))
     $status = 'Not in Use';
     
 	
-	$result = mysql_query("INSERT INTO slot SET slot_code='$slotcode', slot_num='$slotnum', status='$status'") or die(mysql_error());
+	$result = mysqli_query($con, "INSERT INTO slot SET slot_code='$slotcode', slot_num='$slotnum', status='$status'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Create');

@@ -9,8 +9,8 @@ if(isset($_POST['order_id']))
     $statuss = 'Completed';
     
 	
-	$result = mysql_query("UPDATE order_list SET status='$status', datetime=NOW() WHERE ol_id = $order_id ") or die(mysql_error());
-    $result1 = mysql_query("UPDATE payment SET status = '$statuss' WHERE p_id = $p_id ") or die(mysql_error());
+	$result = mysqli_query($con, "UPDATE order_list SET status='$status', datetime=NOW() WHERE ol_id = $order_id ") or die(mysqli_error($con));
+    $result1 = mysqli_query($con, "UPDATE payment SET status = '$statuss' WHERE p_id = $p_id ") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Update');

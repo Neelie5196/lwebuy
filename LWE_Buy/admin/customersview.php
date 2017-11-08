@@ -2,32 +2,20 @@
 
 require_once '../connection/config.php';
 session_start();
-$counter =0;
+$counter = 0;
 
-$usersinfoQuery = $db->prepare("
-    SELECT *
-    FROM users
-    WHERE user_id=:user_id
-");
+$user_id = $_GET['users'];
 
-$usersinfoQuery->execute([
-    'user_id' => $_GET['users']
-]);
+$query = "SELECT *
+            FROM users
+            WHERE user_id='$user_id'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
-$usersinfo = $usersinfoQuery->rowCount() ? $usersinfoQuery : [];
-
-$addresslistQuery = $db->prepare("
-    SELECT *
-    FROM address
-    WHERE user_id=:user_id
-");
-
-$addresslistQuery->execute([
-    'user_id' => $_GET['users']
-]);
-
-$addresslist = $addresslistQuery->rowCount() ? $addresslistQuery : [];
-
+$query1 = "SELECT *
+            FROM address
+            WHERE user_id='$user_id'";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -74,16 +62,14 @@ $addresslist = $addresslistQuery->rowCount() ? $addresslistQuery : [];
                         <h3 class="title">Customer <small>Information</small></h3>
                     </div>
                 </div>
-                <?php if(!empty($usersinfo)): ?>
                 <div class="row usersinfo">
-                    <?php foreach($usersinfo as $users): ?>
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron users">
                         <div class="row">
                             <div class="col-xs-4 col-md-4 col-lg-4">
                                 <label>First Name</label>
                             </div>
                             <div class="col-xs-8 col-md-8 col-lg-8">
-                                <input type="text" class="form-control" value="<?php echo $users['fname']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                <input type="text" class="form-control" value="<?php echo $results['fname']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                             </div>
                         </div>
                         <br/>
@@ -92,7 +78,7 @@ $addresslist = $addresslistQuery->rowCount() ? $addresslistQuery : [];
                                 <label>Last Name</label>
                             </div>
                             <div class="col-xs-8 col-md-8 col-lg-8">
-                                <input type="text" class="form-control" value="<?php echo $users['lname']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                <input type="text" class="form-control" value="<?php echo $results['lname']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                             </div>
                         </div>
                         <br/>
@@ -101,7 +87,7 @@ $addresslist = $addresslistQuery->rowCount() ? $addresslistQuery : [];
                                 <label>Email</label>
                             </div>
                             <div class="col-xs-8 col-md-8 col-lg-8">
-                                <input type="email" class="form-control" value="<?php echo $users['email']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                <input type="email" class="form-control" value="<?php echo $results['email']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                             </div>
                         </div>
                         <br/>
@@ -110,16 +96,12 @@ $addresslist = $addresslistQuery->rowCount() ? $addresslistQuery : [];
                                 <label>Contact Number</label>
                             </div>
                             <div class="col-xs-8 col-md-8 col-lg-8">
-                                <input type="tel" class="form-control" value="<?php echo $users['contact']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                <input type="tel" class="form-control" value="<?php echo $results['contact']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                             </div>
                         </div>
                         <br/>
                     </div>
-                    <?php endforeach; ?>
                 </div>
-                <?php else: ?>
-                    <p>Error.</p>
-                <?php endif; ?>
                 <div class="row">
                     <div class="col-xs-12 col-md-12">
                         <h3 class="title">Customer <small>Address List</small></h3>
@@ -129,8 +111,11 @@ $addresslist = $addresslistQuery->rowCount() ? $addresslistQuery : [];
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                         <div class="row">
                             <div class="col-xs-12 col-md-12 col-lg-12">
-                                <?php if(!empty($addresslist)): ?>
-                                <table class="table thead-bordered table-hover addresslist">
+                                <?php 
+                                if(mysqli_num_rows($result1) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover" id="receive">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -140,31 +125,34 @@ $addresslist = $addresslistQuery->rowCount() ? $addresslistQuery : [];
                                             <th>Postcode</th>
                                         </tr>
                                     </thead>
-                                    <?php foreach($addresslist as $address): 
-                                    {
-                                        $counter++;
+                                    <?php
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            $counter++;
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td><?php echo $counter; ?></td>
+                                                    <td><?php echo $row['address']; ?></td>
+                                                    <td><?php echo $row['state']; ?></td>
+                                                    <td><?php echo $row['city']; ?></td>
+                                                    <td><?php echo $row['postcode']; ?></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                            <p>There is no address yet.</p>
+                                        <?php
                                     }
-
-                                    ?>
-                                    <tbody class="address">
-                                        <tr>
-                                            <td><?php echo $counter; ?></td>
-                                            <td width="40%"><?php echo $address['address']; ?></td>
-                                            <td width="20%"><?php echo $address['state']; ?></td>
-                                            <td width="20%"><?php echo $address['city']; ?></td>
-                                            <td width="20%"><?php echo $address['postcode']; ?></td>
-                                        </tr>
-                                    </tbody>
-                                    <?php endforeach; ?>
+                                ?>
                                 </table>
-                                <?php else: ?>
-                                    <p>There is no address yet.</p>
-                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
                 </div>
-                <center><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>
+                <center style="padding-bottom:15px;"><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>
             </div>
         </section>
     </body>

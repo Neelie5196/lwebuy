@@ -2,35 +2,6 @@
 
 require_once '../connection/config.php';
 
-if (isset($_POST['editpurchase']))
-
-{
-    $order_id = $_POST['order_id'];
-    $oi_id = $_POST['oi_id'];
-    $name = $_POST['name'];
-    $link = $_POST['link'];
-    $type = $_POST['type'];
-    $unit = $_POST['unit'];
-    $remark = $_POST['remark'];
-
-    $result = mysql_query("UPDATE order_item SET name='$name', link='$link', type='$type', unit='$unit', remark='$remark' WHERE oi_id=$oi_id") or die(mysql_error());
-    ?>
-		<script>
-		alert('Successfully Update');
-        window.location.href='purchaseview.php?order_id=<?php echo $order_id; ?>&success';
-        </script>
-		<?php
-}
-else
-{
-    ?>
-    <script>
-    alert('Error While Update Detail');
-    window.location.href='purchaseview.php?order_id=<?php echo $order_id; ?>&fail';
-    </script>
-    <?php
-}
-
 if (isset($_POST['update-profile']))
 
 {
@@ -41,7 +12,7 @@ if (isset($_POST['update-profile']))
     $contact = $_POST['contact'];
 	 
 
-    $result = mysql_query("UPDATE users SET fname='$fname', lname='$lname', email='$email', contact='$contact' WHERE user_id=$user_id") or die(mysql_error());
+    $result = mysqli_query($con, "UPDATE users SET fname='$fname', lname='$lname', email='$email', contact='$contact' WHERE user_id=$user_id") or die(mysqli_query($con));
     ?>
 		<script>
 		alert('Successfully Update');
@@ -64,7 +35,7 @@ if (isset($_POST['update-password']))
             {
 				$password = $_POST['np'];
 				$password = password_hash($password, PASSWORD_DEFAULT); 
-                $result = mysql_query("UPDATE users SET password='$password' WHERE user_id=$user_id") or die(mysql_error());
+                $result = mysqli_query($con, "UPDATE users SET password='$password' WHERE user_id=$user_id") or die(mysqli_error($con));
                 ?>
                 <script>
                 alert('Successfully Update');

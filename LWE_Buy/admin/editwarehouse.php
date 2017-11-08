@@ -2,19 +2,13 @@
 
 require_once '../connection/config.php';
 session_start();
+$wh_id = $_GET['wh_id'];
 
-$wsinfoQuery = $db->prepare("
-    SELECT *
-    FROM warehouse
-    WHERE wh_id=:wh_id
-    
-");
-
-$wsinfoQuery->execute([
-    'wh_id' => $_GET['wh_id']
-]);
-
-$wsinfo = $wsinfoQuery->rowCount() ? $wsinfoQuery : [];
+$query = "SELECT *
+        FROM warehouse
+        WHERE wh_id = '$wh_id'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
 ?>
 
@@ -58,67 +52,61 @@ $wsinfo = $wsinfoQuery->rowCount() ? $wsinfoQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                         <form action="updatewarehouse.php" method="post">
-                            <?php if(!empty($wsinfo)): ?>
-                                <?php foreach($wsinfo as $ws): ?>
-                                    <div class="row">
-                                        <div class="col-xs-4 col-md-4 col-lg-4">
-                                            <label>Station Code</label>
-                                        </div>
-                                        <div class="col-xs-8 col-md-8 col-lg-8">
-                                            <input type="text" name="stationcode" class="form-control" placeholder="StationCode (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $ws['station_code']; ?>" required>
-                                            <input type="hidden" name="wh_id" class="form-control" value="<?php echo $_GET['wh_id']; ?>">
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-xs-4 col-md-4 col-lg-4">
-                                            <label>Station Description</label>
-                                        </div>
-                                        <div class="col-xs-8 col-md-8 col-lg-8">
-                                            <input type="text" name="stationdescription" class="form-control" placeholder="StationDescription (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $ws['station_description']; ?>" required>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-xs-4 col-md-4 col-lg-4">
-                                            <label>Country Code</label>
-                                        </div>
-                                        <div class="col-xs-8 col-md-8 col-lg-8">
-                                            <input type="text" name="countrycode" class="form-control" placeholder="CountryCode (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $ws['country_code']; ?>" required>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-xs-4 col-md-4 col-lg-4">
-                                            <label>Country Description</label>
-                                        </div>
-                                        <div class="col-xs-8 col-md-8 col-lg-8">
-                                            <input type="text" name="countrydescription" class="form-control" placeholder="CountryDescription (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $ws['country_description']; ?>" required>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-xs-4 col-md-4 col-lg-4">
-                                            <label>Company Name</label>
-                                        </div>
-                                        <div class="col-xs-8 col-md-8 col-lg-8">
-                                            <input type="text" name="companyname" class="form-control" placeholder="CompanyName (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $ws['company_name']; ?>" required>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div class="row">
-                                        <div class="col-xs-4 col-md-4 col-lg-4">
-                                            <label>Station Name</label>
-                                        </div>
-                                        <div class="col-xs-8 col-md-8 col-lg-8">
-                                            <input type="text" name="stationname" class="form-control" placeholder="StationName (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $ws['station_name']; ?>" required>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <p>Error.</p>
-                            <?php endif; ?>
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                    <label>Station Code</label>
+                                </div>
+                                <div class="col-xs-8 col-md-8 col-lg-8">
+                                    <input type="text" name="stationcode" class="form-control" placeholder="StationCode (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $results['station_code']; ?>" required>
+                                    <input type="hidden" name="wh_id" class="form-control" value="<?php echo $_GET['wh_id']; ?>">
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                    <label>Station Description</label>
+                                </div>
+                                <div class="col-xs-8 col-md-8 col-lg-8">
+                                    <input type="text" name="stationdescription" class="form-control" placeholder="StationDescription (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $results['station_description']; ?>" required>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                    <label>Country Code</label>
+                                </div>
+                                <div class="col-xs-8 col-md-8 col-lg-8">
+                                    <input type="text" name="countrycode" class="form-control" placeholder="CountryCode (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $results['country_code']; ?>" required>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                    <label>Country Description</label>
+                                </div>
+                                <div class="col-xs-8 col-md-8 col-lg-8">
+                                    <input type="text" name="countrydescription" class="form-control" placeholder="CountryDescription (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $results['country_description']; ?>" required>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                    <label>Company Name</label>
+                                </div>
+                                <div class="col-xs-8 col-md-8 col-lg-8">
+                                    <input type="text" name="companyname" class="form-control" placeholder="CompanyName (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $results['company_name']; ?>" required>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                    <label>Station Name</label>
+                                </div>
+                                <div class="col-xs-8 col-md-8 col-lg-8">
+                                    <input type="text" name="stationname" class="form-control" placeholder="StationName (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $results['station_name']; ?>" required>
+                                </div>
+                            </div>
+                            <br/>
                             <input type="submit" class="btn btn-success" name="update-warehouse" value="Update">
                             <input type="button" class="btn btn-default" name="back" value="Back" onclick="window.location.href='warehouselist.php'">
                         </form>

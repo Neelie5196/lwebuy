@@ -2,34 +2,21 @@
 
 require_once '../connection/config.php';
 session_start();
-$counter =0;
+$user_id = $_GET['users'];
 
-$usersinfoQuery = $db->prepare("
-    SELECT *
-    FROM users
-    WHERE user_id=:user_id
-");
+$query = "SELECT *
+        FROM users
+        WHERE user_id = '$user_id'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
-$usersinfoQuery->execute([
-    'user_id' => $_GET['users']
-]);
-
-$usersinfo = $usersinfoQuery->rowCount() ? $usersinfoQuery : [];
-
-$stationinfoQuery = $db->prepare("
-    SELECT *
-    FROM warehouse wh
-    JOIN work_station ws
-    ON ws.wh_id = wh.wh_id
-    WHERE user_id=:user_id
-");
-
-$stationinfoQuery->execute([
-    'user_id' => $_GET['users']
-]);
-
-$stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
-
+$query1 = "SELECT *
+        FROM warehouse wh
+        JOIN work_station ws
+        ON ws.wh_id = wh.wh_id
+        WHERE user_id='$user_id'";
+$result1 = mysqli_query($con, $query1);
+$results1 = mysqli_fetch_assoc($result1);
 
 ?>
 
@@ -63,7 +50,7 @@ $stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <h2>Admin Details</h2>
+                    <h2>User Details</h2>
                     <hr/>
                 </div>
             </div>
@@ -73,19 +60,17 @@ $stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12">
-                        <h3 class="title">Admin <small>Information</small></h3>
+                        <h3 class="title">User <small>Information</small></h3>
                     </div>
                 </div>
-                <?php if(!empty($usersinfo)): ?>
                 <div class="row usersinfo">
-                    <?php foreach($usersinfo as $users): ?>
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron users">
                         <div class="row">
                             <div class="col-xs-4 col-md-4 col-lg-4">
                                 <label>First Name</label>
                             </div>
                             <div class="col-xs-8 col-md-8 col-lg-8">
-                                <input type="text" class="form-control" value="<?php echo $users['fname']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                <input type="text" class="form-control" value="<?php echo $results['fname']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                             </div>
                         </div>
                         <br/>
@@ -94,7 +79,7 @@ $stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
                                 <label>Last Name</label>
                             </div>
                             <div class="col-xs-8 col-md-8 col-lg-8">
-                                <input type="text" class="form-control" value="<?php echo $users['lname']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                <input type="text" class="form-control" value="<?php echo $results['lname']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                             </div>
                         </div>
                         <br/>
@@ -103,7 +88,7 @@ $stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
                                 <label>Email</label>
                             </div>
                             <div class="col-xs-8 col-md-8 col-lg-8">
-                                <input type="email" class="form-control" value="<?php echo $users['email']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                <input type="email" class="form-control" value="<?php echo $results['email']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                             </div>
                         </div>
                         <br/>
@@ -112,33 +97,27 @@ $stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
                                 <label>Contact Number</label>
                             </div>
                             <div class="col-xs-8 col-md-8 col-lg-8">
-                                <input type="tel" class="form-control" value="<?php echo $users['contact']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                <input type="tel" class="form-control" value="<?php echo $results['contact']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                             </div>
                         </div>
                         <br/>
                     </div>
-                    <?php endforeach; ?>
                 </div>
-                <?php else: ?>
-                    <p>Error.</p>
-                <?php endif; ?>
                 <div class="row">
                     <div class="col-xs-12 col-md-12">
-                        <h3 class="title">Admin <small>Work Station</small></h3>
+                        <h3 class="title">User <small>Work Station</small></h3>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                        <?php if(!empty($stationinfo)): ?>
                         <div class="row stationinfo">
-                            <?php foreach($stationinfo as $station): ?>
                             <div class="col-xs-12 col-md-12 col-lg-12 station">
                                 <div class="row">
                                     <div class="col-xs-4 col-md-4 col-lg-4">
                                         <label>Station Code</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" value="<?php echo $station['station_code']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                        <input type="text" class="form-control" value="<?php echo $results1['station_code']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                                     </div>
                                 </div>
                                 <br/>
@@ -147,7 +126,7 @@ $stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
                                         <label>Station Description</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" value="<?php echo $station['station_description']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                        <input type="text" class="form-control" value="<?php echo $results1['station_description']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                                     </div>
                                 </div>
                                 <br/>
@@ -156,7 +135,7 @@ $stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
                                         <label>Country Code</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" value="<?php echo $station['country_code']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                        <input type="text" class="form-control" value="<?php echo $results1['country_code']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                                     </div>
                                 </div>
                                 <br/>
@@ -165,7 +144,7 @@ $stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
                                         <label>Country Description</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" value="<?php echo $station['country_description']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                        <input type="text" class="form-control" value="<?php echo $results1['country_description']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                                     </div>
                                 </div>
                                 <br/>
@@ -174,7 +153,7 @@ $stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
                                         <label>Company Name</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" value="<?php echo $station['company_name']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                        <input type="text" class="form-control" value="<?php echo $results1['company_name']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                                     </div>
                                 </div>
                                 <br/>
@@ -183,19 +162,15 @@ $stationinfo = $stationinfoQuery->rowCount() ? $stationinfoQuery : [];
                                         <label>Station Name</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" class="form-control" value="<?php echo $station['station_name']; ?>" style="border-radius: 30px; width: 50%;" readonly>
+                                        <input type="text" class="form-control" value="<?php echo $results1['station_name']; ?>" style="border-radius: 30px; width: 50%;" readonly>
                                     </div>
                                 </div>
                                 <br/>
                             </div>
-                            <?php endforeach; ?>
                         </div>
-                        <?php else: ?>
-                            <p>Not yet select work station.</p>
-                        <?php endif; ?>
                     </div>
                 </div>
-                <center><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>
+                <center style="padding-bottom:15px;"><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>
             </div>
         </section>
     </body>

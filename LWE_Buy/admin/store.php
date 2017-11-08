@@ -5,39 +5,21 @@ session_start();
 $counter = 0; 
 $counters = 0;
 
-$orderitemQuery = $db->prepare("
-    SELECT *
-    FROM ((order_list ol
-    JOIN users us
-    ON us.user_id = ol.user_id)
-    JOIN order_item oi
-    ON oi.order_id = ol.ol_id)
-    WHERE statuss = 'Pending'
+$query2 = "SELECT *
+            FROM ((order_list ol
+            JOIN users us
+            ON us.user_id = ol.user_id)
+            JOIN order_item oi
+            ON oi.order_id = ol.ol_id)
+            WHERE statuss = 'Pending'";
+$result2 = mysqli_query($con, $query2);
 
-
-");
-
-$orderitemQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$orderitem = $orderitemQuery->rowCount() ? $orderitemQuery : [];
-
-$receiveitemQuery = $db->prepare("
-
-    SELECT *
-    FROM users us
-    JOIN receive_request rr
-    ON rr.user_id = us.user_id
-    WHERE status= 'Request'
-
-");
-
-$receiveitemQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
+$query3 = "SELECT *
+            FROM users us
+            JOIN receive_request rr
+            ON rr.user_id = us.user_id
+            WHERE status= 'Request'";
+$result3 = mysqli_query($con, $query3);
 
 ?>
 
@@ -311,7 +293,10 @@ $receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
                             <div class="row" style="padding-top: -10px;">
                                 <div class="col-xs-12 col-md-6 col-lg-6">
                                     <h3>Order Item</h3>
-                                    <?php if(!empty($orderitem)): ?>
+                                    <?php 
+                                    if(mysqli_num_rows($result2) > 0)
+                                    {
+                                    ?>
                                     <table class="table thead-bordered table-hover" id="receive">
                                         <thead>
                                             <tr>
@@ -322,30 +307,36 @@ $receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
                                                 <th width="25%">Status</th>
                                             </tr>
                                         </thead>
-                                        <?php foreach($orderitem as $order): 
-                                        {
-                                            $counter++;
+                                        <?php
+                                            while($row = mysqli_fetch_array($result2))
+                                            {
+                                                $counter++;
+                                                ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><?php echo $counter; ?></td>
+                                                        <td><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                        <td><?php echo $row['name']; ?></td>
+                                                        <td><?php echo $row['order_code']; ?></td>
+                                                        <td><?php echo $row['statuss']; ?></td>
+                                                    </tr>
+                                                </tbody>
+                                                <?php
+                                            }
+                                        }else{
+                                            ?>
+                                                <p>There is order item need receive.</p>
+                                            <?php
                                         }
-
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $counter; ?></td>
-                                                <td><?php echo $order['fname']; ?> <?php echo $order['lname']; ?></td>
-                                                <td><?php echo $order['name']; ?></td>
-                                                <td><?php echo $order['order_code']; ?></td>
-                                                <td><?php echo $order['statuss']; ?></td>
-                                            </tr>
-                                        </tbody>
-                                        <?php endforeach; ?>
+                                    ?>
                                     </table>
-                                    <?php else: ?>
-                                        <p>There is order item need receive.</p>
-                                    <?php endif; ?>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6">
                                     <h3>Receive Item Request</h3>
-                                    <?php if(!empty($receiveitem)): ?>
+                                    <?php 
+                                    if(mysqli_num_rows($result3) > 0)
+                                    {
+                                    ?>
                                     <table class="table thead-bordered table-hover" id="receives">
                                         <thead>
                                             <tr>
@@ -356,26 +347,29 @@ $receiveitem = $receiveitemQuery->rowCount() ? $receiveitemQuery : [];
                                                 <th width="25%">Status</th>
                                             </tr>
                                         </thead>
-                                        <?php foreach($receiveitem as $receive): 
-                                        {
-                                            $counters++;
+                                        <?php
+                                            while($row = mysqli_fetch_array($result3))
+                                            {
+                                                $counters++;
+                                                ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><?php echo $counters; ?></td>
+                                                        <td><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                        <td><?php echo $row['name']; ?></td>
+                                                        <td><?php echo $row['order_code']; ?></td>
+                                                        <td><?php echo $row['status']; ?></td>
+                                                    </tr>
+                                                </tbody>
+                                                <?php
+                                            }
+                                        }else{
+                                            ?>
+                                                <p>There is no receive item request.</p>
+                                            <?php
                                         }
-
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $counters; ?></td>
-                                                <td><?php echo $receive['fname']; ?> <?php echo $receive['lname']; ?></td>
-                                                <td><?php echo $receive['name']; ?></td>
-                                                <td><?php echo $receive['order_code']; ?></td>
-                                                <td><?php echo $receive['status']; ?></td>
-                                            </tr>
-                                        </tbody>
-                                        <?php endforeach; ?>
+                                    ?>
                                     </table>
-                                    <?php else: ?>
-                                        <p>There is no receive item request.</p>
-                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

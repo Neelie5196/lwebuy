@@ -3,15 +3,9 @@
 require_once '../connection/config.php';
 session_start();
 $counter = 0; 
-$packagelistQuery = $db->prepare("
-    SELECT * FROM package
-");
 
-$packagelistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
+$query1 = "SELECT * FROM package";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -56,34 +50,40 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <button type="button" class="btn btn-default" data-toggle="modal" data-target="#newpackage" style="float: right;">New Package</button><br/><hr/>
-                            <?php if(!empty($packagelist)): ?>
-                            <table class="table thead-bordered table-hover">
-								<thead>
+                            <?php 
+                            if(mysqli_num_rows($result1) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered table-hover" id="receive">
+                                <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Price (RM)</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($packagelist as $package): 
-                                {
-                                    $counter++;
+                                <?php
+                                    while($row = mysqli_fetch_array($result1))
+                                    {
+                                        $counter++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $counter; ?></td>
+                                                <td width="20%"><?php echo $row['name']; ?></td>
+                                                <td width="20%"><?php echo $row['price']; ?></td>
+                                                <td width="20%"><a href="editpackage.php?users=<?php echo $row['id']; ?>" class="btn btn-xs btn-warning">Edit</a> <a href="deletepack.php?user_id=<?php echo $row['id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>There is no package.</p>
+                                    <?php
                                 }
-                                
-                                ?>
-                                <tbody>
-                                    <tr>
-                                        <td><?php echo $counter; ?></td>
-                                        <td width="20%"><?php echo $package['name']; ?></td>
-                                        <td width="20%"><?php echo $package['price']; ?></td>
-                                        <td width="20%"><a href="editpackage.php?users=<?php echo $package['id']; ?>" class="btn btn-xs btn-warning">Edit</a> <a href="deletepack.php?user_id=<?php echo $package['id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
-                            </table>
-                            <?php else: ?>
-                                <p>There is no package.</p>
-                            <?php endif; ?>                                   
+                            ?>
+                            </table>                                  
                         </div>
                     </div>
                 </div>

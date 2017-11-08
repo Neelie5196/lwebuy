@@ -3,18 +3,11 @@
 require_once '../connection/config.php';
 session_start();
 $counter = 0; 
-$userslistQuery = $db->prepare("
-    SELECT *
-    FROM users
-    WHERE type = 'staff'
 
-");
-
-$userslistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
+$query1 = "SELECT *
+        FROM users
+        WHERE type = 'staff'";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -58,8 +51,11 @@ $userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($userslist)): ?>
-                            <table class="table thead-bordered table-hover userslist">
+                            <?php 
+                            if(mysqli_num_rows($result1) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered table-hover" id="receive">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -69,27 +65,30 @@ $userslist = $userslistQuery->rowCount() ? $userslistQuery : [];
                                         <th>Contact</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($userslist as $users): 
-                                {
-                                    $counter++;
+                                <?php
+                                    while($row = mysqli_fetch_array($result1))
+                                    {
+                                        $counter++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $counter; ?></td>
+                                                <td width="20%"><?php echo $row['fname']; ?></td>
+                                                <td width="20%"><?php echo $row['lname']; ?></td>
+                                                <td width="20%"><?php echo $row['email']; ?></td>
+                                                <td width="20%"><?php echo $row['contact']; ?></td>
+                                                <td width="20%"><a href="usersview.php?users=<?php echo $row['user_id']; ?>" class="btn btn-xs btn-info">View Detail</a> <a href="editusers.php?users=<?php echo $row['user_id']; ?>" class="btn btn-xs btn-warning">Edit</a> <a href="delete2.php?user_id=<?php echo $row['user_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>There is no staff users.</p>
+                                    <?php
                                 }
-                                
-                                ?>
-                                <tbody class="users">
-                                    <tr>
-                                        <td><?php echo $counter; ?></td>
-                                        <td width="20%"><?php echo $users['fname']; ?></td>
-                                        <td width="20%"><?php echo $users['lname']; ?></td>
-                                        <td width="20%"><?php echo $users['email']; ?></td>
-                                        <td width="20%"><?php echo $users['contact']; ?></td>
-                                        <td width="20%"><a href="staffsview.php?users=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-info">View Detail</a> <a href="editusers.php?users=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-warning">Edit</a> <a href="delete2.php?user_id=<?php echo $users['user_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
-                            </table>
-                            <?php else: ?>
-                                <p>There is no staff users.</p>
-                            <?php endif; ?>                                   
+                            ?>
+                            </table>                                  
                         </div>
                     </div>
                 </div>

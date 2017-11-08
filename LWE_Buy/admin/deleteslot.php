@@ -8,7 +8,7 @@ if (isset($_GET['s_id']))
 {
     $s_id = $_GET['s_id'];
 
-    $result = mysql_query("DELETE FROM slot WHERE s_id=$s_id") or die(mysql_error());
+    $result = mysqli_query($con, "DELETE FROM slot WHERE s_id=$s_id") or die(mysqli_error($con));
     ?>
 		<script>
 		alert('Successfully Delete');

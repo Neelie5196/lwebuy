@@ -8,10 +8,11 @@ if(isset($_POST['name']))
     $price = $_POST['price'];
     $pts = 'PTS';
 	
-	$result = mysql_query("INSERT INTO package SET name='$name ' '$pts', price='$price'") or die(mysql_error());
+	$result = mysqli_query($con, "INSERT INTO package SET name='$name ' '$pts', price='$price'") or die(mysqli_error($con));
     
     ?>
     <script>
+    alert('Successful to Create');
     window.location.href='packagelist.php?success';
     </script>
     <?php

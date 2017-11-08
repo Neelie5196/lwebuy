@@ -2,22 +2,14 @@
 
 require_once '../connection/config.php';
 session_start();
-
 $counter = 0; 
-$packagelistQuery = $db->prepare("
-    SELECT *
-    FROM payment p
-    JOIN users us
-    ON us.user_id = p.user_id
-    WHERE status = 'Completed'
-");
 
-$packagelistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
-
+$query1 = "SELECT *
+            FROM payment p
+            JOIN users us
+            ON us.user_id = p.user_id
+            WHERE status = 'Completed'";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -56,39 +48,43 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                     </div>
                 </div>
                 <div class="row">
-		
-                        <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($packagelist)): ?>
-                            <table class="table thead-bordered table-hover userslist">
-                                <thead>
-                                    <tr>
-                                        <th width = "5%">#</th>
-                                        <th width = "60%">Description</th>
-                                        <th width = "20%">Receipt</th>
-                                        <th width = "15%">Date / Time</th>
-                                    </tr>
-                                </thead>
-
-                                <?php foreach($packagelist as $package): 
+                    <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
+                        <?php 
+                        if(mysqli_num_rows($result1) > 0)
+                        {
+                        ?>
+                        <table class="table thead-bordered table-hover" id="receive">
+                            <thead>
+                                <tr>
+                                    <th width = "5%">#</th>
+                                    <th width = "60%">Description</th>
+                                    <th width = "20%">Receipt</th>
+                                    <th width = "15%">Date / Time</th>
+                                </tr>
+                            </thead>
+                            <?php
+                                while($row = mysqli_fetch_array($result1))
                                 {
                                     $counter++;
+                                    ?>
+                                    <tbody>
+                                        <tr>
+                                            <td><?php echo $counter; ?></td>
+                                            <td><strong><?php echo $row['title']; ?> To <?php echo $row['fname']; ?> <?php echo $row['lname']; ?></strong></td>
+                                            <td><a href="../resources/img/receipts/<?php echo $row['file']; ?>" target="_blank"><?php echo $row['file']; ?></a></td>
+                                            <td><?php echo $row['datetime']; ?></td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
                                 }
-                                
+                            }else{
                                 ?>
-                                <tbody class="users">
-                                    <tr>
-										<td><?php echo $counter; ?></td>
-										<td><strong><?php echo $package['title']; ?> To <?php echo $package['fname']; ?> <?php echo $package['lname']; ?></strong></td>
-										<td><a href="../resources/img/receipts/<?php echo $package['file']; ?>" target="_blank"><?php echo $package['file']; ?></a></td>
-										<td><?php echo $package['datetime']; ?></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
-                            </table>
-                            <?php else: ?>
-                                <p>There is no history.</p>
-                            <?php endif; ?>                                   
-                        </div>
+                                    <p>There is no credit history.</p>
+                                <?php
+                            }
+                        ?>
+                        </table>                              
+                    </div>
                 </div>
             </div>
         </section>

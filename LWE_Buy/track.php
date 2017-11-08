@@ -8,19 +8,14 @@ $query = "SELECT *
           FROM shipping_update_summary
           WHERE HawbNo = '$hawb'
           ";
-$result = mysql_query($query);
-$results = mysql_fetch_assoc($result);
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
-$trackdetailsQuery = $db->prepare("
-    SELECT * 
-    FROM shipping_update_details
-    WHERE HawbNo = '$hawb'
+$query1 = "SELECT * 
+           FROM shipping_update_details
+           WHERE HawbNo = '$hawb'";
+$result1 = mysqli_query($con, $query1);
 
-");
-
-$trackdetailsQuery->execute();
-
-$trackdetails = $trackdetailsQuery->rowCount() ? $trackdetailsQuery : [];
 ?>
 
 <!DOCTYPE html>
@@ -75,32 +70,40 @@ $trackdetails = $trackdetailsQuery->rowCount() ? $trackdetailsQuery : [];
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-12" style="padding:15px;">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-3 col-lg-3">
-                                            <strong>Status</strong><br>
-                                            <?php echo $results['ReasonDescription']; ?>
-                                        </div>
-                                        <div class="col-xs-12 col-md-2 col-lg-2">
-                                            <strong>Customer Ref</strong><br>
-                                            <?php echo $results['XR1']; ?>
-                                        </div>
-                                        <div class="col-xs-12 col-md-3 col-lg-3">
-                                            <strong>Carrier No</strong><br>
-                                            <?php echo $results['HawbNo']; ?>
-                                        </div>
-                                        <div class="col-xs-12 col-md-2 col-lg-2">
-                                            <strong>Send Date</strong><br>
-                                            <small>
-                                                <?php echo $results['ShipmentDate']; ?>
-                                            </small>
-                                        </div>
-                                        <div class="col-xs-12 col-md-2 col-lg-2">
-                                            <strong>Delivered Date</strong><br>
-                                            <small>
-                                                <?php echo $results['DeliveryDate']; ?>
-                                            </small>
-                                        </div>
-                                    </div>
+                                    <?php
+                                        if($results > 0){
+                                            ?>
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-3 col-lg-3">
+                                                        <strong>Status</strong><br>
+                                                        <?php echo $results['ReasonDescription']; ?>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2 col-lg-2">
+                                                        <strong>Customer Ref</strong><br>
+                                                        <?php echo $results['XR1']; ?>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-3 col-lg-3">
+                                                        <strong>Carrier No</strong><br>
+                                                        <?php echo $results['HawbNo']; ?>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2 col-lg-2">
+                                                        <strong>Send Date</strong><br>
+                                                        <small>
+                                                            <?php echo $results['ShipmentDate']; ?>
+                                                        </small>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-2 col-lg-2">
+                                                        <strong>Delivered Date</strong><br>
+                                                        <small>
+                                                            <?php echo $results['DeliveryDate']; ?>
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                        }else{
+                                            echo '<p>Not Found</p>';
+                                        }
+                                    ?>
                                     <br/>
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 col-lg-12">
@@ -111,7 +114,6 @@ $trackdetails = $trackdetailsQuery->rowCount() ? $trackdetailsQuery : [];
                                     <div class="row">
                                         <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                                             <div class="span12 collapse" id="collapse">
-                                                <?php if(!empty($trackdetails)): ?>
                                                 <table class="table table-striped table-hover">
                                                     <thead>
                                                         <tr>
@@ -121,20 +123,29 @@ $trackdetails = $trackdetailsQuery->rowCount() ? $trackdetailsQuery : [];
                                                             <th width="20%">Remarks</th>
                                                         </tr>
                                                     </thead>
-                                                    <?php foreach($trackdetails as $track): ?>
-                                                    <tbody>
-                                                        <tr height="50">
-                                                            <td><?php echo $track['TransactionDate']; ?></td>
-                                                            <td><?php echo $track['StationDescription']; ?></td>
-                                                            <td><?php echo $track['EventDescription']; ?></td>
-                                                            <td><?php echo $track['Remark']; ?></td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <?php endforeach; ?>
+                                                    <?php 
+                                                        if(mysqli_num_rows($result1) > 0)
+                                                        {
+                                                            while($row = mysqli_fetch_array($result1))
+                                                            {
+                                                                ?>
+                                                                <tbody>
+                                                                    <tr height="50">
+                                                                        <td><?php echo $row['TransactionDate']; ?></td>
+                                                                        <td><?php echo $row['StationDescription']; ?></td>
+                                                                        <td><?php echo $row['EventDescription']; ?></td>
+                                                                        <td><?php echo $row['Remark']; ?></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <?php
+                                                            }
+                                                        }else{
+                                                        ?>
+                                                            <p>Not Found.</p>
+                                                        <?php
+                                                        }
+                                                    ?>
                                                 </table>
-                                                <?php else: ?>
-                                                    <p>Not found</p>
-                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>

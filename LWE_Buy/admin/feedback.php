@@ -2,33 +2,19 @@
 
 require_once '../connection/config.php';
 session_start();
-$counter =$counters =0;
+$counter = $counters =0;
 
-$cfeedbackQuery = $db->prepare("
-    SELECT *
-    FROM contact
-    WHERE status = 'unread'
-    ORDER BY datetime desc
-");
+$query1 = "SELECT *
+            FROM contact
+            WHERE status = 'unread'
+            ORDER BY datetime desc";
+$result1 = mysqli_query($con, $query1);
 
-$cfeedbackQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$cfeedback = $cfeedbackQuery->rowCount() ? $cfeedbackQuery : [];
-
-$csfeedbackQuery = $db->prepare("
-    SELECT *
-    FROM contact
-    WHERE status = 'read'
-    ORDER BY datetime desc
-");
-
-$csfeedbackQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$csfeedback = $csfeedbackQuery->rowCount() ? $csfeedbackQuery : [];
+$query2 = "SELECT *
+            FROM contact
+            WHERE status = 'read'
+            ORDER BY datetime desc";
+$result2 = mysqli_query($con, $query2);
 
 ?>
 
@@ -73,8 +59,11 @@ $csfeedback = $csfeedbackQuery->rowCount() ? $csfeedbackQuery : [];
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <?php if(!empty($cfeedback)): ?>
-                        <table class="table thead-bordered table-hover" style="width:80%">
+                        <?php 
+                        if(mysqli_num_rows($result1) > 0)
+                        {
+                        ?>
+                        <table class="table thead-bordered table-hover" style="width:80%;">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -83,25 +72,29 @@ $csfeedback = $csfeedbackQuery->rowCount() ? $csfeedbackQuery : [];
                                     <th>Date / Time</th>
                                 </tr>
                             </thead>
-                            <?php foreach($cfeedback as $c): 
-                            {
-                                $counter++;
+                            <?php
+                                while($row = mysqli_fetch_array($result1))
+                                {
+                                    $counter++;
+                                    ?>
+                                    <tbody>
+                                        <tr>
+                                            <td width="5%"><?php echo $counter; ?></td>
+                                            <td width="20%"><?php echo $row['name']; ?></td>
+                                            <td width="40%"><?php echo $row['subject']; ?></td>
+                                            <td width="20%"><?php echo $row['datetime']; ?></td>
+                                            <td width="15%"><a href="feedbackview.php?cu_id=<?php echo $row['cu_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
+                                }
+                            }else{
+                                ?>
+                                    <p>There is no customer feedback.</p>
+                                <?php
                             }
-                            ?>
-                            <tbody>
-                                <tr>
-                                    <td width="5%"><?php echo $counter; ?></td>
-                                    <td width="20%"><?php echo $c['name']; ?></td>
-                                    <td width="40%"><?php echo $c['subject']; ?></td>
-                                    <td width="20%"><?php echo $c['datetime']; ?></td>
-                                    <td width="15%"><a href="feedbackview.php?cu_id=<?php echo $c['cu_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                </tr>
-                            </tbody>
-                            <?php endforeach; ?>
+                        ?>
                         </table>
-                        <?php else: ?>
-                            <p>There is no customer feedback.</p>
-                        <?php endif; ?>
                     </div>
                 </div>
             </section>
@@ -118,8 +111,11 @@ $csfeedback = $csfeedbackQuery->rowCount() ? $csfeedbackQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <div class="span12 collapse" id="collapse">
-                            <?php if(!empty($csfeedback)): ?>
-                            <table class="table thead-bordered table-hover" style="width:80%">
+                            <?php 
+                            if(mysqli_num_rows($result2) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered table-hover" style="width:80%;">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -128,25 +124,29 @@ $csfeedback = $csfeedbackQuery->rowCount() ? $csfeedbackQuery : [];
                                         <th>Date / Time</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($csfeedback as $cs): 
-                                {
-                                    $counters++;
+                                <?php
+                                    while($row = mysqli_fetch_array($result2))
+                                    {
+                                        $counters++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%"><?php echo $counters; ?></td>
+                                                <td width="20%"><?php echo $row['name']; ?></td>
+                                                <td width="40%"><?php echo $row['subject']; ?></td>
+                                                <td width="20%"><?php echo $row['datetime']; ?></td>
+                                                <td width="15%"><a href="feedbackview.php?cu_id=<?php echo $row['cu_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>There is no customer feedback.</p>
+                                    <?php
                                 }
-                                ?>
-                                <tbody>
-                                    <tr>
-                                        <td width="5%"><?php echo $counters; ?></td>
-                                        <td width="20%"><?php echo $cs['name']; ?></td>
-                                        <td width="40%"><?php echo $cs['subject']; ?></td>
-                                        <td width="20%"><?php echo $cs['datetime']; ?></td>
-                                        <td width="15%"><a href="feedbackview.php?cu_id=<?php echo $cs['cu_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
+                            ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no customer feedback.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

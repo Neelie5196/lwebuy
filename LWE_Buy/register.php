@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			
 			
             $sql = "INSERT INTO users (email, password, lname, fname, type, image) VALUES ('$email', '$password', '$lname', '$fname', 'customer','$image')";
-            mysql_query($sql);
+            mysqli_query($con, $sql);
             ?>
             <script>
             alert('Register Successful');

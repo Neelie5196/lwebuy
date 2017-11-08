@@ -2,46 +2,24 @@
 
 require_once '../connection/config.php';
 session_start();
-$_SESSION['users'] = $_GET['users'];
+$user_id = $_GET['users'];
 
-$usersinfoQuery = $db->prepare("
-    SELECT *
-    FROM users
-    WHERE user_id=:user_id
-");
+$query = "SELECT *
+        FROM users
+        WHERE user_id='$user_id'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
-$usersinfoQuery->execute([
-    'user_id' => $_GET['users']
-]);
+$query1 = "SELECT *
+        FROM warehouse wh
+        JOIN work_station ws
+        ON ws.wh_id = wh.wh_id
+        WHERE user_id='$user_id'";
+$result1 = mysqli_query($con, $query1);
+$results1 = mysqli_fetch_assoc($result1);
 
-$usersinfo = $usersinfoQuery->rowCount() ? $usersinfoQuery : [];
-
-$wsinfoQuery = $db->prepare("
-    SELECT *
-    FROM warehouse wh
-    JOIN work_station ws
-    ON ws.wh_id = wh.wh_id
-    WHERE user_id=:user_id
-    
-");
-
-$wsinfoQuery->execute([
-    'user_id' => $_GET['users']
-]);
-
-$wsinfo = $wsinfoQuery->rowCount() ? $wsinfoQuery : [];
-
-$warehouselistQuery = $db->prepare("
-    SELECT *
-    FROM warehouse
-
-");
-
-$warehouselistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
+$query2 = "SELECT * FROM warehouse";
+$result2 = mysqli_query($con, $query2);
 
 ?>
 
@@ -82,129 +60,143 @@ $warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                         <form action="updateusers.php" method="post">
-                            <?php if(!empty($usersinfo)): ?>
-                                <?php foreach($usersinfo as $users): ?>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <label>First name</label>
-                                                </div>
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <input type="text" name="fname" class="form-control" style="border-radius: 30px; float: left;" value="<?php echo $users['fname']; ?>" required>
-                                                    <input type="hidden" name="user_id" class="form-control" value="<?php echo $_SESSION['users']; ?>">
-                                                </div>
-                                            </div>
+                                            <label>First name</label>
                                         </div>
                                         <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <label>Last name</label>
-                                                </div>
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <input type="text" name="lname" class="form-control" style="border-radius: 30px; float: left;" value="<?php echo $users['lname']; ?>" required>
-                                                </div>
-                                            </div>
+                                            <input type="text" name="fname" class="form-control" style="border-radius: 30px; float: left;" value="<?php echo $results['fname']; ?>" required>
+                                            <input type="hidden" name="user_id" class="form-control" value="<?php echo $user_id; ?>">
                                         </div>
                                     </div>
-                                    <br/>
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-6">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <label>Contact Number</label>
-                                                </div>
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <input type="tel" name="contact" class="form-control" style="border-radius: 30px; float: left;" value="<?php echo $users['contact']; ?>" required>
-                                                </div>
-                                            </div>
+                                            <label>Last name</label>
                                         </div>
                                         <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <label>Email</label>
-                                                </div>
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <input type="email" name="email" class="form-control" style="border-radius: 30px; float: left;" value="<?php echo $users['email']; ?>" required>
-                                                </div>
-                                            </div>
+                                            <input type="text" name="lname" class="form-control" style="border-radius: 30px; float: left;" value="<?php echo $results['lname']; ?>" required>
                                         </div>
                                     </div>
-                                    <br/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <label>Type</label>
-                                                </div>
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <select name="type" class="form-control" style="border-radius: 30px;">
-                                                      <option selected><?php echo $users['type']; ?></option>
-                                                      <option>admin</option>
-                                                      <option>staff</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            <label>Contact Number</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <input type="tel" name="contact" class="form-control" style="border-radius: 30px; float: left;" value="<?php echo $results['contact']; ?>" required>
                                         </div>
                                     </div>
-                                    <br/>
-                                    <?php if(!empty($wsinfo)): ?>
-                                        <?php foreach($wsinfo as $ws): ?>
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-6 col-lg-6">
-                                                    <div class="row">
-                                                        <div class="col-xs-12 col-md-6 col-lg-6">
-                                                            <label>Work Station</label>
-                                                            <input type="hidden" name="ws_id" class="form-control" value="<?php echo $ws['ws_id']; ?>">
-                                                        </div>
-                                                        <div class="col-xs-12 col-md-6 col-lg-6">
-                                                            <select name="workstation" class="form-control" style="border-radius: 30px;">
-                                                                <option selected><?php echo $ws['station_name']; ?></option>
-                                                                <?php if(!empty($warehouselist)): ?>
-                                                                    <?php foreach($warehouselist as $warehouse): ?>
-                                                                        <option value="<?php echo $warehouse['wh_id']; ?>">
-                                                                            <?php echo $warehouse['station_name']; ?>
-                                                                        </option>
-                                                                    <?php endforeach; ?>
-                                                                <?php else: ?>
-                                                                    <p>There is no warehouse records.</p>
-                                                                <?php endif; ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
+                                </div>
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <input type="email" name="email" class="form-control" style="border-radius: 30px; float: left;" value="<?php echo $results['email']; ?>" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <label>Type</label>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6 col-lg-6">
+                                            <select name="type" class="form-control" style="border-radius: 30px;">
+                                              <option selected><?php echo $results['type']; ?></option>
+                                              <option>admin</option>
+                                              <option>staff</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <?php 
+                                if($results1 > 0){
+                                    ?>
                                         <div class="row">
                                             <div class="col-xs-12 col-md-6 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-md-6 col-lg-6">
                                                         <label>Work Station</label>
-                                                        <input type="hidden" name="ws_id" class="form-control" value="<?php echo $ws['ws_id']; ?>">
+                                                        <input type="hidden" name="ws_id" class="form-control" value="<?php echo $results1['ws_id']; ?>">
                                                     </div>
                                                     <div class="col-xs-12 col-md-6 col-lg-6">
                                                         <select name="workstation" class="form-control" style="border-radius: 30px;">
-                                                            <option selected>Please Select</option>
-                                                            <?php if(!empty($warehouselist)): ?>
-                                                                <?php foreach($warehouselist as $warehouse): ?>
-                                                                    <option value="<?php echo $warehouse['wh_id']; ?>">
-                                                                        <?php echo $warehouse['station_name']; ?>
-                                                                    </option>
-                                                                <?php endforeach; ?>
-                                                            <?php else: ?>
-                                                                <p>There is no warehouse records.</p>
-                                                            <?php endif; ?>
+                                                            <option selected><?php echo $results1['station_name']; ?></option>
+                                                            <?php 
+                                                                if(mysqli_num_rows($result2) > 0)
+                                                                {
+                                                                    while($row = mysqli_fetch_array($result2))
+                                                                    {
+                                                                        ?>
+                                                                            <option value="<?php echo $row['wh_id']; ?>">
+                                                                                <?php echo $row['station_name']; ?>
+                                                                            </option>
+                                                                        <?php
+                                                                    }
+                                                                }else{
+                                                                    ?>
+                                                                        <p>There is no warehouse records.</p>
+                                                                    <?php
+                                                                }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            <?php else: ?>
-                                <p>Error.</p>
-                            <?php endif; ?>
+                                    <?php
+                                }else{
+                                    ?>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-xs-12 col-md-6 col-lg-6">
+                                                        <label>Work Station</label>
+                                                        <input type="hidden" name="ws_id" class="form-control" value="<?php echo $results1['ws_id']; ?>">
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-6 col-lg-6">
+                                                        <select name="workstation" class="form-control" style="border-radius: 30px;">
+                                                            <option selected>Please Select</option>
+                                                            <?php 
+                                                                if(mysqli_num_rows($result2) > 0)
+                                                                {
+                                                                    while($row = mysqli_fetch_array($result2))
+                                                                    {
+                                                                        ?>
+                                                                            <option value="<?php echo $row['wh_id']; ?>">
+                                                                                <?php echo $row['station_name']; ?>
+                                                                            </option>
+                                                                        <?php
+                                                                    }
+                                                                }else{
+                                                                    ?>
+                                                                        <p>There is no warehouse records.</p>
+                                                                    <?php
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php
+                                }
+                            ?>
                             <br/>
                             <input type="submit" class="btn btn-success" name="new-users" value="Update">
                         </form>

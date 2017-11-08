@@ -9,8 +9,8 @@ if(isset($_POST['oi_id']))
     $query = "SELECT * 
               FROM adjust
               WHERE name = 'currency'";
-    $result = mysql_query($query);
-    $results = mysql_fetch_assoc($result);
+    $result = mysqli_query($con, $query);
+    $results = mysqli_fetch_assoc($result);
     
     $order_id = $_POST['order_id'];
     $oi_id = $_POST['oi_id'];
@@ -19,7 +19,7 @@ if(isset($_POST['oi_id']))
     $itemprice = $price / $currency;
     
 	
-	$result = mysql_query("UPDATE order_item SET price='$itemprice' WHERE oi_id = $oi_id ") or die(mysql_error());
+	$result = mysqli_query($con, "UPDATE order_item SET price='$itemprice' WHERE oi_id = $oi_id ") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Update');

@@ -2,19 +2,13 @@
 
 require_once '../connection/config.php';
 session_start();
+$user_id = $_SESSION['user_id'];
 
-$profilesettingQuery = $db->prepare("
-    SELECT *
-    FROM users
-    WHERE user_id=:user_id
-");
-
-$profilesettingQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
-
+$query = "SELECT *
+            FROM users
+            WHERE user_id='$user_id'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
 ?>
 
@@ -54,10 +48,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
             <h2>Profile</h2>
             <hr/>
         </center>
-
-        <?php if(!empty($profilesetting)): ?>
         <section class = "content profilesetting">
-            <?php foreach($profilesetting as $profile): ?>
             <div class="container profile">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
@@ -70,8 +61,8 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                                         <label>First Name</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="fname" class="form-control" value="<?php echo $profile['fname']; ?>" style="border-radius: 30px; width: 50%;float: left;" required>
-                                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                                        <input type="text" name="fname" class="form-control" value="<?php echo $results['fname']; ?>" style="border-radius: 30px; width: 50%;float: left;" required>
+                                        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
                                     </div>
                                 </div>
                                 <br/>
@@ -80,7 +71,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                                         <label>Last Name</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="lname" class="form-control" value="<?php echo $profile['lname']; ?>" style="border-radius: 30px; width: 50%;float: left;" required>
+                                        <input type="text" name="lname" class="form-control" value="<?php echo $results['lname']; ?>" style="border-radius: 30px; width: 50%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -89,7 +80,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                                         <label>Email</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="email" name="email" class="form-control" value="<?php echo $profile['email']; ?>" style="border-radius: 30px; width: 50%;float: left;" required>
+                                        <input type="email" name="email" class="form-control" value="<?php echo $results['email']; ?>" style="border-radius: 30px; width: 50%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -98,7 +89,7 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                                         <label>Contact Number</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="tel" name="contact" class="form-control" value="<?php echo $profile['contact']; ?>" style="border-radius: 30px; width: 50%; float: left;" required>
+                                        <input type="tel" name="contact" class="form-control" value="<?php echo $results['contact']; ?>" style="border-radius: 30px; width: 50%; float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -118,9 +109,9 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                                         <label>Current Password</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="password" name="cp" id="cp" class="form-control" style="border-radius: 30px; width: 50%;float: left;" value="<?php echo $profile['password']; ?>" readonly required><br/><br/>
+                                        <input type="password" name="cp" id="cp" class="form-control" style="border-radius: 30px; width: 50%;float: left;" value="<?php echo $results['password']; ?>" readonly required><br/><br/>
                                         
-                                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                                        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
                                     </div>
                                 </div>
                                 <br/>
@@ -148,10 +139,6 @@ $profilesetting = $profilesettingQuery->rowCount() ? $profilesettingQuery : [];
                     </div>
                 </div>
             </div>
-            <?php endforeach; ?>
         </section>
-        <?php else: ?>
-            <p>Error.</p>
-        <?php endif; ?>
     </body>
 </html>

@@ -13,10 +13,10 @@ if(isset($_POST['fname']))
     $ws_id = $_POST['ws_id'];
     $workstation = $_POST['workstation'];
 	
-	$result = mysql_query("UPDATE users SET fname='$fname', lname='$lname', contact='$contact', email='$email', type='$type' WHERE user_id = $user_id ") or die(mysql_error());
+	$result = mysqli_query($con, "UPDATE users SET fname='$fname', lname='$lname', contact='$contact', email='$email', type='$type' WHERE user_id = $user_id ") or die(mysqli_error($con));
     
     
-    $result1 = mysql_query("UPDATE work_station SET wh_id='$workstation' WHERE ws_id = $ws_id ") or die(mysql_error());
+    $result1 = mysqli_query($con, "UPDATE work_station SET wh_id='$workstation' WHERE ws_id = $ws_id ") or die(mysqli_error($con));
     
     ?>
     <script>

@@ -5,35 +5,17 @@ session_start();
 $counter = 0; 
 $counters = 0; 
 
-$slotlistQuery = $db->prepare("
+$query1 = "SELECT *
+            FROM users us
+            JOIN slot s
+            ON s.user_id = us.user_id
+            WHERE status= 'In Use'";
+$result1 = mysqli_query($con, $query1);
 
-    SELECT *
-    FROM users us
-    JOIN slot s
-    ON s.user_id = us.user_id
-    WHERE status= 'In Use'
-
-");
-
-$slotlistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$slotlist = $slotlistQuery->rowCount() ? $slotlistQuery : [];
-
-$slotslistQuery = $db->prepare("
-
-    SELECT *
-    FROM slot
-    WHERE status= 'Not in Use'
-
-");
-
-$slotslistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$slotslist = $slotslistQuery->rowCount() ? $slotslistQuery : [];
+$query2 = "SELECT *
+            FROM slot
+            WHERE status= 'Not in Use'";
+$result2 = mysqli_query($con, $query2);
 
 ?>
 
@@ -82,8 +64,11 @@ $slotslist = $slotslistQuery->rowCount() ? $slotslistQuery : [];
                             <div class="row" style="padding-top: -10px;">
                                 <div class="col-xs-12 col-md-6 col-lg-6">
                                     <h3>In Use</h3>
-                                    <?php if(!empty($slotlist)): ?>
-                                    <table class="table thead-bordered table-hover">
+                                    <?php 
+                                    if(mysqli_num_rows($result1) > 0)
+                                    {
+                                    ?>
+                                    <table class="table thead-bordered table-hover" id="receive">
                                         <thead>
                                             <tr>
                                                 <th width="5%">#</th>
@@ -93,32 +78,38 @@ $slotslist = $slotslistQuery->rowCount() ? $slotslistQuery : [];
                                                 <th width="25%">User Name</th>
                                             </tr>
                                         </thead>
-                                        <?php foreach($slotlist as $slot): 
-                                        {
-                                            $counter++;
+                                        <?php
+                                            while($row = mysqli_fetch_array($result1))
+                                            {
+                                                $counter++;
+                                                ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><?php echo $counter; ?></td>
+                                                        <td><?php echo $row['slot_code']; ?></td>
+                                                        <td><?php echo $row['slot_num']; ?></td>
+                                                        <td><?php echo $row['status']; ?></td>
+                                                        <td><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                        <td><a href="slotitemview.php?s_id=<?php echo $row['s_id']; ?>&slotcode=<?php echo $row['slot_code']; ?>&slotnum=<?php echo $row['slot_num']; ?>&user_id=<?php echo $row['user_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                    </tr>
+                                                </tbody>
+                                                <?php
+                                            }
+                                        }else{
+                                            ?>
+                                                <p>There is no slot in use.</p>
+                                            <?php
                                         }
-
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $counter; ?></td>
-                                                <td><?php echo $slot['slot_code']; ?></td>
-                                                <td><?php echo $slot['slot_num']; ?></td>
-                                                <td><?php echo $slot['status']; ?></td>
-                                                <td><?php echo $slot['fname']; ?> <?php echo $slot['lname']; ?></td>
-                                                <td><a href="slotitemview.php?s_id=<?php echo $slot['s_id']; ?>&slotcode=<?php echo $slot['slot_code']; ?>&slotnum=<?php echo $slot['slot_num']; ?>&user_id=<?php echo $slot['user_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                            </tr>
-                                        </tbody>
-                                        <?php endforeach; ?>
+                                    ?>
                                     </table>
-                                    <?php else: ?>
-                                        <p>There is no slot in use.</p>
-                                    <?php endif; ?>
                                 </div>
                                 <div class="col-xs-12 col-md-6 col-lg-6">
                                     <h3>Not In Use</h3>
-                                    <?php if(!empty($slotslist)): ?>
-                                    <table class="table thead-bordered table-hover">
+                                    <?php 
+                                    if(mysqli_num_rows($result2) > 0)
+                                    {
+                                    ?>
+                                    <table class="table thead-bordered table-hover" id="receives">
                                         <thead>
                                             <tr>
                                                 <th width="5%">#</th>
@@ -127,26 +118,29 @@ $slotslist = $slotslistQuery->rowCount() ? $slotslistQuery : [];
                                                 <th width="20%">Status</th>
                                             </tr>
                                         </thead>
-                                        <?php foreach($slotslist as $slots): 
-                                        {
-                                            $counters++;
+                                        <?php
+                                            while($row = mysqli_fetch_array($result2))
+                                            {
+                                                $counters++;
+                                                ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><?php echo $counters; ?></td>
+                                                        <td><?php echo $row['slot_code']; ?></td>
+                                                        <td><?php echo $row['slot_num']; ?></td>
+                                                        <td><?php echo $row['status']; ?></td>
+                                                        <td><a href="deleteslot.php?s_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
+                                                    </tr>
+                                                </tbody>
+                                                <?php
+                                            }
+                                        }else{
+                                            ?>
+                                                <p>There is no available slot to use.</p>
+                                            <?php
                                         }
-
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $counters; ?></td>
-                                                <td><?php echo $slots['slot_code']; ?></td>
-                                                <td><?php echo $slots['slot_num']; ?></td>
-                                                <td><?php echo $slots['status']; ?></td>
-                                                <td><a href="deleteslot.php?s_id=<?php echo $slots['s_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
-                                            </tr>
-                                        </tbody>
-                                        <?php endforeach; ?>
+                                    ?>
                                     </table>
-                                    <?php else: ?>
-                                        <p>There is no available slot to use.</p>
-                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

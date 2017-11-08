@@ -11,7 +11,7 @@ if(isset($_POST['stationcode']))
     $companyname = $_POST['companyname'];
     $stationname = $_POST['stationname'];
 	
-	$result = mysql_query("INSERT INTO warehouse SET station_code='$stationcode', station_description='$stationdescription', country_code='$countrycode', country_description='$countrydescription', company_name='$companyname', station_name='$stationname'") or die(mysql_error());
+	$result = mysqli_query($con, "INSERT INTO warehouse SET station_code='$stationcode', station_description='$stationdescription', country_code='$countrycode', country_description='$countrydescription', company_name='$companyname', station_name='$stationname'") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Create');

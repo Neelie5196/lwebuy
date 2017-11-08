@@ -12,7 +12,7 @@ if(isset($_POST['wh_id']))
     $companyname = $_POST['companyname'];
     $stationname = $_POST['stationname'];
 	
-	$result = mysql_query("UPDATE warehouse SET station_code='$stationcode', station_description='$stationdescription', country_code='$countrycode', country_description='$countrydescription', company_name='$companyname', station_name='$stationname' WHERE wh_id = $wh_id ") or die(mysql_error());
+	$result = mysqli_query($con, "UPDATE warehouse SET station_code='$stationcode', station_description='$stationdescription', country_code='$countrycode', country_description='$countrydescription', company_name='$companyname', station_name='$stationname' WHERE wh_id = $wh_id ") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Update');

@@ -4,20 +4,13 @@ require_once '../connection/config.php';
 session_start();
 
 $counter = 0; 
-$packagelistQuery = $db->prepare("
-    SELECT *
-    FROM payment p
-    JOIN users us
-    ON us.user_id = p.user_id
-    WHERE status = 'Waiting for Approve'
-");
 
-$packagelistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
-
+$query1 = "SELECT *
+            FROM payment p
+            JOIN users us
+            ON us.user_id = p.user_id
+            WHERE status = 'Waiting for Approve'";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -60,9 +53,12 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                     <div class="row">
 		
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <?php if(!empty($packagelist)): ?>
-                            <table class="table thead-bordered table-hover userslist">
-								<thead>
+                            <?php 
+                            if(mysqli_num_rows($result1) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered table-hover" id="receive">
+                                <thead>
                                     <tr>
                                         <th width = "4%">#</th>
                                         <th width = "18%">Name</th>
@@ -73,29 +69,32 @@ $packagelist = $packagelistQuery->rowCount() ? $packagelistQuery : [];
                                         <th width = "10%">Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($packagelist as $package): 
-                                {
-                                    $counter++;
+                                <?php
+                                    while($row = mysqli_fetch_array($result1))
+                                    {
+                                        $counter++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $counter; ?></td>
+                                                <td><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                <td><?php echo $row['title']; ?></td>
+                                                <td>RM <?php echo $row['amount']; ?></td>
+                                                <td><?php echo $row['datetime']; ?></td>
+                                                <td><a href="../resources/img/receipts/<?php echo $row['file']; ?>" target="_blank"><?php echo $row['file']; ?></a></td>
+                                                <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                                <td><a href="updatepoint.php?user_id=<?php echo $row['user_id']; ?>&p_id=<?php echo $row['p_id']; ?>&point=<?php echo $row['amount']; ?>" class="btn btn-xs btn-warning">Top Up</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>There is no top up request.</p>
+                                    <?php
                                 }
-                                
-                                ?>
-                                <tbody class="users">
-                                    <tr>
-                                        <td><?php echo $counter; ?></td>
-                                        <td><?php echo $package['fname']; ?> <?php echo $package['lname']; ?></td>
-                                        <td><?php echo $package['title']; ?></td>
-                                        <td>RM <?php echo $package['amount']; ?></td>
-                                        <td><?php echo $package['datetime']; ?></td>
-                                        <td><a href="../resources/img/receipts/<?php echo $package['file']; ?>" target="_blank"><?php echo $package['file']; ?></a></td>
-                                        <td><a href="#" class="btn btn-xs btn-info"><?php echo $package['status']; ?></a></td>
-                                        <td><a href="updatepoint.php?user_id=<?php echo $package['user_id']; ?>&p_id=<?php echo $package['p_id']; ?>&point=<?php echo $package['amount']; ?>" class="btn btn-xs btn-warning">Top Up</a></td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
-                            </table>
-                            <?php else: ?>
-                                <p>There is no package.</p>
-                            <?php endif; ?>                                   
+                            ?>
+                            </table>                                  
                         </div>
                     </div>
                 </div>

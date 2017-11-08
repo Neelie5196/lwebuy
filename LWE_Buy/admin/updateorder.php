@@ -9,7 +9,7 @@ if(isset($_POST['oi_id']))
     $status = 'Pending';
     
 	
-	$result = mysql_query("UPDATE order_item SET order_code='$ordercode', statuss = '$status' WHERE oi_id = $oi_id ") or die(mysql_error());
+	$result = mysqli_query($con, "UPDATE order_item SET order_code='$ordercode', statuss = '$status' WHERE oi_id = $oi_id ") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Update');

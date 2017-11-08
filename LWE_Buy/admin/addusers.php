@@ -14,11 +14,11 @@ if(isset($_POST['fname']))
     $workstation = $_POST['workstation'];
 	$image = $_POST['image'];
 	
-	$result = mysql_query("INSERT INTO users SET fname='$fname', lname='$lname', contact='$contact', email='$email', password='$password', type='$type', image='$image'") or die(mysql_error());
+	$result = mysqli_query($con, "INSERT INTO users SET fname='$fname', lname='$lname', contact='$contact', email='$email', password='$password', type='$type', image='$image'") or die(mysqli_error($con));
     
-    $user_id = mysql_insert_id();
+    $user_id = mysqli_insert_id($con);
     
-    $result1 = mysql_query("INSERT INTO work_station SET user_id='$user_id', wh_id='$workstation'") or die(mysql_error());
+    $result1 = mysqli_query($con, "INSERT INTO work_station SET user_id='$user_id', wh_id='$workstation'") or die(mysqli_error($con));
     
     ?>
     <script>

@@ -3,17 +3,8 @@
 require_once '../connection/config.php';
 session_start();
 
-$warehouselistQuery = $db->prepare("
-    SELECT *
-    FROM warehouse
-
-");
-
-$warehouselistQuery->execute([
-    'user_id' => $_SESSION['user_id']
-]);
-
-$warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
+$query1 = "SELECT * FROM warehouse";
+$result1 = mysqli_query($con, $query1);
 
 ?>
 
@@ -137,15 +128,23 @@ $warehouselist = $warehouselistQuery->rowCount() ? $warehouselistQuery : [];
                                         </div>
                                         <div class="col-xs-12 col-md-6 col-lg-6">
                                             <select name="workstation" class="form-control" style="border-radius: 30px;">
-                                                <?php if(!empty($warehouselist)): ?>
-                                                    <?php foreach($warehouselist as $warehouse): ?>
-                                                        <option value="<?php echo $warehouse['wh_id']; ?>" selected>
-                                                            <?php echo $warehouse['station_name']; ?>
-                                                        </option>
-                                                    <?php endforeach; ?>
-                                                <?php else: ?>
-                                                    <p>There is no warehouse records.</p>
-                                                <?php endif; ?>
+                                                <?php 
+                                                if(mysqli_num_rows($result1) > 0)
+                                                {
+                                                    while($row = mysqli_fetch_array($result1))
+                                                    {
+                                                        ?>
+                                                            <option value="<?php echo $row['wh_id']; ?>" selected>
+                                                                <?php echo $row['station_name']; ?>
+                                                            </option>
+                                                        <?php
+                                                    }
+                                                }else{
+                                                    ?>
+                                                        <p>There is no warehouse records.</p>
+                                                    <?php
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>

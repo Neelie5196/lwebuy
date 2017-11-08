@@ -2,33 +2,19 @@
 
 require_once '../connection/config.php';
 session_start();
-$_SESSION['order_id'] = $_GET['order_id'];
-$counter = 0; 
+$order_id = $_GET['order_id'];
+$counter = 0;
 
-$orderhistoryQuery = $db->prepare("
-    SELECT *
-    FROM order_item
-    WHERE order_id=:order_id
-");
+$query1 = "SELECT *
+            FROM order_item
+            WHERE order_id='$order_id'";
+$result1 = mysqli_query($con, $query1);
 
-$orderhistoryQuery->execute([
-    'order_id' => $_SESSION['order_id']
-]);
-
-$orderhistory = $orderhistoryQuery->rowCount() ? $orderhistoryQuery : [];
-
-$bankreceiptQuery = $db->prepare("
-    SELECT *
-    FROM payment
-    WHERE from_order=:from_order
-");
-
-$bankreceiptQuery->execute([
-    'from_order' => $_SESSION['order_id']
-]);
-
-$bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
-
+$query2 = "SELECT *
+            FROM payment
+            WHERE from_order='$order_id'";
+$result2 = mysqli_query($con, $query2);
+$results2 = mysqli_fetch_assoc($result2);
 
 ?>
 
@@ -61,7 +47,7 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
             </div>
             
             <div class="container">
-                <h2>Order# <?php echo $_SESSION['order_id']; ?></h2>
+                <h2>Order# <?php echo $order_id; ?></h2>
                 <hr/>
             </div>
             <section class = "content">
@@ -69,64 +55,69 @@ $bankreceipt = $bankreceiptQuery->rowCount() ? $bankreceiptQuery : [];
                     <div class="row">
                         <form action="#">
                             <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                                <?php if(!empty($orderhistory)): ?>
-                                <table class="table thead-bordered table-hover orderhistory" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Link</th>
-                                            <th>Type</th>
-                                            <th>Unit</th>
-                                            <th>Price (RM)</th>
-                                            <th>Order Code</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <?php foreach($orderhistory as $order): 
+                                <?php 
+                                    if(mysqli_num_rows($result1) > 0)
                                     {
-                                        $counter++;
-                                    }
                                     ?>
-                                    <tbody class="order">
-                                        <tr>
-                                            <td width="5%"><?php echo $counter; ?></td>
-                                            <td width="20%"><?php echo $order['name']; ?></td>
-                                            <td width="20%"><a href="<?php echo $order['link']; ?>" target="_blank"><?php echo $order['link']; ?></a></td>
-                                            <td width="8%"><?php echo $order['type']; ?></td>
-                                            <td width="8%"><?php echo $order['unit']; ?></td>
-                                            <td width="14%"><?php echo $order['price']; ?></td>
-                                            <td width="15%"><?php echo $order['order_code']; ?></td>
-                                            <td width="10%"><?php echo $order['statuss']; ?></td>
-                                        </tr>
-                                    </tbody>
-                                    <?php endforeach; ?>
-                                </table>
-                                <?php else: 
-                                    Error
+                                    <table class="table thead-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Link</th>
+                                                <th>Type</th>
+                                                <th>Unit</th>
+                                                <th>Price (RM)</th>
+                                                <th>Order Code</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                            while($row = mysqli_fetch_array($result1))
+                                            {
+                                                $counter++;
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $counter; ?></td>
+                                                    <td width="20%"><?php echo $row['name']; ?></td>
+                                                    <td width="20%"><a href="<?php echo $row['link']; ?>" target="_blank"><?php echo $row['link']; ?></a></td>
+                                                    <td width="8%"><?php echo $row['type']; ?></td>
+                                                    <td width="8%"><?php echo $row['unit']; ?></td>
+                                                    <td width="14%"><?php echo $row['price']; ?></td>
+                                                    <td width="15%"><?php echo $row['order_code']; ?></td>
+                                                    <td width="10%"><?php echo $row['statuss']; ?></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                            <p>Error.</p>
+                                        <?php
+                                    }
                                 ?>
-                                <?php endif; ?>
+                                </table>
                                 <?php
-                                    $order = $_SESSION['order_id'];
-                                    $result = mysql_query("SELECT sum(price) FROM order_item WHERE order_id= $order") or die(mysql_error());
-                                    while ($rows = mysql_fetch_array($result)) {
+                                    $result = mysqli_query($con, "SELECT sum(price) FROM order_item WHERE order_id= $order_id") or die(mysqli_error($con));
+                                    while ($rows = mysqli_fetch_array($result)) {
                                 ?>
                                 <h2 style="text-align: right; padding-right: 70px;"><small>RM</small> <?php echo $rows['sum(price)']; ?></h2>
                                 <?php
                                     }
                                 ?>
-                                <?php 
-                                if(!empty($bankreceipt)): 
-                                    foreach($bankreceipt as $bank):
-                                ?>
-                                <tfoot>
-                                    <tr>
-                                        <td><label style="float: left;">Bank in Receipt:</label> <em style="float:left;"> <a href="../resources/img/receipts/<?php echo $bank['file']; ?>" target="_blank"><?php echo $bank['title']; ?></a></em></td>
-                                    </tr>
-                                </tfoot>
-                                <?php 
-                                        endforeach; 
-                                    endif;
+                                <?php
+                                    if($results2 > 0){
+                                        ?>
+                                            <tfoot>
+                                                <tr>
+                                                    <td><label style="float: left;">Bank in Receipt:</label> <em style="float:left;"> <a href="../resources/img/receipts/<?php echo $results2['file']; ?>" target="_blank"><?php echo $results2['title']; ?></a></em></td>
+                                                </tr>
+                                            </tfoot>
+                                        <?php
+                                    }else{
+
+                                    }
                                 ?>
                             </div>
                             <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>

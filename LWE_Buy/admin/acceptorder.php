@@ -8,7 +8,7 @@ if(isset($_POST['ol_id']))
     $status = 'Ready to Pay';
     
 	
-	$result = mysql_query("UPDATE order_list SET status='$status', datetime=NOW(), price='$price' WHERE ol_id = $ol_id ") or die(mysql_error());
+	$result = mysqli_query($con, "UPDATE order_list SET status='$status', datetime=NOW(), price='$price' WHERE ol_id = $ol_id ") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Update');

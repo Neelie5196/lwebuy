@@ -14,18 +14,18 @@ if(isset($_POST['receivesave']))
     $weight = $_POST['weight'];
     $action = 'In';
     
-    $result = mysql_query("UPDATE receive_request SET status = '$status' WHERE rr_id = $rr_id ") or die(mysql_error());
+    $result = mysqli_query($con, "UPDATE receive_request SET status = '$status' WHERE rr_id = $rr_id ") or die(mysqli_error($con));
     
     $query = "SELECT * 
               FROM slot
               WHERE user_id = '$user_id'";
-    $results = mysql_query($query);
-    $resultss = mysql_num_rows($results);
+    $results = mysqli_query($con, $query);
+    $resultss = mysqli_num_rows($results);
     if($resultss > 0){
-        $result1 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight', action='$action'") or die(mysql_error());
+        $result1 = mysqli_query($con, "INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight', action='$action'") or die(mysqli_error($con));
     }else{
-        $result1 = mysql_query("UPDATE slot SET status = '$statuss', user_id = '$user_id' WHERE s_id = $s_id ") or die(mysql_error());
-        $result2 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight', action='$action'") or die(mysql_error());
+        $result1 = mysqli_query($con, "UPDATE slot SET status = '$statuss', user_id = '$user_id' WHERE s_id = $s_id ") or die(mysqli_error($con));
+        $result2 = mysqli_query($con, "INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight', action='$action'") or die(mysqli_error($con));
     }
     ?>
     <script>
@@ -53,25 +53,25 @@ if(isset($_POST['ordersave']))
               FROM order_item
               WHERE order_id = '$order_id' AND statuss = 'Pending'";
     
-    $rresults = mysql_query($querys);
-    $rresultss = mysql_num_rows($rresults);
+    $rresults = mysqli_query($con, $querys);
+    $rresultss = mysqli_num_rows($rresults);
     if($rresultss > 1){
-        $result = mysql_query("UPDATE order_item SET statuss = '$status' WHERE oi_id = $oi_id ") or die(mysql_error());
+        $result = mysqli_query($con, "UPDATE order_item SET statuss = '$status' WHERE oi_id = $oi_id ") or die(mysqli_error($con));
     }else if($rresultss = 1){
-        $result0 = mysql_query("UPDATE order_list SET status = '$status' WHERE ol_id = $order_id ") or die(mysql_error());
-        $result = mysql_query("UPDATE order_item SET statuss = '$status' WHERE oi_id = $oi_id ") or die(mysql_error());
+        $result0 = mysqli_query($con, "UPDATE order_list SET status = '$status' WHERE ol_id = $order_id ") or die(mysqli_error($con));
+        $result = mysqli_query($con, "UPDATE order_item SET statuss = '$status' WHERE oi_id = $oi_id ") or die(mysqli_error($con));
     }
     
     $query = "SELECT * 
               FROM slot
               WHERE user_id = '$user_id'";
-    $results = mysql_query($query);
-    $resultss = mysql_num_rows($results);
+    $results = mysqli_query($con, $query);
+    $resultss = mysqli_num_rows($results);
     if($resultss > 0){
-        $result1 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight', action='$action'") or die(mysql_error());
+        $result1 = mysqli_query($con, "INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight', action='$action'") or die(mysqli_error($con));
     }else{
-        $result1 = mysql_query("UPDATE slot SET status = '$statuss', user_id = '$user_id' WHERE s_id = $s_id ") or die(mysql_error());
-        $result2 = mysql_query("INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight', action='$action'") or die(mysql_error());
+        $result1 = mysqli_query($con, "UPDATE slot SET status = '$statuss', user_id = '$user_id' WHERE s_id = $s_id ") or die(mysqli_error($con));
+        $result2 = mysqli_query($con, "INSERT INTO item SET s_id='$s_id', from_id='$from', name='$name', order_code='$order_code', weight='$weight', action='$action'") or die(mysqli_error($con));
     }
     ?>
     <script>
