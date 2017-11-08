@@ -135,8 +135,11 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                             }
                                             ?>
                                         </td>
-                                        <td width="20%"><?php echo $ns['datetime']; ?></td>
-                                        <td width="5%"><a href="tag.php?s_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">Print tag</a></td>
+                                        <td width="15%"><?php echo $ns['datetime']; ?></td>
+                                        <td width="10%">
+                                            <a href="tag.php?s_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">Print tag</a>
+                                            <a href="shippinglrview.php?shipping_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">View</a>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
@@ -175,10 +178,11 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                 <?php foreach($shipping as $s): ?>
                                 <tbody>
                                     <tr>
-                                        <td width="5%"><?php echo $s['s_id']; ?></td>
+                                        <td width="10%"><?php echo $s['s_id']; ?></td>
                                         <td width="40%"><?php echo $s['fname']; ?> <?php echo $s['lname']; ?></td>
                                         <td width="15%"><?php echo $s['datetime']; ?></td>
                                         <td width="10%"><?php echo $s['status']; ?></td>
+                                        <td width="5"><a href="shippinglpview.php?shipping_id=<?php echo $s['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-info">View</a></td>
                                     </tr>
                                 </tbody>
                                 <?php endforeach; ?>
