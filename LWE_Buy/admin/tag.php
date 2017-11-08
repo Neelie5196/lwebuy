@@ -115,6 +115,7 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
         <p>
             <button onclick="printDiv('parceltag')">Print</button>
             <a href="shippinglist.php"><button>Back</button></a>
+            <a href="updateshipping.php?tracking_code=<?php echo $sd['tracking_code']; ?>"><button>Update</button></a>
         </p>
     </body>
 </html>
