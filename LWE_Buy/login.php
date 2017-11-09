@@ -33,14 +33,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 
                 if($user['type'] == 'admin')
                 {
+					$result = mysqli_query($con, "UPDATE users
+													SET login_status = 'Online'
+													WHERE user_id = '$_SESSION[user_id]';");
                     header("location: admin/dashboard.php");
                 }
                 else if($user['type'] == 'staff')
-                {
+                {	
+					$result = mysqli_query($con, "UPDATE users
+								SET login_status = 'Online'
+								WHERE user_id = '$_SESSION[user_id]';");
                     header("location: admin/dashboard.php");
                 }
                 else if($user['type'] == 'customer')
                 {
+						$result = mysqli_query($con, "UPDATE users
+						SET login_status = 'Online'
+						WHERE user_id = '$_SESSION[user_id]';");
                     header("location: user/dashboard.php");
                 }
                             
@@ -48,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             }
             else
             {
-                $_SESSION['message'] = "You have entered wrong password, try again!";
+               alert('You have entered wrong password, try again!');
             }
         }
     }

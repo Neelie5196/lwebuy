@@ -32,9 +32,9 @@
         <div class="message-left">
             <ul>
                 <?php 
-                    $q = mysqli_query($con, "SELECT * FROM `users` WHERE user_id!='$user_id' and type='admin'");
+                    $q = mysqli_query($con, "SELECT * FROM `users` WHERE user_id!='$user_id' and (type='admin'||type='bot') and login_status='Online'");
                     while($row = mysqli_fetch_assoc($q)){
-                        echo "<a href='message.php?user_id={$row['user_id']}'><li><img src='{$row['image']}'> {$row['fname']}</li></a>";
+                        echo "<a href='message.php?user_id={$row['user_id']}'><li><img src='{$row['image']}'> {$row['fname']}({$row['login_status']})</li></a>";
                     }
                 ?>
             </ul>
