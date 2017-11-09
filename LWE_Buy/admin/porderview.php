@@ -142,7 +142,7 @@ $results2 = mysqli_fetch_assoc($result2);
             </section>
         </center>
     </body>
-        <div class="modal fade" id="imagedialog" role="dialog">
+    <div class="modal fade" id="imagedialog" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="proceedorder.php" method="post">

@@ -48,4 +48,28 @@ else
     </script>
     <?php
 }
+
+if(isset($_POST['approves']))
+{
+    $shipping_id = $_POST['shipping_id'];
+    $p_id = $_POST['p_id'];
+    $statuss = 'Completed';
+    
+    $result = mysqli_query($con, "UPDATE payment SET status = '$statuss' WHERE p_id = $p_id ") or die(mysqli_error($con));
+    ?>
+    <script>
+    alert('Success to Update');
+    window.location.href='shippinglrview.php?shipping_id=<?php echo $shipping_id; ?>&success';
+    </script>
+    <?php
+}
+else
+{
+    ?>
+    <script>
+    alert('Error While Update, Please try again');
+    window.location.href='shippinglrview.php?shipping_id=<?php echo $shipping_id; ?>&fail';
+    </script>
+    <?php
+}
 ?>
