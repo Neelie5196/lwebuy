@@ -20,8 +20,8 @@
         <![endif]-->
     </head>
 
-    <body>
-        <div class="row">
+    <body class="homepagebg">
+        <div class="row homepagenav">
             <?php include_once('nav.php')?>
         </div>
 

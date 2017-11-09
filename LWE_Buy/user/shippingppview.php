@@ -54,7 +54,7 @@ $result2 = mysqli_query($con, $query2);
         
     </head>
 
-    <body background="../resources/img/bg.jpg">
+    <body>
         <center>
             <div class="row">
                 <?php include_once('nav.php')?>

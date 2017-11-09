@@ -18,11 +18,11 @@
                         <li><a href="purchasehistory.php">Purchase History</a></li>
                     </ul>
                 </li>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Receive <span class="caret"></span></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Inventory <span class="caret"></span></a>
                     <ul class="dropdown-menu menuitem">
-                        <li><a href="receive-1.php">Receive Request</a></li>
-                        <li><a href="receivehistory.php">Receive History</a></li>
-                        <li><a href="receiveditem.php">Received Item</a></li>
+                        <li><a href="receive-1.php">Add Inventory</a></li>
+                        <li><a href="receivehistory.php">Inventory Records</a></li>
+                        <li><a href="receiveditem.php">Manage Inventory</a></li>
                     </ul>
                 </li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Shipping <span class="caret"></span></a>
@@ -38,9 +38,7 @@
                         <li><a href="transaction.php">Transaction History</a></li>
                     </ul>
                 </li>
-                <li><a href="service.php" class="menuitem">Service</a></li>
-                <li><a href="contact.php" class="menuitem">Contact us</a></li>
-                 <li><a href="message.php" class="menuitem">Inbox</a></li>
+                <li><a href="message.php" class="menuitem">Inbox</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

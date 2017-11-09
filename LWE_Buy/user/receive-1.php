@@ -27,14 +27,14 @@ session_start();
         
     </head>
 
-    <body background="../resources/img/bg.jpg">
+    <body>
         <center>
             <div class="row">
                 <?php include_once('nav.php')?>
             </div>
             
             <div class="container">
-                <h2>Receive Item</h2>
+                <h2>Add Inventory</h2>
                 <hr/>
             </div>
             
@@ -45,7 +45,7 @@ session_start();
                             <div class="container">
                                 <div class="row">
                                     <div class="col-xs-12 col-md-12 jumbotron">
-                                        <h3 class="title">How Many Item to Receive</h3>
+                                        <h3 class="title">Please enter number of items to add:</h3>
                                         <table>
                                             <tbody>
                                                 <tr>
@@ -58,7 +58,7 @@ session_start();
                                     </div>
                                 </div>
                             </div>
-                            <input type="submit" class="btn btn-default" name="submit" value="Receive Form">
+                            <input type="submit" class="btn btn-default" name="submit" value="Next">
                             <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>
                         </form>
                         

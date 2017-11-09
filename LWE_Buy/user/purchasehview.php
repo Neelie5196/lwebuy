@@ -41,7 +41,7 @@ $results1 = mysqli_fetch_assoc($result1);
         
     </head>
 
-    <body background="../resources/img/bg.jpg">
+    <body>
         <center>
             <div class="row">
                 <?php include_once('nav.php')?>

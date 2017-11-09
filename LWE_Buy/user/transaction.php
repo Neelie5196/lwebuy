@@ -39,7 +39,7 @@ $result1 = mysqli_query($con, $query1);
         <![endif]-->
     </head>
 
-    <body background="../resources/img/bg.jpg">
+    <body>
         <section class = "content"> 
 		<center>
             <div class="row">

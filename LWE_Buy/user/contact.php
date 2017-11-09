@@ -34,7 +34,7 @@ $results = mysqli_fetch_assoc($result);
         
     </head>
 
-    <body background="../resources/img/bg.jpg">
+    <body>
         <div class="row">
             <?php include_once('nav.php')?>
         </div>
@@ -151,5 +151,11 @@ $results = mysqli_fetch_assoc($result);
                 </div>
             </div>
         </section>
+        
+        <div class="footercontainer">
+            <div class="footer">
+                <?php include_once('../footer.php') ?>
+            </div>
+        </div>
     </body>
 </html>

@@ -36,7 +36,7 @@ if (mysqli_num_rows($result) > 0) {
         
     </head>
 
-    <body background="../resources/img/bg.jpg">
+    <body>
         <center>
             <div class="row">
                 <?php include_once('nav.php')?>

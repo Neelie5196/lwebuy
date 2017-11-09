@@ -27,14 +27,14 @@ session_start();
         
     </head>
 
-    <body background="../resources/img/bg.jpg">
+    <body>
         <center>
             <div class="row">
                 <?php include_once('nav.php')?>
             </div>
             
             <div class="container">
-                <h2>Receive Item</h2>
+                <h2>Add Inventory</h2>
                 <hr/>
             </div>
             

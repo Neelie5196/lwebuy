@@ -41,312 +41,339 @@ $results = mysqli_fetch_assoc($result);
             <?php include_once('nav.php')?>
         </div>
 
-        <div class="row"> 
-            <div class="col-xs-5 col-md-5 col-lg-5">
-                <a href="purchaselist.php">
-                    <div class="row udashrow1">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
-                            <!-- purchase -->
-                            <h3>Purchase</h3>
-                            
-                            <div class="row">
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box1">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Pending requests</p>
+        <div class="container">
+            <div class="row udash"> 
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                    <a href="purchaselist.php">
+                        <div class="row udashrow1">
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <!-- purchase -->
+                                <h3>Purchase</h3>
 
-                                            <p>
-                                            <?php
-                                                $query1 = "SELECT status FROM order_list WHERE user_id='$user_id'";
-                                                $result1 = mysqli_query($con, $query1);
-                                                $count1 = 0;
-                                                if(mysqli_num_rows($result1) > 0)
-                                                {
-                                                    while($row = mysqli_fetch_array($result1))
+                                <div class="row">
+                                    <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box1">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <p>Pending requests</p>
+
+                                                <p>
+                                                <?php
+                                                    $query1 = "SELECT status FROM order_list WHERE user_id='$user_id'";
+                                                    $result1 = mysqli_query($con, $query1);
+                                                    $count1 = 0;
+                                                    if(mysqli_num_rows($result1) > 0)
                                                     {
-                                                        if ($row['status']=="Request")
+                                                        while($row = mysqli_fetch_array($result1))
                                                         {
-                                                            $count1 += 1;
+                                                            if ($row['status']=="Request")
+                                                            {
+                                                                $count1 += 1;
+                                                            }
+                                                            else
+                                                            {
+                                                                $count1 = $count1;
+                                                            }
                                                         }
-                                                        else
-                                                        {
-                                                            $count1 = $count1;
-                                                        }
+                                                        echo $count1;
+                                                    }else{
+                                                        echo '<p>0</p>';
                                                     }
-                                                    echo $count1;
-                                                }else{
-                                                    echo '<p>0</p>';
-                                                }
-                                            ?>
-                                            </p>
+                                                ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <p>Awaiting payment</p>
+
+                                                <p>
+                                                <?php
+                                                    $query2 = "SELECT status FROM order_list WHERE user_id='$user_id'";
+                                                    $result2 = mysqli_query($con, $query2);
+                                                    $count2 = 0;
+                                                    if(mysqli_num_rows($result2) > 0)
+                                                    {
+                                                        while($row = mysqli_fetch_array($result2))
+                                                        {
+                                                            if ($row['status']=="Ready to pay")
+                                                            {
+                                                                $count2 += 1;
+                                                            }
+                                                            else
+                                                            {
+                                                                $count2 = $count2;
+                                                            }
+                                                        }
+                                                        echo $count2;
+                                                    }else{
+                                                        echo '<p>0</p>';
+                                                    }
+                                                ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <p>Parcels proceeded</p>
+
+                                                <p>
+                                                <?php
+                                                    $query3 = "SELECT status FROM order_list WHERE user_id='$user_id'";
+                                                    $result3 = mysqli_query($con, $query3);
+                                                    $count3 = 0;
+                                                    if(mysqli_num_rows($result3) > 0)
+                                                    {
+                                                        while($row = mysqli_fetch_array($result3))
+                                                        {
+                                                            if ($row['status']=="Paid")
+                                                            {
+                                                                $count3 += 1;
+                                                            }
+                                                            else
+                                                            {
+                                                                $count3 = $count3;
+                                                            }
+                                                        }
+                                                        echo $count3;
+                                                    }else{
+                                                        echo '<p>0</p>';
+                                                    }
+                                                ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <p>Parcels in-house</p>
+
+                                                <p>
+                                                <?php
+                                                    $query4 = "SELECT * FROM slot sl JOIN item it ON sl.s_id = it.s_id WHERE user_id='$user_id'";
+                                                    $result4 = mysqli_query($con, $query4);
+                                                    $count4 = 0;
+                                                    if(mysqli_num_rows($result4) > 0)
+                                                    {
+                                                        while($row = mysqli_fetch_array($result4))
+                                                        {
+                                                            if ($row['action']=="In")
+                                                            {
+                                                                $count4 += 1;
+                                                            }
+                                                            else
+                                                            {
+                                                                $count4 = $count4;
+                                                            }
+                                                        }
+                                                        echo $count4;
+                                                    }else{
+                                                        echo '<p>0</p>';
+                                                    }
+                                                ?>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Awaiting payment</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $query2 = "SELECT status FROM order_list WHERE user_id='$user_id'";
-                                                $result2 = mysqli_query($con, $query2);
-                                                $count2 = 0;
-                                                if(mysqli_num_rows($result2) > 0)
-                                                {
-                                                    while($row = mysqli_fetch_array($result2))
-                                                    {
-                                                        if ($row['status']=="Ready to pay")
-                                                        {
-                                                            $count2 += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count2 = $count2;
-                                                        }
-                                                    }
-                                                    echo $count2;
-                                                }else{
-                                                    echo '<p>0</p>';
-                                                }
-                                            ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Parcels proceeded</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $query3 = "SELECT status FROM order_list WHERE user_id='$user_id'";
-                                                $result3 = mysqli_query($con, $query3);
-                                                $count3 = 0;
-                                                if(mysqli_num_rows($result3) > 0)
-                                                {
-                                                    while($row = mysqli_fetch_array($result3))
-                                                    {
-                                                        if ($row['status']=="Paid")
-                                                        {
-                                                            $count3 += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count3 = $count3;
-                                                        }
-                                                    }
-                                                    echo $count3;
-                                                }else{
-                                                    echo '<p>0</p>';
-                                                }
-                                            ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Parcels in-house</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $query4 = "SELECT * FROM slot sl JOIN item it ON sl.s_id = it.s_id WHERE user_id='$user_id'";
-                                                $result4 = mysqli_query($con, $query4);
-                                                $count4 = 0;
-                                                if(mysqli_num_rows($result4) > 0)
-                                                {
-                                                    while($row = mysqli_fetch_array($result4))
-                                                    {
-                                                        if ($row['action']=="In")
-                                                        {
-                                                            $count4 += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count4 = $count4;
-                                                        }
-                                                    }
-                                                    echo $count4;
-                                                }else{
-                                                    echo '<p>0</p>';
-                                                }
-                                            ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                    <a href="shippinglist.php">
+                        <div class="row udashrow1">
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <!-- shipping -->
+                                <h3>Shipping</h3>
+
+                                <div class="row">
+                                    <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box1">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <p>Pending requests</p>
+
+                                                <p>
+                                                <?php
+                                                    $query5 = "SELECT status FROM shipping WHERE user_id='$user_id'";
+                                                    $result5 = mysqli_query($con, $query5);
+                                                    $count5 = 0;
+                                                    if(mysqli_num_rows($result5) > 0)
+                                                    {
+                                                        while($row = mysqli_fetch_array($result5))
+                                                        {
+                                                            if ($row['status']=="Request")
+                                                            {
+                                                                $count5 += 1;
+                                                            }
+                                                            else
+                                                            {
+                                                                $count5 = $count5;
+                                                            }
+                                                        }
+                                                        echo $count5;
+                                                    }else{
+                                                        echo '<p>0</p>';
+                                                    }
+                                                ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <p>Awaiting payment</p>
+
+                                                <p>
+                                                <?php
+                                                    $query6 = "SELECT status FROM shipping WHERE user_id='$user_id'";
+                                                    $result6 = mysqli_query($con, $query5);
+                                                    $count6 = 0;
+                                                    if(mysqli_num_rows($result6) > 0)
+                                                    {
+                                                        while($row = mysqli_fetch_array($result6))
+                                                        {
+                                                            if ($row['status']=="Pending Payment")
+                                                            {
+                                                                $count6 += 1;
+                                                            }
+                                                            else
+                                                            {
+                                                                $count6 = $count6;
+                                                            }
+                                                        }
+                                                        echo $count6;
+                                                    }else{
+                                                        echo '<p>0</p>';
+                                                    }
+                                                ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <p>Items proceeded</p>
+
+                                                <p>
+                                                <?php
+                                                    $query7 = "SELECT status FROM shipping WHERE user_id='$user_id'";
+                                                    $result7 = mysqli_query($con, $query7);
+                                                    $count7 = 0;
+                                                    if(mysqli_num_rows($result7) > 0)
+                                                    {
+                                                        while($row = mysqli_fetch_array($result7))
+                                                        {
+                                                            if ($row['status']=="Proceed")
+                                                            {
+                                                                $count7 += 1;
+                                                            }
+                                                            else
+                                                            {
+                                                                $count7 = $count7;
+                                                            }
+                                                        }
+                                                        echo $count7;
+                                                    }else{
+                                                        echo '<p>0</p>';
+                                                    }
+                                                ?>
+                                                </p>                                            
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                                <p>Delivered Items</p>
+
+                                                <p>
+                                                <?php
+                                                    $query8 = "SELECT status FROM shipping WHERE user_id='$user_id'";
+                                                    $result8 = mysqli_query($con, $query8);
+                                                    $count8 = 0;
+                                                    if(mysqli_num_rows($result8) > 0)
+                                                    {
+                                                        while($row = mysqli_fetch_array($result8))
+                                                        {
+                                                            if ($row['status']=="Delivered")
+                                                            {
+                                                                $count8 += 1;
+                                                            }
+                                                            else
+                                                            {
+                                                                $count8 = $count8;
+                                                            }
+                                                        }
+                                                        echo $count8;
+                                                    }else{
+                                                        echo '<p>0</p>';
+                                                    }
+                                                ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
-            
-            <div class="col-xs-5 col-md-5 col-lg-5">
-                <a href="shippinglist.php">
-                    <div class="row udashrow1">
+
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-lg-8">
+                    <div class="row udashrow2">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <!-- shipping -->
-                            <h3>Shipping</h3>
-                            
-                            <div class="row">
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box1">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Pending requests</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $query5 = "SELECT status FROM shipping WHERE user_id='$user_id'";
-                                                $result5 = mysqli_query($con, $query5);
-                                                $count5 = 0;
-                                                if(mysqli_num_rows($result5) > 0)
-                                                {
-                                                    while($row = mysqli_fetch_array($result5))
-                                                    {
-                                                        if ($row['status']=="Request")
-                                                        {
-                                                            $count5 += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count5 = $count5;
-                                                        }
-                                                    }
-                                                    echo $count5;
-                                                }else{
-                                                    echo '<p>0</p>';
-                                                }
-                                            ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Awaiting payment</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $query6 = "SELECT status FROM shipping WHERE user_id='$user_id'";
-                                                $result6 = mysqli_query($con, $query5);
-                                                $count6 = 0;
-                                                if(mysqli_num_rows($result6) > 0)
-                                                {
-                                                    while($row = mysqli_fetch_array($result6))
-                                                    {
-                                                        if ($row['status']=="Pending Payment")
-                                                        {
-                                                            $count6 += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count6 = $count6;
-                                                        }
-                                                    }
-                                                    echo $count6;
-                                                }else{
-                                                    echo '<p>0</p>';
-                                                }
-                                            ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Items proceeded</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $query7 = "SELECT status FROM shipping WHERE user_id='$user_id'";
-                                                $result7 = mysqli_query($con, $query7);
-                                                $count7 = 0;
-                                                if(mysqli_num_rows($result7) > 0)
-                                                {
-                                                    while($row = mysqli_fetch_array($result7))
-                                                    {
-                                                        if ($row['status']=="Proceed")
-                                                        {
-                                                            $count7 += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count7 = $count7;
-                                                        }
-                                                    }
-                                                    echo $count7;
-                                                }else{
-                                                    echo '<p>0</p>';
-                                                }
-                                            ?>
-                                            </p>                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-xs-3 col-md-3 col-lg-3 udashrow1box2">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-12 col-lg-12">
-                                            <p>Delivered Items</p>
-                                            
-                                            <p>
-                                            <?php
-                                                $query8 = "SELECT status FROM shipping WHERE user_id='$user_id'";
-                                                $result8 = mysqli_query($con, $query8);
-                                                $count8 = 0;
-                                                if(mysqli_num_rows($result8) > 0)
-                                                {
-                                                    while($row = mysqli_fetch_array($result8))
-                                                    {
-                                                        if ($row['status']=="Delivered")
-                                                        {
-                                                            $count8 += 1;
-                                                        }
-                                                        else
-                                                        {
-                                                            $count8 = $count8;
-                                                        }
-                                                    }
-                                                    echo $count8;
-                                                }else{
-                                                    echo '<p>0</p>';
-                                                }
-                                            ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- address -->
+                            <h3>Warehouse details</h3>
+
+                            <div class="row warehousedetr">
+                                <div class="col-xs-12 col-md-12 col-lg-12 udashrow1box1">
+                                    <table class="tblwarehouse">
+                                        <tr>
+                                            <td class="waretdlbl"><label for="stName">Name: </label></td>
+                                            <td class="waretdinput"><input type="text" id="name" autocomplete="off" class="warehouseinput" /></td>
+                                            <td class="waretdbtn"><input type= "submit" id ="name-submit" class="btn btn-default" value="Search" /></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td class="waretdlbl"><label for="stName">Address: </label></td>
+                                            <td colspan="2"><div id ="name-data"></div></td
+                                        </tr>
+                                    </table>
+                                </div>			
+                            </div>                      
                         </div>
                     </div>
-                </a>
-            </div>
-            
-            <div class="col-xs-2 col-md-2 col-lg-2">
-                <a href="#">
-                    <div class="row udashrow1">
+                </div>
+                
+                <div class="col-xs-12 col-md-4 col-lg-4">
+                    <div class="row udashrow2">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <!-- point -->
                             <h3>Points</h3>
-                            
+
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-12 udashrow1box1">
                                     <?php
                                         $query9 = "SELECT * FROM point WHERE user_id='$user_id'";
                                         $result9 = mysqli_query($con, $query9);
                                         $results9 = mysqli_fetch_assoc($result9);
-                                    
+
                                         if($results9 > 0){
                                             ?>
                                                 <p><?php echo $results9['point']; ?></p>
@@ -364,7 +391,7 @@ $results = mysqli_fetch_assoc($result);
                                             <div class="modal-content">
                                                 <form action="reload.php" method="post" enctype="multipart/form-data">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Point Reload</h4>
+                                                        <h4 class="modal-title">Point Top Up</h4>
                                                     </div>
 
                                                     <div class="modal-body">
@@ -377,7 +404,7 @@ $results = mysqli_fetch_assoc($result);
                                                             <input type="hidden" name="amount" value="{{reloadamt*<?php echo $results['value']; ?> | number:2}}">
                                                             Amount to be paid: RM {{reloadamt*<?php echo $results['value']; ?> | number:2}}
                                                         </p>
-                                                        
+
                                                         <p>Instructions for top up:<br/>
                                                             Please bank in amount to the following bank account and submit transaction details. Thank you.</p>
                                                         <p>
@@ -385,7 +412,7 @@ $results = mysqli_fetch_assoc($result);
                                                             Account No.: 123456789<br/>
                                                             Account name: Logistics Worldwide Express(M) Sdn Bhd
                                                         </p>
-                                                
+
                                                         <label for="file">Transaction receipt: </label>
                                                         <input type="file" name="file" id="file" required/>
                                                     </div>
@@ -402,43 +429,13 @@ $results = mysqli_fetch_assoc($result);
                             </div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-xs-6 col-md-6 col-lg-6">
-                <div class="row udashrow2">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <!-- address -->
-                        <h3>Warehouse details</h3>
-                        
-	
-                        <div>
-                            <div class="row warehousedetr">
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <label for="stName">Name: </label>
-                                </div>
-
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                  <input type="text" id="name" autocomplete="off"  style="border-radius: 30px; width: 30%;">
-                                </div>			
-                            </div>
-							<div class="row warehousedetr">                  
-                                <div class="col-xs-11 col-md-11 col-lg-11">
-								 <label for="stName">Address: </label>
-									<div id ="name-data"></div>	
-                                </div>			
-                            </div>
-                             <div class="row warehousedetr">                  
-                                <div class="col-xs-11 col-md-11 col-lg-11">
-									 <input type= "submit" id ="name-submit" class="btn btn-success" value="Get" >
-									 
-                                </div>			
-                            </div>                      
-                        </div>
-                    </div>
-                </div>
+        <div class="noscrollfooter footercontainer">
+            <div class="footer">
+                <?php include_once('../footer.php') ?>
             </div>
         </div>
     </body>

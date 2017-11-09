@@ -27,13 +27,13 @@ session_start();
         
     </head>
 
-    <body background="../resources/img/bg.jpg">
+    <body>
         <center>
             <div class="row">
                 <?php include_once('nav.php')?>
             </div>
             
-            <div class="container">
+            <div>
                 <h2>Purchase Product</h2>
                 <hr/>
             </div>
@@ -45,7 +45,7 @@ session_start();
                             <div class="container">
                                 <div class="row">
                                     <div class="col-xs-12 col-md-12 jumbotron">
-                                        <h3 class="title">How Many Product to Purchase</h3>
+                                        <h3 class="title">Enter number of product to be purchased</h3>
                                         <table>
                                             <tbody>
                                                 <tr>

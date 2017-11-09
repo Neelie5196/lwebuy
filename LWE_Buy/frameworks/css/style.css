@@ -1,6 +1,16 @@
 body {
+    background-image: url("../../resources/img/bg.jpg");
     font-family: sans-serif;
     overflow-x: hidden;
+}
+
+.homepagebg {
+    background: none;
+}
+
+.container {
+    width: 60%;
+    margin: 0px auto;
 }
 
 .parallax {
@@ -8,7 +18,7 @@ body {
     min-height: 300px;
     background-attachment: fixed;
     background-position: center;
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
 }
@@ -52,29 +62,6 @@ body {
     height: 100%;
 }
 
-.homecontent {
-    background-color: rgba(255,255,255,0.8);
-    margin: 30px 0;
-}
-
-.userlogin {
-    border: groove 1px #dee0e2;
-    border-radius: 10px;
-    padding: 10px 5px;
-}
-
-.formfield {
-    padding: 10px 8px;
-}
-
-.btnreg {
-    margin-left: 10px;
-}
-
-.userreg {
-    border: solid 1px #dee0e2;
-}
-
 .dropdown-menu {
     display: none;
     position: absolute;
@@ -100,33 +87,74 @@ body {
     display: block;
 }
 
+.homecontent {
+    background-color: rgba(255,255,255,0.8);
+    margin: 30px 0;
+}
+
+.userlogin {
+    border: groove 1px #dee0e2;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 5px;
+}
+
+.formfield {
+    padding: 10px 8px;
+}
+
+.btnreg {
+    margin-left: 10px;
+}
+
+.userreg {
+    border: solid 1px #dee0e2;
+}
+
 .udashrow1 {
     margin: 10px;
-    background: #e0f0c1;
+    background: #fff;
     border-radius: 5px;
-    color: #1b6430;
+    color: #000;
+    border-left: solid 1px #299145;
+    border-top: solid 1px #299145;
+    border-right: solid 2px #299145;
+    border-bottom: solid 2px #299145;
+    min-height: 100%;
 }
 
 .udashrow1:hover {
     box-shadow: -5px 5px 5px #e6e6e6;
 }
 
+.udashrow1 h3 {
+    color: #ff6600;
+}
+
 .udashrow1box1 {
-    border-top: solid 1px #b3b3b3;
+    border-top: solid 1px #ff9966;
     padding: 10px 25px;
 }
 
 .udashrow1box2 {
-    border-top: solid 1px #b3b3b3;
-    border-left: solid 1px #b3b3b3;
+    border-top: solid 1px #ff9966;
+    border-left: solid 1px #ff9966;
     padding: 10px 25px;
 }
 
 .udashrow2 {
     margin: 10px;
-    background: #e0f0c1;
+    background: #fff;
     border-radius: 5px;
-    color: #1b6430;
+    color: #000;
+    border-left: solid 1px #299145;
+    border-top: solid 1px #299145;
+    border-right: solid 2px #299145;
+    border-bottom: solid 2px #299145;
+}
+
+.udashrow2 h3 {
+    color: #ff6600;
 }
 
 .warehousedetr {
@@ -211,3 +239,80 @@ body {
     text-align: left;
     margin-top: 15px;
 }
+
+.warehouseinput {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.tblwarehouse {
+    width: 100%;
+}
+
+.waretdlbl {
+    width: 10%;
+}
+
+.waretdinput {
+    width: 30%;
+}
+
+.waretdbtn {
+    padding-left: 10px;
+    width: 50%;
+}
+
+.footercontainer {
+    background: #333333;
+    width: 100%;
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+.noscrollfooter {
+    position: absolute;
+    bottom: 0;
+}
+
+.footer {
+    width: 60%;
+    margin: auto;
+}
+
+.tblfooter {
+    padding-left: 30px;
+}
+
+.footertitle {
+    font-weight: 1000;
+    font-size: 20px;
+}
+
+.footercon {
+    color: #cccccc;
+}
+
+.footerlink > a {
+    color: #cccccc;
+}
+
+.footerlink > a:hover {
+    color: #88b72f;
+    text-decoration: none;
+}
+
+.contacthead {
+    color: #fff;
+}
+
+.footerconimg > img {
+    
+}
+
+/*
+@media (max-width: @screen-xs) {
+    .footerlist > li {
+        display: inline;
+    }
+}*/
