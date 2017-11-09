@@ -71,34 +71,36 @@ $result1 = mysqli_query($con, $query1);
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="request">
-                            <table class="table thead-bordered table-hover" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Placed on</th>
-                                        <th>Order Code</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <?php 
-                                    if(mysqli_num_rows($result) > 0)
+                            <?php 
+                                if(mysqli_num_rows($result) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:80%">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Placed on</th>
+                                            <th>Order Code</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result))
                                     {
-                                        while($row = mysqli_fetch_array($result))
-                                        {
-                                            $counter++;
-                                            ?>
-                                            <tbody>
-                                                <tr>
-                                                    <td width="5%"><?php echo $counter; ?></td>
-                                                    <td width="40%"><?php echo $row['name']; ?></td>
-                                                    <td width="15%"><?php echo $row['datetime']; ?></td>
-                                                    <td width="15%"><?php echo $row['order_code']; ?></td>
-                                                    <td width="10%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="deletereceive.php?rr_id=<?php echo $row['rr_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
-                                                </tr>
-                                            </tbody>
-                                            <?php
+                                        $counter++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%"><?php echo $counter; ?></td>
+                                                <td width="40%"><?php echo $row['name']; ?></td>
+                                                <td width="15%"><?php echo $row['datetime']; ?></td>
+                                                <td width="15%"><?php echo $row['order_code']; ?></td>
+                                                <td width="10%"><?php echo $row['status']; ?></td>
+                                                <td width="15%"><a href="deletereceive.php?rr_id=<?php echo $row['rr_id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
                                         }
                                     }else{
                                     ?>
@@ -124,33 +126,35 @@ $result1 = mysqli_query($con, $query1);
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="received">
-                            <table class="table thead-bordered table-hover" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Placed on</th>
-                                        <th>Order Code</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <?php 
-                                    if(mysqli_num_rows($result1) > 0)
+                            <?php 
+                                if(mysqli_num_rows($result1) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:80%">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Placed on</th>
+                                            <th>Order Code</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result1))
                                     {
-                                        while($row = mysqli_fetch_array($result1))
-                                        {
-                                            $counters++;
-                                            ?>
-                                            <tbody>
-                                                <tr>
-                                                    <td width="5%"><?php echo $counters; ?></td>
-                                                    <td width="40%"><?php echo $row['name']; ?></td>
-                                                    <td width="20%"><?php echo $row['datetime']; ?></td>
-                                                    <td width="20%"><?php echo $row['order_code']; ?></td>
-                                                    <td width="15%"><?php echo $row['status']; ?></td>
-                                                </tr>
-                                            </tbody>
-                                            <?php
+                                        $counters++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%"><?php echo $counters; ?></td>
+                                                <td width="40%"><?php echo $row['name']; ?></td>
+                                                <td width="20%"><?php echo $row['datetime']; ?></td>
+                                                <td width="20%"><?php echo $row['order_code']; ?></td>
+                                                <td width="15%"><?php echo $row['status']; ?></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
                                         }
                                     }else{
                                     ?>

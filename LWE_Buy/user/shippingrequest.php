@@ -124,31 +124,33 @@ $results1 = mysqli_fetch_assoc($result1);
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <table class="table thead-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th width="33%">#</th>
-                                        <th width="33%">Item Name</th>
-                                        <th width="33%">Weight (KG)</th>
-                                    </tr>
-                                </thead>
-                                <?php 
-                                    if(mysqli_num_rows($result2) > 0)
+                            <?php 
+                                if(mysqli_num_rows($result2) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="33%">#</th>
+                                            <th width="33%">Item Name</th>
+                                            <th width="33%">Weight (KG)</th>
+                                        </tr>
+                                    </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result2))
                                     {
-                                        while($row = mysqli_fetch_array($result2))
-                                        {
-                                            $counter++;
-                                            ?>
-                                            <tbody>
-                                                <tr>
-                                                    <input type="hidden" value="<?php echo $counter; ?>" name="counter"/>
-                                                    <input type="hidden" name="i_id[]" class="form-control" value="<?php echo $row['i_id']; ?>">
-                                                    <td><?php echo $counter; ?></td>
-                                                    <td><?php echo $row['name']; ?></td>
-                                                    <td><?php echo $row['weight']; ?></td>
-                                                </tr>
-                                            </tbody>
-                                            <?php
+                                        $counter++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <input type="hidden" value="<?php echo $counter; ?>" name="counter"/>
+                                                <input type="hidden" name="i_id[]" class="form-control" value="<?php echo $row['i_id']; ?>">
+                                                <td><?php echo $counter; ?></td>
+                                                <td><?php echo $row['name']; ?></td>
+                                                <td><?php echo $row['weight']; ?></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
                                         }
                                     }else{
                                     ?>

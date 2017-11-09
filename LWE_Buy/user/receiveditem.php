@@ -61,34 +61,36 @@ $results = mysqli_fetch_assoc($result);
                 <form action="shippingrequest.php" method="post">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <table class="table thead-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Item Name</th>
-                                        <th>Order Code</th>
-                                        <th>Weight</th>
-                                        <th>Date / Time</th>
-                                    </tr>
-                                </thead>
+                            <?php 
+                                if(mysqli_num_rows($result1) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Item Name</th>
+                                            <th>Order Code</th>
+                                            <th>Weight</th>
+                                            <th>Date / Time</th>
+                                        </tr>
+                                    </thead>
                                 <?php 
-                                    if(mysqli_num_rows($result1) > 0)
+                                    while($row = mysqli_fetch_array($result1))
                                     {
-                                        while($row = mysqli_fetch_array($result1))
-                                        {
-                                            $counter++;
-                                            ?>
-                                            <tbody>
-                                                <tr>
-                                                    <td><?php echo $counter; ?></td>
-                                                    <td><?php echo $row['name']; ?></td>
-                                                    <td><?php echo $row['order_code']; ?></td>
-                                                    <td><?php echo $row['weight']; ?></td>
-                                                    <td><?php echo $row['datetime']; ?></td>
-                                                    <td><input type="checkbox" weight="<?php echo $row['weight']; ?>" value="<?php echo $row['i_id']; ?>" name="item[]"></td>
-                                                </tr>
-                                            </tbody>
-                                            <?php
+                                        $counter++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $counter; ?></td>
+                                                <td><?php echo $row['name']; ?></td>
+                                                <td><?php echo $row['order_code']; ?></td>
+                                                <td><?php echo $row['weight']; ?></td>
+                                                <td><?php echo $row['datetime']; ?></td>
+                                                <td><input type="checkbox" weight="<?php echo $row['weight']; ?>" value="<?php echo $row['i_id']; ?>" name="item[]"></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
                                         }
                                     }else{
                                     ?>

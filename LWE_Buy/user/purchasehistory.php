@@ -53,6 +53,10 @@ $result = mysqli_query($con, $query);
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
+                        <?php 
+                            if(mysqli_num_rows($result) > 0)
+                            {
+                            ?>
                         <table class="table thead-bordered table-hover" style="width:80%">
                             <thead>
                                 <tr>
@@ -62,22 +66,20 @@ $result = mysqli_query($con, $query);
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <?php 
-                                if(mysqli_num_rows($result) > 0)
+                            <?php
+                                while($row = mysqli_fetch_array($result))
                                 {
-                                    while($row = mysqli_fetch_array($result))
-                                    {
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                <td width="40%"><?php echo $row['datetime']; ?></td>
-                                                <td width="20%"><?php echo $row['price']; ?></td>
-                                                <td width="20%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="purchasehview.php?order_id=<?php echo $row['ol_id']; ?>&timeline=Received" class="btn btn-xs btn-info">View</a></td>
-                                            </tr>
-                                        </tbody>
-                                        <?php
+                                    ?>
+                                    <tbody>
+                                        <tr>
+                                            <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                            <td width="40%"><?php echo $row['datetime']; ?></td>
+                                            <td width="20%"><?php echo $row['price']; ?></td>
+                                            <td width="20%"><?php echo $row['status']; ?></td>
+                                            <td width="15%"><a href="purchasehview.php?order_id=<?php echo $row['ol_id']; ?>&timeline=Received" class="btn btn-xs btn-info">View</a></td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
                                     }
                                 }else{
                                 ?>

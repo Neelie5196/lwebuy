@@ -81,29 +81,31 @@ $result4 = mysqli_query($con, $query4);
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <div class="span12 collapse" id="collapse1">
-                            <table class="table thead-bordered table-hover" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>Placed on</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <?php 
-                                    if(mysqli_num_rows($result1) > 0)
+                            <?php 
+                                if(mysqli_num_rows($result1) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:80%">
+                                    <thead>
+                                        <tr>
+                                            <th>Order#</th>
+                                            <th>Placed on</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result1))
                                     {
-                                        while($row = mysqli_fetch_array($result1))
-                                        {
-                                            ?>
-                                            <tbody>
-                                                <tr>
-                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                    <td width="50%"><?php echo $row['datetime']; ?></td>
-                                                    <td width="30%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="purchaseview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                                </tr>
-                                            </tbody>
-                                            <?php
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                <td width="50%"><?php echo $row['datetime']; ?></td>
+                                                <td width="30%"><?php echo $row['status']; ?></td>
+                                                <td width="15%"><a href="purchaseview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
                                         }
                                     }else{
                                         ?>
@@ -127,31 +129,33 @@ $result4 = mysqli_query($con, $query4);
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <table class="table thead-bordered table-hover" style="width:80%">
-                            <thead>
-                                <tr>
-                                    <th>Order#</th>
-                                    <th>Placed on</th>
-                                    <th>Total (RM)</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
+                        <?php 
+                            if(mysqli_num_rows($result2) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered table-hover" style="width:80%">
+                                <thead>
+                                    <tr>
+                                        <th>Order#</th>
+                                        <th>Placed on</th>
+                                        <th>Total (RM)</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
                             <?php 
-                                if(mysqli_num_rows($result2) > 0)
+                                while($row = mysqli_fetch_array($result2))
                                 {
-                                    while($row = mysqli_fetch_array($result2))
-                                    {
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                <td width="40%"><?php echo $row['datetime']; ?></td>
-                                                <td width="20%"><?php echo $row['price']; ?></td>
-                                                <td width="20%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="purchasepview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                            </tr>
-                                        </tbody>
-                                        <?php
+                                    ?>
+                                    <tbody>
+                                        <tr>
+                                            <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                            <td width="40%"><?php echo $row['datetime']; ?></td>
+                                            <td width="20%"><?php echo $row['price']; ?></td>
+                                            <td width="20%"><?php echo $row['status']; ?></td>
+                                            <td width="15%"><a href="purchasepview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
                                     }
                                 }else{
                                     ?>
@@ -176,31 +180,33 @@ $result4 = mysqli_query($con, $query4);
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <div class="span12 collapse" id="collapse3">
-                            <table class="table thead-bordered table-hover" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>Placed on</th>
-                                        <th>Total (RM)</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <?php 
-                                    if(mysqli_num_rows($result3) > 0)
+                             <?php 
+                                if(mysqli_num_rows($result3) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:80%">
+                                    <thead>
+                                        <tr>
+                                            <th>Order#</th>
+                                            <th>Placed on</th>
+                                            <th>Total (RM)</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result3))
                                     {
-                                        while($row = mysqli_fetch_array($result3))
-                                        {
-                                            ?>
-                                            <tbody>
-                                                <tr>
-                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                    <td width="40%"><?php echo $row['datetime']; ?></td>
-                                                    <td width="20%"><?php echo $row['price']; ?></td>
-                                                    <td width="20%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="purchasephview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                                </tr>
-                                            </tbody>
-                                            <?php
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                <td width="20%"><?php echo $row['price']; ?></td>
+                                                <td width="20%"><?php echo $row['status']; ?></td>
+                                                <td width="15%"><a href="purchasephview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
                                         }
                                     }else{
                                         ?>
@@ -226,31 +232,33 @@ $result4 = mysqli_query($con, $query4);
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <div class="span12 collapse" id="collapse4">
-                            <table class="table thead-bordered table-hover" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>Placed on</th>
-                                        <th>Total (RM)</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <?php 
-                                    if(mysqli_num_rows($result4) > 0)
+                            <?php 
+                                if(mysqli_num_rows($result4) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:80%">
+                                    <thead>
+                                        <tr>
+                                            <th>Order#</th>
+                                            <th>Placed on</th>
+                                            <th>Total (RM)</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result4))
                                     {
-                                        while($row = mysqli_fetch_array($result4))
-                                        {
-                                            ?>
-                                            <tbody>
-                                                <tr>
-                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                    <td width="40%"><?php echo $row['datetime']; ?></td>
-                                                    <td width="20%"><?php echo $row['price']; ?></td>
-                                                    <td width="20%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="purchasehview.php?order_id=<?php echo $row['ol_id']; ?>&timeline=Shipping" class="btn btn-xs btn-info">View</a></td>
-                                                </tr>
-                                            </tbody>
-                                            <?php
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                <td width="20%"><?php echo $row['price']; ?></td>
+                                                <td width="20%"><?php echo $row['status']; ?></td>
+                                                <td width="15%"><a href="purchasehview.php?order_id=<?php echo $row['ol_id']; ?>&timeline=Shipping" class="btn btn-xs btn-info">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
                                         }
                                     }else{
                                         ?>

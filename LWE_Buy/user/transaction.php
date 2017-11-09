@@ -60,35 +60,41 @@ $result1 = mysqli_query($con, $query1);
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <table class="table thead-bordered" style="width:80%">
-                            <thead>
-                                <tr>
-                                    <th width = "4%">#</th>
-                                    <th width = "21%">Detail</th>
-                                    <th width = "13%">Amount</th>
-                                    <th width = "26%">Created</th>
-                                    <th width = "23%">Receipt</th>
-                                    <th width = "13%">Status</th>
-                                </tr>
-                            </thead>
-                            <?php 
-                                if(mysqli_num_rows($result) > 0)
+                        <?php 
+                            if(mysqli_num_rows($result) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered" style="width:80%">
+                                <thead>
+                                    <tr>
+                                        <th width = "4%">#</th>
+                                        <th width = "21%">Detail</th>
+                                        <th width = "13%">Amount</th>
+                                        <th width = "26%">Created</th>
+                                        <th width = "23%">Receipt</th>
+                                        <th width = "13%">Status</th>
+                                    </tr>
+                                </thead>
+                            <?php
+                                while($row = mysqli_fetch_array($result))
                                 {
-                                    while($row = mysqli_fetch_array($result))
-                                    {
-                                        $i++;
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $i; ?></td>
-                                                <td><?php echo $row['title']; ?></td>
-                                                <td>RM <?php echo $row['amount']; ?></td>
-                                                <td><?php echo $row['datetime']; ?></td>
-                                                <td><a href="../resources/img/receipts/<?php echo $row['file']; ?>" target="_blank"><?php echo $row['file']; ?></a></td>
-                                                <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
-                                            </tr>
-                                        </tbody>
-                                        <?php
+                                    $i++;
+                                    ?>
+                                    <tbody>
+                                        <tr>
+                                            <td><?php echo $i; ?></td>
+                                            <td><?php echo $row['title']; ?></td>
+                                            <td>RM <?php echo $row['amount']; ?></td>
+                                            <td><?php echo $row['datetime']; ?></td>
+                                            <td>
+                                                <a href="#" class="pop">
+                                                    <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['file']; ?>
+                                                </a>
+                                            </td>
+                                            <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
                                     }
                                 }else{
                                 ?>
@@ -111,35 +117,37 @@ $result1 = mysqli_query($con, $query1);
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <table class="table thead-bordered" style="width:80%">
-                            <thead>
-                                <tr>
-                                    <th width = "4%">#</th>
-                                    <th width = "21%">Detail</th>
-                                    <th width = "13%">Amount</th>
-                                    <th width = "26%">Created</th>
-                                    <th width = "23%">Receipt</th>
-                                    <th width = "13%">Status</th>
-                                </tr>
-                            </thead>
-                            <?php 
-                                if(mysqli_num_rows($result1) > 0)
+                        <?php 
+                            if(mysqli_num_rows($result1) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered" style="width:80%">
+                                <thead>
+                                    <tr>
+                                        <th width = "4%">#</th>
+                                        <th width = "21%">Detail</th>
+                                        <th width = "13%">Amount</th>
+                                        <th width = "26%">Created</th>
+                                        <th width = "23%">Receipt</th>
+                                        <th width = "13%">Status</th>
+                                    </tr>
+                                </thead>
+                            <?php
+                                while($row = mysqli_fetch_array($result1))
                                 {
-                                    while($row = mysqli_fetch_array($result1))
-                                    {
-                                        $is++;
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <td><?php echo $is; ?></td>
-                                                <td><?php echo $row['title']; ?></td>
-                                                <td>RM <?php echo $row['amount']; ?></td>
-                                                <td><?php echo $row['datetime']; ?></td>
-                                                <td><a href="../resources/img/receipts/<?php echo $row['file']; ?>" target="_blank"><?php echo $row['file']; ?></a></td>
-                                                <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
-                                            </tr>
-                                        </tbody>
-                                        <?php
+                                    $is++;
+                                    ?>
+                                    <tbody>
+                                        <tr>
+                                            <td><?php echo $is; ?></td>
+                                            <td><?php echo $row['title']; ?></td>
+                                            <td>RM <?php echo $row['amount']; ?></td>
+                                            <td><?php echo $row['datetime']; ?></td>
+                                            <td><a href="../resources/img/receipts/<?php echo $row['file']; ?>" target="_blank"><?php echo $row['file']; ?></a></td>
+                                            <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
                                     }
                                 }else{
                                 ?>
@@ -154,4 +162,22 @@ $result1 = mysqli_query($con, $query1);
         </center>  
 		</section>
     </body>
+    <div class="modal fade" id="imagedialog" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">              
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <img src="" class="image" style="width: 100%;" >
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function() {
+            $('.pop').on('click', function() {
+                $('.image').attr('src', $(this).find('img').attr('src'));
+                $('#imagedialog').modal('show');   
+            });		
+        });
+    </script>
 </html>

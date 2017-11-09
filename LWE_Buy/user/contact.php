@@ -151,7 +151,7 @@ $results = mysqli_fetch_assoc($result);
                 </div>
             </div>
         </section>
-        
+              
         <div class="footercontainer">
             <div class="footer">
                 <?php include_once('../footer.php') ?>
