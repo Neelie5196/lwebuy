@@ -49,7 +49,7 @@ $results = mysqli_fetch_assoc($result);
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <h2>Received Item</h2>
+                    <h2>Your Inventory</h2>
                     <hr/>
                 </div>
             </div>
@@ -97,16 +97,11 @@ $results = mysqli_fetch_assoc($result);
                                     }
                                 ?>
                             </table>
+                            
+                            <input type="hidden" id="totalweight" name="totalweight" class="form-control" value="">
+                            <input type="submit" class="btn btn-success" name="shipnow" value="Ship Now" onclick="return val();">
                         </div>
                     </div>
-                    <center>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
-                                <input type="hidden" id="totalweight" name="totalweight" class="form-control" value="">
-                                <input type="submit" class="btn btn-success" name="shipnow" value="Ship Now" onclick="return val();">
-                            </div>
-                        </div>
-                    </center>
                 </form>
             </div>
         </section>

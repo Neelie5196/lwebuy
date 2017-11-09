@@ -153,6 +153,14 @@ body {
     border-bottom: solid 2px #299145;
 }
 
+.jumbotron {
+    margin: 10px;
+    background: #fff;
+    border-radius: 5px;
+    color: #000;
+    box-shadow: -3px 3px 3px #009933;
+}
+
 .udashrow2 h3 {
     color: #ff6600;
 }
@@ -249,7 +257,7 @@ body {
     width: 100%;
 }
 
-.waretdlbl {
+.tenwidth {
     width: 10%;
 }
 

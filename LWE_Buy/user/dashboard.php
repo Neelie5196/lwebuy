@@ -345,13 +345,13 @@ $results = mysqli_fetch_assoc($result);
                                 <div class="col-xs-12 col-md-12 col-lg-12 udashrow1box1">
                                     <table class="tblwarehouse">
                                         <tr>
-                                            <td class="waretdlbl"><label for="stName">Name: </label></td>
+                                            <td class="tenwidth"><label for="stName">Name: </label></td>
                                             <td class="waretdinput"><input type="text" id="name" autocomplete="off" class="warehouseinput" /></td>
                                             <td class="waretdbtn"><input type= "submit" id ="name-submit" class="btn btn-default" value="Search" /></td>
                                         </tr>
                                         
                                         <tr>
-                                            <td class="waretdlbl"><label for="stName">Address: </label></td>
+                                            <td class="tenwidth"><label for="stName">Address: </label></td>
                                             <td colspan="2"><div id ="name-data"></div></td
                                         </tr>
                                     </table>
