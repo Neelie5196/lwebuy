@@ -10,7 +10,7 @@ if(isset($_POST['update-point']))
     ?>
     <script>
     alert('Success to Update');
-    window.location.href='dashboard.php?success';
+    window.location.href='rate.php?success';
     </script>
     <?php
 }
@@ -24,7 +24,7 @@ if(isset($_POST['update-currency']))
     ?>
     <script>
     alert('Success to Update');
-    window.location.href='dashboard.php?success';
+    window.location.href='rate.php?success';
     </script>
     <?php
 }
@@ -40,7 +40,7 @@ if(isset($_POST['update-weight']))
     ?>
     <script>
     alert('Success to Update');
-    window.location.href='dashboard.php?success';
+    window.location.href='rate.php?success';
     </script>
     <?php
 }

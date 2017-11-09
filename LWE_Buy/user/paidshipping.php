@@ -16,7 +16,7 @@ if(isset($_POST['submit']))
     $title = $_POST['s_id'];
     $pay = 'Pay Shipping';
     $amount = $_POST['amount'];
-    $statuss = 'Waiting for Proceed';
+    $statuss = 'Waiting for Accept';
 	
 	// make file name in lower case
 	$new_file_name = strtolower($file);
@@ -59,7 +59,7 @@ if(isset($_POST['pay']))
     $paypoint = $_POST['paypoint'];
     $title = 'Pay by';
     $points = 'Points';
-    $statuss = 'Waiting for Proceed';
+    $statuss = 'Completed';
 
 	if($point >= $paypoint)
 	{
