@@ -52,29 +52,31 @@ $result = mysqli_query($con, $query);
             <section class = "content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <table class="table thead-bordered table-hover" style="width:80%">
-                            <thead>
-                                <tr>
-                                    <th>Shipping#</th>
-                                    <th>Placed on</th>
-                                    <th>Total (RM)</th>
-                                </tr>
-                            </thead>
-                            <?php 
-                                if(mysqli_num_rows($result) > 0)
+                        <?php 
+                            if(mysqli_num_rows($result) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered table-hover" style="width:80%">
+                                <thead>
+                                    <tr>
+                                        <th>Shipping#</th>
+                                        <th>Placed on</th>
+                                        <th>Total (RM)</th>
+                                    </tr>
+                                </thead>
+                            <?php
+                                while($row = mysqli_fetch_array($result))
                                 {
-                                    while($row = mysqli_fetch_array($result))
-                                    {
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <td width="5%"><?php echo $row['s_id']; ?></td>
-                                                <td width="40%"><?php echo $row['datetime']; ?></td>
-                                                <td width="20%"><?php echo $row['price']; ?></td>
-                                                <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $row['s_id']; ?>&timeline=Delivered" class="btn btn-xs btn-info">View</a></td>
-                                            </tr>
-                                        </tbody>
-                                        <?php
+                                    ?>
+                                    <tbody>
+                                        <tr>
+                                            <td width="5%"><?php echo $row['s_id']; ?></td>
+                                            <td width="40%"><?php echo $row['datetime']; ?></td>
+                                            <td width="20%"><?php echo $row['price']; ?></td>
+                                            <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $row['s_id']; ?>&timeline=Delivered" class="btn btn-xs btn-info">View</a></td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
                                     }
                                 }else{
                                 ?>

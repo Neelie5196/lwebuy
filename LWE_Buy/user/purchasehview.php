@@ -68,39 +68,41 @@ $results1 = mysqli_fetch_assoc($result1);
                     <div class="row">
                         <form action="#">
                             <div class="col-xs-12 col-md-12 col-lg-12 jumbotron" style="padding-bottom: 15px;">
-                                <table class="table thead-bordered table-hover" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Link</th>
-                                            <th>Type</th>
-                                            <th>Unit</th>
-                                            <th>Price (RM)</th>
-                                            <th>Order Code</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <?php 
-                                        if(mysqli_num_rows($result) > 0)
+                                <?php 
+                                    if(mysqli_num_rows($result) > 0)
+                                    {
+                                    ?>
+                                    <table class="table thead-bordered table-hover" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Link</th>
+                                                <th>Type</th>
+                                                <th>Unit</th>
+                                                <th>Price (RM)</th>
+                                                <th>Order Code</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result))
                                         {
-                                            while($row = mysqli_fetch_array($result))
-                                            {
-                                                $counter++;
-                                                ?>
-                                                <tbody>
-                                                    <tr>
-                                                        <td width="5%"><?php echo $counter; ?></td>
-                                                        <td width="20%"><?php echo $row['name']; ?></td>
-                                                        <td width="20%"><a href="<?php echo $row['link']; ?>" target="_blank"><?php echo $row['link']; ?></a></td>
-                                                        <td width="8%"><?php echo $row['type']; ?></td>
-                                                        <td width="8%"><?php echo $row['unit']; ?></td>
-                                                        <td width="14%"><?php echo $row['price']; ?></td>
-                                                        <td width="15%"><?php echo $row['order_code']; ?></td>
-                                                        <td width="10%"><?php echo $row['statuss']; ?></td>
-                                                    </tr>
-                                                </tbody>
-                                                <?php
+                                            $counter++;
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $counter; ?></td>
+                                                    <td width="20%"><?php echo $row['name']; ?></td>
+                                                    <td width="20%"><a href="<?php echo $row['link']; ?>" target="_blank"><?php echo $row['link']; ?></a></td>
+                                                    <td width="8%"><?php echo $row['type']; ?></td>
+                                                    <td width="8%"><?php echo $row['unit']; ?></td>
+                                                    <td width="14%"><?php echo $row['price']; ?></td>
+                                                    <td width="15%"><?php echo $row['order_code']; ?></td>
+                                                    <td width="10%"><?php echo $row['statuss']; ?></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
                                             }
                                         }else{
                                         ?>

@@ -83,29 +83,31 @@ $result2 = mysqli_query($con, $query2);
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
-                            <table class="table thead-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th width="33%">#</th>
-                                        <th width="33%">Item Name</th>
-                                        <th width="33%">Item Weight</th>
-                                    </tr>
-                                </thead>
-                                <?php 
-                                    if(mysqli_num_rows($result2) > 0)
+                            <?php 
+                                if(mysqli_num_rows($result2) > 0)
+                                {
+                                ?>
+                                <table class="table thead-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th width="33%">#</th>
+                                            <th width="33%">Item Name</th>
+                                            <th width="33%">Item Weight</th>
+                                        </tr>
+                                    </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result2))
                                     {
-                                        while($row = mysqli_fetch_array($result2))
-                                        {
-                                            $counter++;
-                                            ?>
-                                            <tbody>
-                                                <tr>
-                                                    <td><?php echo $counter; ?></td>
-                                                    <td><?php echo $row['name']; ?></td>
-                                                    <td><?php echo $row['weight']; ?></td>
-                                                </tr>
-                                            </tbody>
-                                            <?php
+                                        $counter++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $counter; ?></td>
+                                                <td><?php echo $row['name']; ?></td>
+                                                <td><?php echo $row['weight']; ?></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
                                         }
                                     }else{
                                     ?>
