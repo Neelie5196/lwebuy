@@ -7,12 +7,9 @@ if(isset($_POST['oi_id']))
     $oi_id = $_POST['oi_id'];
     $ordercode = $_POST['ordercode'];
     $status = 'Pending';
-
     
-    for($i=0; $i<$_POST['numbers']; $i++){
-        $result = mysqli_query($con, "UPDATE order_item SET order_code='$ordercode[$i]', statuss = '$status' WHERE oi_id = $oi_id[$i]") or die(mysqli_error($con));
-    }
-    
+	
+	$result = mysqli_query($con, "UPDATE order_item SET order_code='$ordercode', statuss = '$status' WHERE oi_id = $oi_id ") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Update');

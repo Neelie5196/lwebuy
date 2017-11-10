@@ -81,11 +81,7 @@ $result1 = mysqli_query($con, $query1);
                                                 <td><?php echo $row['title']; ?></td>
                                                 <td>RM <?php echo $row['amount']; ?></td>
                                                 <td><?php echo $row['datetime']; ?></td>
-                                                <td>
-                                                    <a href="#" class="pop">
-                                                        <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['title']; ?>
-                                                    </a>
-                                                </td>
+                                                <td><a href="../resources/img/receipts/<?php echo $row['file']; ?>" target="_blank"><?php echo $row['file']; ?></a></td>
                                                 <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
                                                 <td><a href="updatepoint.php?user_id=<?php echo $row['user_id']; ?>&p_id=<?php echo $row['p_id']; ?>&point=<?php echo $row['amount']; ?>" class="btn btn-xs btn-warning">Top Up</a></td>
                                             </tr>
@@ -103,23 +99,6 @@ $result1 = mysqli_query($con, $query1);
                     </div>
                 </div>
         </section>
+
     </body>
-    <div class="modal fade" id="imagedialog" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">              
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal"></button>
-                    <img src="" class="image" style="width: 100%;" >
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        $(function() {
-            $('.pop').on('click', function() {
-                $('.image').attr('src', $(this).find('img').attr('src'));
-                $('#imagedialog').modal('show');   
-            });		
-        });
-    </script>
 </html>

@@ -127,12 +127,7 @@ $results1 = mysqli_fetch_assoc($result1);
                                         ?>
                                             <tfoot>
                                                 <tr>
-                                                    <td>
-                                                        <label style="float: left;">Bank in Receipt:</label> <em style="float:left;">
-                                                        <a href="#" class="pop">
-                                                            <img src="../resources/img/receipts/<?php echo $results1['file']; ?>" style="width: 0px; height: 0px;"><?php echo $results1['title']; ?>
-                                                        </a></em>
-                                                    </td>
+                                                    <td><label style="float: left;">Bank in Receipt:</label> <em style="float:left;"> <a href="../resources/img/receipts/<?php echo $results1['file']; ?>" target="_blank"><?php echo $results1['title']; ?></a></em></td>
                                                 </tr>
                                             </tfoot>
                                         <?php
@@ -149,22 +144,4 @@ $results1 = mysqli_fetch_assoc($result1);
             </section>
         </center>
     </body>
-    <div class="modal fade" id="imagedialog" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">              
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal"></button>
-                    <img src="" class="image" style="width: 100%;" >
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        $(function() {
-            $('.pop').on('click', function() {
-                $('.image').attr('src', $(this).find('img').attr('src'));
-                $('#imagedialog').modal('show');   
-            });		
-        });
-    </script>
 </html>

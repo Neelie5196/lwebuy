@@ -7,7 +7,7 @@ $user_id = $_SESSION['user_id'];
 $i= 0;
 $query = "SELECT *
           FROM payment
-          WHERE user_id='$user_id' AND status !='Completed'";
+          WHERE user_id='$user_id' AND status='Waiting for Approve'";
 $result = mysqli_query($con, $query);
 
 $is= 0;
@@ -88,7 +88,7 @@ $result1 = mysqli_query($con, $query1);
                                             <td><?php echo $row['datetime']; ?></td>
                                             <td>
                                                 <a href="#" class="pop">
-                                                    <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['title']; ?>
+                                                    <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['file']; ?>
                                                 </a>
                                             </td>
                                             <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
@@ -143,11 +143,7 @@ $result1 = mysqli_query($con, $query1);
                                             <td><?php echo $row['title']; ?></td>
                                             <td>RM <?php echo $row['amount']; ?></td>
                                             <td><?php echo $row['datetime']; ?></td>
-                                            <td>
-                                                <a href="#" class="pop">
-                                                    <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['title']; ?>
-                                                </a>
-                                            </td>
+                                            <td><a href="../resources/img/receipts/<?php echo $row['file']; ?>" target="_blank"><?php echo $row['file']; ?></a></td>
                                             <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
                                         </tr>
                                     </tbody>
