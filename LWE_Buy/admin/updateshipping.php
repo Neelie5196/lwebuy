@@ -4,21 +4,21 @@ require_once '../connection/config.php';
 session_start();
 
 $tracking_code = $_GET['tracking_code'];
+$user_id = $_SESSION['user_id'];
 
-$workstQuery = $db->prepare("
-    SELECT *
-    FROM warehouse wh
-    JOIN work_station ws
-    ON ws.wh_id = wh.wh_id
-    JOIN users us
-    ON us.user_id = ws.user_id
-");
-$workstQuery->execute();
-$workst = $workstQuery->rowCount() ? $workstQuery : [];
+$query = "SELECT *
+          FROM warehouse wh
+          JOIN work_station ws
+          ON ws.wh_id = wh.wh_id
+          JOIN users us
+          ON us.user_id = ws.user_id
+          WHERE us.user_id = '$user_id'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
-$getstationsQuery = $db->prepare("SELECT * FROM warehouse");
-$getstationsQuery->execute();
-$getstations = $getstationsQuery->rowCount() ? $getstationsQuery : [];
+$query1 = "SELECT * FROM warehouse";
+$result1 = mysqli_query($con, $query1);
+
 
 $getaddressQuery = $db->prepare("
     SELECT *
@@ -400,28 +400,19 @@ if (isset($_POST['updateshipping']))
 
             <div class="row" ng-init="in=true">
                 <div class="updateform col-xs-12 col-md-12 col-lg-12">
-                <?php
-                    if(!empty($workst))
-                    {
-                        foreach($workst as $w)
-                        {
-                            if($w['user_id'] == $_SESSION['user_id'])
-                            {
-
-                ?>
                     <form class="form-inline" action="updateshipping.php" method="post">
                         <h2>Station details</h2>
-                        <input type="text" name="stCode" value="<?php echo $w['station_code']; ?>" hidden="hidden" />
-                        <input type="text" name="CtyCode" value="<?php echo $w['country_code']; ?>" hidden="hidden" />
+                        <input type="text" name="stCode" value="<?php echo $results['station_code']; ?>" hidden="hidden" />
+                        <input type="text" name="CtyCode" value="<?php echo $results['country_code']; ?>" hidden="hidden" />
                         <table class="tblUpdate">
                             <tr>
                                 <td class="lblUpdate"><label for="stDesc">Station Name: </label></td>
-                                <td class="inputUpdate textUpdate"><input type="text" name="stDesc" id="stDesc" value="<?php echo $w['station_description']; ?>" readonly="readonly" /></td>
+                                <td class="inputUpdate textUpdate"><input type="text" name="stDesc" id="stDesc" value="<?php echo $results['station_description']; ?>" readonly="readonly" /></td>
                             </tr>
                             
                             <tr>
                                 <td class="lblUpdate"><label for="CtyDesc">Country: </label></td>
-                                <td class="inputUpdate textUpdate"><input type="text" name="CtyDesc" id="CtyDesc" value="<?php echo $w['country_description']; ?>" readonly="readonly" /></td>
+                                <td class="inputUpdate textUpdate"><input type="text" name="CtyDesc" id="CtyDesc" value="<?php echo $results['country_description']; ?>" readonly="readonly" /></td>
                             </tr>
                         </table>
 
@@ -491,15 +482,15 @@ if (isset($_POST['updateshipping']))
                                             // }
                                             // else
                                             // {
-                                                if(!empty($getstations))
-                                                {
-                                                    foreach($getstations as $gs)
-                                                    {
-                                        ?>
-                                        <option value="<?php echo $gs['station_description']; ?>"><?php echo $gs['station_description']; ?></option>
-                                        <?php
-                                                    }
-                                                }
+                                        if(mysqli_num_rows($result1) > 0)
+                                        {
+                                            while($row = mysqli_fetch_array($result1))
+                                            {
+                                                ?>
+                                                    <option value="<?php echo $row['station_description']; ?>"><?php echo $row['station_description']; ?></option>
+                                                <?php
+                                            }
+                                        }
                                             // }
                                         ?>
                                         
@@ -528,11 +519,6 @@ if (isset($_POST['updateshipping']))
                             <a href="shippinglist.php"><input type="button" value="Back" class="btn btn-default"/></a>
                         </p>
                     </form>
-                <?php
-                            }
-                        }
-                    }
-                ?>
                 </div>      
             </div>
     </body>
