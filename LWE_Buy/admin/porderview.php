@@ -58,25 +58,25 @@ $results2 = mysqli_fetch_assoc($result2);
                                 if(mysqli_num_rows($result1) > 0)
                                 {
                                 ?>
-                                <table class="table thead-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Link</th>
-                                            <th>Type</th>
-                                            <th>Unit</th>
-                                            <th>Remark</th>
-                                            <th>Price (RM)</th>
-                                            <th>Order Code</th>
-                                        </tr>
-                                    </thead>
-                                    <?php
-                                        while($row = mysqli_fetch_array($result1))
-                                        {
-                                            $counter++;
-                                        ?>
-                                        <form action="updateorder.php" method="post">
+                                <form action="updateorder.php" method="post">
+                                    <table class="table thead-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Link</th>
+                                                <th>Type</th>
+                                                <th>Unit</th>
+                                                <th>Remark</th>
+                                                <th>Price (RM)</th>
+                                                <th>Order Code</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                            while($row = mysqli_fetch_array($result1))
+                                            {
+                                                $counter++;
+                                            ?>
                                             <tbody>
                                                 <tr>
                                                     <td width="5%"><?php echo $counter; ?></td>
@@ -85,25 +85,26 @@ $results2 = mysqli_fetch_assoc($result2);
                                                     <td width="8%"><?php echo $row['type']; ?></td>
                                                     <td width="8%"><?php echo $row['unit']; ?></td>
                                                     <td width="20%"><?php echo $row['remark']; ?></td>
-                                                    <td width="9%"><?php echo $row['price']; ?></td>
-                                                    <td width="9%"><input type="text" name="ordercode" value="<?php echo $row['order_code']; ?>" required></td>
-                                                    <td width="15%">
-                                                        <input type="hidden" name="oi_id" value="<?php echo $row['oi_id']; ?>">
+                                                    <td width="12%"><?php echo $row['price']; ?></td>
+                                                    <td width="12%"><input type="text" name="ordercode[]" value="<?php echo $row['order_code']; ?>" required></td>
+                                                    <td width="9%">
+                                                        <input type="hidden" name="oi_id[]" value="<?php echo $row['oi_id']; ?>">
                                                         <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
-                                                        <input type="submit" class="btn btn-xs btn-warning" value="Update">
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </form>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                            <p>Error.</p>
                                         <?php
                                     }
-                                }else{
-                                    ?>
-                                        <p>Error.</p>
-                                    <?php
-                                }
-                            ?>
-                            </table>
+                                ?>
+                                </table>
+                                <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
+                                <input type="submit" class="btn btn-warning" value="Update">
+                            </form>
                             <?php
                                 $result = mysqli_query($con, "SELECT sum(price) FROM order_item WHERE order_id= $order_id") or die(mysqli_error($con));
                                 while ($rows = mysqli_fetch_array($result)) {
@@ -117,7 +118,12 @@ $results2 = mysqli_fetch_assoc($result2);
                                     ?>
                                         <tfoot>
                                             <tr>
-                                                <td><label style="float: left;">Bank in Receipt:</label> <em style="float:left;"> <a href="../resources/img/receipts/<?php echo $results2['file']; ?>" target="_blank"><?php echo $results2['title']; ?></a></em></td>
+                                                <td>
+                                                    <label style="float: left;">Bank in Receipt:</label> <em style="float:left;">
+                                                    <a href="#" class="pop">
+                                                        <img src="../resources/img/receipts/<?php echo $results2['file']; ?>" style="width: 0px; height: 0px;"><?php echo $results2['title']; ?>
+                                                    </a></em>
+                                                </td>
                                             </tr>
                                         </tfoot>
                                     <?php
@@ -127,9 +133,8 @@ $results2 = mysqli_fetch_assoc($result2);
                             ?>                            
                         </div>
                         <form action="proceedorder.php" method="post">
-                            <input type="hidden" name="p_id" value="<?php echo $results2['p_id']; ?>">
                             <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
-                            <input type="submit" class="btn btn-success" value="Proceed">
+                            <input type="submit" class="btn btn-success" name="proceed" value="Proceed">
                             <a href="orderpending.php" class="btn btn-default" name="back">Back</a>
                         </form>
                     </div>
@@ -137,4 +142,29 @@ $results2 = mysqli_fetch_assoc($result2);
             </section>
         </center>
     </body>
+    <div class="modal fade" id="imagedialog" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="proceedorder.php" method="post">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal"></button>
+                        <img src="" class="image" style="width: 100%;" >
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" name="p_id" value="<?php echo $results2['p_id']; ?>">
+                        <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
+                        <button type="submit" class="btn btn-success" name="approve">Approve</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function() {
+            $('.pop').on('click', function() {
+                $('.image').attr('src', $(this).find('img').attr('src'));
+                $('#imagedialog').modal('show');   
+            });		
+        });
+    </script>
 </html>

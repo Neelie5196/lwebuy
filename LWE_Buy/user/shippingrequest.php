@@ -19,6 +19,12 @@ $query1 = "SELECT *
 $result1 = mysqli_query($con, $query1);
 $results1 = mysqli_fetch_assoc($result1);
 
+$query3 = "SELECT *
+           FROM users
+           WHERE user_id='$user_id'";
+$result3 = mysqli_query($con, $query3);
+$results3 = mysqli_fetch_assoc($result3);
+
 ?>
 
 <!DOCTYPE html>
@@ -103,7 +109,7 @@ $results1 = mysqli_fetch_assoc($result1);
                                 <label>Recipient Name</label>
                             </div>
                             <div class="col-xs-8 col-md-8 col-lg-8">
-                                <input type="text" name="rname" class="form-control" style="border-radius: 30px; width: 80%;" required>
+                                <input type="text" name="rname" class="form-control" style="border-radius: 30px; width: 80%;" value="<?php echo $results3['fname']; ?> <?php echo $results3['lname']; ?>" required>
                             </div>
                         </div>
                     </div>
@@ -113,7 +119,7 @@ $results1 = mysqli_fetch_assoc($result1);
                                 <label>Recipient Contact</label>
                             </div>
                             <div class="col-xs-8 col-md-8 col-lg-8">
-                                <input type="text" name="rcontact" class="form-control" style="border-radius: 30px; width: 80%;" required>
+                                <input type="text" name="rcontact" class="form-control" style="border-radius: 30px; width: 80%;" value="<?php echo $results3['contact']; ?>" required>
                             </div>
                         </div>
                     </div>

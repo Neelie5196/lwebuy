@@ -42,6 +42,7 @@
                 </li>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Other <span class="caret"></span></a>
                     <ul class="dropdown-menu menuitem">
+                        <li><a href="rate.php">Adjust Rate</a></li>
                         <li><a href="topup.php">Top Up Request</a></li>
                         <li><a href="credithistory.php">Credit History</a></li>
                         <li><a href="packagelist.php">Package</a></li>

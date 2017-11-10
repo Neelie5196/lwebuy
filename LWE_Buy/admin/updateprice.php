@@ -1,8 +1,6 @@
 <?php
 require_once '../connection/config.php';
 
-
-
 if(isset($_POST['oi_id']))
 {    
     
@@ -16,10 +14,12 @@ if(isset($_POST['oi_id']))
     $oi_id = $_POST['oi_id'];
     $price = $_POST['price'];
     $currency = $results['value'];
-    $itemprice = $price / $currency;
+
+    for($i=0; $i<$_POST['numbers']; $i++){
+        $itemprice = $price[$i] / $currency;
+        $result = mysqli_query($con, "UPDATE order_item SET price='$itemprice' WHERE oi_id = $oi_id[$i]") or die(mysqli_error($con));
+    }
     
-	
-	$result = mysqli_query($con, "UPDATE order_item SET price='$itemprice' WHERE oi_id = $oi_id ") or die(mysqli_error($con));
     ?>
     <script>
     alert('Success to Update');
