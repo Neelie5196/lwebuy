@@ -57,7 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             }
             else
             {
-               alert('You have entered wrong password, try again!');
+			     ?>
+            <script>
+            alert('Wrong Password');
+            window.location.href='login.php?fail';
+            </script>
+            <?php
+			   
             }
         }
     }
@@ -113,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                         </tr>
                                         
                                         <tr>
-                                            <td colspan="2" class="formfield"><a href="#">Forgot password?</a></td>
+                                            <td colspan="2" class="formfield"><a href="forgotpass.php">Forgot password?</a></td>
                                         </tr>
                                         
                                         <tr>
