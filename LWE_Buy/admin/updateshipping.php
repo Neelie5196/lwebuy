@@ -13,15 +13,11 @@ $workstQuery = $db->prepare("
     JOIN users us
     ON us.user_id = ws.user_id
 ");
-
 $workstQuery->execute();
-
 $workst = $workstQuery->rowCount() ? $workstQuery : [];
 
 $getstationsQuery = $db->prepare("SELECT * FROM warehouse");
-
 $getstationsQuery->execute();
-
 $getstations = $getstationsQuery->rowCount() ? $getstationsQuery : [];
 
 $getaddressQuery = $db->prepare("
@@ -30,10 +26,16 @@ $getaddressQuery = $db->prepare("
     JOIN address ad
     ON ad.a_id = sh.a_id
 ");
-
 $getaddressQuery->execute();
-
 $getaddress = $getaddressQuery->rowCount() ? $getaddressQuery : [];
+
+$getslotQuery = $db->prepare("SELECT * FROM slot");
+$getslotQuery->execute();
+$getslot = $getslotQuery->rowCount() ? $getslotQuery : [];
+
+$getitemlistQuery = $db->prepare("SELECT * FROM item");
+$getitemlistQuery->execute();
+$getitemlist = $getitemlistQuery->rowCount() ? $getitemlistQuery : [];
                                                 
 if (isset($_POST['updateshipping'])) 
 {
@@ -262,6 +264,36 @@ if (isset($_POST['updateshipping']))
             )");
     
             $proceedshippingsumQuery->execute();
+			
+			// if(!empty($getslot))
+            // {
+				// $count = 0;
+				
+                // foreach($getslot as $gsl)
+                // {
+					// $s_id = $gsl['s_id'];
+					
+                    // if(!empty($getitemlist))
+					// {
+						// foreach($getitemlist as $gil)
+						// {
+							// if($gsl['s_id'] == $gil['s_id'])
+							// {
+								// if($gil['action'] == 'in')
+								// {
+									// $count += 1;
+								// }
+							// }
+						// }
+					// }
+					
+					// if($count == 0)
+					// {
+						// $updateslotQuery = $db->prepare("UPDATE slot SET status = 'Not in Use', user_id = NULL WHERE s_id = $s_id);
+						// $updateslotQueryuery->execute();
+					// }
+                // }
+            // }
         }
         else
         {
@@ -432,44 +464,43 @@ if (isset($_POST['updateshipping']))
                                 <td class="inputUpdate">
                                     <select name="desStation">
                                         <?php
-                                            if($tracking_code != '')
-                                            {
-                                                if(!empty($getaddress))
-                                                {
-                                                    foreach($getaddress as $ga)
-                                                    {
-                                                        if($ga['tracking_code'] == $tracking_code)
-                                                        {
-                                                            $desCountry = $ga['country'];
-                                                        }
-                                                    }
-                                                }
+                                            // if($tracking_code != '')
+                                            // {
+                                                // if(!empty($getaddress))
+                                                // {
+                                                    // foreach($getaddress as $ga)
+                                                    // {
+                                                        // if($ga['tracking_code'] == $tracking_code)
+                                                        // {
+                                                            // $desCountry = $ga['country'];
+                                                        // }
+                                                    // }
+                                                // }
                                                 
+                                                // if(!empty($getstations))
+                                                // {
+                                                    // foreach($getstations as $gs)
+                                                    // {
+                                                        // if($gs['country_description'] == $desCountry)
+                                                        // {
+                                        ?>
+                                        <?php
+                                                        // }
+                                                    // }
+                                                // }
+                                            // }
+                                            // else
+                                            // {
                                                 if(!empty($getstations))
                                                 {
                                                     foreach($getstations as $gs)
                                                     {
-                                                        if($gs['country_description'] == $desCountry)
-                                                        {
-                                        ?>
-                                        <option value="<?php echo $gs['station_description']; ?>"><?php echo $gs['station_description']; ?></option>
-                                        <?php
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if(!empty($getstations))
-                                                {
-                                                    foreach($getstations as $gs)
-                                                    {
                                         ?>
                                         <option value="<?php echo $gs['station_description']; ?>"><?php echo $gs['station_description']; ?></option>
                                         <?php
                                                     }
                                                 }
-                                            }
+                                            // }
                                         ?>
                                         
                                     </select>

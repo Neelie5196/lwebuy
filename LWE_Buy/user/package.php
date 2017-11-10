@@ -36,7 +36,12 @@ $results = mysqli_fetch_assoc($result);
                      <div class="col-md-12">
 					<div style="border: 1px solid #eaeaec; margin: -1px 19px 3px -1px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding:10px;" align="center">
 					<h5 class="text-danger">Current Point:</h5>
-					<h5 class="text-info"><?php echo $results['point']; ?></h5>
+					<h5 class="text-info"><?php 
+												if($results['user_id'] != 0){
+													echo $results['point'];
+												}else{
+													echo '<p>0</p>';
+												}?></h5>
 					</div>
 			</div>
 			</div>

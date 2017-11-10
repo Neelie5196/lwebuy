@@ -122,7 +122,7 @@ $result1 = mysqli_query($con, $query1);
                         <strong>Completed</strong>
 						<div class="box-tools pull-right">
                             <div class="has-feedback">
-                                <input type="text" class="form-control input-sm" id="myInput1" onkeyup="myFunction2()" placeholder="Filter List">
+                                <input type="text" class="form-control input-sm" id="myInput1" onkeyup="myFunction3()" placeholder="Filter List">
                                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
                             </div>
                         </div>
@@ -219,7 +219,7 @@ $result1 = mysqli_query($con, $query1);
 	}
 </script>
 		<script>
-	function myFunction2() {
+	function myFunction3() {
 	  var input, filter, table, tr, td, i;
 	  input = document.getElementById("myInput1");
 	  filter = input.value.toUpperCase();
