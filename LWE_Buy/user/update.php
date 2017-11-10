@@ -64,7 +64,7 @@ if (isset($_POST['update-password']))
             {
 				$password = $_POST['np'];
 				$password = password_hash($password, PASSWORD_DEFAULT); 
-                $result = mysqli_query($con, "UPDATE users SET password='$password' WHERE user_id=$user_id") or die(mysql_error($con));
+                $result = mysqli_query($con, "UPDATE users SET password='$password' WHERE user_id=$user_id") or die(mysqli_error($con));
                 ?>
                 <script>
                 alert('Successfully Update');
@@ -103,10 +103,6 @@ if (isset($_POST['update-password']))
     }
 
 ?>
-
-else
-{
-    ?>
     <script>
     alert('Error While Update Profile');
     window.location.href='setting.php';
@@ -117,7 +113,4 @@ else
 
 ?>
 
-
-
-?>
 

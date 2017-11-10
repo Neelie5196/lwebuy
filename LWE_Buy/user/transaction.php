@@ -54,8 +54,16 @@ $result1 = mysqli_query($con, $query1);
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Pending</strong>
+						<div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control input-sm" id="myInput2" onkeyup="myFunction2()" placeholder="Filter List">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                        </div>
                     </div>
+					
                 </div>
+					
             </div>
             <section class = "content">
                 <div class="row">
@@ -64,8 +72,9 @@ $result1 = mysqli_query($con, $query1);
                             if(mysqli_num_rows($result) > 0)
                             {
                             ?>
-                            <table class="table thead-bordered" style="width:80%">
+                            <table id="transaction" class="table thead-bordered" style="width:80%">
                                 <thead>
+								
                                     <tr>
                                         <th width = "4%">#</th>
                                         <th width = "21%">Detail</th>
@@ -111,6 +120,12 @@ $result1 = mysqli_query($con, $query1);
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Completed</strong>
+						<div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control input-sm" id="myInput1" onkeyup="myFunction2()" placeholder="Filter List">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -121,7 +136,7 @@ $result1 = mysqli_query($con, $query1);
                             if(mysqli_num_rows($result1) > 0)
                             {
                             ?>
-                            <table class="table thead-bordered" style="width:80%">
+                            <table id ="completed" class="table thead-bordered" style="width:80%">
                                 <thead>
                                     <tr>
                                         <th width = "4%">#</th>
@@ -184,4 +199,42 @@ $result1 = mysqli_query($con, $query1);
             });		
         });
     </script>
+		<script>
+	function myFunction2() {
+	  var input, filter, table, tr, td, i;
+	  input = document.getElementById("myInput2");
+	  filter = input.value.toUpperCase();
+	  table = document.getElementById("transaction");
+	  tr = table.getElementsByTagName("tr");
+	  for (i = 0; i < tr.length; i++) {
+		td = tr[i].getElementsByTagName("td")[1];
+		if (td) {
+		  if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+			tr[i].style.display = "";
+		  } else {
+			tr[i].style.display = "none";
+		  }
+		}       
+	  }
+	}
+</script>
+		<script>
+	function myFunction2() {
+	  var input, filter, table, tr, td, i;
+	  input = document.getElementById("myInput1");
+	  filter = input.value.toUpperCase();
+	  table = document.getElementById("completed");
+	  tr = table.getElementsByTagName("tr");
+	  for (i = 0; i < tr.length; i++) {
+		td = tr[i].getElementsByTagName("td")[1];
+		if (td) {
+		  if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+			tr[i].style.display = "";
+		  } else {
+			tr[i].style.display = "none";
+		  }
+		}       
+	  }
+	}
+</script>
 </html>

@@ -52,6 +52,7 @@ $result2 = mysqli_query($con, $query2);
                 <h2>Order History</h2>
                 <hr/>
             </div>
+			
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
@@ -68,9 +69,11 @@ $result2 = mysqli_query($con, $query2);
                                 if(mysqli_num_rows($result1) > 0)
                                 {
                                 ?>
-                                <table class="table thead-bordered table-hover" style="width:80%">
-                                    <thead>
+                                <table id="order_history" class="table thead-bordered table-hover" style="width:80%">
+                                   
+									<thead>
                                         <tr>
+									
                                             <th>Order#</th>
                                             <th>Name</th>
                                             <th>Placed on</th>
@@ -111,6 +114,12 @@ $result2 = mysqli_query($con, $query2);
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Received</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse1">More Order Details</button>
+						<div class="box-tools pull-right">
+									<div class="has-feedback">
+										<input type="text" class="form-control input-sm" id="myInput2" onkeyup="myFunction2()" placeholder="Filter List">
+										<span class="glyphicon glyphicon-search form-control-feedback"></span>
+									</div>
+									</div>
                     </div>
                 </div>
             </div>
@@ -122,7 +131,7 @@ $result2 = mysqli_query($con, $query2);
                                 if(mysqli_num_rows($result2) > 0)
                                 {
                                 ?>
-                                <table class="table thead-bordered table-hover" style="width:80%">
+                                <table id="received" class="table thead-bordered table-hover" style="width:80%">
                                     <thead>
                                         <tr>
                                             <th>Order#</th>
@@ -161,4 +170,23 @@ $result2 = mysqli_query($con, $query2);
             </section>
         </center>
     </body>
+	<script>
+	function myFunction2() {
+	  var input, filter, table, tr, td, i;
+	  input = document.getElementById("myInput2");
+	  filter = input.value.toUpperCase();
+	  table = document.getElementById("received");
+	  tr = table.getElementsByTagName("tr");
+	  for (i = 0; i < tr.length; i++) {
+		td = tr[i].getElementsByTagName("td")[1];
+		if (td) {
+		  if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+			tr[i].style.display = "";
+		  } else {
+			tr[i].style.display = "none";
+		  }
+		}       
+	  }
+	}
+</script>
 </html>

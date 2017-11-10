@@ -46,6 +46,12 @@ $result1 = mysqli_query($con, $query1);
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <h2>Credit History</h2>
                     </div>
+					<div class="box-tools pull-right">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control input-sm" id="myInput2" onkeyup="myFunction2()" placeholder="Filter List">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                        </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
@@ -53,7 +59,7 @@ $result1 = mysqli_query($con, $query1);
                         if(mysqli_num_rows($result1) > 0)
                         {
                         ?>
-                        <table class="table thead-bordered table-hover" id="receive">
+                        <table id ="tbl_credit" class="table thead-bordered table-hover" id="receive">
                             <thead>
                                 <tr>
                                     <th width = "5%">#</th>
@@ -111,4 +117,23 @@ $result1 = mysqli_query($con, $query1);
             });		
         });
     </script>
+	<script>
+	function myFunction2() {
+	  var input, filter, table, tr, td, i;
+	  input = document.getElementById("myInput2");
+	  filter = input.value.toUpperCase();
+	  table = document.getElementById("tbl_credit");
+	  tr = table.getElementsByTagName("tr");
+	  for (i = 0; i < tr.length; i++) {
+		td = tr[i].getElementsByTagName("td")[2];
+		if (td) {
+		  if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+			tr[i].style.display = "";
+		  } else {
+			tr[i].style.display = "none";
+		  }
+		}       
+	  }
+	}
+</script>
 </html>

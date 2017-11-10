@@ -42,7 +42,7 @@ $results = mysqli_fetch_assoc($result);
         </div>
 
         <div class="container">
-            <div class="row"> 
+            <div class="row udash"> 
                 <div class="col-xs-12 col-md-6 col-lg-6">
                     <a href="purchaselist.php">
                         <div class="row udashrow1">
@@ -352,7 +352,7 @@ $results = mysqli_fetch_assoc($result);
                                         
                                         <tr>
                                             <td class="tenwidth"><label for="stName">Address: </label></td>
-                                            <td colspan="2"><div id ="name-data"></div></td
+                                            <td colspan="2"><div id ="name-data"></div></td>
                                         </tr>
                                     </table>
                                 </div>			
@@ -432,23 +432,16 @@ $results = mysqli_fetch_assoc($result);
                 </div>
             </div>
         </div>
-        </div>
         
-        <div class="hidden-lg footercontainer">
+        <div class="noscrollfooter footercontainer">
             <div class="footer">
-                <?php include('../footer.php') ?>
-            </div>
-        </div>
-        
-        <div class="hidden-xs hidden-md hidden-sm noscrollfooter footercontainer">
-            <div class="footer">
-                <?php include('../footer.php') ?>
+                <?php include_once('../footer.php') ?>
             </div>
         </div>
     </body>
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="js/global.js"></script>
-	<script type="text/javascript" src="js/typeahead.js"></script>
+	<script type="text/javascript" src="../frameworks/js/global.js"></script>
+	<script type="text/javascript" src="../frameworks/js/typeahead.js"></script>
 	<script>
     $(document).ready(function () {
         $('#name').typeahead({

@@ -21,8 +21,8 @@
         
         <!--stylesheet-->
     <link href="../frameworks/css/style.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="../frameworks/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../frameworks/css/msg_style.css">
 </head>
 <body ng-app="">
     <div class="row">
@@ -89,7 +89,7 @@
             <!-- / send message -->
         </div>
     </div>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/script.js"></script> 
+    <script type="text/javascript" src="../frameworks/js/jquery.min.js"></script>
+    <script type="text/javascript" src="../frameworks/js/msgscript.js"></script> 
 </body>
 </html>

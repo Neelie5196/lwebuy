@@ -8,7 +8,6 @@ if(isset($_POST["title"]))
 
 		$fileName = $file['name'];
 		$fileTmpName = $file['tmp_name'];
-		$fileSize = $file['size'];
 		$fileError = $file['error'];
 		$fileType = $file['type'];
 
@@ -19,13 +18,9 @@ if(isset($_POST["title"]))
 
 		if (in_array($fileActualExt, $allowed)) {
 			if ($fileError === 0) {
-				if ($fileSize < 1000000) {
 					$fileNameNew = uniqid('', true).".".$fileActualExt;
 					$fileDestination = '../resources/img/receipts/'.$fileNameNew;
 					move_uploaded_file($fileTmpName, $fileDestination);
-				} else {
-					echo "Your file is too big!";
-				}
 			} else {
 				echo "There was an error uploading your file!";
 			}
