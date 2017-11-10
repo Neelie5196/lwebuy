@@ -60,7 +60,7 @@ $result = mysqli_query($con, $query);
                         <table class="table thead-bordered table-hover" style="width:80%">
                             <thead>
                                 <tr>
-                                    <th>Order#</th>
+                                    <th>Order No.</th>
                                     <th>Placed on</th>
                                     <th>Total (RM)</th>
                                     <th>Status</th>
@@ -72,11 +72,11 @@ $result = mysqli_query($con, $query);
                                     ?>
                                     <tbody>
                                         <tr>
-                                            <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                            <td width="40%"><?php echo $row['datetime']; ?></td>
+                                            <td width="10%"><?php echo $row['ol_id']; ?></td>
+                                            <td width="35%"><?php echo $row['datetime']; ?></td>
                                             <td width="20%"><?php echo $row['price']; ?></td>
                                             <td width="20%"><?php echo $row['status']; ?></td>
-                                            <td width="15%"><a href="purchasehview.php?order_id=<?php echo $row['ol_id']; ?>&timeline=Received" class="btn btn-xs btn-info">View</a></td>
+                                            <td width="15%"><a href="purchasehview.php?order_id=<?php echo $row['ol_id']; ?>&timeline=Received" class="btn btn-xs btn-default">View</a></td>
                                         </tr>
                                     </tbody>
                                     <?php

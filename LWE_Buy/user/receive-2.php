@@ -55,7 +55,7 @@ session_start();
                                             for($i=1; $i<=$numbers; $i++)
                                             {
                                         ?>
-                                        <table class="table table-bordered">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
                                                     <td>
@@ -67,7 +67,7 @@ session_start();
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <label>Item Name</label>
+                                                        <label>Item Name:</label>
                                                     </td>
                                                     <td>
                                                         <input class="form-control" name="name[]" type="text" required>
@@ -75,7 +75,7 @@ session_start();
                                                         <input type="hidden" value="Request" name="status[]">
                                                     </td>
                                                     <td>
-                                                        <label>Order Code</label>
+                                                        <label>Tracking Code:</label>
                                                     </td>
                                                     <td>
                                                         <input class="form-control" name="ordercode[]" type="text" required>
@@ -87,7 +87,7 @@ session_start();
                                             }
                                         ?>
                                         <a href='receive-1.php' class='btn btn-default' name='back'>Back</a>
-                                        <input type="submit" class="btn btn-default" name="submit" value="Submit Request">
+                                        <input type="submit" class="btn btn-success" name="submit" value="Submit Request">
                                     </form>
                                 </div>
                             </div>

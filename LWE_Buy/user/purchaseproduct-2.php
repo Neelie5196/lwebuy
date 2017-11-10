@@ -64,7 +64,7 @@ if (mysqli_num_rows($result) > 0) {
                                             for($i=1; $i<=$numbers; $i++)
                                             {
                                         ?>
-                                        <table class="table table-bordered">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
                                                     <td>
@@ -76,7 +76,7 @@ if (mysqli_num_rows($result) > 0) {
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <label>Item Name</label>
+                                                        <label>Item Name:</label>
                                                     </td>
                                                     <td>
                                                         <input class="form-control" name="name[]" type="text" required>
@@ -84,7 +84,7 @@ if (mysqli_num_rows($result) > 0) {
                                                         <input type="hidden" value="<?php echo $orderid; ?>" name="orderId">
                                                     </td>
                                                     <td>
-                                                        <label>Item Link</label>
+                                                        <label>Item Link:</label>
                                                     </td>
                                                     <td>
                                                         <input class="form-control" name="link[]" type="text" required>
@@ -92,13 +92,13 @@ if (mysqli_num_rows($result) > 0) {
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <label>Item Type</label>
+                                                        <label>Item Type:</label>
                                                     </td>
                                                     <td>
                                                         <input class="form-control" name="type[]" type="text" required>
                                                     </td>
                                                     <td>
-                                                        <label>Unit</label>
+                                                        <label>Unit:</label>
                                                     </td>
                                                     <td>
                                                         <input class="form-control" name="unit[]" type="number" required>
@@ -106,7 +106,7 @@ if (mysqli_num_rows($result) > 0) {
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <label>Remark</label>
+                                                        <label>Remark:</label>
                                                     </td>
                                                     <td colspan="3">
                                                         <input class="form-control" name="remark[]" type="text" width="80">
@@ -118,7 +118,7 @@ if (mysqli_num_rows($result) > 0) {
                                             }
                                         ?>
                                         <a href='purchaseproduct-1.php' class='btn btn-default' name='back'>Back to Purchase</a>
-                                        <input type="submit" class="btn btn-default" name="submit" value="Submit Request">
+                                        <input type="submit" class="btn btn-success" name="submit" value="Submit Request">
                                     </form>
                                 </div>
                             </div>
