@@ -1,23 +1,18 @@
 <?php
 require_once '../connection/config.php';
 session_start();
-$_SESSION['s_id'] = $_GET['s_id'];
+$s_id = $_GET['s_id'];
 
-$shippingdetailQuery = $db->prepare("
-    SELECT *
-    FROM shipping sh
-    JOIN users us
-    ON us.user_id = sh.user_id
-    JOIN address ad
-    on ad.a_id = sh.a_id
-    WHERE s_id=:s_id
-");
+$query = "SELECT *
+          FROM shipping sh
+          JOIN users us
+          ON us.user_id = sh.user_id
+          JOIN address ad
+          on ad.a_id = sh.a_id
+          WHERE s_id='$s_id'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
 
-$shippingdetailQuery->execute([
-    's_id' => $_SESSION['s_id']
-]);
-
-$shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
 ?>
 
 <html>
@@ -36,14 +31,7 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
                 <h1>Logistic Worldwides Express</h1>
                 <hr/>
                 
-                <?php 
-                    if(!empty($shippingdetail))
-                    {
-                        foreach($shippingdetail as $sd)
-                        {
-                ?>
-                
-                <p>Weight(KG): <?php echo $sd['weight'] ?></p>
+                <p>Weight(KG): <?php echo $results['weight'] ?></p>
                 <script type="text/javascript">
                     function printDiv(parceltag)
                     {
@@ -95,20 +83,16 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
                     </tr>
                     
                     <tr>
-                        <td><p><?php echo $sd['fname'] . " " . $sd['lname']; ?></p></td>
-                        <td><p><?php echo $sd['recipient_contact']; ?></p></td>
+                        <td><p><?php echo $results['recipient_name']; ?></p></td>
+                        <td><p><?php echo $results['recipient_contact']; ?></p></td>
                     </tr>
                 </table>
                 
                 <h3>Address</h3>
                 
-                <p><?php echo $sd['address'] . ", " . $sd['postcode'] . " " . $sd['city'] . ", " . $sd['state'] . ", " . $sd['country']; ?></p>
+                <p><?php echo $results['address'] . ", " . $results['postcode'] . " " . $results['city'] . ", " . $results['state'] . ", " . $results['country']; ?></p>
                 
 
-                <?php
-                            }
-                        }
-                    ?>
             </div>
         </div>
         

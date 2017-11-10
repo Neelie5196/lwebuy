@@ -3,59 +3,44 @@
 require_once '../connection/config.php';
 session_start();
 
+
 if(isset($_POST['genCode']))
 {
+    $shippingid = $_POST['shippingid'];
     $defaultno = "122352562";
     $itemno = rand(100, 999);
     $tCode = $defaultno . $itemno;
     
-    $gencodeQuery = $db->prepare("UPDATE shipping SET tracking_code = $tCode WHERE s_id=:s_id");
-    
-    $gencodeQuery->execute(['s_id' => $_POST['shippingid']]);
-    
-    $gencode = $gencodeQuery->rowCount() ? $gencodeQuery : [];
+    $query = "UPDATE shipping SET tracking_code = '$tCode' WHERE s_id='$shippingid'";
+    $result = mysqli_query($con, $query);
+    $results = mysqli_fetch_assoc($result);
     
     header("Refresh:0");
 }
 
-$newshippingQuery = $db->prepare("
-    SELECT *
-    FROM shipping sh
-    JOIN users us
-    ON us.user_id = sh.user_id
-    WHERE status = 'request'
-    ORDER BY datetime desc
-");
+$query1 = "SELECT *
+           FROM shipping sh
+           JOIN users us
+           ON us.user_id = sh.user_id
+           WHERE status = 'request'
+           ORDER BY datetime desc";
+$result1 = mysqli_query($con, $query1);
 
-$newshippingQuery->execute();
+$query2 = "SELECT *
+           FROM shipping sh
+           JOIN users us
+           ON us.user_id = sh.user_id
+           WHERE status = 'proceed'
+           ORDER BY datetime desc";
+$result2 = mysqli_query($con, $query2);
 
-$newshipping = $newshippingQuery->rowCount() ? $newshippingQuery : [];
-
-$shippingQuery = $db->prepare("
-    SELECT *
-    FROM shipping sh
-    JOIN users us
-    ON us.user_id = sh.user_id
-    WHERE status = 'proceed'
-    ORDER BY datetime desc
-");
-
-$shippingQuery->execute();
-
-$shipping = $shippingQuery->rowCount() ? $shippingQuery : [];
-
-$shippingresponseQuery = $db->prepare("
-    SELECT *
-    FROM shipping sh
-    JOIN users us
-    ON us.user_id = sh.user_id
-    WHERE status = 'delivered'
-    ORDER BY datetime desc
-");
-
-$shippingresponseQuery->execute();
-
-$shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery : [];
+$query3 = "SELECT *
+           FROM shipping sh
+           JOIN users us
+           ON us.user_id = sh.user_id
+           WHERE status = 'delivered'
+           ORDER BY datetime desc";
+$result3 = mysqli_query($con, $query3);
 
 ?>
 
@@ -103,7 +88,10 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse1">
-                            <?php if(!empty($newshipping)): ?>
+                            <?php 
+                            if(mysqli_num_rows($result1) > 0)
+                            {
+                            ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
@@ -113,41 +101,48 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                         <th>Placed on</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($newshipping as $ns): ?>
-                                <tbody>
-                                    <tr>
-                                        <td width="5%"><?php echo $ns['s_id']; ?></td>
-                                        <td width="30%"><?php echo $ns['fname']; ?> <?php echo $ns['lname']; ?></td>
-                                        <td width="10%">
-                                            <?php
-                                            if($ns['tracking_code'] != "")
-                                            {
-                                                echo $ns['tracking_code'];
-                                            }
-                                            else
-                                            {
-                                            ?>
-                                            <form method="post" action="shippinglist.php">
-                                                <input type="text" value="<?php echo $ns['s_id']; ?>" name="shippingid" hidden="hidden" />
-                                                <input type="submit" value="Generate tracking code" name="genCode" class="btn btn-xs btn-info" />
-                                            </form>
-                                            <?php
-                                            }
-                                            ?>
-                                        </td>
-                                        <td width="10%"><?php echo $ns['datetime']; ?></td>
-                                        <td width="15%">
-                                            <a href="tag.php?s_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">Print tag</a>
-                                            <a href="shippinglrview.php?shipping_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">View</a>
-                                            <a href="updateshipping.php?tracking_code=<?php echo $ns['tracking_code']; ?>" class="btn btn-xs btn-info">Update</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
+                            <?php
+                                while($row = mysqli_fetch_array($result1))
+                                {
+                                    ?>
+                                    <tbody>
+                                        <tr>
+                                            <td width="5%"><?php echo $row['s_id']; ?></td>
+                                            <td width="30%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                            <td width="10%">
+                                                <?php
+                                                if($row['tracking_code'] != "")
+                                                {
+                                                    echo $row['tracking_code'];
+                                                }
+                                                else
+                                                {
+                                                ?>
+                                                <form method="post" action="shippinglist.php">
+                                                    <input type="text" value="<?php echo $row['s_id']; ?>" name="shippingid" hidden="hidden" />
+                                                    <input type="submit" value="Generate tracking code" name="genCode" class="btn btn-xs btn-info" />
+                                                </form>
+                                                <?php
+                                                }
+                                                ?>
+                                            </td>
+                                            <td width="10%"><?php echo $row['datetime']; ?></td>
+                                            <td width="15%">
+                                                <a href="tag.php?s_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-info">Print tag</a>
+                                                <a href="shippinglrview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-info">View</a>
+                                                <a href="updateshipping.php?tracking_code=<?php echo $row['tracking_code']; ?>" class="btn btn-xs btn-info">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>There is no shipping pending.</p>
+                                    <?php
+                                }
+                            ?>                                                    
                             </table>
-                            <?php else: ?>
-                                <p>There is no shipping pending.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -166,7 +161,10 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse2">
-                            <?php if(!empty($shipping)): ?>
+                            <?php 
+                            if(mysqli_num_rows($result2) > 0)
+                            {
+                            ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
@@ -176,25 +174,32 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($shipping as $s): ?>
-                                <tbody>
-                                    <tr>
-                                        <td width="10%"><?php echo $s['s_id']; ?></td>
-                                        <td width="40%"><?php echo $s['fname']; ?> <?php echo $s['lname']; ?></td>
-                                        <td width="15%"><?php echo $s['datetime']; ?></td>
-                                        <td width="10%"><?php echo $s['status']; ?></td>
-                                        <td width="5">
-                                            <a href="tag.php?s_id=<?php echo $ns['s_id']; ?>" class="btn btn-xs btn-info">Reprint tag</a>
-                                            <a href="shippinglpview.php?shipping_id=<?php echo $s['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-info">View</a>
-                                            <a href="updateshipping.php?tracking_code=<?php echo $ns['tracking_code']; ?>" class="btn btn-xs btn-info">Update</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <?php endforeach; ?>
+                            <?php
+                                while($rows = mysqli_fetch_array($result2))
+                                {
+                                    ?>
+                                    <tbody>
+                                        <tr>
+                                            <td width="10%"><?php echo $rows['s_id']; ?></td>
+                                            <td width="40%"><?php echo $rows['fname']; ?> <?php echo $rows['lname']; ?></td>
+                                            <td width="15%"><?php echo $rows['datetime']; ?></td>
+                                            <td width="10%"><?php echo $rows['status']; ?></td>
+                                            <td width="5">
+                                                <a href="tag.php?s_id=<?php echo $rows['s_id']; ?>" class="btn btn-xs btn-info">Reprint tag</a>
+                                                <a href="shippinglpview.php?shipping_id=<?php echo $rows['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-info">View</a>
+                                                <a href="updateshipping.php?tracking_code=<?php echo $rows['tracking_code']; ?>" class="btn btn-xs btn-info">Update</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>There is no proceeded shipping.</p>
+                                    <?php
+                                }
+                            ?>
                             </table>
-                            <?php else: ?>
-                                <p>There is no proceeded shipping.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -213,7 +218,10 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse3">
-                            <?php if(!empty($shippingresponse)): ?>
+                            <?php 
+                            if(mysqli_num_rows($result3) > 0)
+                            {
+                            ?>
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
@@ -222,19 +230,26 @@ $shippingresponse = $shippingresponseQuery->rowCount() ? $shippingresponseQuery 
                                         <th>Placed on</th>
                                     </tr>
                                 </thead>
-                                <?php foreach($shippingresponse as $sr): ?>
-                                <tbody>
+                            <?php
+                                while($row = mysqli_fetch_array($result3))
+                                {
+                                    ?>
+                                    <tbody>
                                     <tr>
-                                        <td width="5%"><?php echo $sr['s_id']; ?></td>
-                                        <td width="40%"><?php echo $sr['fname']; ?> <?php echo $sr['lname']; ?></td>
-                                        <td width="15%"><?php echo $sr['datetime']; ?></td>
+                                        <td width="5%"><?php echo $row['s_id']; ?></td>
+                                        <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                        <td width="15%"><?php echo $row['datetime']; ?></td>
                                     </tr>
                                 </tbody>
-                                <?php endforeach; ?>
+                                    <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <p>There is no pending response.</p>
+                                    <?php
+                                }
+                            ?>                           
                             </table>
-                            <?php else: ?>
-                                <p>There is no pending response.</p>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
