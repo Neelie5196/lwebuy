@@ -86,7 +86,7 @@ $results3 = mysqli_fetch_assoc($result3);
                                                     <?php echo $row["postcode"]; ?>, <?php echo $row["city"]; ?>,<br/>
                                                     <?php echo $row["state"]; ?>, <?php echo $row["country"]; ?><br/>
                                                 </h5>
-                                                <input type="checkbox" value="<?php echo $row["a_id"]; ?>" name="address">
+                                                <input type="checkbox" value="<?php echo $row["a_id"]; ?>" name="address" class="address">
                                             </div>
                                         </div>
                                     <?php
@@ -268,4 +268,29 @@ $results3 = mysqli_fetch_assoc($result3);
             </div>
         </div>
     </body>
+    <script>
+        $('input.address').on('change', function() {
+            $('input.address').not(this).prop('checked', false);  
+        });
+        
+        function val(){
+            var address = document.getElementsByName('address');
+            var hasChecked = false;
+
+            for (var i = 0; i < address.length; i++)
+            {
+                if (address[i].checked)
+                {
+                    hasChecked = true;
+                    break;
+                }
+            }
+            if (hasChecked == false)
+            {
+                alert("Please select an address");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </html>
