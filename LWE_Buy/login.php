@@ -17,7 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         
         if ( $result->num_rows == 0 )
         {
-            $_SESSION['message'] = "User does not exist!";
+            ?>
+            <script>
+                alert('You have entered wrong email, try again!');
+            </script>
+            <?php
         }
         else
         {
@@ -57,7 +61,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             }
             else
             {
-               alert('You have entered wrong password, try again!');
+                ?>
+                <script>
+                    alert('You have entered wrong password, try again!');
+                </script>
+                <?php
             }
         }
     }

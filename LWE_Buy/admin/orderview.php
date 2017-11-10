@@ -10,6 +10,12 @@ $query1 = "SELECT *
            WHERE order_id='$order_id'";
 $result1 = mysqli_query($con, $query1);
 
+$query = "SELECT * 
+          FROM adjust
+          WHERE name = 'currency'";
+$result = mysqli_query($con, $query);
+$results = mysqli_fetch_assoc($result);
+
 ?>
 
 <!DOCTYPE html>
@@ -54,25 +60,25 @@ $result1 = mysqli_query($con, $query1);
                                 if(mysqli_num_rows($result1) > 0)
                                 {
                                 ?>
-                                <table class="table thead-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Link</th>
-                                            <th>Type</th>
-                                            <th>Unit</th>
-                                            <th>Remark</th>
-                                            <th>Price (RMB)</th>
-                                            <th>Price (RM)</th>
-                                        </tr>
-                                    </thead>
-                                    <?php
-                                        while($row = mysqli_fetch_array($result1))
-                                        {
-                                            $counter++;
-                                        ?>
-                                        <form action="updateprice.php" method="post">
+                                <form action="updateprice.php" method="post">
+                                    <table class="table thead-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Link</th>
+                                                <th>Type</th>
+                                                <th>Unit</th>
+                                                <th>Remark</th>
+                                                <th>Price (RMB)</th>
+                                                <th>Price (RM)</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                            while($row = mysqli_fetch_array($result1))
+                                            {
+                                                $counter++;
+                                            ?>
                                             <tbody>
                                                 <tr>
                                                     <td width="4%"><?php echo $counter; ?></td>
@@ -81,25 +87,26 @@ $result1 = mysqli_query($con, $query1);
                                                     <td width="6%"><?php echo $row['type']; ?></td>
                                                     <td width="6%"><?php echo $row['unit']; ?></td>
                                                     <td width="18%"><?php echo $row['remark']; ?></td>
-                                                    <td width="9%"><input type="number" step="0.01" name="price" required/></td>
-                                                    <td width="9%"><input type="text" name="myr" value="<?php echo $row['price']; ?>" readonly></td>
+                                                    <td width="9%"><input type="number" step="0.01" name="price[]" value="<?php echo number_format((float)$row['price']*$results['value'], 2, '.', ''); ?>" required/></td>
+                                                    <td width="9%"><?php echo $row['price']; ?></td>
                                                     <td width="15%">
-                                                        <input type="hidden" name="oi_id" value="<?php echo $row['oi_id']; ?>">
+                                                        <input type="hidden" name="oi_id[]" value="<?php echo $row['oi_id']; ?>">
                                                         <input type="hidden" name="order_id" value="<?php echo $_GET['order_id']; ?>">
-                                                        <input type="submit" class="btn btn-xs btn-warning" value="Update">
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </form>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                            <p>Error.</p>
                                         <?php
                                     }
-                                }else{
-                                    ?>
-                                        <p>Error.</p>
-                                    <?php
-                                }
-                            ?>
-                            </table>
+                                ?>
+                                </table>
+                                <input type="hidden" name="numbers" value="<?php echo $counter; ?>">
+                                <input type="submit" class="btn btn-warning" value="Update">
+                            </form>
                         </div>
                         <form action="acceptorder.php" method="post">
                             <?php

@@ -8,10 +8,7 @@ body {
     background: none;
 }
 
-.container {
-    width: 60%;
-    margin: 0px auto;
-}
+
 
 .parallax {
     background-image: url("../../resources/img/bg.jpg");
