@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['name']) === true && empty($_POST['name']) === false) {
-	require_once '../../connection/config.php';
+	require_once '../connection/config.php';
 	
 	$query = mysql_query("
 		SELECT warehouse.station_description
