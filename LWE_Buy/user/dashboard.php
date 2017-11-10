@@ -449,22 +449,22 @@ $results = mysqli_fetch_assoc($result);
 	<script type="text/javascript" src="../frameworks/js/global.js"></script>
 	<script type="text/javascript" src="../frameworks/js/typeahead.js"></script>
 	<script>
-    $(document).ready(function () {
-        $('#name').typeahead({
-            source: function (query, result) {
-                $.ajax({
-                    url: "server.php",
-					data: 'query=' + query,            
-                    dataType: "json",
-                    type: "POST",
-                    success: function (data) {
-						result($.map(data, function (item) {
-							return item;
-                        }));
-                    }
-                });
-            }
+        $(document).ready(function () {
+            $('#name').typeahead({
+                source: function (query, result) {
+                    $.ajax({
+                        url: "server.php",
+                        data: 'query=' + query,            
+                        dataType: "json",
+                        type: "POST",
+                        success: function (data) {
+                            result($.map(data, function (item) {
+                                return item;
+                            }));
+                        }
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
 </html>

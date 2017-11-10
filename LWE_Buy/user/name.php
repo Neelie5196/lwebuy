@@ -1,21 +1,28 @@
 <?php
+require_once '../connection/config.php';
+
 if (isset($_POST['name']) === true && empty($_POST['name']) === false) {
-	require_once '../connection/config.php';
 	
-	$query = mysql_query("
-		SELECT warehouse.station_description
-		FROM  warehouse
-		WHERE warehouse.country_description ='". mysql_real_escape_string(trim($_POST['name']))."'
-	");
 	
-	if (mysql_num_rows($query) == 0)
-			echo "Not Found";
+    $name = $_POST['name'];
+    
+    $query = "SELECT * 
+              FROM  warehouse
+		      WHERE country_description ='$name'";
+    $result = mysqli_query($con, $query);
+    $results = mysqli_fetch_assoc($result);
+    
+	
+	if ($results > 0){
+        $query = $results['station_description'];
+        echo $query;
+    }
 	else
 	{
-		$query = mysql_result($query,0);
-		echo $query;
+		echo 'Not Found';
+		
 	}
-	}
+}
 
 ?>
 
