@@ -492,7 +492,10 @@ if (isset($_POST['updateshipping']))
                             </tr>
                         </table>
                         
-                        <p class="btnUpdate"><input type="submit" name="updateshipping" value="Update" class="btn btn-default"/></p>
+                        <p class="btnUpdate">
+                            <input type="submit" name="updateshipping" value="Update" class="btn btn-default"/>
+                            <a href="shippinglist.php"><input type="button" value="Back" class="btn btn-default"/></a>
+                        </p>
                     </form>
                 <?php
                             }

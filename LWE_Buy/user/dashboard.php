@@ -42,7 +42,7 @@ $results = mysqli_fetch_assoc($result);
         </div>
 
         <div class="container">
-            <div class="row udash"> 
+            <div class="row"> 
                 <div class="col-xs-12 col-md-6 col-lg-6">
                     <a href="purchaselist.php">
                         <div class="row udashrow1">
@@ -432,10 +432,17 @@ $results = mysqli_fetch_assoc($result);
                 </div>
             </div>
         </div>
+        </div>
         
-        <div class="noscrollfooter footercontainer">
+        <div class="hidden-lg footercontainer">
             <div class="footer">
-                <?php include_once('../footer.php') ?>
+                <?php include('../footer.php') ?>
+            </div>
+        </div>
+        
+        <div class="hidden-xs hidden-md hidden-sm noscrollfooter footercontainer">
+            <div class="footer">
+                <?php include('../footer.php') ?>
             </div>
         </div>
     </body>

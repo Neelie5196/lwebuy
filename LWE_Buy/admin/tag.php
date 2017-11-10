@@ -30,7 +30,7 @@ $shippingdetail = $shippingdetailQuery->rowCount() ? $shippingdetailQuery : [];
         <link href="../frameworks/css/style.css" rel="stylesheet"/>
     </head>
     
-    <body onload="generateBarcode()">
+    <body class="homepagebg" onload="generateBarcode()">
         <div id="parceltag">
             <div class="parceltag">
                 <h1>Logistic Worldwides Express</h1>

@@ -23,7 +23,7 @@
         mysqli_query($con, $s);
         ?>
         <script>
-        alert('Success to Submit');
+        alert('Your request has been recorded. Thank you!');
         window.location.href='purchaselist.php?success';
         </script>
         <?php
@@ -32,7 +32,7 @@
     {
         ?>
         <script>
-        alert('Error While Submit, Please try again');
+        alert('Error! Please try again');
        window.location.href='purchaselist.php?fail';
         </script>
         <?php

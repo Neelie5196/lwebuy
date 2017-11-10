@@ -8,7 +8,10 @@ body {
     background: none;
 }
 
-
+.container {
+    width: 80%;
+    margin: 0px auto;
+}
 
 .parallax {
     background-image: url("../../resources/img/bg.jpg");
@@ -281,7 +284,7 @@ body {
 }
 
 .footer {
-    width: 60%;
+    width: 80%;
     margin: auto;
 }
 
@@ -311,10 +314,9 @@ body {
     color: #fff;
 }
 
-.footerconimg > img {
-    
+.copyrow {
+    margin-top: 15px;
 }
-
 /*
 @media (max-width: @screen-xs) {
     .footerlist > li {
