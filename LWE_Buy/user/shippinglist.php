@@ -50,7 +50,7 @@ $result1 = mysqli_query($con, $query1);
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <p style="float: right;"><a href='message.php' class='btn btn-info' name='contact'>Contact Admin</a> <a href='receiveditem.php' class='btn btn-default' name='new'>New Shipping</a></p>
+                        <p style="float: right;"><a href='message.php' class='btn btn-default' name='contact'>Contact Admin</a> <a href='receiveditem.php' class='btn btn-default' name='new'>New Shipping</a></p>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@ $result1 = mysqli_query($con, $query1);
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Request</strong>
-                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#request">More Item Details</button>
+                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#request">More</button>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@ $result1 = mysqli_query($con, $query1);
                                                 <td width="40%"><?php echo $row['datetime']; ?></td>
                                                 <td width="20%"><?php echo $row['price']; ?></td>
                                                 <td width="20%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="shippinglrview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                <td width="15%"><a href="shippinglrview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-default">View</a></td>
                                             </tr>
                                         </tbody>
                                         <?php
@@ -111,7 +111,7 @@ $result1 = mysqli_query($con, $query1);
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>In Proceed</strong>
-                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#proceed">More Item Details</button>
+                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#proceed">More</button>
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@ $result1 = mysqli_query($con, $query1);
                                                 <td width="40%"><?php echo $row['datetime']; ?></td>
                                                 <td width="20%"><?php echo $row['price']; ?></td>
                                                 <td width="20%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $row['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-info">View</a></td>
+                                                <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $row['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-default">View</a></td>
                                             </tr>
                                         </tbody>
                                         <?php

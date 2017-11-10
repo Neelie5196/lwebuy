@@ -45,7 +45,7 @@ session_start();
                                 <div class="jumbotron">
                                     <h3 class="title">Enter number of product to be purchased</h3>
                                     <p><input class="form-control tenwidth" name="num" type="number" value="1" required></p>
-                                    <p><input type="submit" class="btn btn-default" name="submit" value="Next"></p>
+                                    <p><input type="submit" class="btn btn-success" name="submit" value="Next"></p>
                                 </div>
                             </form>
                         </div>

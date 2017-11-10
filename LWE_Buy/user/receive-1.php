@@ -36,35 +36,23 @@ session_start();
             <div class="container">
                 <h2>Add Inventory</h2>
                 <hr/>
-            </div>
             
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <form method="post" action="receive-2.php">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-12 col-md-12 jumbotron">
-                                        <h3 class="title">Please enter number of items to add:</h3>
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <input class="form-control" name="num" type="number" value="1" required>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                <section class = "content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <form method="post" action="receive-2.php">
+                                <div class="jumbotron">
+                                    <h3 class="title">Enter number of items to add</h3>
+                                    <p><input class="form-control tenwidth" name="num" type="number" value="1" required></p>
+                                    <p>
+                                        <input type="submit" class="btn btn-success" name="submit" value="Next">
+                                    </p>
                                 </div>
-                            </div>
-                            <input type="submit" class="btn btn-default" name="submit" value="Next">
-                            <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>
-                        </form>
-                        
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </center>
     </body>
 </html>

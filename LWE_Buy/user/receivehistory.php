@@ -54,7 +54,7 @@ $result1 = mysqli_query($con, $query1);
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <p style="float: right;"><a href='message.php' class='btn btn-info' name='contact'>Contact Admin</a> <a href='receive-1.php' class='btn btn-default' name='new'>New Receive</a></p>
+                        <p style="float: right;"><a href='message.php' class='btn btn-default' name='contact'>Contact Admin</a> <a href='receive-1.php' class='btn btn-default' name='new'>New Receive</a></p>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@ $result1 = mysqli_query($con, $query1);
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
-                        <strong>Request</strong>
+                        <strong>Request (<?php echo mysqli_num_rows($result); ?>)</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#request">More Item Details</button>
                     </div>
                 </div>
