@@ -1,8 +1,3 @@
-<?php
-require_once 'connection/config.php';
-session_start();
-?>
-
 <!DOCTYPE html>
 <html data-ng-app="">
     <head>

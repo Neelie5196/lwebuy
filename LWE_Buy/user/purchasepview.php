@@ -92,7 +92,7 @@ $result = mysqli_query($con, $query);
                                             if(isset($order_id)){
                                                 $order_id = $order_id;
 
-                                                $result = mysqli_query($con, "DELETE FROM order_list WHERE ol_id=$order_id") or die(mysql_error());
+                                                $result = mysqli_query($con, "DELETE FROM order_list WHERE ol_id=$order_id") or die(mysqli_error($con));
                                                 ?>
                                                     <script>
                                                         window.location.href='purchaselist.php';
