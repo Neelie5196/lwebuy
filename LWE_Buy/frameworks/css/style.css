@@ -396,3 +396,7 @@ body {
 .marright {
     margin-right: 10px;
 }
+
+input{
+    text-transform:uppercase;
+}

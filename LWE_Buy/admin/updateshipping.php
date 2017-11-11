@@ -19,24 +19,13 @@ $results = mysqli_fetch_assoc($result);
 $query1 = "SELECT * FROM warehouse";
 $result1 = mysqli_query($con, $query1);
 
+$query2 = "SELECT *
+           FROM shipping sh
+           JOIN address ad
+           ON ad.a_id = sh.a_id";
+$result2 = mysqli_query($con, $query2);
+$results2 = mysqli_fetch_assoc($result2);
 
-/*$getaddressQuery = $db->prepare("
-    SELECT *
-    FROM shipping sh
-    JOIN address ad
-    ON ad.a_id = sh.a_id
-");
-$getaddressQuery->execute();
-$getaddress = $getaddressQuery->rowCount() ? $getaddressQuery : [];
-*/
-
-$getslotQuery = $db->prepare("SELECT * FROM slot");
-$getslotQuery->execute();
-$getslot = $getslotQuery->rowCount() ? $getslotQuery : [];
-
-$getitemlistQuery = $db->prepare("SELECT * FROM item");
-$getitemlistQuery->execute();
-$getitemlist = $getitemlistQuery->rowCount() ? $getitemlistQuery : [];
                                                 
 if (isset($_POST['updateshipping'])) 
 {
@@ -66,61 +55,13 @@ if (isset($_POST['updateshipping']))
                 $eventDesc = 'Shipment arrived at ' . $stationName . ' station.';
             }
             
-            $arriveshippingdetQuery = $db->prepare("
-            INSERT INTO shipping_update_details
-            (HawbNo, 
-            StationCode, 
-            StationDescription, 
-            CountryCode, 
-            CountryDescription, 
-            EventCode, 
-            EventDescription, 
-            ReasonCode, 
-            ReasonDescription, 
-            Remark) 
-            VALUES (
-            '$trackcode', 
-            '$stationCode', 
-            '$stationName', 
-            '$countryCode', 
-            '$countryName', 
-            'ARV', 
-            '$eventDesc', 
-            'IS', 
-            'Is Shipping',
-            '$remark'
-            )");
-
-            $arriveshippingdetQuery->execute();
+            $result = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$trackcode', StationCode='$stationCode', StationDescription='$stationName', CountryCode='$countryCode', CountryDescription='$countryName', EventCode='ARV', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark='$remark'") or die(mysqli_error($con));
         }
         else
         {
             $eventDesc = 'Custom cleared and arrived at ' . $stationName . '.';
-                
-            $arriveshippingdetQuery = $db->prepare("
-            INSERT INTO shipping_update_details
-            (HawbNo, 
-            StationCode, 
-            StationDescription, 
-            CountryCode, 
-            CountryDescription, 
-            EventCode, 
-            EventDescription, 
-            ReasonCode, 
-            ReasonDescription, 
-            Remark) 
-            VALUES (
-            '$trackcode', 
-            '$stationCode', 
-            '$stationName', 
-            '$countryCode', 
-            '$countryName', 
-            'CAV', 
-            '$eventDesc', 
-            'IS', 
-            'Is Shipping',
-            '$remark'
-            )");
+            
+            $result = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$trackcode', StationCode='$stationCode', StationDescription='$stationName', CountryCode='$countryCode', CountryDescription='$countryName', EventCode='CAV', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark='$remark'") or die(mysqli_error($con));
         }
     }
     else if($eventType == 'out')
@@ -130,242 +71,53 @@ if (isset($_POST['updateshipping']))
         if($eventAct == 'depart')
         {
             $eventDesc = 'Shipment departed from/to ' . $stationName . ' station.';
-                
-            $arriveshippingdetQuery = $db->prepare("
-            INSERT INTO shipping_update_details
-            (HawbNo, 
-            StationCode, 
-            StationDescription, 
-            CountryCode, 
-            CountryDescription, 
-            EventCode, 
-            EventDescription, 
-            ReasonCode, 
-            ReasonDescription, 
-            Remark) 
-            VALUES (
-            '$trackcode', 
-            '$stationCode', 
-            '$stationName', 
-            '$countryCode', 
-            '$countryName', 
-            'DPT', 
-            '$eventDesc', 
-            'IS', 
-            'Is Shipping',
-            '$remark'
-            )");
-
-            $arriveshippingdetQuery->execute();
+            
+            $result = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$trackcode', StationCode='$stationCode', StationDescription='$stationName', CountryCode='$countryCode', CountryDescription='$countryName', EventCode='DPT', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark='$remark'") or die(mysqli_error($con));
         }
         else if($eventAct == 'register')
         {
             $desStation = $_POST['desStation'];
             $eventDesc = 'Shipment info registered at ' . $stationName . '.';
             
-            $proceedshippingQuery = $db->prepare("UPDATE shipping SET status = 'Proceed' WHERE tracking_code = $trackcode");
-            $proceedshippingQuery->execute();
+            $result1 = mysqli_query($con, "UPDATE shipping SET status = 'Proceed' WHERE tracking_code = $trackcode") or die(mysqli_error($con));
             
-            $proceedshippingdetQuery = $db->prepare("
-            INSERT INTO shipping_update_details
-            (HawbNo, 
-            StationCode, 
-            StationDescription, 
-            CountryCode, 
-            CountryDescription, 
-            EventCode, 
-            EventDescription, 
-            ReasonCode, 
-            ReasonDescription, 
-            Remark) 
-            VALUES (
-            '$trackcode', 
-            '$stationCode', 
-            '$stationName', 
-            '$countryCode', 
-            '$countryName', 
-            'RDL', 
-            '$eventDesc', 
-            'IS', 
-            'In Shipping',
-            '$remark'
-            )");
+            $result = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$trackcode', StationCode='$stationCode', StationDescription='$stationName', CountryCode='$countryCode', CountryDescription='$countryName', EventCode='RDL', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark='$remark'") or die(mysqli_error($con));
             
-            $proceedshippingdetQuery->execute();            
+            $query3 = "SELECT * FROM shipping WHERE tracking_code = '$trackcode'";
+            $result3 = mysqli_query($con, $query3);
+            $results3 = mysqli_fetch_assoc($result3);
             
-            $getrecipientQuery = $db->prepare("SELECT * FROM shipping");
-            $getrecipientQuery->execute();
-            $getrecipient = $getrecipientQuery->rowCount() ? $getrecipientQuery : [];
+            $recipient = $results3['recipient_name'];
+
+            $query4 = "SELECT * FROM warehouse WHERE station_description = '$desStation'";
+            $result4 = mysqli_query($con, $query4);
+            $results4 = mysqli_fetch_assoc($result4);
             
-            if(!empty($getrecipient))
-            {
-                foreach($getrecipient as $gr)
-                {
-                    if($gr['tracking_code'] == $trackcode)
-                    {
-                        $recipient = $gr['recipient_name'];
-                    }
-                }
-            }
+            $destinationStationCode = $results4['station_code'];
+            $destinationCountryCode = $results4['country_code'];
+            $destinationCountryName = $results4['country_description'];
             
-            $getdestinationQuery = $db->prepare("SELECT * FROM warehouse");
-            $getdestinationQuery->execute();
-            $getdestination = $getdestinationQuery->rowCount() ? $getdestinationQuery : [];
-            
-            if(!empty($getdestination))
-            {
-                foreach($getdestination as $gd)
-                {
-                    if($gd['station_description'] == $desStation)
-                    {
-                        $destinationStationCode = $gd['station_code'];
-                        $destinationCountryCode = $gd['country_code'];
-                        $destinationCountryName = $gd['country_description'];
-                    }
-                }
-            }
-            
-            $proceedshippingsumQuery = $db->prepare("
-            INSERT INTO shipping_update_summary(
-            HawbNo,
-            DeliveryDate,
-            RecipientName,
-            SignedName,
-            OriginStationCode, 
-            OriginStationDescription, 
-            OriginCountryCode, 
-            OriginCountryDescription,
-            DestinationStationCode, 
-            DestinationStationDescription, 
-            DestinationCountryCode,
-            DestinationCountryDescription,
-            EventCode, 
-            EventDescription, 
-            ReasonCode, 
-            ReasonDescription, 
-            Remark) 
-            VALUES (
-            '$trackcode', 
-            '',
-            '$recipient',
-            '',
-            '$stationCode', 
-            '$stationName', 
-            '$countryCode', 
-            '$countryName',
-            '$destinationStationCode',
-            '$desStation',
-            '$destinationCountryCode',
-            '$destinationCountryName',
-            'IP', 
-            'In Proceed', 
-            'IS', 
-            'In Shipping', 
-            '$remark'
-            )");
-    
-            $proceedshippingsumQuery->execute();
-			
-			 if(!empty($getslot))
-             {
-				 $count = 0;
-				
-                 foreach($getslot as $gsl)
-                 {
-					 $s_id = $gsl['s_id'];
-					
-                     if(!empty($getitemlist))
-					 {
-						 foreach($getitemlist as $gil)
-						 {
-							 if($gsl['s_id'] == $gil['s_id'])
-							 {
-								 if($gil['action'] == 'in')
-								 {
-									 $count += 1;
-								 }
-							 }
-						 }
-					 }
-					
-					 if($count == 0)
-					 {
-						 $updateslotQuery = $db->prepare("UPDATE slot SET status = 'Not in Use', user_id = NULL WHERE s_id = $s_id");
-						 $updateslotQueryuery->execute();
-					 }
-                 }
-             }
+            $result2 = mysqli_query($con, "INSERT INTO shipping_update_summary SET HawbNo='$trackcode', DeliveryDate='', RecipientName='$recipient', SignedName='', OriginStationCode='$stationCode', OriginStationDescription='$stationName', OriginCountryCode='$countryCode', OriginCountryDescription='$countryName', DestinationStationCode='$destinationStationCode', DestinationStationDescription='$desStation', DestinationCountryCode='$destinationCountryCode', DestinationCountryDescription='$destinationCountryName', EventCode='IP', EventDescription='In Proceed', ReasonCode='IS', ReasonDescription='Is Shipping', Remark='$remark'") or die(mysqli_error($con));
         }
         else
         {
             $eventDesc = 'Pickup shipment checked in at ' . $stationName . '.';
 
-            $checkshippingdetQuery = $db->prepare("
-            INSERT INTO shipping_update_details
-            (HawbNo, 
-            StationCode, 
-            StationDescription, 
-            CountryCode, 
-            CountryDescription, 
-            EventCode, 
-            EventDescription, 
-            ReasonCode, 
-            ReasonDescription, 
-            Remark) 
-            VALUES (
-            '$trackcode', 
-            '$stationCode', 
-            '$stationName', 
-            '$countryCode', 
-            '$countryName', 
-            'PKI', 
-            '$eventDesc', 
-            'IS', 
-            'Is Shipping',
-            '$remark'
-            )");
-
-            $checkshippingdetQuery->execute();
+            $result = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$trackcode', StationCode='$stationCode', StationDescription='$stationName', CountryCode='$countryCode', CountryDescription='$countryName', EventCode='PKI', EventDescription='$eventDesc', ReasonCode='IS', ReasonDescription='Is Shipping', Remark='$remark'") or die(mysqli_error($con));
         }
     }
     else
     {
         $signedName = $_POST['signedName'];
         
-        $endshippingQuery = $db->prepare("UPDATE shipping SET status = 'Delivered' WHERE tracking_code = $trackcode");
-        $endshippingQuery->execute();
-
-        $endshippingsumQuery = $db->prepare("UPDATE shipping_update_summary SET SignedName = '$signedName', EventCode = 'DL', EventDescription = 'Delivered', ReasonCode = 'DL', ReasonDescription = 'Delivered' WHERE HawbNo = $trackcode");
-        $endshippingsumQuery->execute();
+        $result = mysqli_query($con, "UPDATE shipping SET status = 'Delivered' WHERE tracking_code = $trackcode") or die(mysqli_error($con));
+        
+        $result1 = mysqli_query($con, "UPDATE shipping_update_summary SET SignedName = '$signedName', EventCode = 'DL', EventDescription = 'Delivered', ReasonCode = 'DL', ReasonDescription = 'Delivered' WHERE HawbNo = $trackcode") or die(mysqli_error($con));
         
         $eventDesc = 'SHIPMENT DELIVERED';
+        
+        $result2 = mysqli_query($con, "INSERT INTO shipping_update_details SET HawbNo='$trackcode', StationCode='$stationCode', StationDescription='$stationName', CountryCode='$countryCode', CountryDescription='$countryName', EventCode='DLV', EventDescription='$eventDesc', ReasonCode='DL', ReasonDescription='Delivered', Remark='$remark'") or die(mysqli_error($con));
 
-        $endshippingdetQuery = $db->prepare("
-        INSERT INTO shipping_update_details
-        (HawbNo, 
-        StationCode, 
-        StationDescription, 
-        CountryCode, 
-        CountryDescription, 
-        EventCode, 
-        EventDescription, 
-        ReasonCode, 
-        ReasonDescription, 
-        Remark) 
-        VALUES (
-        '$trackcode', 
-        '$stationCode', 
-        '$stationName', 
-        '$countryCode', 
-        '$countryName', 
-        'DLV', 
-        '$eventDesc', 
-        'DL', 
-        'Delivered',
-        '$remark'
-        )");
-
-        $endshippingdetQuery->execute();
     }
 }
 ?>
@@ -398,9 +150,10 @@ if (isset($_POST['updateshipping']))
         <div class="row">
             <?php include_once('nav.php') ?>
         </div>
-        
+
         <div class="container">
             <h2>Shipping Details</h2>
+
             <div class="row" ng-init="in=true">
                 <div class="updateform col-xs-12 col-md-12 col-lg-12 jumbotron">
                     <form action="updateshipping.php" method="post">
@@ -412,7 +165,7 @@ if (isset($_POST['updateshipping']))
                                 <td class="lblUpdate"><label for="stDesc">Station Name: </label></td>
                                 <td class="inputUpdate textUpdate"><input type="text" name="stDesc" id="stDesc" value="<?php echo $results['station_description']; ?>" readonly="readonly" /></td>
                             </tr>
-
+                            
                             <tr>
                                 <td class="lblUpdate"><label for="CtyDesc">Country: </label></td>
                                 <td class="inputUpdate textUpdate"><input type="text" name="CtyDesc" id="CtyDesc" value="<?php echo $results['country_description']; ?>" readonly="readonly" /></td>
@@ -429,22 +182,22 @@ if (isset($_POST['updateshipping']))
                                     <input type="radio" name="eventType" value="delivered" ng-click="in=false; out=false; delivered=true; arrive=false; register=false" /> Delivered&nbsp;
                                 </td>                                
                             </tr>
-
+                            
                             <tr ng-show="in || out">
                                 <td class="lblUpdate">Event Activity: </td>
-
+                                
                                 <td class="inputUpdate" ng-show="in">
                                     <input type="radio" name="eventAct" value="arrive" ng-click="arrive=true" /> Arrive&nbsp;
                                     <input type="radio" name="eventAct" value="custom" ng-click="arrive=false" /> Clear custom and arrive&nbsp;
                                 </td>
-
+                                
                                 <td class="inputUpdate" ng-show="out">
                                     <input type="radio" name="eventAct" value="depart" ng-click="register=false" /> Depart&nbsp;
                                     <input type="radio" name="eventAct" value="register" ng-click="register=true" /> Register&nbsp;
                                     <input type="radio" name="eventAct" value="check" ng-click="register=false" /> Check in&nbsp;
                                 </td>
                             </tr>
-
+                            
                             <tr ng-show="arrive">
                                 <td class="lblUpdate">More event details: </td>
                                 <td class="inputUpdate" ng-show="arrive">
@@ -452,7 +205,7 @@ if (isset($_POST['updateshipping']))
                                     <input type="radio" name="eventMore" value="station" /> Station&nbsp;
                                 </td>
                             </tr>
-
+                            
                             <tr ng-show="register">
                                 <td class="lblUpdate">Destination station: </td>
                                 <td class="inputUpdate">
@@ -460,27 +213,23 @@ if (isset($_POST['updateshipping']))
                                         <?php
                                              if($tracking_code != '')
                                              {
-                                                 if(!empty($getaddress))
-                                                 {
-                                                     foreach($getaddress as $ga)
-                                                     {
-                                                         if($ga['tracking_code'] == $tracking_code)
-                                                         {
-                                                             $desCountry = $ga['country'];
-                                                         }
-                                                     }
-                                                 }
-
-                                                 if(!empty($getstations))
-                                                 {
-                                                     foreach($getstations as $gs)
-                                                     {
-                                                         if($gs['country_description'] == $desCountry)
-                                                         {
-                                                             
-                                                         }
-                                                     }
-                                                 }
+                                                if($results2['tracking_code'] == $tracking_code)
+                                                {
+                                                    $desCountry = $results2['country'];
+                                                }
+                                                
+                                                if(mysqli_num_rows($result1) > 0)
+                                                {
+                                                    while($row = mysqli_fetch_array($result1))
+                                                    {
+                                                        if($row['country_description'] == $desCountry)
+                                                        {
+                                                        ?>
+                                                            <option value="<?php echo $row['station_description']; ?>"><?php echo $row['station_description']; ?></option>
+                                                        <?php
+                                                        }
+                                                    }
+                                                }
                                              }
                                              else
                                              {
@@ -493,29 +242,28 @@ if (isset($_POST['updateshipping']))
                                                         <?php
                                                     }
                                                 }
-                                             #}
+                                             }
                                         ?>
-
                                     </select>
                                 </td>
                             </tr>
-
+                            
                             <tr ng-show="delivered">
                                 <td class="lblUpdate"><label for="signedName">Signed Name: </label></td>
                                 <td class="inputUpdate textUpdate"><input type="text" name="signedName" id="signedName" /></td>
                             </tr>
-
+                            
                             <tr>
                                 <td class="lblUpdate"><label for="remark">Remark: </label></td>
                                 <td class="inputUpdate textUpdate"><input type="text" name="remark" id="remark" /></td>
                             </tr>
-
+                            
                             <tr>
                                 <td><label for="trackcode">Tracking code: </label></td>
                                 <td class="inputUpdate textUpdate"><input type="text" name="trackcode" id="trackcode" value="<?php echo $tracking_code; ?>" /></td>    
                             </tr>
                         </table>
-
+                        
                         <p class="btnUpdate">
                             <input type="submit" name="updateshipping" value="Update" class="btn btn-success"/>
                             <a href="shippinglist.php"><input type="button" value="Back" class="btn btn-default"/></a>
@@ -523,6 +271,5 @@ if (isset($_POST['updateshipping']))
                     </form>
                 </div>      
             </div>
-        </div>
     </body>
 </html>
