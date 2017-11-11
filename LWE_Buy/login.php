@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$_SESSION['fname'] = $user['fname'];
                 $_SESSION['lname'] = $user['lname'];
                 $_SESSION['email'] = $user['email'];
+                $_SESSION['type'] = $user['type'];
             
                 
                 if($user['type'] == 'admin')
