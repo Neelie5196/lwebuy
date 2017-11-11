@@ -62,15 +62,15 @@ $results3 = mysqli_fetch_assoc($result3);
                 </div>
             </div>
             
-            <form action="payments.php" method="post">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+            <form action="payments.php" method="post" class="botmar">
+                <div class="row botmar">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
                         <strong>Address</strong>
                         <button style="float: right;" class="btn btn-default" type="button" data-toggle="modal" data-target="#newaddress">Add New Address</button>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row botmar">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <?php
                             if(mysqli_num_rows($result) > 0)
@@ -78,14 +78,14 @@ $results3 = mysqli_fetch_assoc($result3);
                                 while($row = mysqli_fetch_array($result))
                                 {
                                     ?>
-                                        <div class="col-md-3">
-                                            <div style="border: 1px solid #eaeaec; margin: -1px 19px 3px -1px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding:10px;" align="center">
-                                                <h5 class="text-info">
+                                        <div class="col-xs-2 col-md-2 col-lg-2 adcontainer">
+                                            <div>
+                                                <p>
                                                     <?php echo $row["address"]; ?>,<br/>
                                                     <?php echo $row["postcode"]; ?>, <?php echo $row["city"]; ?>,<br/>
                                                     <?php echo $row["state"]; ?>, <?php echo $row["country"]; ?><br/>
-                                                </h5>
-                                                <input type="checkbox" value="<?php echo $row["a_id"]; ?>" name="address" class="address">
+                                                </p>
+                                                <p><input type="checkbox" value="<?php echo $row["a_id"]; ?>" name="address" class="address"></p>
                                             </div>
                                         </div>
                                     <?php
@@ -95,13 +95,13 @@ $results3 = mysqli_fetch_assoc($result3);
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row botmar">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Recipient Information</strong>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row botmar">
                     <div class="col-xs-6 col-md-6 col-lg-6">
                         <div class="row">
                             <div class="col-xs-4 col-md-4 col-lg-4">
@@ -131,72 +131,67 @@ $results3 = mysqli_fetch_assoc($result3);
                                 if(mysqli_num_rows($result2) > 0)
                                 {
                                 ?>
-                                <table class="table thead-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th width="33%">#</th>
-                                            <th width="33%">Item Name</th>
-                                            <th width="33%">Weight (KG)</th>
-                                        </tr>
-                                    </thead>
-                                <?php
-                                    while($row = mysqli_fetch_array($result2))
-                                    {
-                                        $counter++;
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <input type="hidden" value="<?php echo $counter; ?>" name="counter"/>
-                                                <input type="hidden" name="i_id[]" class="form-control" value="<?php echo $row['i_id']; ?>">
-                                                <td><?php echo $counter; ?></td>
-                                                <td><?php echo $row['name']; ?></td>
-                                                <td><?php echo $row['weight']; ?></td>
-                                            </tr>
-                                        </tbody>
-                                        <?php
-                                        }
-                                    }else{
+                            <table class="table thead-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th width="33%">#</th>
+                                        <th width="33%">Item Name</th>
+                                        <th width="33%">Weight (KG)</th>
+                                    </tr>
+                                </thead>
+                            <?php
+                                while($row = mysqli_fetch_array($result2))
+                                {
+                                    $counter++;
                                     ?>
-                                        <p>There is no item in warehouse.</p>
+                                    <tbody>
+                                        <tr>
+                                            <input type="hidden" value="<?php echo $counter; ?>" name="counter"/>
+                                            <input type="hidden" name="i_id[]" class="form-control" value="<?php echo $row['i_id']; ?>">
+                                            <td><?php echo $counter; ?></td>
+                                            <td><?php echo $row['name']; ?></td>
+                                            <td><?php echo $row['weight']; ?></td>
+                                        </tr>
+                                    </tbody>
                                     <?php
                                     }
+                                }else{
                                 ?>
+                                    <p>There is no item in warehouse.</p>
+                                <?php
+                                }
+                            ?>
                             </table>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-xs-12 col-md-6 col-lg-6">
-
-                        </div>
-                        <div class="col-xs-12 col-md-6 col-lg-6" style="padding-bottom: 20px;">
+                        
                             <div class="row">
-                                <div class="col-xs-8 col-md-8 col-lg-8">
-                                    <?php
-                                        $over = '';
-                                        $over1 = '0.5';
-                                        if($totalweight <= 1){
+                                <div class="col-xs-11 col-md-11 col-lg-11 right">
+                                    <p>
+                                        <?php
+                                                $over = '';
+                                                $over1 = '0.5';
+                                                if($totalweight <= 1){
+                                                    ?>
+                                                        <input type="hidden" name="pricetotal" class="form-control" value="<?php echo $results1['bprice']; ?>">
+                                                        <h4>Total Shipping Fee: RM <?php echo $results1['bprice']; ?></h4>
+                                                    <?php
+                                                }else{
+                                                    while ($over < $totalweight){
+                                                        $over += $over1;
+                                                    }
+                                                    ?>
+                                                        <input type="hidden" name="pricetotal" class="form-control" value="<?php echo number_format((float)$over*$results1['bprice'], 2, '.', ''); ?>">
+                                                        <h4>Total Shipping Fee: RM <?php echo number_format((float)$over*$results1['bprice'], 2, '.', ''); ?></h4>
+                                                    <?php
+                                                }
                                             ?>
-                                                <input type="hidden" name="pricetotal" class="form-control" value="<?php echo $results1['bprice']; ?>">
-                                                <h4 style="float: right; ">Total Shipping Fee: RM <?php echo $results1['bprice']; ?></h4>
-                                            <?php
-                                        }else{
-                                            while ($over < $totalweight){
-                                                $over += $over1;
-                                            }
-                                            ?>
-                                                <input type="hidden" name="pricetotal" class="form-control" value="<?php echo number_format((float)$over*$results1['bprice'], 2, '.', ''); ?>">
-                                                <h4 style="float: right; ">Total Shipping Fee: RM <?php echo number_format((float)$over*$results1['bprice'], 2, '.', ''); ?></h4>
-                                            <?php
-                                        }
-                                    ?>
+                                    </p>
+                                </div>
 
-                                </div>
-                                <div class="col-xs-4 col-md-4 col-lg-4">
+                                <div class="col-xs-1 col-md-1 col-lg-1 right">
                                     <input type="hidden" name="weight" class="form-control" value="<?php echo $totalweight; ?>">
-                                    <input type="submit" class="btn btn-success" name="pay" value="Pay Now" onclick="return val();" style="float:right;">
+                                    <input type="submit" class="btn btn-success" name="pay" value="Pay Now" onclick="return val();">
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </section>

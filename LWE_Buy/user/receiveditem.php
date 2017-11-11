@@ -91,7 +91,7 @@ $results = mysqli_fetch_assoc($result);
                                         }
                                     }else{
                                     ?>
-                                        <p>There is no item in warehouse.</p>
+                                        <p>You have no item in the warehouse.</p>
                                     <?php
                                     }
                                 ?>

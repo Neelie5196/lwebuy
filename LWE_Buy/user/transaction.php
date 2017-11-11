@@ -62,7 +62,7 @@ $result1 = mysqli_query($con, $query1);
                 </div>
 
                 <section class="content">
-                    <div class="row">
+                    <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <?php 
                                 if(mysqli_num_rows($result) > 0)
@@ -92,11 +92,11 @@ $result1 = mysqli_query($con, $query1);
                                                 <td>RM <?php echo $row['amount']; ?></td>
                                                 <td><?php echo $row['datetime']; ?></td>
                                                 <td>
-                                                    <a href="#" class="pop">
-                                                        <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['title']; ?>
-                                                    </a>
+                                                    <button class="pop btn btn-default btn-xs">
+                                                        <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;">View receipt
+                                                    </button>
                                                 </td>
-                                                <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                                <td><?php echo $row['status']; ?></td>
                                             </tr>
                                         </tbody>
                                         <?php
@@ -125,7 +125,7 @@ $result1 = mysqli_query($con, $query1);
                 </div>
                 
                 <section class="content">
-                    <div class="row">
+                    <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <?php 
                                 if(mysqli_num_rows($result1) > 0)
@@ -154,11 +154,11 @@ $result1 = mysqli_query($con, $query1);
                                                 <td>RM <?php echo $row['amount']; ?></td>
                                                 <td><?php echo $row['datetime']; ?></td>
                                                 <td>
-                                                    <a href="#" class="pop">
-                                                        <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['title']; ?>
-                                                    </a>
+                                                    <button class="pop btn btn-default btn-xs">
+                                                        <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;">View receipt
+                                                    </button>
                                                 </td>
-                                                <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                                <td><?php echo $row['status']; ?></td>
                                             </tr>
                                         </tbody>
                                         <?php

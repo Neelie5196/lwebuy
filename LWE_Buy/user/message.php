@@ -20,9 +20,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
         
         <!--stylesheet-->
-    <link href="../frameworks/css/style.css" rel="stylesheet"/>
     <link rel="stylesheet" href="../frameworks/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../frameworks/css/msg_style.css">
+    <link href="../frameworks/css/style.css" rel="stylesheet"/>
 </head>
 <body ng-app="">
     <div class="row">

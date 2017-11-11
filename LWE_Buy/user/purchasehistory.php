@@ -43,8 +43,8 @@ $result = mysqli_query($con, $query);
                 <h2>Purchase History</h2>
                 <hr/>
 
-            <div class="row">
-                <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+            <div class="row botmar">
+                <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                     <strong>Received</strong>
                 </div>
             </div>

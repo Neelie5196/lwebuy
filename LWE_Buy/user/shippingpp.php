@@ -43,20 +43,20 @@ $result = mysqli_query($con, $query);
                 <h2>Pending Payment</h2>
                 <hr/>
 
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                <div class="row botmar">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Waiting</strong>
                     </div>
                 </div>
 
                 <section class="content">
-                    <div class="row">
+                    <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <?php 
                                 if(mysqli_num_rows($result) > 0)
                                 {
                                 ?>
-                                <table class="table thead-bordered table-hover" style="width:80%">
+                                <table class="table thead-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>Shipping#</th>
@@ -75,7 +75,7 @@ $result = mysqli_query($con, $query);
                                                 <td width="40%"><?php echo $row['datetime']; ?></td>
                                                 <td width="20%"><?php echo $row['price']; ?></td>
                                                 <td width="20%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="shippingppview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                <td width="15%"><a href="shippingppview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-default">View</a></td>
                                             </tr>
                                         </tbody>
                                         <?php

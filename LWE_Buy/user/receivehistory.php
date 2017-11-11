@@ -53,19 +53,19 @@ $result1 = mysqli_query($con, $query1);
 
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <p style="float: right;"><a href='message.php' class='btn btn-default' name='contact'>Contact Admin</a> <a href='receive-1.php' class='btn btn-default' name='new'>New Receive</a></p>
+                        <p style="float: right;"><a href='message.php' class='btn btn-default' name='contact'>Contact Admin</a> <a href='receive-1.php' class='btn btn-default' name='new'>Add Inventory</a></p>
                     </div>
                 </div>
                 
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                <div class="row botmar">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Request (<?php echo mysqli_num_rows($result); ?>)</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#request">More Item Details</button>
                     </div>
                 </div>
 
                 <section class="content">
-                    <div class="row">
+                    <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                             <div class="span12 collapse" id="request">
                                 <?php 
@@ -101,7 +101,7 @@ $result1 = mysqli_query($con, $query1);
                                             }
                                         }else{
                                         ?>
-                                            <p>There is no receive request.</p>
+                                            <p>There is no inventory request.</p>
                                         <?php
                                         }
                                     ?>
@@ -112,14 +112,14 @@ $result1 = mysqli_query($con, $query1);
                 </section>
 
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Received (<?php echo mysqli_num_rows($result1); ?>)</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#received">More Item Details</button>
                     </div>
                 </div>
 
                 <section class="content">
-                    <div class="row">
+                    <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                             <div class="span12 collapse" id="received">
                                 <?php 

@@ -30,53 +30,57 @@ $results = mysqli_fetch_assoc($result);
                 <?php include_once('nav.php')?>
         </div>
 		<div class="container">
-            <div class="table">
-                <table class="table table-bordered">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
-                            <div style="border: 1px solid #eaeaec; margin: -1px 19px 3px -1px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding:10px;" align="center">
-                                <h5 class="text-danger">Current Point:</h5>
-                                <h5 class="text-info">
-                                    <?php 
-                                        if($results['user_id'] != 0){
-                                            echo $results['point'];
-                                        }else{
-                                            echo '<p>0</p>';
-                                        }?>
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
-                </table>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12 right">
+                    <h3>
+                        Current Point:
+                        <?php 
+                            if($results['user_id'] != 0){
+                                echo $results['point'];
+                            }else{
+                                echo '0';
+                            }?>
+                    </h3>
+                </div>
             </div>
             
             <hr>
             
-            <h2 align="center">Value Package</h2>
-			<?php
-                $query = "SELECT * FROM package ORDER BY id ASC";
-                $result = mysqli_query($con, $query);
+            <div class="row">
+                <center>
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <h2>Value Package</h2>
+                    </div>
+                </center>
+            </div>
             
-                if(mysqli_num_rows($result) > 0)
-                {
-                    while($row = mysqli_fetch_array($result))
-                    {
-                        ?>
-                        <div class="col-md-3">
-                        <form method="post" action="shop.php?action=add&id=<?php echo $row["id"]; ?>">
-                        <div style="border: 1px solid #eaeaec; margin: -1px 19px 3px -1px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); padding:10px;" align="center">
-                        <h5 class="text-info"><?php echo $row["name"]; ?></h5>
-                        <h5 class="text-danger">Rm <?php echo $row["price"]; ?></h5>
-                        <a href= getpackage.php?id=<?php echo $row["id"]; ?>  class="btn btn-default">Pay Now</a>
-                        </div>
-                        </form>
-                        </div>
-                        <?php
-                    }
-                }
-			?>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <?php
+                        $query = "SELECT * FROM package ORDER BY id ASC";
+                        $result = mysqli_query($con, $query);
+
+                        if(mysqli_num_rows($result) > 0)
+                        {
+                            while($row = mysqli_fetch_array($result))
+                            {
+                                ?>
+                                <div class="col-xs-2 col-md-2 col-lg-2 adcontainer">
+                                <form method="post" action="shop.php?action=add&id=<?php echo $row["id"]; ?>">
+                                    <div>
+                                        <p><?php echo $row["name"]; ?><br/>
+                                        Rm <?php echo $row["price"]; ?></p>
+                                        <a href= getpackage.php?id=<?php echo $row["id"]; ?>  class="btn btn-default">Pay Now</a>
+                                    </div>
+                                </form>
+                                </div>
+                                <?php
+                            }
+                        }
+                    ?>    
+                </div>
+            </div>
 		</div>
-	
         <div><?php include('../footer.php') ?></div>
 	</body>
 </html>

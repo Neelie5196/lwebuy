@@ -55,16 +55,17 @@ $results = mysqli_fetch_assoc($result);
                 <div class="col-xs-12 col-md-6 col-lg-6">
                     <h2>Payment</h2>
                 </div>
+                
                 <div class="col-xs-12 col-md-6 col-lg-6">
                     <h2 style="float: right;">RM <?php echo $_POST['pricetotal']; ?></h2>
                 </div>
             </div>
+            
             <hr/>
-        </div>
-        <section class="content">
-            <div class="container">
+            
+            <section class="content">
                 <div class="row">
-                    <center style="padding-bottom: 15px;">
+                    <center>
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <div class="row">
                                 <div class="col-xs-12 col-md-6 col-lg-6">
@@ -98,7 +99,7 @@ $results = mysqli_fetch_assoc($result);
                                 </div>
                                 <div class="col-xs-12 col-md-5 col-lg-5">
                                     <form action="paidpurchase.php" method="post">
-                                        <h3>Pay by LEW Point</h3>
+                                        <h3>Pay by LWE Point</h3>
                                         <div class="row">
                                             <div class="col-xs-12 col-md-12 col-lg-12">
                                                 <div class="details">
@@ -136,44 +137,44 @@ $results = mysqli_fetch_assoc($result);
                         <a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a>
                     </center>
                 </div>
-            </div>
-        </section>
-        <div id="topupModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="reload.php" method="post" enctype="multipart/form-data">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Point Reload</h4>
-                        </div>
+            </section>
+            <div id="topupModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="reload.php" method="post" enctype="multipart/form-data">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Point Reload</h4>
+                            </div>
 
-                        <div class="modal-body">
-                            <p>Enter point amount to reload</p>
-                            <p>
-                                <input type="number" name="reloadamt" ng-model="reloadamt" ng-init="reloadamt=1"/>
-                            </p>
+                            <div class="modal-body">
+                                <p>Enter point amount to reload</p>
+                                <p>
+                                    <input type="number" name="reloadamt" ng-model="reloadamt" ng-init="reloadamt=1"/>
+                                </p>
 
-                            <p>
-                                <input type="hidden" name="amount" value="{{reloadamt*<?php echo $results['value']; ?>}}">
-                                Amount to be paid: RM {{reloadamt*<?php echo $results['value']; ?> | number:2}}
-                            </p>
+                                <p>
+                                    <input type="hidden" name="amount" value="{{reloadamt*<?php echo $results['value']; ?>}}">
+                                    Amount to be paid: RM {{reloadamt*<?php echo $results['value']; ?> | number:2}}
+                                </p>
 
-                            <p>Instructions for top up:<br/>
-                                Please bank in amount to the following bank account and submit transaction details. Thank you.</p>
-                            <p>
-                                Bank: Maybank<br/>
-                                Account No.: 123456789<br/>
-                                Account name: Logistics Worldwide Express(M) Sdn Bhd
-                            </p>
+                                <p>Instructions for top up:<br/>
+                                    Please bank in amount to the following bank account and submit transaction details. Thank you.</p>
+                                <p>
+                                    Bank: Maybank<br/>
+                                    Account No.: 123456789<br/>
+                                    Account name: Logistics Worldwide Express(M) Sdn Bhd
+                                </p>
 
-                            <label for="file">Transaction receipt: </label>
-                            <input type="file" name="file" id="file" required/>
-                        </div>
+                                <label for="file">Transaction receipt: </label>
+                                <input type="file" name="file" id="file" required/>
+                            </div>
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success" name="transaction">Submit</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </form>                                                    
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" name="transaction">Submit</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>                                                    
+                    </div>
                 </div>
             </div>
         </div>

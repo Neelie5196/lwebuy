@@ -53,22 +53,22 @@ $result1 = mysqli_query($con, $query1);
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                <div class="row botmar">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Request</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#request">More</button>
                     </div>
                 </div>
             
                 <section class="content">
-                    <div class="row">
+                    <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                             <div class="span12 collapse" id="request">
                                 <?php 
                                     if(mysqli_num_rows($result) > 0)
                                     {
                                         ?>
-                                    <table class="table thead-bordered table-hover" style="width:80%">
+                                    <table class="table thead-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th>Shipping#</th>
@@ -104,22 +104,22 @@ $result1 = mysqli_query($con, $query1);
                     </div>
                 </section>
 
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                <div class="row botmar">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>In Proceed</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#proceed">More</button>
                     </div>
                 </div>
             
                 <section class="content">
-                    <div class="row">
+                    <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                             <div class="span12 collapse" id="proceed">
                                 <?php 
                                     if(mysqli_num_rows($result1) > 0)
                                     {
                                     ?>
-                                    <table class="table thead-bordered table-hover" style="width:80%">
+                                    <table class="table thead-bordered table-hover">
                                         <thead>
                                             <tr>
                                                 <th>Shipping#</th>
