@@ -148,7 +148,7 @@ $results2 = mysqli_fetch_assoc($result2);
                 <form action="proceedorder.php" method="post">
                     <div class="modal-body">
                         <button type="button" class="close" data-dismiss="modal"></button>
-                        <img src="" class="image" style="width: 100%;" >
+                        <img src="" class="image" style="width: 100%;" data-dismiss="modal">
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" name="p_id" value="<?php echo $results2['p_id']; ?>">

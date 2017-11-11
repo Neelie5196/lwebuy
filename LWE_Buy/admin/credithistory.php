@@ -104,7 +104,7 @@ $result1 = mysqli_query($con, $query1);
             <div class="modal-content">              
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal"></button>
-                    <img src="" class="image" style="width: 100%;" >
+                    <img src="" class="image" style="width: 100%;" data-dismiss="modal">
                 </div>
             </div>
         </div>
