@@ -48,7 +48,7 @@ $results = mysqli_fetch_assoc($result);
                     function generateBarcode()
                     {
                         $("barcode").update();
-                        var value = '<?php echo $sd['tracking_code']; ?>';
+                        var value = '<?php echo $results['tracking_code']; ?>';
                         var btype = 'code128';
                         var renderer ='css';
 
@@ -99,7 +99,7 @@ $results = mysqli_fetch_assoc($result);
         <p>
             <button onclick="printDiv('parceltag')">Print</button>
             <a href="shippinglist.php"><button>Back</button></a>
-            <a href="updateshipping.php?tracking_code=<?php echo $sd['tracking_code']; ?>"><button>Update</button></a>
+            <a href="updateshipping.php?tracking_code=<?php echo $results['tracking_code']; ?>"><button>Update</button></a>
         </p>
     </body>
 </html>
