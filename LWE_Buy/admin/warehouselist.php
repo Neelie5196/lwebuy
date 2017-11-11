@@ -110,7 +110,7 @@ $result1 = mysqli_query($con, $query1);
                                         <label>Station Code</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="stationcode" class="form-control" placeholder="StationCode (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="stationcode" class="form-control upper" placeholder="StationCode (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -119,7 +119,7 @@ $result1 = mysqli_query($con, $query1);
                                         <label>Station Description</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="stationdescription" class="form-control" placeholder="StationDescription (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="stationdescription" class="form-control upper" placeholder="StationDescription (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -128,7 +128,7 @@ $result1 = mysqli_query($con, $query1);
                                         <label>Country Code</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="countrycode" class="form-control" placeholder="CountryCode (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="countrycode" class="form-control upper" placeholder="CountryCode (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -137,7 +137,7 @@ $result1 = mysqli_query($con, $query1);
                                         <label>Country Description</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="countrydescription" class="form-control" placeholder="CountryDescription (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="countrydescription" class="form-control upper" placeholder="CountryDescription (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -146,7 +146,7 @@ $result1 = mysqli_query($con, $query1);
                                         <label>Company Name</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="companyname" class="form-control" placeholder="CompanyName (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="companyname" class="form-control upper" placeholder="CompanyName (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -155,7 +155,7 @@ $result1 = mysqli_query($con, $query1);
                                         <label>Station Name</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="stationname" class="form-control" placeholder="StationName (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="stationname" class="form-control upper" placeholder="StationName (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                             </div>

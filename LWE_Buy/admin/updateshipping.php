@@ -163,12 +163,12 @@ if (isset($_POST['updateshipping']))
                         <table class="tblUpdate">
                             <tr>
                                 <td class="lblUpdate"><label for="stDesc">Station Name: </label></td>
-                                <td class="inputUpdate textUpdate"><input type="text" name="stDesc" id="stDesc" value="<?php echo $results['station_description']; ?>" readonly="readonly" /></td>
+                                <td class="inputUpdate textUpdate"><input type="text" class="form-control" name="stDesc" id="stDesc" value="<?php echo $results['station_description']; ?>" readonly="readonly" /></td>
                             </tr>
                             
                             <tr>
                                 <td class="lblUpdate"><label for="CtyDesc">Country: </label></td>
-                                <td class="inputUpdate textUpdate"><input type="text" name="CtyDesc" id="CtyDesc" value="<?php echo $results['country_description']; ?>" readonly="readonly" /></td>
+                                <td class="inputUpdate textUpdate"><input type="text" class="form-control" name="CtyDesc" id="CtyDesc" value="<?php echo $results['country_description']; ?>" readonly="readonly" /></td>
                             </tr>
                         </table>
 
@@ -250,17 +250,17 @@ if (isset($_POST['updateshipping']))
                             
                             <tr ng-show="delivered">
                                 <td class="lblUpdate"><label for="signedName">Signed Name: </label></td>
-                                <td class="inputUpdate textUpdate"><input type="text" name="signedName" id="signedName" /></td>
+                                <td class="inputUpdate textUpdate"><input type="text" class="form-control" name="signedName" id="signedName" /></td>
                             </tr>
                             
                             <tr>
                                 <td class="lblUpdate"><label for="remark">Remark: </label></td>
-                                <td class="inputUpdate textUpdate"><input type="text" name="remark" id="remark" /></td>
+                                <td class="inputUpdate textUpdate"><input type="text" class="form-control" name="remark" id="remark" /></td>
                             </tr>
                             
                             <tr>
                                 <td><label for="trackcode">Tracking code: </label></td>
-                                <td class="inputUpdate textUpdate"><input type="text" name="trackcode" id="trackcode" value="<?php echo $tracking_code; ?>" /></td>    
+                                <td class="inputUpdate textUpdate"><input type="text" class="form-control" name="trackcode" id="trackcode" value="<?php echo $tracking_code; ?>" /></td>    
                             </tr>
                         </table>
                         

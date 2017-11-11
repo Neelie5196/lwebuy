@@ -204,14 +204,14 @@ $results3 = mysqli_fetch_assoc($result3);
                             <div class="modal-header">
                                 <h4 class="modal-title">New Address</h4>
                             </div>
-                            <input type="hidden" name="user_id" class="form-control" value="<?php echo $user_id ?>">
+                            <input type="hidden" name="user_id" class="form-control upper" value="<?php echo $user_id ?>">
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-xs-4 col-md-4 col-lg-4">
                                         <label>Address</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="address" class="form-control" placeholder="Delivery Address (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="address" class="form-control upper" placeholder="Delivery Address (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -220,7 +220,7 @@ $results3 = mysqli_fetch_assoc($result3);
                                         <label>Postcode</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="postcode" class="form-control" placeholder="Postcode (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="postcode" class="form-control upper" placeholder="Postcode (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -229,7 +229,7 @@ $results3 = mysqli_fetch_assoc($result3);
                                         <label>City</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="city" class="form-control" placeholder="City (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="city" class="form-control upper" placeholder="City (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -238,7 +238,7 @@ $results3 = mysqli_fetch_assoc($result3);
                                         <label>State</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="state" class="form-control" placeholder="State (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="state" class="form-control upper" placeholder="State (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                                 <br/>
@@ -247,7 +247,7 @@ $results3 = mysqli_fetch_assoc($result3);
                                         <label>Country</label>
                                     </div>
                                     <div class="col-xs-8 col-md-8 col-lg-8">
-                                        <input type="text" name="country" class="form-control" placeholder="Country (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                        <input type="text" name="country" class="form-control upper" placeholder="Country (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
                                     </div>
                                 </div>
                             </div>
