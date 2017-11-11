@@ -84,7 +84,7 @@ $result3 = mysqli_query($con, $query3);
                     </div>
                 </div>
             </div>
-            <section class = "content">
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse1">
@@ -157,7 +157,7 @@ $result3 = mysqli_query($con, $query3);
                     </div>
                 </div>
             </div>
-            <section class = "content">
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse2">
@@ -214,7 +214,7 @@ $result3 = mysqli_query($con, $query3);
                     </div>
                 </div>
             </div>
-            <section class = "content">
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse3">

@@ -56,7 +56,7 @@ $result2 = mysqli_query($con, $query2);
                     </div>
                 </div>
             </div>
-            <section class = "content">
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <?php 
@@ -107,7 +107,7 @@ $result2 = mysqli_query($con, $query2);
                     </div>
                 </div>
             </div>
-            <section class = "content">
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <div class="span12 collapse" id="collapse">

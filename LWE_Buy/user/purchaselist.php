@@ -52,228 +52,225 @@ $result4 = mysqli_query($con, $query4);
     </head>
 
     <body>
-        <center>
-            <div class="row">
-                <?php include_once('nav.php')?>
-            </div>
+        <div class="row">
+            <?php include_once('nav.php')?>
+        </div>
             
-            <div class="container">
+        <div class="container">
+            <center>
                 <h2>Purchase</h2>
                 <hr/>
-            </div>
-            <div class="container">
+
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <p style="float: right;">
+                        <p class="right">
                             <a href='message.php' class='btn btn-default' name='contact'>Contact Admin</a>
                             <a href='purchaseproduct-1.php' class='btn btn-default' name='new'>New Purchase</a>
                         </p>
                     </div>
                 </div>
-            </div>
-            <br/>
-            <div class="container">
+
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Request (<?php echo mysqli_num_rows($result1); ?>)</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse1">More</button>
                     </div>
                 </div>
-            </div>
-            <section class = "content">
+
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <div class="span12 collapse" id="collapse1">
+                                <?php 
+                                    if(mysqli_num_rows($result1) > 0)
+                                    {
+                                    ?>
+                                    <table class="table thead-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Order#</th>
+                                                <th>Placed on</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                    <td width="50%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="30%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="purchaseview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                            }
+                                        }else{
+                                            ?>
+                                                <p>There is no purchase request.</p>
+                                            <?php
+                                        }
+                                    ?>
+                                </table>       
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <div class="span12 collapse" id="collapse1">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
+                        <strong>Ready to Pay (<?php echo mysqli_num_rows($result2); ?>)</strong>
+                    </div>
+                </div>
+
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
                             <?php 
-                                if(mysqli_num_rows($result1) > 0)
+                                if(mysqli_num_rows($result2) > 0)
                                 {
                                 ?>
-                                <table class="table thead-bordered table-hover" style="width:80%">
+                                <table class="table thead-bordered table-hover">
                                     <thead>
                                         <tr>
                                             <th>Order#</th>
                                             <th>Placed on</th>
+                                            <th>Total (RM)</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
-                                <?php
-                                    while($row = mysqli_fetch_array($result1))
+                                <?php 
+                                    while($row = mysqli_fetch_array($result2))
                                     {
                                         ?>
                                         <tbody>
                                             <tr>
                                                 <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                <td width="50%"><?php echo $row['datetime']; ?></td>
-                                                <td width="30%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="purchaseview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                <td width="20%"><?php echo $row['price']; ?></td>
+                                                <td width="20%"><?php echo $row['status']; ?></td>
+                                                <td width="15%"><a href="purchasepview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
                                             </tr>
                                         </tbody>
                                         <?php
                                         }
                                     }else{
                                         ?>
-                                            <p>There is no purchase request.</p>
+                                            <p>There is no purchase ready to pay.</p>
                                         <?php
                                     }
                                 ?>
-                            </table>       
+                            </table>
                         </div>
                     </div>
-                </div>
-            </section>
-            <br/>
-            <div class="container">
+                </section>
+
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
-                        <strong>Ready to Pay (<?php echo mysqli_num_rows($result2); ?>)</strong>
-                    </div>
-                </div>
-            </div>
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <?php 
-                            if(mysqli_num_rows($result2) > 0)
-                            {
-                            ?>
-                            <table class="table thead-bordered table-hover" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>Placed on</th>
-                                        <th>Total (RM)</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                            <?php 
-                                while($row = mysqli_fetch_array($result2))
-                                {
-                                    ?>
-                                    <tbody>
-                                        <tr>
-                                            <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                            <td width="40%"><?php echo $row['datetime']; ?></td>
-                                            <td width="20%"><?php echo $row['price']; ?></td>
-                                            <td width="20%"><?php echo $row['status']; ?></td>
-                                            <td width="15%"><a href="purchasepview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
-                                        </tr>
-                                    </tbody>
-                                    <?php
-                                    }
-                                }else{
-                                    ?>
-                                        <p>There is no purchase ready to pay.</p>
-                                    <?php
-                                }
-                            ?>
-                        </table>
-                    </div>
-                </div>
-            </section>
-            <br/>
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Ready to Proceed (<?php echo mysqli_num_rows($result3); ?>)</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse3">More</button>
                     </div>
                 </div>
-            </div>
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <div class="span12 collapse" id="collapse3">
-                             <?php 
-                                if(mysqli_num_rows($result3) > 0)
-                                {
-                                ?>
-                                <table class="table thead-bordered table-hover" style="width:80%">
-                                    <thead>
-                                        <tr>
-                                            <th>Order#</th>
-                                            <th>Placed on</th>
-                                            <th>Total (RM)</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                <?php
-                                    while($row = mysqli_fetch_array($result3))
+
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <div class="span12 collapse" id="collapse3">
+                                 <?php 
+                                    if(mysqli_num_rows($result3) > 0)
                                     {
-                                        ?>
-                                        <tbody>
+                                    ?>
+                                    <table class="table thead-bordered table-hover">
+                                        <thead>
                                             <tr>
-                                                <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                <td width="40%"><?php echo $row['datetime']; ?></td>
-                                                <td width="20%"><?php echo $row['price']; ?></td>
-                                                <td width="20%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="purchasephview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                <th>Order#</th>
+                                                <th>Placed on</th>
+                                                <th>Total (RM)</th>
+                                                <th>Status</th>
                                             </tr>
-                                        </tbody>
-                                        <?php
+                                        </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result3))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="20%"><?php echo $row['price']; ?></td>
+                                                    <td width="20%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="purchasephview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                            }
+                                        }else{
+                                            ?>
+                                                <p>There is no purchase paid.</p>
+                                            <?php
                                         }
-                                    }else{
-                                        ?>
-                                            <p>There is no purchase paid.</p>
-                                        <?php
-                                    }
-                                ?>
-                            </table>
+                                    ?>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <br/>
-            <div class="container">
+                </section>
+
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Proceeded (<?php echo mysqli_num_rows($result4); ?>)</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse4">More</button>
                     </div>
                 </div>
-            </div>
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <div class="span12 collapse" id="collapse4">
-                            <?php 
-                                if(mysqli_num_rows($result4) > 0)
-                                {
-                                ?>
-                                <table class="table thead-bordered table-hover" style="width:80%">
-                                    <thead>
-                                        <tr>
-                                            <th>Order#</th>
-                                            <th>Placed on</th>
-                                            <th>Total (RM)</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                <?php
-                                    while($row = mysqli_fetch_array($result4))
+
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <div class="span12 collapse" id="collapse4">
+                                <?php 
+                                    if(mysqli_num_rows($result4) > 0)
                                     {
-                                        ?>
-                                        <tbody>
+                                    ?>
+                                    <table class="table thead-bordered table-hover">
+                                        <thead>
                                             <tr>
-                                                <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                <td width="40%"><?php echo $row['datetime']; ?></td>
-                                                <td width="20%"><?php echo $row['price']; ?></td>
-                                                <td width="20%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="purchasehview.php?order_id=<?php echo $row['ol_id']; ?>&timeline=Shipping" class="btn btn-xs btn-default">View</a></td>
+                                                <th>Order#</th>
+                                                <th>Placed on</th>
+                                                <th>Total (RM)</th>
+                                                <th>Status</th>
                                             </tr>
-                                        </tbody>
-                                        <?php
+                                        </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result4))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="20%"><?php echo $row['price']; ?></td>
+                                                    <td width="20%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="purchasehview.php?order_id=<?php echo $row['ol_id']; ?>&timeline=Shipping" class="btn btn-xs btn-default">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                            }
+                                        }else{
+                                            ?>
+                                                <p>There is no purchase paid.</p>
+                                            <?php
                                         }
-                                    }else{
-                                        ?>
-                                            <p>There is no purchase paid.</p>
-                                        <?php
-                                    }
-                                ?>
-                            </table>
+                                    ?>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </center>
+                </section>
+            </center>
+        </div>
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
 </html>

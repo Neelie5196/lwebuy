@@ -40,17 +40,15 @@ $result1 = mysqli_query($con, $query1);
     </head>
 
     <body>
-        <section class = "content"> 
-		<center>
-            <div class="row">
-                <?php include_once('nav.php')?>
-            </div>
-   
-            <div class="container">
+        <div class="row">
+            <?php include_once('nav.php')?>
+        </div>
+
+        <div class="container">
+            <center>
                 <h2>Transaction History</h2>
                 <hr/>
-            </div>
-            <div class="container">
+
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Pending</strong>
@@ -61,62 +59,59 @@ $result1 = mysqli_query($con, $query1);
                             </div>
                         </div>
                     </div>
-					
                 </div>
-					
-            </div>
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <?php 
-                            if(mysqli_num_rows($result) > 0)
-                            {
-                            ?>
-                            <table id="transaction" class="table thead-bordered" style="width:80%">
-                                <thead>
-								
-                                    <tr>
-                                        <th width = "4%">#</th>
-                                        <th width = "21%">Detail</th>
-                                        <th width = "13%">Amount</th>
-                                        <th width = "26%">Created</th>
-                                        <th width = "23%">Receipt</th>
-                                        <th width = "13%">Status</th>
-                                    </tr>
-                                </thead>
-                            <?php
-                                while($row = mysqli_fetch_array($result))
+
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <?php 
+                                if(mysqli_num_rows($result) > 0)
                                 {
-                                    $i++;
-                                    ?>
-                                    <tbody>
+                                ?>
+                                <table id="transaction" class="table thead-bordered">
+                                    <thead>
+
                                         <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <td><?php echo $row['title']; ?></td>
-                                            <td>RM <?php echo $row['amount']; ?></td>
-                                            <td><?php echo $row['datetime']; ?></td>
-                                            <td>
-                                                <a href="#" class="pop">
-                                                    <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['title']; ?>
-                                                </a>
-                                            </td>
-                                            <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                            <th width = "4%">#</th>
+                                            <th width = "21%">Detail</th>
+                                            <th width = "13%">Amount</th>
+                                            <th width = "26%">Created</th>
+                                            <th width = "23%">Receipt</th>
+                                            <th width = "13%">Status</th>
                                         </tr>
-                                    </tbody>
+                                    </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result))
+                                    {
+                                        $i++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $i; ?></td>
+                                                <td><?php echo $row['title']; ?></td>
+                                                <td>RM <?php echo $row['amount']; ?></td>
+                                                <td><?php echo $row['datetime']; ?></td>
+                                                <td>
+                                                    <a href="#" class="pop">
+                                                        <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['title']; ?>
+                                                    </a>
+                                                </td>
+                                                <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                        }
+                                    }else{
+                                    ?>
+                                        <p>There is no reload request.</p>
                                     <?php
                                     }
-                                }else{
                                 ?>
-                                    <p>There is no reload request.</p>
-                                <?php
-                                }
-                            ?>
-                        </table>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            </section>
-            <br/>
-            <div class="container">
+                </section>
+
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Completed</strong>
@@ -128,58 +123,60 @@ $result1 = mysqli_query($con, $query1);
                         </div>
                     </div>
                 </div>
-            </div>
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <?php 
-                            if(mysqli_num_rows($result1) > 0)
-                            {
-                            ?>
-                            <table id ="completed" class="table thead-bordered" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th width = "4%">#</th>
-                                        <th width = "21%">Detail</th>
-                                        <th width = "13%">Amount</th>
-                                        <th width = "26%">Created</th>
-                                        <th width = "23%">Receipt</th>
-                                        <th width = "13%">Status</th>
-                                    </tr>
-                                </thead>
-                            <?php
-                                while($row = mysqli_fetch_array($result1))
+                
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <?php 
+                                if(mysqli_num_rows($result1) > 0)
                                 {
-                                    $is++;
-                                    ?>
-                                    <tbody>
+                                ?>
+                                <table id ="completed" class="table thead-bordered">
+                                    <thead>
                                         <tr>
-                                            <td><?php echo $is; ?></td>
-                                            <td><?php echo $row['title']; ?></td>
-                                            <td>RM <?php echo $row['amount']; ?></td>
-                                            <td><?php echo $row['datetime']; ?></td>
-                                            <td>
-                                                <a href="#" class="pop">
-                                                    <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['title']; ?>
-                                                </a>
-                                            </td>
-                                            <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                            <th width = "4%">#</th>
+                                            <th width = "21%">Detail</th>
+                                            <th width = "13%">Amount</th>
+                                            <th width = "26%">Created</th>
+                                            <th width = "23%">Receipt</th>
+                                            <th width = "13%">Status</th>
                                         </tr>
-                                    </tbody>
+                                    </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result1))
+                                    {
+                                        $is++;
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $is; ?></td>
+                                                <td><?php echo $row['title']; ?></td>
+                                                <td>RM <?php echo $row['amount']; ?></td>
+                                                <td><?php echo $row['datetime']; ?></td>
+                                                <td>
+                                                    <a href="#" class="pop">
+                                                        <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['title']; ?>
+                                                    </a>
+                                                </td>
+                                                <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                        }
+                                    }else{
+                                    ?>
+                                        <p>No Transaction Record.</p>
                                     <?php
                                     }
-                                }else{
                                 ?>
-                                    <p>No Transaction Record.</p>
-                                <?php
-                                }
-                            ?>
-                        </table>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            </section>
-        </center>  
-		</section>
+                </section>
+            </center>  
+        </div>
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
     <div class="modal fade" id="imagedialog" role="dialog">
         <div class="modal-dialog">

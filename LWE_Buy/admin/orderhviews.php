@@ -44,7 +44,7 @@ $result1 = mysqli_query($con, $query1);
                 <h2>Order# <?php echo $order_id; ?></h2>
                 <hr/>
             </div>
-            <section class = "content">
+            <section class="content">
                 <div class="container">
                     <div class="row">
                         <form action="#">

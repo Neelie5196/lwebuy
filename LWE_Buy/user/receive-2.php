@@ -28,20 +28,19 @@ session_start();
     </head>
 
     <body>
-        <center>
-            <div class="row">
-                <?php include_once('nav.php')?>
-            </div>
-            
-            <div class="container">
+        
+        <div class="row">
+            <?php include_once('nav.php')?>
+        </div>
+
+        <div class="container">
+            <center>
                 <h2>Add Inventory</h2>
                 <hr/>
-            </div>
             
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <div class="container">
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
                             <div class="row">
                                 <div class="col-xs-12 col-md-12">
                                     <h3 class="title" style="text-align: left;">Item <small>Information</small></h3>
@@ -93,8 +92,10 @@ session_start();
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </center>
+                </section>
+            </center>
+        </div>
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
 </html>

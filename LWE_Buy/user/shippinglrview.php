@@ -71,7 +71,7 @@ $results3 = mysqli_fetch_assoc($result3);
                 <img src="../resources/timeline/request.PNG" alt="timeline" width="500px"/>
             </div>
         </center>
-        <section class = "content">
+        <section class="content">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">

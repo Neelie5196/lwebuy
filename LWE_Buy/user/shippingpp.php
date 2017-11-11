@@ -33,63 +33,66 @@ $result = mysqli_query($con, $query);
     </head>
 
     <body>
-		<center>
-            <div class="row">
-                <?php include_once('nav.php')?>
-            </div>
-            
-            <div class="container">
+		
+        <div class="row">
+            <?php include_once('nav.php')?>
+        </div>
+
+        <div class="container">
+            <center>
                 <h2>Pending Payment</h2>
                 <hr/>
-            </div>
-            <div class="container">
+
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Waiting</strong>
                     </div>
                 </div>
-            </div>
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <?php 
-                            if(mysqli_num_rows($result) > 0)
-                            {
-                            ?>
-                            <table class="table thead-bordered table-hover" style="width:80%">
-                                <thead>
-                                    <tr>
-                                        <th>Shipping#</th>
-                                        <th>Placed on</th>
-                                        <th>Total (RM)</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                            <?php
-                                while($row = mysqli_fetch_array($result))
+
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <?php 
+                                if(mysqli_num_rows($result) > 0)
                                 {
-                                    ?>
-                                    <tbody>
+                                ?>
+                                <table class="table thead-bordered table-hover" style="width:80%">
+                                    <thead>
                                         <tr>
-                                            <td width="5%"><?php echo $row['s_id']; ?></td>
-                                            <td width="40%"><?php echo $row['datetime']; ?></td>
-                                            <td width="20%"><?php echo $row['price']; ?></td>
-                                            <td width="20%"><?php echo $row['status']; ?></td>
-                                            <td width="15%"><a href="shippingppview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                            <th>Shipping#</th>
+                                            <th>Placed on</th>
+                                            <th>Total (RM)</th>
+                                            <th>Status</th>
                                         </tr>
-                                    </tbody>
+                                    </thead>
+                                <?php
+                                    while($row = mysqli_fetch_array($result))
+                                    {
+                                        ?>
+                                        <tbody>
+                                            <tr>
+                                                <td width="5%"><?php echo $row['s_id']; ?></td>
+                                                <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                <td width="20%"><?php echo $row['price']; ?></td>
+                                                <td width="20%"><?php echo $row['status']; ?></td>
+                                                <td width="15%"><a href="shippingppview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                            </tr>
+                                        </tbody>
+                                        <?php
+                                        }
+                                    }else{
+                                    ?>
+                                        <p>There is no pending payment.</p>
                                     <?php
                                     }
-                                }else{
                                 ?>
-                                    <p>There is no pending payment.</p>
-                                <?php
-                                }
-                            ?>
-                        </table>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            </section>
-        </center>
+                </section>
+            </center>
+        </div>
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
 </html>

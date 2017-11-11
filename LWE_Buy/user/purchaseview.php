@@ -46,7 +46,7 @@ $result = mysqli_query($con, $query);
                 <img src="../resources/timeline/requests.PNG" alt="timeline" width="600px"/>
             </div>
             <br/>
-            <section class = "content">
+            <section class="content">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">

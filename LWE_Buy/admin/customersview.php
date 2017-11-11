@@ -55,7 +55,7 @@ $result1 = mysqli_query($con, $query1);
             </div>
         </div>
 
-        <section class = "content">
+        <section class="content">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12">

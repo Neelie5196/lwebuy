@@ -63,7 +63,7 @@ $results1 = mysqli_fetch_assoc($result1);
                 ?>
             </div>
             <br/>
-            <section class = "content">
+            <section class="content">
                 <div class="container">
                     <div class="row">
                         <form action="#">

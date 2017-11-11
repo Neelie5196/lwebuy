@@ -56,7 +56,7 @@ $results1 = mysqli_fetch_assoc($result1);
             </div>
         </div>
 
-        <section class = "content">
+        <section class="content">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-md-12">

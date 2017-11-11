@@ -32,61 +32,60 @@ while($pack = mysqli_fetch_array($result))
 </head>
 
 <body>
-		<div class="row">
-            <?php include_once('nav.php')?>
-        </div>
-	<div class="container" style="width:60%;">
-	<h2>Pay Your Item Here</h2>
-	<div class ="table">
-	<br/><br/>
-	
-	<form name="form1" method="post" action="payhere.php" enctype="multipart/form-data">
+    <div class="row">
+        <?php include_once('nav.php')?>
+    </div>
+    
+    <div class="container">
+        <h2>Pay Your Item Here</h2>
+        <div class="table">
+            <form name="form1" method="post" action="payhere.php" enctype="multipart/form-data">
+                <input type="hidden" name="user_id" class="form-control" value="<?php echo $_SESSION["user_id"];?>">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <label>Title: </label> 
+                                <input type="text" name="title" class="form-control" value="<?php echo $name;?>" style="border-radius: 30px; float: left;" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <label>Amount: </label> 
+                                <input type="text" name="amount" class="form-control" value="<?php echo $price;?>" style="border-radius: 30px; float: left;" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <label>Image: </label> 
+                                <input type="file" name="file" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="status" value="Waiting for Approve">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6 col-lg-6">
+                                <input type="submit" class="btn btn-success" name="pay" value="Pay" style="float: left;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-			<input type="hidden" name="user_id" class="form-control" value="<?php echo $_SESSION["user_id"];?>">
-			<div class="row">
-                       <div class="col-xs-12 col-md-6 col-lg-6">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <label>Title: </label> 
-											<input type="text" name="title" class="form-control" value="<?php echo $name;?>" style="border-radius: 30px; float: left;" readonly>
-                                        </div>
-                                    </div>
-                         </div>
-			</div>
-			<div class="row">
-                       <div class="col-xs-12 col-md-6 col-lg-6">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <label>Amount: </label> 
-											<input type="text" name="amount" class="form-control" value="<?php echo $price;?>" style="border-radius: 30px; float: left;" readonly>
-                                        </div>
-                                    </div>
-                         </div>
-			</div>
-			<div class="row">
-                       <div class="col-xs-12 col-md-6 col-lg-6">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-6 col-lg-6">
-                                            <label>Image: </label> 
-											<input type="file" name="file" required>
-                                        </div>
-                                    </div>
-                         </div>
-			</div>
-			<input type="hidden" name="status" value="Waiting for Approve">
-			<br>
-			<div class="row">
-                       <div class="col-xs-12 col-md-6 col-lg-6">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-md-6 col-lg-6">
-											<input type="submit" class="btn btn-success" name="pay" value="Pay" style="float: left;">
-                                        </div>
-                                    </div>
-                         </div>
-			</div>
-			
-	</form>
-	</div>
-	</div>
+            </form>
+        </div>
+    </div>
+    
+    <div><?php include('../footer.php') ?></div>
 </body>
 </html>

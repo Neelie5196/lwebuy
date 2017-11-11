@@ -433,17 +433,7 @@ $results = mysqli_fetch_assoc($result);
             </div>
         </div>
         
-        <div class="hidden-lg footercontainer">
-            <div class="footer">
-                <?php include('../footer.php') ?>
-            </div>
-        </div>
-        
-        <div class="hidden-xs hidden-md hidden-sm noscrollfooter footercontainer">
-            <div class="footer">
-                <?php include('../footer.php') ?>
-            </div>
-        </div>
+        <div><?php include('../footer.php') ?></div>
     </body>
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="../frameworks/js/global.js"></script>

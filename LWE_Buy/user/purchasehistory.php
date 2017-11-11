@@ -34,30 +34,29 @@ $result = mysqli_query($con, $query);
     </head>
 
     <body>
-        <center>
-            <div class="row">
-                <?php include_once('nav.php')?>
-            </div>
+        <div class="row">
+            <?php include_once('nav.php')?>
+        </div>
             
-            <div class="container">
+        <div class="container">
+            <center>
                 <h2>Purchase History</h2>
                 <hr/>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
-                        <strong>Received</strong>
-                    </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                    <strong>Received</strong>
                 </div>
             </div>
-            <section class = "content">
+                    
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <?php 
                             if(mysqli_num_rows($result) > 0)
                             {
                             ?>
-                        <table class="table thead-bordered table-hover" style="width:80%">
+                        <table class="table thead-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>Order No.</th>
@@ -91,6 +90,9 @@ $result = mysqli_query($con, $query);
                     </div>
                 </div>
             </section>
-        </center>
+            </center>
+        </div>
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
 </html>

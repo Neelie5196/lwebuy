@@ -38,126 +38,125 @@ $result1 = mysqli_query($con, $query1);
     </head>
 
     <body>
-		<center>
-            <div class="row">
-                <?php include_once('nav.php')?>
-            </div>
-            
-            <div class="container">
+        <div class="row">
+            <?php include_once('nav.php')?>
+        </div>
+
+        <div class="container">
+            <center>
                 <h2>Shipping Request</h2>
                 <hr/>
-            </div>
-            <div class="container">
+
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <p style="float: right;"><a href='message.php' class='btn btn-default' name='contact'>Contact Admin</a> <a href='receiveditem.php' class='btn btn-default' name='new'>New Shipping</a></p>
                     </div>
                 </div>
-            </div>
-            <br/>
-            <div class="container">
+
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Request</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#request">More</button>
                     </div>
                 </div>
-            </div>
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
-                        <div class="span12 collapse" id="request">
-                            <?php 
-                                if(mysqli_num_rows($result) > 0)
-                                {
-                                    ?>
-                                <table class="table thead-bordered table-hover" style="width:80%">
-                                    <thead>
-                                        <tr>
-                                            <th>Shipping#</th>
-                                            <th>Placed on</th>
-                                            <th>Total (RM)</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                <?php
-                                    while($row = mysqli_fetch_array($result))
+            
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
+                            <div class="span12 collapse" id="request">
+                                <?php 
+                                    if(mysqli_num_rows($result) > 0)
                                     {
                                         ?>
-                                        <tbody>
+                                    <table class="table thead-bordered table-hover" style="width:80%">
+                                        <thead>
                                             <tr>
-                                                <td width="5%"><?php echo $row['s_id']; ?></td>
-                                                <td width="40%"><?php echo $row['datetime']; ?></td>
-                                                <td width="20%"><?php echo $row['price']; ?></td>
-                                                <td width="20%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="shippinglrview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                <th>Shipping#</th>
+                                                <th>Placed on</th>
+                                                <th>Total (RM)</th>
+                                                <th>Status</th>
                                             </tr>
-                                        </tbody>
+                                        </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['s_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="20%"><?php echo $row['price']; ?></td>
+                                                    <td width="20%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="shippinglrview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                            }
+                                        }else{
+                                        ?>
+                                            <p>There is no shipping request.</p>
                                         <?php
                                         }
-                                    }else{
                                     ?>
-                                        <p>There is no shipping request.</p>
-                                    <?php
-                                    }
-                                ?>
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <br/>
-            <div class="container">
+                </section>
+
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>In Proceed</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#proceed">More</button>
                     </div>
                 </div>
-            </div>
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
-                        <div class="span12 collapse" id="proceed">
-                            <?php 
-                                if(mysqli_num_rows($result1) > 0)
-                                {
-                                ?>
-                                <table class="table thead-bordered table-hover" style="width:80%">
-                                    <thead>
-                                        <tr>
-                                            <th>Shipping#</th>
-                                            <th>Placed on</th>
-                                            <th>Total (RM)</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                <?php
-                                    while($row = mysqli_fetch_array($result1))
+            
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
+                            <div class="span12 collapse" id="proceed">
+                                <?php 
+                                    if(mysqli_num_rows($result1) > 0)
                                     {
-                                        ?>
-                                        <tbody>
+                                    ?>
+                                    <table class="table thead-bordered table-hover" style="width:80%">
+                                        <thead>
                                             <tr>
-                                                <td width="5%"><?php echo $row['s_id']; ?></td>
-                                                <td width="40%"><?php echo $row['datetime']; ?></td>
-                                                <td width="20%"><?php echo $row['price']; ?></td>
-                                                <td width="20%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $row['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-default">View</a></td>
+                                                <th>Shipping#</th>
+                                                <th>Placed on</th>
+                                                <th>Total (RM)</th>
+                                                <th>Status</th>
                                             </tr>
-                                        </tbody>
+                                        </thead>
+                                    <?php
+                                        while($row = mysqli_fetch_array($result1))
+                                        {
+                                            ?>
+                                            <tbody>
+                                                <tr>
+                                                    <td width="5%"><?php echo $row['s_id']; ?></td>
+                                                    <td width="40%"><?php echo $row['datetime']; ?></td>
+                                                    <td width="20%"><?php echo $row['price']; ?></td>
+                                                    <td width="20%"><?php echo $row['status']; ?></td>
+                                                    <td width="15%"><a href="shippinglpview.php?shipping_id=<?php echo $row['s_id']; ?>&timeline=Proceed" class="btn btn-xs btn-default">View</a></td>
+                                                </tr>
+                                            </tbody>
+                                            <?php
+                                            }
+                                        }else{
+                                        ?>
+                                            <p>There is no shipping in proceed.</p>
                                         <?php
                                         }
-                                    }else{
                                     ?>
-                                        <p>There is no shipping in proceed.</p>
-                                    <?php
-                                    }
-                                ?>
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </center>
+                </section>
+            </center>
+        </div>
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
 </html>

@@ -61,16 +61,15 @@ $results3 = mysqli_fetch_assoc($result3);
                     <hr/>
                 </div>
             </div>
-        </div>
-        <form action="payments.php" method="post">
-            <div class="container">
+            
+            <form action="payments.php" method="post">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Address</strong>
                         <button style="float: right;" class="btn btn-default" type="button" data-toggle="modal" data-target="#newaddress">Add New Address</button>
                     </div>
                 </div>
-                <br/>
+
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <?php
@@ -95,13 +94,13 @@ $results3 = mysqli_fetch_assoc($result3);
                         ?>
                     </div>
                 </div>
-                <br/>
+
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
                         <strong>Recipient Information</strong>
                     </div>
                 </div>
-                <br/>
+
                 <div class="row">
                     <div class="col-xs-6 col-md-6 col-lg-6">
                         <div class="row">
@@ -124,10 +123,8 @@ $results3 = mysqli_fetch_assoc($result3);
                         </div>
                     </div>
                 </div>
-            </div>
-            <br/>
-            <section class = "content">
-                <div class="container">
+
+                <section class="content">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <?php 
@@ -167,9 +164,10 @@ $results3 = mysqli_fetch_assoc($result3);
                             </table>
                         </div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-xs-12 col-md-6 col-lg-6">
-                            
+
                         </div>
                         <div class="col-xs-12 col-md-6 col-lg-6" style="padding-bottom: 20px;">
                             <div class="row">
@@ -192,7 +190,7 @@ $results3 = mysqli_fetch_assoc($result3);
                                             <?php
                                         }
                                     ?>
-                                    
+
                                 </div>
                                 <div class="col-xs-4 col-md-4 col-lg-4">
                                     <input type="hidden" name="weight" class="form-control" value="<?php echo $totalweight; ?>">
@@ -201,72 +199,75 @@ $results3 = mysqli_fetch_assoc($result3);
                             </div>                            
                         </div>
                     </div>
-                </div>
-            </section>
-        </form>
-        <div id="newaddress" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="addaddress.php" method="post">
-                        <div class="modal-header">
-                            <h4 class="modal-title">New Address</h4>
-                        </div>
-                        <input type="hidden" name="user_id" class="form-control" value="<?php echo $user_id ?>">
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-xs-4 col-md-4 col-lg-4">
-                                    <label>Address</label>
+                </section>
+            </form>
+            
+            <div id="newaddress" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="addaddress.php" method="post">
+                            <div class="modal-header">
+                                <h4 class="modal-title">New Address</h4>
+                            </div>
+                            <input type="hidden" name="user_id" class="form-control" value="<?php echo $user_id ?>">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-xs-4 col-md-4 col-lg-4">
+                                        <label>Address</label>
+                                    </div>
+                                    <div class="col-xs-8 col-md-8 col-lg-8">
+                                        <input type="text" name="address" class="form-control" placeholder="Delivery Address (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                    </div>
                                 </div>
-                                <div class="col-xs-8 col-md-8 col-lg-8">
-                                    <input type="text" name="address" class="form-control" placeholder="Delivery Address (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-xs-4 col-md-4 col-lg-4">
+                                        <label>Postcode</label>
+                                    </div>
+                                    <div class="col-xs-8 col-md-8 col-lg-8">
+                                        <input type="text" name="postcode" class="form-control" placeholder="Postcode (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-xs-4 col-md-4 col-lg-4">
+                                        <label>City</label>
+                                    </div>
+                                    <div class="col-xs-8 col-md-8 col-lg-8">
+                                        <input type="text" name="city" class="form-control" placeholder="City (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-xs-4 col-md-4 col-lg-4">
+                                        <label>State</label>
+                                    </div>
+                                    <div class="col-xs-8 col-md-8 col-lg-8">
+                                        <input type="text" name="state" class="form-control" placeholder="State (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-xs-4 col-md-4 col-lg-4">
+                                        <label>Country</label>
+                                    </div>
+                                    <div class="col-xs-8 col-md-8 col-lg-8">
+                                        <input type="text" name="country" class="form-control" placeholder="Country (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
+                                    </div>
                                 </div>
                             </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-xs-4 col-md-4 col-lg-4">
-                                    <label>Postcode</label>
-                                </div>
-                                <div class="col-xs-8 col-md-8 col-lg-8">
-                                    <input type="text" name="postcode" class="form-control" placeholder="Postcode (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-xs-4 col-md-4 col-lg-4">
-                                    <label>City</label>
-                                </div>
-                                <div class="col-xs-8 col-md-8 col-lg-8">
-                                    <input type="text" name="city" class="form-control" placeholder="City (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-xs-4 col-md-4 col-lg-4">
-                                    <label>State</label>
-                                </div>
-                                <div class="col-xs-8 col-md-8 col-lg-8">
-                                    <input type="text" name="state" class="form-control" placeholder="State (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-xs-4 col-md-4 col-lg-4">
-                                    <label>Country</label>
-                                </div>
-                                <div class="col-xs-8 col-md-8 col-lg-8">
-                                    <input type="text" name="country" class="form-control" placeholder="Country (Required)" style="border-radius: 30px; width: 100%;float: left;" required>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success" name="new-address">Add New</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        </div>
-                    </form>                                                    
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" name="new-address">Add New</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>                                                    
+                    </div>
                 </div>
             </div>
         </div>
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
     <script>
         $('input.address').on('change', function() {

@@ -46,7 +46,7 @@ $result = mysqli_query($con, $query);
                 <img src="../resources/timeline/payments.PNG" alt="timeline" width="600px"/>
             </div>
             <br/>
-            <section class = "content">
+            <section class="content">
                 <div class="container">
                     <div class="row">
                         <form action="payment.php" method="post">

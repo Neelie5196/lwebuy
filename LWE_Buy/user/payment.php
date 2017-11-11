@@ -61,7 +61,7 @@ $results = mysqli_fetch_assoc($result);
             </div>
             <hr/>
         </div>
-        <section class = "content">
+        <section class="content">
             <div class="container">
                 <div class="row">
                     <center style="padding-bottom: 15px;">

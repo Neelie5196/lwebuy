@@ -37,20 +37,18 @@ if (mysqli_num_rows($result) > 0) {
     </head>
 
     <body>
-        <center>
-            <div class="row">
-                <?php include_once('nav.php')?>
-            </div>
+        <div class="row">
+            <?php include_once('nav.php')?>
+        </div>
             
-            <div class="container">
+        <div class="container">
+            <center>
                 <h2>Purchase Product</h2>
                 <hr/>
-            </div>
-            
-            <section class = "content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <div class="container">
+
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
                             <div class="row">
                                 <div class="col-xs-12 col-md-12">
                                     <h3 class="title" style="text-align: left;">Product <small>Information</small></h3>
@@ -124,8 +122,11 @@ if (mysqli_num_rows($result) > 0) {
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </center>
+                </section>
+            </center>
+        </div>
+        
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
 </html>

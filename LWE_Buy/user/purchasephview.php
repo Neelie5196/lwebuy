@@ -52,7 +52,7 @@ $results1 = mysqli_fetch_assoc($result1);
                 <img src="../resources/timeline/proceeds.PNG" alt="timeline" width="600px"/>
             </div>
             <br/>
-            <section class = "content">
+            <section class="content">
                 <div class="container">
                     <div class="row">
                         <form action="#">

@@ -42,9 +42,8 @@ $results = mysqli_fetch_assoc($result);
         <div class="container">
             <h2>Contact Us</h2>
             <hr/>
-        </div>
-        <section class = "content">
-            <div class="container">
+        
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-lg-6">
                         <div class="row">
@@ -149,13 +148,9 @@ $results = mysqli_fetch_assoc($result);
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-              
-        <div class="footercontainer">
-            <div class="footer">
-                <?php include_once('../footer.php') ?>
-            </div>
+            </section>
         </div>
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
 </html>

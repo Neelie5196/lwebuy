@@ -28,17 +28,15 @@ session_start();
     </head>
 
     <body>
-        <center>
-            <div class="row">
-                <?php include_once('nav.php')?>
-            </div>
-            
-            <div class="container">
-
+        <div class="row">
+            <?php include_once('nav.php')?>
+        </div>
+        
+        <div class="container">
+            <center>
                 <h2>Purchase Product</h2>
                 <hr/>
-
-                <section class = "content">
+                <section class="content">
                     <div class="row">
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <form method="post" action="purchaseproduct-2.php">
@@ -51,7 +49,9 @@ session_start();
                         </div>
                     </div>
                 </section>
-            </div>
-        </center>
+            </center>
+        </div>
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
 </html>

@@ -50,7 +50,7 @@ $results2 = mysqli_fetch_assoc($result2);
                 <h2>Order# <?php echo $order_id; ?></h2>
                 <hr/>
             </div>
-            <section class = "content">
+            <section class="content">
                 <div class="container">
                     <div class="row">
                         <form action="#">

@@ -52,11 +52,8 @@ $results = mysqli_fetch_assoc($result);
                     <h2>Your Inventory</h2>
                     <hr/>
                 </div>
-            </div>
-        </div>
-        
-        <section class = "content">
-            <div class="container">
+            </div>        
+            <section class="content">
                 <p>Below 1kg = RM <?php echo $results['bprice']; ?>, above 1kg each 0.5kg = RM <?php echo $results['oprice']; ?></p>
                 <form action="shippingrequest.php" method="post">
                     <div class="row">
@@ -99,14 +96,16 @@ $results = mysqli_fetch_assoc($result);
                                     }
                                 ?>
                             </table>
-                            
+
                             <input type="hidden" id="totalweight" name="totalweight" class="form-control" value="">
                             <input type="submit" class="btn btn-success" name="shipnow" value="Ship Now" onclick="return val();">
                         </div>
                     </div>
                 </form>
-            </div>
-        </section>
+            </section>
+        </div>
+        
+        <div><?php include('../footer.php') ?></div>
     </body>
 
     <script>
