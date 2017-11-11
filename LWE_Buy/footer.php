@@ -27,7 +27,7 @@
 
             <div class="col-xs-12 col-md-5 col-lg-5">
                 <p class="footertitle">Our Company</p>
-        <!--        <p class="footerconimg"><img src="resources/img/logo-grey-small.PNG" alt="logogrey.png" /></p>-->
+                <p class="footerconimg"><img src="../resources/img/logo-grey-small.PNG" alt="logogrey.png" /></p>
                 <p class="footercon">LWE is a logistics leader in the Asia Pacific market. We specialise in complete cross border logistics and fulfilment. We have established networks in major cities within Asia Pacific.</p>
             </div>
 
