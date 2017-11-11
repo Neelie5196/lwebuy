@@ -21,6 +21,7 @@ $query3 = "SELECT *
             WHERE status= 'Request'";
 $result3 = mysqli_query($con, $query3);
 
+
 ?>
 
 <!DOCTYPE html>
@@ -86,13 +87,13 @@ $result3 = mysqli_query($con, $query3);
                                                   ON oi.order_id = ol.ol_id)
                                                   WHERE order_code = '$search' AND statuss = 'Pending'";
                                         
-                                        $result = mysql_query($query);
-                                        $result1 = mysql_query($querys);
+                                        $result = mysqli_query($con, $query);
+                                        $result1 = mysqli_query($con, $querys);
                                         
-                                        $results = mysql_num_rows($result);
-                                        $resultss = mysql_num_rows($result1);
+                                        $results = mysqli_num_rows($result);
+                                        $resultss = mysqli_num_rows($result1);
                                         if($results > 0){
-                                            while (($line = mysql_fetch_array($result, MYSQL_ASSOC))!==false) 
+                                            while ($line = mysqli_fetch_array($result))
                                             {
                                             ?>
                                                 <div class="row">
@@ -115,63 +116,47 @@ $result3 = mysqli_query($con, $query3);
                                                                 <td><?php echo $line['fname']; ?> <?php echo $line['lname']; ?></td>
                                                                 <td><?php echo $line['name']; ?></td>
                                                                 <?php
-                                                                    $slotQuery = $db->prepare("
-                                                                        SELECT *
-                                                                        FROM slot
-                                                                        WHERE user_id=:user_id
-                                                                    ");
-
-                                                                    $slotQuery->execute([
-                                                                        'user_id' => $line['user_id']
-                                                                    ]);
-
-                                                                    $slot = $slotQuery->rowCount() ? $slotQuery : []; 
+                                                                    $user_id = $line['user_id'];
+                                                                    $query4 = "SELECT *
+                                                                               FROM slot
+                                                                               WHERE user_id= '$user_id' ";
+                                                                    $result4 = mysqli_query($con, $query4);
+                                                                    $results4 = mysqli_fetch_assoc($result4);
                                                 
-                                                                    if(!empty($slot)):
-                                                                        foreach($slot as $s):
-                                                                ?>
-                                                                    <input type="hidden" name="s_id" value="<?php echo $s['s_id']; ?>">
-                                                                    <td><?php echo $s['slot_code']; ?></td>
-                                                                    <td><?php echo $s['slot_num']; ?></td>
-                                                                <?php 
-                                                                        endforeach;
-                                                                    else:
-                                                                ?>
-                                                                    <?php
-                                                                        $slotsQuery = $db->prepare("
-                                                                            SELECT *
-                                                                            FROM slot
-                                                                            WHERE status = 'Not in Use'
-                                                                            ORDER BY RAND()
-                                                                            LIMIT 1
-                                                                        ");
-
-                                                                        $slotsQuery->execute([
-                                                                            'user_id' => $_SESSION['user_id']
-                                                                        ]);
-
-                                                                        $slots = $slotsQuery->rowCount() ? $slotsQuery : [];
-                                                                    ?>
+                                                                    if(!empty($results4))
+                                                                    {
+                                                                        ?>
+                                                                            <input type="hidden" name="s_id" value="<?php echo $results4['s_id']; ?>">
+                                                                            <td><?php echo $results4['slot_code']; ?></td>
+                                                                            <td><?php echo $results4['slot_num']; ?></td>
+                                                                        <?php
+                                                                    }else{
+                                                                        $query5 = "SELECT *
+                                                                                   FROM slot
+                                                                                   WHERE status = 'Not in Use'
+                                                                                   ORDER BY RAND()
+                                                                                   LIMIT 1";
+                                                                        $result5 = mysqli_query($con, $query5);
+                                                                        $results5 = mysqli_fetch_assoc($result5);
+                                                                        
+                                                                        ?>
                                                                         <td>
-                                                                            <?php 
-                                                                                if(!empty($slots)):
-                                                                                    foreach($slots as $ss): 
-                                                                                        ?>
-                                                                                        <input type="hidden" name="s_id" value="<?php echo $ss['s_id']; ?>">
-                                                                                        <?php
-                                                                                        echo $ss['slot_code'];
-                                                                                    endforeach;
-                                                                                else:
-                                                                            ?>
-                                                                                <p>There is no empty slot.</p>
-                                                                            <?php 
-                                                                                endif;
+                                                                        <?php
+                                                                            if(!empty($results5))
+                                                                            {
+                                                                                ?>
+                                                                                    <input type="hidden" name="s_id" value="<?php echo $results5['s_id']; ?>"><?php echo $results5['slot_code']; ?>
+                                                                                <?php
+                                                                            }else{
+                                                                                echo '<p>There is no empty slot.</p>';
+                                                                            }
                                                                             ?>
                                                                         </td>
-                                                                        <td><?php echo $ss['slot_num']; ?></td>
-                                                                <?php 
-                                                                    endif; 
+                                                                        <td><?php echo $results5['slot_num']; ?></td>
+                                                                        <?php
+                                                                    }
                                                                 ?>
+                                                                
                                                                 <td><input type="text" name="weight" class="form-control" style="border-radius: 30px; width: 100%;" required></td>
                                                                 <td><input type="submit" class="btn btn-xs btn-default" name="receivesave" value="Save"></td>
                                                             </tr>
@@ -181,7 +166,7 @@ $result3 = mysqli_query($con, $query3);
                                             <?php  
                                             }
                                         }else if($resultss > 0){
-                                            while (($line = mysql_fetch_array($result1, MYSQL_ASSOC))!==false) 
+                                            while ($line = mysqli_fetch_array($result1)) 
                                             {
                                             ?>
                                                 <div class="row">
@@ -205,62 +190,45 @@ $result3 = mysqli_query($con, $query3);
                                                                 <td><?php echo $line['fname']; ?> <?php echo $line['lname']; ?></td>
                                                                 <td><?php echo $line['name']; ?></td>
                                                                 <?php
-                                                                    $slotQuery = $db->prepare("
-                                                                        SELECT *
-                                                                        FROM slot
-                                                                        WHERE user_id=:user_id
-                                                                    ");
-
-                                                                    $slotQuery->execute([
-                                                                        'user_id' => $line['user_id']
-                                                                    ]);
-
-                                                                    $slot = $slotQuery->rowCount() ? $slotQuery : []; 
+                                                                    $user_id = $line['user_id'];
+                                                                    $query4 = "SELECT *
+                                                                               FROM slot
+                                                                               WHERE user_id= '$user_id' ";
+                                                                    $result4 = mysqli_query($con, $query4);
+                                                                    $results4 = mysqli_fetch_assoc($result4);
                                                 
-                                                                    if(!empty($slot)):
-                                                                        foreach($slot as $s):
-                                                                ?>
-                                                                    <input type="hidden" name="s_id" value="<?php echo $s['s_id']; ?>">
-                                                                    <td><?php echo $s['slot_code']; ?></td>
-                                                                    <td><?php echo $s['slot_num']; ?></td>
-                                                                <?php 
-                                                                        endforeach;
-                                                                    else:
-                                                                ?>
-                                                                    <?php
-                                                                        $slotsQuery = $db->prepare("
-                                                                            SELECT *
-                                                                            FROM slot
-                                                                            WHERE status = 'Not in Use'
-                                                                            ORDER BY RAND()
-                                                                            LIMIT 1
-                                                                        ");
-
-                                                                        $slotsQuery->execute([
-                                                                            'user_id' => $_SESSION['user_id']
-                                                                        ]);
-
-                                                                        $slots = $slotsQuery->rowCount() ? $slotsQuery : [];
-                                                                    ?>
+                                                                    if(!empty($results4))
+                                                                    {
+                                                                        ?>
+                                                                            <input type="hidden" name="s_id" value="<?php echo $results4['s_id']; ?>">
+                                                                            <td><?php echo $results4['slot_code']; ?></td>
+                                                                            <td><?php echo $results4['slot_num']; ?></td>
+                                                                        <?php
+                                                                    }else{
+                                                                        $query5 = "SELECT *
+                                                                                   FROM slot
+                                                                                   WHERE status = 'Not in Use'
+                                                                                   ORDER BY RAND()
+                                                                                   LIMIT 1";
+                                                                        $result5 = mysqli_query($con, $query5);
+                                                                        $results5 = mysqli_fetch_assoc($result5);
+                                                                        
+                                                                        ?>
                                                                         <td>
-                                                                            <?php 
-                                                                                if(!empty($slots)):
-                                                                                    foreach($slots as $ss): 
-                                                                                        ?>
-                                                                                        <input type="hidden" name="s_id" value="<?php echo $ss['s_id']; ?>">
-                                                                                        <?php
-                                                                                        echo $ss['slot_code'];
-                                                                                    endforeach;
-                                                                                else:
-                                                                            ?>
-                                                                                <p>There is no empty slot.</p>
-                                                                            <?php 
-                                                                                endif;
+                                                                        <?php
+                                                                            if(!empty($results5))
+                                                                            {
+                                                                                ?>
+                                                                                    <input type="hidden" name="s_id" value="<?php echo $results5['s_id']; ?>"><?php echo $results5['slot_code']; ?>
+                                                                                <?php
+                                                                            }else{
+                                                                                echo '<p>There is no empty slot.</p>';
+                                                                            }
                                                                             ?>
                                                                         </td>
-                                                                        <td><?php echo $ss['slot_num']; ?></td>
-                                                                <?php 
-                                                                    endif; 
+                                                                        <td><?php echo $results5['slot_num']; ?></td>
+                                                                        <?php
+                                                                    }
                                                                 ?>
                                                                 <td><input type="text" name="weight" class="form-control" style="border-radius: 30px; width: 100%;" required></td>
                                                                 <td><input type="submit" class="btn btn-xs btn-default" name="ordersave" value="Save"></td>

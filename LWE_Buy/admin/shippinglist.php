@@ -7,15 +7,28 @@ session_start();
 if(isset($_POST['genCode']))
 {
     $shippingid = $_POST['shippingid'];
-    $defaultno = "122352562";
-    $itemno = rand(100, 999);
-    $tCode = $defaultno . $itemno;
+    $query5 = "SELECT *
+              FROM payment
+              WHERE from_shipping='$shippingid'";
+    $result5 = mysqli_query($con, $query5);
+    $results5 = mysqli_fetch_assoc($result5);
     
-    $query = "UPDATE shipping SET tracking_code = '$tCode' WHERE s_id='$shippingid'";
-    $result = mysqli_query($con, $query);
-    $results = mysqli_fetch_assoc($result);
-    
-    header("Refresh:0");
+    if($results5['status'] != 'Waiting for Accept'){
+        $defaultno = "122352562";
+        $itemno = rand(100, 999);
+        $tCode = $defaultno . $itemno;
+
+        $query = "UPDATE shipping SET tracking_code = '$tCode' WHERE s_id='$shippingid'";
+        $result = mysqli_query($con, $query);
+
+    }else{
+        ?>
+        <script>
+        alert('Please approve payment before generate!!');
+        window.location.href='shippinglist.php?fail';
+        </script>
+        <?php
+    }
 }
 
 $query1 = "SELECT *
@@ -78,7 +91,6 @@ $result3 = mysqli_query($con, $query3);
                 <div class="row botmar">
                     <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>New</strong>
-                        <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse1">More Shipping Details</button>
                     </div>
                 </div>
 
@@ -142,7 +154,7 @@ $result3 = mysqli_query($con, $query3);
                                 ?>                                                    
                                 </table>
                             </div>
-                        </div>
+                        </div>  
                     </div>
                 </section>
 

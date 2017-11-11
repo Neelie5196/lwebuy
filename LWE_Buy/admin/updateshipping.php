@@ -20,7 +20,7 @@ $query1 = "SELECT * FROM warehouse";
 $result1 = mysqli_query($con, $query1);
 
 
-$getaddressQuery = $db->prepare("
+/*$getaddressQuery = $db->prepare("
     SELECT *
     FROM shipping sh
     JOIN address ad
@@ -28,6 +28,7 @@ $getaddressQuery = $db->prepare("
 ");
 $getaddressQuery->execute();
 $getaddress = $getaddressQuery->rowCount() ? $getaddressQuery : [];
+*/
 
 $getslotQuery = $db->prepare("SELECT * FROM slot");
 $getslotQuery->execute();
@@ -476,24 +477,23 @@ if (isset($_POST['updateshipping']))
                                                      {
                                                          if($gs['country_description'] == $desCountry)
                                                          {
-                                        ?>
-                                        <?php
+                                                             
                                                          }
                                                      }
                                                  }
                                              }
                                              else
                                              {
-                                        if(mysqli_num_rows($result1) > 0)
-                                        {
-                                            while($row = mysqli_fetch_array($result1))
-                                            {
-                                                ?>
-                                                    <option value="<?php echo $row['station_description']; ?>"><?php echo $row['station_description']; ?></option>
-                                                <?php
-                                            }
-                                        }
-                                             }
+                                                if(mysqli_num_rows($result1) > 0)
+                                                {
+                                                    while($row = mysqli_fetch_array($result1))
+                                                    {
+                                                        ?>
+                                                            <option value="<?php echo $row['station_description']; ?>"><?php echo $row['station_description']; ?></option>
+                                                        <?php
+                                                    }
+                                                }
+                                             #}
                                         ?>
 
                                     </select>
