@@ -118,7 +118,7 @@ $results = mysqli_fetch_assoc($result);
                                 </div>
                                 <div class="col-xs-12 col-md-5 col-lg-5">
                                     <form action="paidshipping.php" method="post">
-                                        <h3>Pay by LEW Point</h3>
+                                        <h3>Pay by LWE Point</h3>
                                         <div class="row">
                                             <div class="col-xs-12 col-md-12 col-lg-12">
                                                 <div class="details">

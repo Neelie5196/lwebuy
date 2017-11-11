@@ -125,7 +125,6 @@ body {
     border-top: solid 1px #299145;
     border-right: solid 2px #299145;
     border-bottom: solid 2px #299145;
-    min-height: 100%;
 }
 
 .udashrow1:hover {
@@ -156,6 +155,50 @@ body {
     border-top: solid 1px #299145;
     border-right: solid 2px #299145;
     border-bottom: solid 2px #299145;
+}
+
+.addashrow1 {
+    margin: 10px;
+    background: #fff;
+    border-radius: 5px;
+    color: #000;
+    border-left: solid 1px #299145;
+    border-top: solid 1px #299145;
+    border-right: solid 2px #299145;
+    border-bottom: solid 2px #299145;
+}
+
+.addashrow1:hover {
+    box-shadow: -5px 5px 5px #e6e6e6;
+}
+
+.admindashtitle {
+    color: #ff6600;
+    font-weight: bold;
+}
+
+.admindash {
+    text-align: right;
+    font-size: 20px;
+}
+
+.addashrow2 {
+    margin: 10px;
+    background: #fff;
+    border-radius: 5px;
+    color: #000;
+    border-left: solid 1px #299145;
+    border-top: solid 1px #299145;
+    border-right: solid 2px #299145;
+    border-bottom: solid 2px #299145;
+}
+
+.addashrow2 > div > hr {
+    border: solid 0.5px black;
+}
+
+.analbl {
+    width: 30%;
 }
 
 .jumbotron {
@@ -195,10 +238,6 @@ body {
 
 .frmtrans {   
     margin-bottom: 10px;
-}
-
-.admindash {
-    text-align: right;
 }
 
 .parceltag {
