@@ -56,8 +56,7 @@ $results2 = mysqli_fetch_assoc($result2);
                     <h2>Adjust Rate</h2>
                 </div>
             </div>
-        </div>
-        <div class="container">
+
             <div class="row">
                 <form action="updateratio.php" method="post">
                     <div class="col-xs-12 col-md-6 col-lg-6">

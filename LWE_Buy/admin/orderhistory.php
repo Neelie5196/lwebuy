@@ -43,132 +43,131 @@ $result2 = mysqli_query($con, $query2);
     </head>
 
     <body>
-        <center>
-            <div class="row">
-                <?php include_once('nav.php')?>
-            </div>
-            
-            <div class="container">
+        
+        <div class="row">
+            <?php include_once('nav.php')?>
+        </div>
+
+        <div class="container">
+            <center>
                 <h2>Order History</h2>
                 <hr/>
-            </div>
 			
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                <div class="row botmar">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Proceed</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse">More Order Details</button>
                     </div>
                 </div>
-            </div>
-            <section class="content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
-                        <div class="span12 collapse" id="collapse">
-                            <?php 
-                                if(mysqli_num_rows($result1) > 0)
-                                {
-                                ?>
-                                <table id="order_history" class="table thead-bordered table-hover" style="width:80%">
-                                   
-									<thead>
-                                        <tr>
-									
-                                            <th>Order#</th>
-                                            <th>Name</th>
-                                            <th>Placed on</th>
-                                            <th>Total (RM)</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <?php
-                                        while($row = mysqli_fetch_array($result1))
-                                        {
+
+                <section class="content">
+                    <div class="row botmar">
+                        <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
+                            <div class="span12 collapse" id="collapse">
+                                <?php 
+                                    if(mysqli_num_rows($result1) > 0)
+                                    {
+                                    ?>
+                                    <table id="order_history" class="table thead-bordered table-hover">
+
+                                        <thead>
+                                            <tr>
+
+                                                <th>Order#</th>
+                                                <th>Name</th>
+                                                <th>Placed on</th>
+                                                <th>Total (RM)</th>
+                                                <th colspan="2">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                            while($row = mysqli_fetch_array($result1))
+                                            {
+                                                ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                        <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                        <td width="15%"><?php echo $row['datetime']; ?></td>
+                                                        <td width="15%"><?php echo $row['price']; ?></td>
+                                                        <td width="10%"><?php echo $row['status']; ?></td>
+                                                        <td width="15%"><a href="orderhview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                    </tr>
+                                                </tbody>
+                                                <?php
+                                            }
+                                        }else{
                                             ?>
-                                            <tbody>
-                                                <tr>
-                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                    <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
-                                                    <td width="15%"><?php echo $row['datetime']; ?></td>
-                                                    <td width="15%"><?php echo $row['price']; ?></td>
-                                                    <td width="10%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="orderhview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                                </tr>
-                                            </tbody>
+                                                <p>There is no order in proceed.</p>
                                             <?php
                                         }
-                                    }else{
-                                        ?>
-                                            <p>There is no order in proceed.</p>
-                                        <?php
-                                    }
-                                ?>
-                            </table>
+                                    ?>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <br/>
-            <div class="container">
+                </section>
+
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Received</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse1">More Order Details</button>
-						<div class="box-tools pull-right">
-									<div class="has-feedback">
-										<input type="text" class="form-control input-sm" id="myInput2" onkeyup="myFunction2()" placeholder="Filter List">
-										<span class="glyphicon glyphicon-search form-control-feedback"></span>
-									</div>
-									</div>
-                    </div>
-                </div>
-            </div>
-            <section class="content">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
-                        <div class="span12 collapse" id="collapse1">
-                            <?php 
-                                if(mysqli_num_rows($result2) > 0)
-                                {
-                                ?>
-                                <table id="received" class="table thead-bordered table-hover" style="width:80%">
-                                    <thead>
-                                        <tr>
-                                            <th>Order#</th>
-                                            <th>Name</th>
-                                            <th>Placed on</th>
-                                            <th>Total (RM)</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <?php
-                                        while($row = mysqli_fetch_array($result2))
-                                        {
-                                            ?>
-                                            <tbody>
-                                                <tr>
-                                                    <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                    <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
-                                                    <td width="15%"><?php echo $row['datetime']; ?></td>
-                                                    <td width="15%"><?php echo $row['price']; ?></td>
-                                                    <td width="10%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="orderhview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
-                                                </tr>
-                                            </tbody>
-                                            <?php
-                                        }
-                                    }else{
-                                        ?>
-                                            <p>There is no order history.</p>
-                                        <?php
-                                    }
-                                ?>
-                            </table>
+						<div class="marright" style="float: right;">
+                            <div class="has-feedback">
+                                <input type="text" class="form-control input-sm" id="myInput2" onkeyup="myFunction2()" placeholder="Filter List">
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </center>
+
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
+                            <div class="span12 collapse" id="collapse1">
+                                <?php 
+                                    if(mysqli_num_rows($result2) > 0)
+                                    {
+                                    ?>
+                                    <table id="received" class="table thead-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Order#</th>
+                                                <th>Name</th>
+                                                <th>Placed on</th>
+                                                <th>Total (RM)</th>
+                                                <th colspan="2">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                            while($row = mysqli_fetch_array($result2))
+                                            {
+                                                ?>
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="5%"><?php echo $row['ol_id']; ?></td>
+                                                        <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                        <td width="15%"><?php echo $row['datetime']; ?></td>
+                                                        <td width="15%"><?php echo $row['price']; ?></td>
+                                                        <td width="10%"><?php echo $row['status']; ?></td>
+                                                        <td width="15%"><a href="orderhview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
+                                                    </tr>
+                                                </tbody>
+                                                <?php
+                                            }
+                                        }else{
+                                            ?>
+                                                <p>There is no order history.</p>
+                                            <?php
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </center>
+        </div>
     </body>
 	<script>
 	function myFunction2() {

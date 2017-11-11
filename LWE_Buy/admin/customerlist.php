@@ -83,7 +83,7 @@ $result1 = mysqli_query($con, $query1);
                                                 <td width="20%"><?php echo $row['lname']; ?></td>
                                                 <td width="20%"><?php echo $row['email']; ?></td>
                                                 <td width="20%"><?php echo $row['contact']; ?></td>
-                                                <td width="20%"><a href="customersview.php?users=<?php echo $row['user_id']; ?>" class="btn btn-xs btn-info">View Detail</a></td>
+                                                <td width="20%"><a href="customersview.php?users=<?php echo $row['user_id']; ?>" class="btn btn-xs btn-default">View Detail</a></td>
                                             </tr>
                                         </tbody>
                                         <?php

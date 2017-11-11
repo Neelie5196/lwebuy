@@ -59,7 +59,7 @@ $results1 = mysqli_fetch_assoc($result1);
         <center>
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong><?php echo $results1['name']; ?></strong>
                         <input type="text" style="float: right;" class="btn btn-success" value="<?php echo $results1['datetime']; ?>" readonly>
                     </div>

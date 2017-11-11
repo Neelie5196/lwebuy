@@ -54,15 +54,15 @@ $result2 = mysqli_query($con, $query2);
             </div>
             
             <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                <div class="row botmar">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Ready to Pay</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse1">More Order Details</button>
                     </div>
                 </div>
             </div>
             <section class="content">
-                <div class="row">
+                <div class="row botmar">
                     <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
                         <div class="span12 collapse" id="collapse1">
                             <?php 
@@ -90,7 +90,7 @@ $result2 = mysqli_query($con, $query2);
                                                     <td width="15%"><?php echo $row['datetime']; ?></td>
                                                     <td width="15%"><?php echo $row['price']; ?></td>
                                                     <td width="10%"><?php echo $row['status']; ?></td>
-                                                    <td width="15%"><a href="orderhviews.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                    <td width="15%"><a href="orderhviews.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
                                                 </tr>
                                             </tbody>
                                             <?php
@@ -106,16 +106,16 @@ $result2 = mysqli_query($con, $query2);
                     </div>
                 </div>
             </section>
-            <br/>
+
             <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                <div class="row botmar">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Ready to Proceed</strong>
                     </div>
                 </div>
             </div>
             <section class="content">
-                <div class="row">
+                <div class="row botmar">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <?php 
                             if(mysqli_num_rows($result2) > 0)
@@ -142,7 +142,7 @@ $result2 = mysqli_query($con, $query2);
                                                 <td width="15%"><?php echo $row['datetime']; ?></td>
                                                 <td width="15%"><?php echo $row['price']; ?></td>
                                                 <td width="10%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="porderview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                <td width="15%"><a href="porderview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
                                             </tr>
                                         </tbody>
                                         <?php

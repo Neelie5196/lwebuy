@@ -173,7 +173,7 @@ $result3 = mysqli_query($con, $query3);
                                                                     endif; 
                                                                 ?>
                                                                 <td><input type="text" name="weight" class="form-control" style="border-radius: 30px; width: 100%;" required></td>
-                                                                <td><input type="submit" class="btn btn-xs btn-warning" name="receivesave" value="Save"></td>
+                                                                <td><input type="submit" class="btn btn-xs btn-default" name="receivesave" value="Save"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -263,7 +263,7 @@ $result3 = mysqli_query($con, $query3);
                                                                     endif; 
                                                                 ?>
                                                                 <td><input type="text" name="weight" class="form-control" style="border-radius: 30px; width: 100%;" required></td>
-                                                                <td><input type="submit" class="btn btn-xs btn-warning" name="ordersave" value="Save"></td>
+                                                                <td><input type="submit" class="btn btn-xs btn-default" name="ordersave" value="Save"></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

@@ -266,25 +266,23 @@ body {
     margin: auto;
 }
 
-.updateform {
-    margin-left: 15px;
-    width: 80%;
-}
-
 .lblUpdate {
     width: 2%;
     padding-top: 5px;
     padding-bottom: 5px;
+    font-weight: bold;
 }
 
 .inputUpdate {
     width: 20%;
     padding-top: 5px;
     padding-bottom: 5px;
+    
 }
 
 .textUpdate > input {
     width: 30%;
+    border-radius: 30px;
 }
 
 .btnUpdate {
@@ -393,4 +391,8 @@ body {
 
 .ptcontain {
     width: 10%;
+}
+
+.marright {
+    margin-right: 10px;
 }

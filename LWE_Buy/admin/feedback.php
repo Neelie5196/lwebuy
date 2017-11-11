@@ -51,7 +51,7 @@ $result2 = mysqli_query($con, $query2);
             </div>
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Unread</strong>
                     </div>
                 </div>
@@ -101,7 +101,7 @@ $result2 = mysqli_query($con, $query2);
             <br/>
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Read</strong>
                         <button style="float: right;" class="btn btn-success" type="button" data-toggle="collapse" data-target="#collapse">Show History</button>
                     </div>

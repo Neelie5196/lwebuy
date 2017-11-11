@@ -54,12 +54,10 @@ $results1 = mysqli_fetch_assoc($result1);
                     <hr/>
                 </div>
             </div>
-        </div>
 
-        <section class="content">
-            <div class="container">
+            <section class="content">
                 <div class="row">
-                    <div class="col-xs-12 col-md-12">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
                         <h3 class="title">User <small>Information</small></h3>
                     </div>
                 </div>
@@ -104,7 +102,7 @@ $results1 = mysqli_fetch_assoc($result1);
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12 col-md-12">
+                    <div class="col-xs-12 col-md-12 col-lg-12">
                         <h3 class="title">User <small>Work Station</small></h3>
                     </div>
                 </div>
@@ -171,7 +169,7 @@ $results1 = mysqli_fetch_assoc($result1);
                     </div>
                 </div>
                 <center style="padding-bottom:15px;"><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>
-            </div>
-        </section>
+            </section>
+        </div>
     </body>
 </html>

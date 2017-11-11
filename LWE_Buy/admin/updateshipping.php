@@ -394,14 +394,16 @@ if (isset($_POST['updateshipping']))
     </head>
 
     <body background="../resources/img/bg.jpg" ng-app="">
-            <div class="row">
-                <?php include_once('nav.php') ?>
-            </div>
-
+        <div class="row">
+            <?php include_once('nav.php') ?>
+        </div>
+        
+        <div class="container">
+            <h2>Shipping Details</h2>
             <div class="row" ng-init="in=true">
-                <div class="updateform col-xs-12 col-md-12 col-lg-12">
-                    <form class="form-inline" action="updateshipping.php" method="post">
-                        <h2>Station details</h2>
+                <div class="updateform col-xs-12 col-md-12 col-lg-12 jumbotron">
+                    <form action="updateshipping.php" method="post">
+                        <h3>Station details</h3>
                         <input type="text" name="stCode" value="<?php echo $results['station_code']; ?>" hidden="hidden" />
                         <input type="text" name="CtyCode" value="<?php echo $results['country_code']; ?>" hidden="hidden" />
                         <table class="tblUpdate">
@@ -409,14 +411,14 @@ if (isset($_POST['updateshipping']))
                                 <td class="lblUpdate"><label for="stDesc">Station Name: </label></td>
                                 <td class="inputUpdate textUpdate"><input type="text" name="stDesc" id="stDesc" value="<?php echo $results['station_description']; ?>" readonly="readonly" /></td>
                             </tr>
-                            
+
                             <tr>
                                 <td class="lblUpdate"><label for="CtyDesc">Country: </label></td>
                                 <td class="inputUpdate textUpdate"><input type="text" name="CtyDesc" id="CtyDesc" value="<?php echo $results['country_description']; ?>" readonly="readonly" /></td>
                             </tr>
                         </table>
 
-                        <h2>Update details</h2>
+                        <h3>Update details</h3>
                         <table class="tblUpdate">
                             <tr>
                                 <td class="lblUpdate">Event Type: </td>
@@ -426,22 +428,22 @@ if (isset($_POST['updateshipping']))
                                     <input type="radio" name="eventType" value="delivered" ng-click="in=false; out=false; delivered=true; arrive=false; register=false" /> Delivered&nbsp;
                                 </td>                                
                             </tr>
-                            
+
                             <tr ng-show="in || out">
                                 <td class="lblUpdate">Event Activity: </td>
-                                
+
                                 <td class="inputUpdate" ng-show="in">
                                     <input type="radio" name="eventAct" value="arrive" ng-click="arrive=true" /> Arrive&nbsp;
                                     <input type="radio" name="eventAct" value="custom" ng-click="arrive=false" /> Clear custom and arrive&nbsp;
                                 </td>
-                                
+
                                 <td class="inputUpdate" ng-show="out">
                                     <input type="radio" name="eventAct" value="depart" ng-click="register=false" /> Depart&nbsp;
                                     <input type="radio" name="eventAct" value="register" ng-click="register=true" /> Register&nbsp;
                                     <input type="radio" name="eventAct" value="check" ng-click="register=false" /> Check in&nbsp;
                                 </td>
                             </tr>
-                            
+
                             <tr ng-show="arrive">
                                 <td class="lblUpdate">More event details: </td>
                                 <td class="inputUpdate" ng-show="arrive">
@@ -449,7 +451,7 @@ if (isset($_POST['updateshipping']))
                                     <input type="radio" name="eventMore" value="station" /> Station&nbsp;
                                 </td>
                             </tr>
-                            
+
                             <tr ng-show="register">
                                 <td class="lblUpdate">Destination station: </td>
                                 <td class="inputUpdate">
@@ -467,7 +469,7 @@ if (isset($_POST['updateshipping']))
                                                          }
                                                      }
                                                  }
-                                                
+
                                                  if(!empty($getstations))
                                                  {
                                                      foreach($getstations as $gs)
@@ -493,33 +495,34 @@ if (isset($_POST['updateshipping']))
                                         }
                                              }
                                         ?>
-                                        
+
                                     </select>
                                 </td>
                             </tr>
-                            
+
                             <tr ng-show="delivered">
                                 <td class="lblUpdate"><label for="signedName">Signed Name: </label></td>
                                 <td class="inputUpdate textUpdate"><input type="text" name="signedName" id="signedName" /></td>
                             </tr>
-                            
+
                             <tr>
                                 <td class="lblUpdate"><label for="remark">Remark: </label></td>
                                 <td class="inputUpdate textUpdate"><input type="text" name="remark" id="remark" /></td>
                             </tr>
-                            
+
                             <tr>
                                 <td><label for="trackcode">Tracking code: </label></td>
                                 <td class="inputUpdate textUpdate"><input type="text" name="trackcode" id="trackcode" value="<?php echo $tracking_code; ?>" /></td>    
                             </tr>
                         </table>
-                        
+
                         <p class="btnUpdate">
-                            <input type="submit" name="updateshipping" value="Update" class="btn btn-default"/>
+                            <input type="submit" name="updateshipping" value="Update" class="btn btn-success"/>
                             <a href="shippinglist.php"><input type="button" value="Back" class="btn btn-default"/></a>
                         </p>
                     </form>
                 </div>      
             </div>
+        </div>
     </body>
 </html>

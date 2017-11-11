@@ -96,7 +96,7 @@ $results3 = mysqli_fetch_assoc($result3);
                 </div>
 
                 <div class="row botmar">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Recipient Information</strong>
                     </div>
                 </div>

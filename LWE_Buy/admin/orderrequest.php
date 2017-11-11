@@ -45,14 +45,14 @@ $result1 = mysqli_query($con, $query1);
                 <hr/>
             </div>
             <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-md-12 col-lg-12" style="background:#444; padding:10px; color:#fff; font-weight:bold; font-size:180%; text-align: left;">
+                <div class="row botmar">
+                    <div class="col-xs-12 col-md-12 col-lg-12 rowhead">
                         <strong>Order Request</strong>
                     </div>
                 </div>
             </div>
             <section class="content">
-                <div class="row">
+                <div class="row botmar">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                         <?php 
                             if(mysqli_num_rows($result1) > 0)
@@ -61,7 +61,7 @@ $result1 = mysqli_query($con, $query1);
                             <table class="table thead-bordered table-hover" style="width:80%">
                                 <thead>
                                     <tr>
-                                        <th>Order#</th>
+                                        <th>Order No.</th>
                                         <th>Name</th>
                                         <th>Placed on</th>
                                         <th>Status</th>
@@ -73,11 +73,11 @@ $result1 = mysqli_query($con, $query1);
                                         ?>
                                         <tbody>
                                             <tr>
-                                                <td width="5%"><?php echo $row['ol_id']; ?></td>
-                                                <td width="40%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                                <td width="10%"><?php echo $row['ol_id']; ?></td>
+                                                <td width="35%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
                                                 <td width="20%"><?php echo $row['datetime']; ?></td>
                                                 <td width="20%"><?php echo $row['status']; ?></td>
-                                                <td width="15%"><a href="orderview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                <td width="15%"><a href="orderview.php?order_id=<?php echo $row['ol_id']; ?>" class="btn btn-xs btn-default">View</a></td>
                                             </tr>
                                         </tbody>
                                         <?php

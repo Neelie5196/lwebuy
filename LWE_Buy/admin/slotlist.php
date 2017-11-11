@@ -90,7 +90,7 @@ $result2 = mysqli_query($con, $query2);
                                                         <td><?php echo $row['slot_num']; ?></td>
                                                         <td><?php echo $row['status']; ?></td>
                                                         <td><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
-                                                        <td><a href="slotitemview.php?s_id=<?php echo $row['s_id']; ?>&slotcode=<?php echo $row['slot_code']; ?>&slotnum=<?php echo $row['slot_num']; ?>&user_id=<?php echo $row['user_id']; ?>" class="btn btn-xs btn-info">View</a></td>
+                                                        <td><a href="slotitemview.php?s_id=<?php echo $row['s_id']; ?>&slotcode=<?php echo $row['slot_code']; ?>&slotnum=<?php echo $row['slot_num']; ?>&user_id=<?php echo $row['user_id']; ?>" class="btn btn-xs btn-default">View</a></td>
                                                     </tr>
                                                 </tbody>
                                                 <?php

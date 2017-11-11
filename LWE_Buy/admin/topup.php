@@ -46,12 +46,10 @@ $result1 = mysqli_query($con, $query1);
                     <h2>Top Up Request</h2>
                 </div>
             </div>
-        </div>
 
-        <section class="content">
-            <div class="container">
+            <section class="content">
                     <div class="row">
-		
+
                         <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                             <?php 
                             if(mysqli_num_rows($result1) > 0)
@@ -86,8 +84,8 @@ $result1 = mysqli_query($con, $query1);
                                                         <img src="../resources/img/receipts/<?php echo $row['file']; ?>" style="width: 0px; height: 0px;"><?php echo $row['title']; ?>
                                                     </a>
                                                 </td>
-                                                <td><a href="#" class="btn btn-xs btn-info"><?php echo $row['status']; ?></a></td>
-                                                <td><a href="updatepoint.php?user_id=<?php echo $row['user_id']; ?>&p_id=<?php echo $row['p_id']; ?>&point=<?php echo $row['amount']; ?>" class="btn btn-xs btn-warning">Top Up</a></td>
+                                                <td><?php echo $row['status']; ?></a>
+                                                <td><a href="updatepoint.php?user_id=<?php echo $row['user_id']; ?>&p_id=<?php echo $row['p_id']; ?>&point=<?php echo $row['amount']; ?>" class="btn btn-xs btn-success">Top Up</a></td>
                                             </tr>
                                         </tbody>
                                         <?php
@@ -101,8 +99,8 @@ $result1 = mysqli_query($con, $query1);
                             </table>                                  
                         </div>
                     </div>
-                </div>
-        </section>
+            </section>
+        </div>
     </body>
     <div class="modal fade" id="imagedialog" role="dialog">
         <div class="modal-dialog">

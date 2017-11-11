@@ -72,7 +72,7 @@ $result1 = mysqli_query($con, $query1);
                                                 <td><?php echo $counter; ?></td>
                                                 <td width="20%"><?php echo $row['name']; ?></td>
                                                 <td width="20%"><?php echo $row['price']; ?></td>
-                                                <td width="20%"><a href="editpackage.php?users=<?php echo $row['id']; ?>" class="btn btn-xs btn-warning">Edit</a> <a href="deletepack.php?user_id=<?php echo $row['id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
+                                                <td width="20%"><a href="editpackage.php?users=<?php echo $row['id']; ?>" class="btn btn-xs btn-default">Edit</a> <a href="deletepack.php?user_id=<?php echo $row['id']; ?>" class="btn btn-xs btn-danger">Delete</a></td>
                                             </tr>
                                         </tbody>
                                         <?php

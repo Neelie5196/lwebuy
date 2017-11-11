@@ -53,10 +53,8 @@ $result1 = mysqli_query($con, $query1);
                     <hr/>
                 </div>
             </div>
-        </div>
 
-        <section class="content">
-            <div class="container">
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12">
                         <h3 class="title">Customer <small>Information</small></h3>
@@ -153,7 +151,7 @@ $result1 = mysqli_query($con, $query1);
                     </div>
                 </div>
                 <center style="padding-bottom:15px;"><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>
-            </div>
-        </section>
+            </section>
+        </div>
     </body>
 </html>

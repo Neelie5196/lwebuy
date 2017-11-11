@@ -45,10 +45,8 @@ $results = mysqli_fetch_assoc($result);
                     <h2>Warehouse Detail</h2>
                 </div>
             </div>
-        </div>
 
-        <section class="content">
-            <div class="container">
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                         <form action="updatewarehouse.php" method="post">
@@ -58,7 +56,7 @@ $results = mysqli_fetch_assoc($result);
                                 </div>
                                 <div class="col-xs-8 col-md-8 col-lg-8">
                                     <input type="text" name="stationcode" class="form-control" placeholder="StationCode (Required)" style="border-radius: 30px; width: 50%;" value="<?php echo $results['station_code']; ?>" required>
-                                    <input type="hidden" name="wh_id" class="form-control" value="<?php echo $_GET['wh_id']; ?>">
+                                    <input type="hidden" name="wh_id" value="<?php echo $_GET['wh_id']; ?>">
                                 </div>
                             </div>
                             <br/>
@@ -112,8 +110,7 @@ $results = mysqli_fetch_assoc($result);
                         </form>
                     </div>
                 </div>
-            </div>
-        </section>
-
+            </section>
+        </div>
     </body>
 </html>
