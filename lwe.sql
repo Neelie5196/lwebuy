@@ -449,8 +449,8 @@ CREATE TABLE IF NOT EXISTS `warehouse` (
 
 INSERT INTO `warehouse` (`wh_id`, `station_code`, `station_description`, `country_code`, `country_description`, `company_name`, `station_name`) VALUES
 (0, 'SZX', 'SHENZHEN, CHINA, PEOPLE REPUBLIC', 'CN', 'CHINA, PEOPLE REPUBLIC', 'LOGISTICS WORLDWIDE EXPRESS (SHENZHEN)', 'SHENZHEN, CHINA, PEOPLE REPUBLIC'),
-(1, 'HKG', 'HONG KONG, HONGKONG', 'HK', 'HONGKONG', 'LOGISTICS WORLDWIDE EXPRESS (HK) LTD', 'HONG KONG, HONGKONG');
-
+(1, 'HKG', 'HONG KONG, HONGKONG', 'HK', 'HONGKONG', 'LOGISTICS WORLDWIDE EXPRESS (HK) LTD', 'HONG KONG, HONGKONG'),
+(3, 'MYS', 'LWE LOGISTICS HUB', 'MY', 'MALAYSIA', 'LOGISTICS WORLDWIDE EXPRESS (MALAYSIA)', 'LWE LOGISTICS HUB');
 -- --------------------------------------------------------
 
 --
