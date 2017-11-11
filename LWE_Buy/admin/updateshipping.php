@@ -265,35 +265,35 @@ if (isset($_POST['updateshipping']))
     
             $proceedshippingsumQuery->execute();
 			
-			// if(!empty($getslot))
-            // {
-				// $count = 0;
+			 if(!empty($getslot))
+             {
+				 $count = 0;
 				
-                // foreach($getslot as $gsl)
-                // {
-					// $s_id = $gsl['s_id'];
+                 foreach($getslot as $gsl)
+                 {
+					 $s_id = $gsl['s_id'];
 					
-                    // if(!empty($getitemlist))
-					// {
-						// foreach($getitemlist as $gil)
-						// {
-							// if($gsl['s_id'] == $gil['s_id'])
-							// {
-								// if($gil['action'] == 'in')
-								// {
-									// $count += 1;
-								// }
-							// }
-						// }
-					// }
+                     if(!empty($getitemlist))
+					 {
+						 foreach($getitemlist as $gil)
+						 {
+							 if($gsl['s_id'] == $gil['s_id'])
+							 {
+								 if($gil['action'] == 'in')
+								 {
+									 $count += 1;
+								 }
+							 }
+						 }
+					 }
 					
-					// if($count == 0)
-					// {
-						// $updateslotQuery = $db->prepare("UPDATE slot SET status = 'Not in Use', user_id = NULL WHERE s_id = $s_id);
-						// $updateslotQueryuery->execute();
-					// }
-                // }
-            // }
+					 if($count == 0)
+					 {
+						 $updateslotQuery = $db->prepare("UPDATE slot SET status = 'Not in Use', user_id = NULL WHERE s_id = $s_id");
+						 $updateslotQueryuery->execute();
+					 }
+                 }
+             }
         }
         else
         {
@@ -455,33 +455,33 @@ if (isset($_POST['updateshipping']))
                                 <td class="inputUpdate">
                                     <select name="desStation">
                                         <?php
-                                            // if($tracking_code != '')
-                                            // {
-                                                // if(!empty($getaddress))
-                                                // {
-                                                    // foreach($getaddress as $ga)
-                                                    // {
-                                                        // if($ga['tracking_code'] == $tracking_code)
-                                                        // {
-                                                            // $desCountry = $ga['country'];
-                                                        // }
-                                                    // }
-                                                // }
+                                             if($tracking_code != '')
+                                             {
+                                                 if(!empty($getaddress))
+                                                 {
+                                                     foreach($getaddress as $ga)
+                                                     {
+                                                         if($ga['tracking_code'] == $tracking_code)
+                                                         {
+                                                             $desCountry = $ga['country'];
+                                                         }
+                                                     }
+                                                 }
                                                 
-                                                // if(!empty($getstations))
-                                                // {
-                                                    // foreach($getstations as $gs)
-                                                    // {
-                                                        // if($gs['country_description'] == $desCountry)
-                                                        // {
+                                                 if(!empty($getstations))
+                                                 {
+                                                     foreach($getstations as $gs)
+                                                     {
+                                                         if($gs['country_description'] == $desCountry)
+                                                         {
                                         ?>
                                         <?php
-                                                        // }
-                                                    // }
-                                                // }
-                                            // }
-                                            // else
-                                            // {
+                                                         }
+                                                     }
+                                                 }
+                                             }
+                                             else
+                                             {
                                         if(mysqli_num_rows($result1) > 0)
                                         {
                                             while($row = mysqli_fetch_array($result1))
@@ -491,7 +491,7 @@ if (isset($_POST['updateshipping']))
                                                 <?php
                                             }
                                         }
-                                            // }
+                                             }
                                         ?>
                                         
                                     </select>
