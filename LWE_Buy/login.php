@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="row">
-                        <div class="col-xs-12 col-md-4 col-lg-4 userlogin">
+                        <div class="col-xs-12 col-md-4 col-lg-4 col-md-push-4 col-lg-push-4 userlogin">
                             <form action="login.php" method="post" autocomplete="off">
                                 <div class="form-group">
                                     <table>

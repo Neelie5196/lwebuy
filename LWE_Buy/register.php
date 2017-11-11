@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             <div class="row">
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="row">
-                        <div class="col-xs-4 col-md-4 col-lg-4 userreg">
+                        <div class="col-xs-12 col-md-6 col-lg-4 col-md-push-3 col-lg-push-4 userreg">
                             <form class="form-inline" action="register.php" method="post">
                                 <div class="form-group">
                                     <table>
