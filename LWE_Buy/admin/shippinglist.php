@@ -97,63 +97,61 @@ $result3 = mysqli_query($con, $query3);
                 <section class="content">
                     <div class="row botmar">
                         <div class="col-xs-12 col-md-12 col-lg-12 in collapse">
-                            <div class="span12 collapse" id="collapse1">
-                                <?php 
-                                if(mysqli_num_rows($result1) > 0)
+                            <?php 
+                            if(mysqli_num_rows($result1) > 0)
+                            {
+                            ?>
+                            <table class="table thead-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Shipping No.</th>
+                                        <th>Name</th>
+                                        <th>Tracking code</th>
+                                        <th>Placed on</th>
+                                    </tr>
+                                </thead>
+                            <?php
+                                while($row = mysqli_fetch_array($result1))
                                 {
-                                ?>
-                                <table class="table thead-bordered table-hover">
-                                    <thead>
+                                    ?>
+                                    <tbody>
                                         <tr>
-                                            <th>Shipping No.</th>
-                                            <th>Name</th>
-                                            <th>Tracking code</th>
-                                            <th>Placed on</th>
+                                            <td width="5%"><?php echo $row['s_id']; ?></td>
+                                            <td width="30%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
+                                            <td width="10%">
+                                                <?php
+                                                if($row['tracking_code'] != "")
+                                                {
+                                                    echo $row['tracking_code'];
+                                                }
+                                                else
+                                                {
+                                                ?>
+                                                <form method="post" action="shippinglist.php">
+                                                    <input type="text" value="<?php echo $row['s_id']; ?>" name="shippingid" hidden="hidden" />
+                                                    <input type="submit" value="Generate tracking code" name="genCode" class="btn btn-xs btn-default" />
+                                                </form>
+                                                <?php
+                                                }
+                                                ?>
+                                            </td>
+                                            <td width="10%"><?php echo $row['datetime']; ?></td>
+                                            <td width="15%">
+                                                <a href="tag.php?s_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-default">Print tag</a>
+                                                <a href="shippinglrview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-default">View</a>
+                                                <a href="updateshipping.php?tracking_code=<?php echo $row['tracking_code']; ?>" class="btn btn-xs btn-default">Update</a>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                <?php
-                                    while($row = mysqli_fetch_array($result1))
-                                    {
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <td width="5%"><?php echo $row['s_id']; ?></td>
-                                                <td width="30%"><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></td>
-                                                <td width="10%">
-                                                    <?php
-                                                    if($row['tracking_code'] != "")
-                                                    {
-                                                        echo $row['tracking_code'];
-                                                    }
-                                                    else
-                                                    {
-                                                    ?>
-                                                    <form method="post" action="shippinglist.php">
-                                                        <input type="text" value="<?php echo $row['s_id']; ?>" name="shippingid" hidden="hidden" />
-                                                        <input type="submit" value="Generate tracking code" name="genCode" class="btn btn-xs btn-default" />
-                                                    </form>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </td>
-                                                <td width="10%"><?php echo $row['datetime']; ?></td>
-                                                <td width="15%">
-                                                    <a href="tag.php?s_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-default">Print tag</a>
-                                                    <a href="shippinglrview.php?shipping_id=<?php echo $row['s_id']; ?>" class="btn btn-xs btn-default">View</a>
-                                                    <a href="updateshipping.php?tracking_code=<?php echo $row['tracking_code']; ?>" class="btn btn-xs btn-default">Update</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <?php
-                                        }
-                                    }else{
-                                        ?>
-                                            <p>There is no shipping pending.</p>
-                                        <?php
+                                    </tbody>
+                                    <?php
                                     }
-                                ?>                                                    
-                                </table>
-                            </div>
+                                }else{
+                                    ?>
+                                        <p>There is no shipping pending.</p>
+                                    <?php
+                                }
+                            ?>                                                    
+                            </table>
                         </div>  
                     </div>
                 </section>
