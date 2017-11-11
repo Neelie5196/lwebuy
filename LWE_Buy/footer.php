@@ -92,7 +92,10 @@
 
         <div class="row copyrow">
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <center><p class="footercon">&copy; Developed by Clement, Samuel & Eileen</p></center>
+                <center>
+                    <p class="footercon">Copyright &copy; 2017 Logistics Worldwide Express. All Rights Reserved.<br/>
+                    Web Design by Clement, Samuel & Eileen</p>
+                </center>
             </div>
         </div>
     </div>
