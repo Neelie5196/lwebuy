@@ -46,10 +46,8 @@ $result1 = mysqli_query($con, $query1);
                     <hr/>
                 </div>
             </div>
-        </div>
 
-        <section class="content">
-            <div class="container">
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 jumbotron">
                         <?php 
@@ -94,7 +92,7 @@ $result1 = mysqli_query($con, $query1);
                     </div>
                 </div>
                 <center><a href='javascript:history.go(-1)' class='btn btn-default' name='back'>Back</a></center>
-            </div>
-        </section>
+            </section>
+        </div>
     </body>
 </html>
