@@ -97,6 +97,18 @@ if (isset($_POST['updateshipping']))
             $destinationCountryName = $results4['country_description'];
             
             $result2 = mysqli_query($con, "INSERT INTO shipping_update_summary SET HawbNo='$trackcode', DeliveryDate='', RecipientName='$recipient', SignedName='', OriginStationCode='$stationCode', OriginStationDescription='$stationName', OriginCountryCode='$countryCode', OriginCountryDescription='$countryName', DestinationStationCode='$destinationStationCode', DestinationStationDescription='$desStation', DestinationCountryCode='$destinationCountryCode', DestinationCountryDescription='$destinationCountryName', EventCode='IP', EventDescription='In Proceed', ReasonCode='IS', ReasonDescription='Is Shipping', Remark='$remark'") or die(mysqli_error($con));
+            
+            $s_id = $results2['s_id'];
+            
+            $querys = "SELECT * FROM item i JOIN slot s ON s.s_id = i.s_id WHERE s_id = '$s_id' AND action = 'In'";
+            $results = mysqli_query($con, $querys);
+            
+            $rresultss = mysqli_num_rows($rresults);
+            if($rresultss = 0){
+                $result = mysqli_query($con, "UPDATE slot SET status = 'Not in Use', user_id = NULL WHERE s_id = $s_id") or die(mysqli_error($con));
+            }else{
+                
+            }
         }
         else
         {
