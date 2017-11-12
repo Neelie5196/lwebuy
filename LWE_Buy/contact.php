@@ -34,10 +34,8 @@ require_once 'connection/config.php';
         <div class="container">
             <h2>Contact Us</h2>
             <hr/>
-        </div>
 
-        <section class="content">
-            <div class="container">
+            <section class="content">
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-lg-6">
                         <div class="row">
@@ -142,7 +140,7 @@ require_once 'connection/config.php';
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </body>
 </html>
