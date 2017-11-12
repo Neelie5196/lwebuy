@@ -25,16 +25,17 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    text-align: center;
+    margin-top: -1%;
 }
 
-.parallax img {
+.parallax > div > p > img {
     width: 20%;
     margin-top: 50px;
 }
 
 .whiteheader {
     color: #fff;
+    text-align: center;
 }
 
 .navbar {
@@ -44,23 +45,23 @@ body {
 
 .navbar-default .navbar-nav > li > a {
     font-weight: bold;
-    color: #88b72f;
+    color: #8bb836;
     
 }
 
 .navbar-default .navbar-nav > li > a:hover  {
-    color: #299145;
+    color: #2f9142;
 }
 
 .navbar-default .navbar-nav > li > ul > li > a {
     font-weight: bold;
-    color: #88b72f;
+    color: #8bb836;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
 .navbar-default .navbar-nav > li > ul > li > a:hover  {
-    color: #299145;
+    color: #2f9142;
 }
 
 .navbar-brand img {
@@ -121,10 +122,10 @@ body {
     background: #fff;
     border-radius: 5px;
     color: #000;
-    border-left: solid 1px #299145;
-    border-top: solid 1px #299145;
-    border-right: solid 2px #299145;
-    border-bottom: solid 2px #299145;
+    border-left: solid 1px #2f9142;
+    border-top: solid 1px #2f9142;
+    border-right: solid 2px #2f9142;
+    border-bottom: solid 2px #2f9142;
 }
 
 .udashrow1:hover {
@@ -132,17 +133,17 @@ body {
 }
 
 .udashrow1 h3 {
-    color: #ff6600;
+    color: #f7941d;
 }
 
 .udashrow1box1 {
-    border-top: solid 1px #ff9966;
+    border-top: solid 1px #f7941d;
     padding: 10px 25px;
 }
 
 .udashrow1box2 {
-    border-top: solid 1px #ff9966;
-    border-left: solid 1px #ff9966;
+    border-top: solid 1px #f7941d;
+    border-left: solid 1px #f7941d;
     padding: 10px 25px;
 }
 
@@ -151,10 +152,10 @@ body {
     background: #fff;
     border-radius: 5px;
     color: #000;
-    border-left: solid 1px #299145;
-    border-top: solid 1px #299145;
-    border-right: solid 2px #299145;
-    border-bottom: solid 2px #299145;
+    border-left: solid 1px #2f9142;
+    border-top: solid 1px #2f9142;
+    border-right: solid 2px #2f9142;
+    border-bottom: solid 2px #2f9142;
 }
 
 .addashrow1 {
@@ -162,10 +163,10 @@ body {
     background: #fff;
     border-radius: 5px;
     color: #000;
-    border-left: solid 1px #299145;
-    border-top: solid 1px #299145;
-    border-right: solid 2px #299145;
-    border-bottom: solid 2px #299145;
+    border-left: solid 1px #2f9142;
+    border-top: solid 1px #2f9142;
+    border-right: solid 2px #2f9142;
+    border-bottom: solid 2px #2f9142;
 }
 
 .addashrow1:hover {
@@ -173,7 +174,7 @@ body {
 }
 
 .admindashtitle {
-    color: #ff6600;
+    color: #f7941d;
     font-weight: bold;
 }
 
@@ -187,10 +188,10 @@ body {
     background: #fff;
     border-radius: 5px;
     color: #000;
-    border-left: solid 1px #299145;
-    border-top: solid 1px #299145;
-    border-right: solid 2px #299145;
-    border-bottom: solid 2px #299145;
+    border-left: solid 1px #2f9142;
+    border-top: solid 1px #2f9142;
+    border-right: solid 2px #2f9142;
+    border-bottom: solid 2px #2f9142;
 }
 
 .addashrow2 > div > hr {
@@ -206,11 +207,11 @@ body {
     background: #fff;
     border-radius: 5px;
     color: #000;
-    box-shadow: -3px 3px 3px #009933;
+    box-shadow: -3px 3px 3px #2f9142;
 }
 
 .udashrow2 h3 {
-    color: #ff6600;
+    color: #f7941d;
 }
 
 .warehousedetr {
@@ -348,7 +349,7 @@ body {
 }
 
 .footerlink > a:hover {
-    color: #88b72f;
+    color: #8bb836;
     text-decoration: none;
 }
 
@@ -403,4 +404,20 @@ body {
 
 .upper{
     text-transform: uppercase;
+}
+
+.indexrow {
+    margin: 2% auto;
+    width: 80%;
+    font-size: 115%;
+}
+
+.indextitle {
+    color: #f7941d;
+    font-weight: bold;
+    text-align: center;
+}
+
+.center {
+    text-align: center;
 }
