@@ -49,8 +49,14 @@ require_once 'connection/config.php';
                         <div class="col-xs-12 col-md-12 col-lg-12">
                             <form action="track.php" method="post" enctype="multipart/form-data">
                                 <div class="row" style="padding-bottom: 25px;">
-                                    <div class="col-xs-12 col-md-12 col-lg-12">
-                                        <textarea name="hawb" cols="25" rows="5" class="form-control" placeholder="Enter tracking number here" style="border-radius: 30px; width: 25%;" autocomplete="off" required></textarea>
+                                    <div class="col-xs-12 col-md-4 col-lg-4">
+                                        
+                                    </div>
+                                    <div class="col-xs-12 col-md-4 col-lg-4">
+                                        <textarea name="hawb" cols="25" rows="5" class="form-control" placeholder="Enter tracking number here" style="border-radius: 30px; width: 100%;" autocomplete="off" required></textarea>
+                                    </div>
+                                    <div class="col-xs-12 col-md-4 col-lg-4">
+                                        
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-success">Track <span class="glyphicon glyphicon-search"></span></button>

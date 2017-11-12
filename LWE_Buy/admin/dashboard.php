@@ -109,7 +109,7 @@ $type = $_SESSION['type'];
                         </div>
                         
                         <div class="col-xs-6 col-md-3 col-lg-3">
-                            <a href="feedback.php">
+                            <a href="shippinglist.php">
                                 <div class="row addashrow1">
                                     <div class="col-xs-12 col-md-12 col-lg-12">
                                         <h4 class="admindashtitle">New Shipping</h4>
@@ -206,7 +206,7 @@ $type = $_SESSION['type'];
                                                     }
                                                     else
                                                     {
-                                                        $count7 = $count6;
+                                                        $count7 = $count7;
                                                     }
                                                 }
                                                 echo $count7;
@@ -384,7 +384,7 @@ $type = $_SESSION['type'];
                         </div>
                         
                         <div class="col-xs-6 col-md-3 col-lg-3">
-                            <a href="feedback.php">
+                            <a href="shippinglist.php">
                                 <div class="row addashrow1">
                                     <div class="col-xs-12 col-md-12 col-lg-12">
                                         <h4 class="admindashtitle">New Shipping</h4>

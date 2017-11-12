@@ -41,7 +41,7 @@ require_once 'connection/config.php';
       <div class="row">
         <div class="col-md-3">
           <a href="#">
-            <img class="img" src="resources/service/i.e.jpg" alt="">
+            <img class="img" src="resources/service/i.e.JPG" alt="">
           </a>
         </div>
         <div class="col-md-9">
@@ -64,7 +64,7 @@ require_once 'connection/config.php';
       <div class="row">
         <div class="col-md-3">
           <a href="#">
-            <img class="img" src="resources/service/inbound.jpg" alt="">
+            <img class="img" src="resources/service/inbound.JPG" alt="">
           </a>
         </div>
         <div class="col-md-9">
@@ -85,7 +85,7 @@ require_once 'connection/config.php';
       <div class="row">
         <div class="col-md-3">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="resources/service/ff.jpg" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="resources/service/ff.JPG" alt="">
           </a>
         </div>
         <div class="col-md-9">
@@ -107,7 +107,7 @@ require_once 'connection/config.php';
 
         <div class="col-md-3">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="resources/service/warehouse.jpg" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="resources/service/warehouse.JPG" alt="">
           </a>
         </div>
         <div class="col-md-9">
@@ -130,7 +130,7 @@ require_once 'connection/config.php';
 
         <div class="col-md-3">
           <a href="#">
-            <img class="img-fluid rounded mb-3 mb-md-0" src="resources/service/drop.jpg" alt="">
+            <img class="img-fluid rounded mb-3 mb-md-0" src="resources/service/drop.JPG" alt="">
           </a>
         </div>
         <div class="col-md-9">

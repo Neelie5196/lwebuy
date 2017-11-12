@@ -18,12 +18,12 @@ $results = mysqli_fetch_assoc($result);
 $query1 = "SELECT * FROM warehouse";
 $result1 = mysqli_query($con, $query1);
 
-/*$query2 = "SELECT *
+$query2 = "SELECT *
            FROM shipping sh
            JOIN address ad
            ON ad.a_id = sh.a_id";
 $result2 = mysqli_query($con, $query2);
-$results2 = mysqli_fetch_assoc($result2);*/
+$results2 = mysqli_fetch_assoc($result2);
 
                                                 
 if (isset($_POST['updateshipping'])) 
@@ -210,7 +210,7 @@ if (isset($_POST['updateshipping']))
                                 <td class="inputUpdate">
                                     <select name="desStation">
                                         <?php
-                                             /*if($tracking_code != '')
+                                             if($tracking_code != '')
                                              {
                                                 if($results2['tracking_code'] == $tracking_code)
                                                 {
@@ -222,18 +222,18 @@ if (isset($_POST['updateshipping']))
                                                     while($row = mysqli_fetch_array($result1))
                                                     {
                                                         if($row['country_description'] == $desCountry)
-                                                        {*/
+                                                        {
                                                         ?>
-<!--
-                                                            <option value="<?php /*echo $row['station_description']; ?>"><?php echo $row['station_description'];*/ ?></option>
--->
+
+                                                            <option value="<?php echo $row['station_description']; ?>"><?php echo $row['station_description']; ?></option>
+
                                                         <?php
-                                                        /*}
+                                                        }
                                                     }
                                                 }
                                              }
                                              else
-                                             {*/
+                                             {
                                                 if(mysqli_num_rows($result1) > 0)
                                                 {
                                                     while($row = mysqli_fetch_array($result1))
@@ -243,7 +243,7 @@ if (isset($_POST['updateshipping']))
                                                         <?php
                                                     }
                                                 }
-//                                             }
+                                             }
                                         ?>
                                     </select>
                                 </td>

@@ -5,11 +5,11 @@ if(isset($_POST['address']))
 {    
 
     $user_id = $_POST['user_id'];
-    $address = $_POST['address'];
-    $postcode = $_POST['postcode'];
-    $city = $_POST['city'];
-    $state = $_POST['state'];
-    $country = $_POST['country'];
+    $address = strtoupper($_POST['address']);
+    $postcode = strtoupper($_POST['postcode']);
+    $city = strtoupper($_POST['city']);
+    $state = strtoupper($_POST['state']);
+    $country = strtoupper($_POST['country']);
     
 	
 	$result = mysqli_query($con, "INSERT INTO address SET user_id='$user_id', address='$address', state='$state', city='$city', country='$country', postcode='$postcode'") or die(mysqli_error($con));
