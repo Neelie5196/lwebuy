@@ -28,7 +28,10 @@ $results = mysqli_fetch_assoc($result);
     <body class="homepagebg" onload="generateBarcode()">
         <div id="parceltag">
             <div class="parceltag">
-                <h1>Logistic Worldwides Express</h1>
+                <h1>
+                    <img src="../resources/img/logo-black.png" alt="blacklogo"/>
+                    Logistics Worldwide Express
+                </h1>
                 <hr/>
                 
                 <p>Weight(KG): <?php echo $results['weight'] ?></p>

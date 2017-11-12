@@ -241,8 +241,12 @@ body {
 }
 
 .parceltag {
-    width: 591px;   
+    width: 615px;   
     border: solid 1px black;
+}
+
+.parceltag > h1 > img {
+    margin-top: 5px;
 }
 
 .parceltag > table {
