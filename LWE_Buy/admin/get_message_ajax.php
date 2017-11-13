@@ -22,9 +22,7 @@
                 //display the message
                 echo "
                             <div class='message'>
-                                <div class='img-con'>
-                                    <img src='{$user_form_img}'>
-                                </div>
+                            
                                 <div class='text-con'>
                                     <a href='#''>{$user_form_username}</a>
                                     <p>{$message}</p>

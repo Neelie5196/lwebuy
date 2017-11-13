@@ -15,9 +15,14 @@
         //insert into `messages`
         $q = mysqli_query($con, "INSERT INTO `messages` VALUES ('','$conversation_id','$user_form','$user_to','$message')");
         if($q){
-            echo "Posted";
+            echo "Sent";
         }else{
             echo "Error";
         }
-    }
+		}
+		
+	
 ?>
+
+			
+		

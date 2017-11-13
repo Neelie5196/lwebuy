@@ -17,7 +17,7 @@
         if($q){
             echo "Posted";
         }else{
-            echo "Error";
+            echo "Session End";
         }
     }
 ?>

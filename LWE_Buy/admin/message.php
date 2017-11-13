@@ -6,6 +6,7 @@
     }else{
         header("Location: ../login.php");
     }
+	
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,11 +29,12 @@
     <div class="row">
             <?php include_once('nav.php')?>
         </div>
-    <div class="message-body">
+    <div class="message-body jumbotron automar">
         <div class="message-left">
             <ul>
                 <?php 
-                    $q = mysqli_query($con, "SELECT * FROM `users` WHERE user_id!='$user_id'");
+			
+                    $q = mysqli_query($con, "SELECT * FROM users INNER JOIN conversation ON users.user_id=conversation.user_one WHERE user_two=$user_id");
                     while($row = mysqli_fetch_assoc($q)){
                         echo "<a href='message.php?user_id={$row['user_id']}'><li><img src='{$row['image']}'> {$row['fname']}</li></a>";
                     }
@@ -65,10 +67,10 @@
                             $conversation_id = mysqli_insert_id($con);
                         }
                     }else{
-                        die("Invalid $_GET ID.");
+                        die("Invalid ID");
                     }
                 }else {
-                    die("Click On the Person to start Chating.");
+                    die("No New Message.");
                 }
             ?>
             </div>
@@ -84,7 +86,9 @@
                     <textarea class="form-control" id="message" placeholder="Enter Your Message"></textarea>
                 </div>
                 <button class="btn btn-primary" id="reply">Reply</button> 
+				<a href="endchat.php?user_id=<?php echo $user_id; ?>" class="btn btn-danger">End Chat</a>
                 <span id="error"></span>
+				
             </div>
             <!-- / send message -->
         </div>

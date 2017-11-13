@@ -28,13 +28,13 @@
     <div class="row">
             <?php include_once('nav.php')?>
         </div>
-    <div class="message-body">
+    <div class="message-body jumbotron automar">
         <div class="message-left">
             <ul>
                 <?php 
-                    $q = mysqli_query($con, "SELECT * FROM `users` WHERE user_id!='$user_id' and (type='admin'||type='bot') and login_status='Online'");
+                    $q = mysqli_query($con, "SELECT * FROM `users` WHERE user_id!='$user_id' and type !='customer'and login_status='Online'");
                     while($row = mysqli_fetch_assoc($q)){
-                        echo "<a href='message.php?user_id={$row['user_id']}'><li><img src='{$row['image']}'> {$row['fname']}({$row['login_status']})</li></a>";
+                        echo "<a href='message.php?user_id={$row['user_id']}'><li><img src='{$row['image']}'> {$row['fname']}({$row['type']})</li></a>";
                     }
                 ?>
             </ul>
@@ -43,7 +43,7 @@
         <div class="message-right">
             <!-- display message -->
             <div class="display-message">
-            <?php
+             <?php
                 //check $_GET['id'] is set
                 if(isset($_GET['user_id'])){
                     $user_two = trim(mysqli_real_escape_string($con, $_GET['user_id']));
@@ -51,24 +51,36 @@
                     $q = mysqli_query($con, "SELECT `user_id` FROM `users` WHERE user_id='$user_two' AND user_id!='$user_id'");
                     //valid $user_two
                     if(mysqli_num_rows($q) == 1){
-                        //check $user_id and $user_two has conversation or not if no start one
-                        $conver = mysqli_query($con, "SELECT * FROM `conversation` WHERE (user_one='$user_id' AND user_two='$user_two') OR (user_one='$user_two' AND user_two='$user_id')");
- 
-                        //they have a conversation
-                        if(mysqli_num_rows($conver) == 1){
-                            //fetch the converstaion id
-                            $fetch = mysqli_fetch_assoc($conver);
-                            $conversation_id = $fetch['id'];
-                        }else{ //they do not have a conversation
-                            //start a new converstaion and fetch its id
-                            $q = mysqli_query($con, "INSERT INTO `conversation` VALUES ('','$user_id',$user_two)");
-                            $conversation_id = mysqli_insert_id($con);
-                        }
+							$query = "SELECT * FROM messages WHERE user_to = '$user_two'";
+							$result = mysqli_query($con, $query);
+							if(mysqli_num_rows($result) == 0)
+							{
+								//check $user_id and $user_two has conversation or not if no start one
+								$conver = mysqli_query($con, "SELECT * FROM `conversation` WHERE (user_one='$user_id' AND user_two='$user_two') OR (user_one='$user_two' AND user_two='$user_id')");
+		 
+								//they have a conversation
+								if(mysqli_num_rows($conver) == 1){
+									//fetch the converstaion id
+									$fetch = mysqli_fetch_assoc($conver);
+									$conversation_id = $fetch['id'];
+								}else{ //they do not have a conversation
+									//start a new converstaion and fetch its id
+									$q = mysqli_query($con, "INSERT INTO `conversation` VALUES ('','$user_id',$user_two)");
+									$conversation_id = mysqli_insert_id($con);
+								}
+							}else{ 
+								?>
+								<script>
+								alert('Admin chatting, Please Wait!');
+								window.location.href='message.php';
+								</script>
+								<?php
+							}
                     }else{
-                        die("Invalid $_GET ID.");
+						die("Invalid 'id'");
                     }
                 }else {
-                    die("Click On the Person to start Chating.");
+                    die("Choose an admin.");
                 }
             ?>
             </div>
